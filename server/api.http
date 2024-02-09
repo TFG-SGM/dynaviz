@@ -1,0 +1,13 @@
+### GET ALL USERS
+GET http://localhost:3000/usuario
+
+
+### CREATE USER
+POST http://localhost:3000/usuario
+Content-Type: application/json
+
+{
+ "name": "Sergio",
+ "subName": "Garcia",
+ "age": 21
+}
