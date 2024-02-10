@@ -13,5 +13,5 @@ app.disable("x-powered-by");
 app.use("/usuario", userRouter);
 
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(`server is running at http://localhost:${port}`);
 });

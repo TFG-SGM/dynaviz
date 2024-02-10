@@ -3,3 +3,9 @@ export interface User {
   subName: string;
   age: number;
 }
+
+export interface PartialUser {
+  name?: string | undefined;
+  subName?: string | undefined;
+  age?: number | undefined;
+}

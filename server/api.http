@@ -1,6 +1,9 @@
 ### GET ALL USERS
 GET http://localhost:3000/usuario
 
+### GET ONE USER
+GET http://localhost:3000/usuario/65c664246397478013f9b2f6
+
 
 ### CREATE USER
 POST http://localhost:3000/usuario
@@ -11,3 +14,17 @@ Content-Type: application/json
  "subName": "Garcia",
  "age": 21
 }
+
+### UPDATE USER
+PUT http://localhost:3000/usuario/65c6641c6397478013f9b2f5
+Content-Type: application/json
+
+{
+ "name": "Sandra",
+ "subName": "Garcia",
+ "age": 20
+}
+
+
+### DELETE USER
+DELETE http://localhost:3000/usuario/65c6628fd5f4f13719e2c203
