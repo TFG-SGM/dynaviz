@@ -1,5 +1,10 @@
-function App() {
-  return <h1>Hola Mundo!</h1>;
-}
+import { Outlet } from "react-router-dom";
 
-export default App;
+export function App() {
+  return (
+    <>
+      <h1>DiPAMIA</h1>
+      <Outlet></Outlet>
+    </>
+  );
+}

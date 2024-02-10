@@ -12,12 +12,13 @@ export class UserController {
     const { id } = req.params;
     const user = await UserModel.getById({ id });
     if (user) return res.json(user);
-    res.status(404).json({ message: "Usuario no encontrado" });
+    res.status(404).json({ message: "user not found" });
   }
 
   static async create(req: Request, res: Response) {
-    const result = validateUser(req.body);
+    console.log(req.body);
 
+    const result = validateUser(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
@@ -42,7 +43,7 @@ export class UserController {
     const { id } = req.params;
     const result = await UserModel.delete({ id });
 
-    if (result) return res.json({ message: "Usuario eliminado" });
-    res.status(404).json({ message: "Usuario no encontrado" });
+    if (result) return res.json({ message: "user deleted" });
+    res.status(404).json({ message: "user not found" });
   }
 }

@@ -1,12 +1,12 @@
 ### GET ALL USERS
-GET http://localhost:3000/usuario
+GET http://localhost:3000/user
 
 ### GET ONE USER
-GET http://localhost:3000/usuario/65c664246397478013f9b2f6
+GET http://localhost:3000/user/65c664246397478013f9b2f6
 
 
 ### CREATE USER
-POST http://localhost:3000/usuario
+POST http://localhost:3000/user
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### UPDATE USER
-PUT http://localhost:3000/usuario/65c6641c6397478013f9b2f5
+PUT http://localhost:3000/user/65c6641c6397478013f9b2f5
 Content-Type: application/json
 
 {
@@ -27,4 +27,4 @@ Content-Type: application/json
 
 
 ### DELETE USER
-DELETE http://localhost:3000/usuario/65c6628fd5f4f13719e2c203
+DELETE http://localhost:3000/user/65c6628fd5f4f13719e2c203
