@@ -5,7 +5,7 @@ const connectionSting = process.env.DATABASE_URL ?? DEFAULT_URL;
 
 const client = new MongoClient(connectionSting);
 
-async function connectToMongoDB(collection: string) {
+export async function connectToMongoDB(collection: string) {
   try {
     await client.connect();
     const database = client.db();
@@ -15,5 +15,3 @@ async function connectToMongoDB(collection: string) {
     throw error;
   }
 }
-
-export { connectToMongoDB };

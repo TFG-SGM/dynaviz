@@ -1,11 +1,11 @@
 export interface User {
   name: string;
-  subName: string;
+  surname: string;
   age: number;
 }
 
 export interface PartialUser {
   name?: string | undefined;
-  subName?: string | undefined;
+  surname?: string | undefined;
   age?: number | undefined;
 }

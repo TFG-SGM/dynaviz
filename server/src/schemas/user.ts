@@ -3,7 +3,7 @@ import { User } from "../utils/types";
 
 const userSchema = z.object({
   name: z.string(),
-  subName: z.string(),
+  surname: z.string(),
   age: z.number(),
 });
 
