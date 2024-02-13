@@ -43,7 +43,7 @@ export class UserController {
     const { id } = req.params;
     const result = await UserModel.delete({ id });
 
-    if (result) return res.json({ message: "user deleted" });
+    if (result) return res.json(result);
     res.status(404).json({ message: "user not found" });
   }
 }

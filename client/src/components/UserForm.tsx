@@ -46,13 +46,14 @@ function UserForm({ userData, setUserData, handleSubmit, action }) {
   );
 }
 
-export function CreateUserForm() {
+export function CreateUserForm({ setUsers }) {
   const [userData, setUserData] = useState({ name: "", surname: "", age: 0 });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await axios.post(`${URL}user`, userData);
+    const { data } = await axios.post(`${URL}user`, userData);
     setUserData({ name: "", surname: "", age: 0 });
+    setUsers((prevState) => [...prevState, data]);
   };
 
   return (

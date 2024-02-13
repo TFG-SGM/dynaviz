@@ -44,6 +44,7 @@ export class UserModel {
     const objectId = new ObjectId(id);
 
     const { deletedCount } = await db.deleteOne({ _id: objectId });
-    return deletedCount > 0;
+    if (deletedCount > 0) return id;
+    return null;
   }
 }
