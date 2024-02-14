@@ -1,15 +1,32 @@
 import axios from "axios";
-import { FormEvent, useEffect, useState } from "react";
+
+import { ChangeEvent, FormEvent, useState } from "react";
 import { URL } from "../utils/constants";
 import { useData } from "../hooks/useData";
+import {
+  CreateUserFormProps,
+  CreatedUserData,
+  UpdateUserFormProps,
+  UserData,
+  UserFormProps,
+} from "../utils/types";
+import { updateData } from "../utils/utils";
 
-function UserForm({ userData, setUserData, handleSubmit, action }) {
-  const handleChange = (e) => {
+function UserForm<T extends CreatedUserData>({
+  userData,
+  setUserData,
+  handleSubmit,
+  action,
+}: UserFormProps<T>) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserData((prevState) => ({
-      ...prevState,
-      [name]: name === "age" ? parseInt(value) : value,
-    }));
+    setUserData((prevState) => {
+      if (!prevState) return prevState;
+      return {
+        ...prevState,
+        [name]: name === "age" ? parseInt(value) : value,
+      };
+    });
   };
 
   return (
@@ -19,7 +36,7 @@ function UserForm({ userData, setUserData, handleSubmit, action }) {
         <input
           type="text"
           name="name"
-          value={userData.name}
+          value={userData?.name}
           onChange={handleChange}
         ></input>
       </label>
@@ -28,7 +45,7 @@ function UserForm({ userData, setUserData, handleSubmit, action }) {
         <input
           type="text"
           name="surname"
-          value={userData.surname}
+          value={userData?.surname}
           onChange={handleChange}
         ></input>
       </label>
@@ -37,7 +54,7 @@ function UserForm({ userData, setUserData, handleSubmit, action }) {
         <input
           type="number"
           name="age"
-          value={userData.age}
+          value={userData?.age}
           onChange={handleChange}
         ></input>
       </label>
@@ -46,14 +63,18 @@ function UserForm({ userData, setUserData, handleSubmit, action }) {
   );
 }
 
-export function CreateUserForm({ setUsers }) {
-  const [userData, setUserData] = useState({ name: "", surname: "", age: 0 });
+export function CreateUserForm({ setUsers }: CreateUserFormProps) {
+  const [userData, setUserData] = useState<CreatedUserData | null>({
+    name: "",
+    surname: "",
+    age: 0,
+  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { data } = await axios.post(`${URL}user`, userData);
     setUserData({ name: "", surname: "", age: 0 });
-    setUsers((prevState) => [...prevState, data]);
+    setUsers((prevState) => [...(prevState || []), data]);
   };
 
   return (
@@ -66,26 +87,26 @@ export function CreateUserForm({ setUsers }) {
   );
 }
 
-export function UpdateUserForm({ userId, setUserId }) {
-  const userData = useData(`user/${userId}`);
-  const [newUserData, setNewUserData] = useState(userData);
-
-  useEffect(() => {
-    if (userData) setNewUserData(userData);
-  }, [userData]);
+export function UpdateUserForm({
+  userId,
+  setUserId,
+  setUsers,
+}: UpdateUserFormProps) {
+  const [userData, setUserData] = useData<UserData>(`user/${userId}`);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await axios.put(`${URL}user/${userId}`, newUserData);
+    const { data } = await axios.put(`${URL}user/${userId}`, userData);
     setUserId(null);
+    setUsers((prevState) => updateData(prevState, data));
   };
 
   return (
     <>
-      {newUserData ? (
+      {userData ? (
         <UserForm
-          userData={newUserData}
-          setUserData={setNewUserData}
+          userData={userData}
+          setUserData={setUserData}
           handleSubmit={handleSubmit}
           action="Editar"
         ></UserForm>

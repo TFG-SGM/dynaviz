@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useData } from "../hooks/useData";
-import { deleteHelper } from "../utils/deleteHelper";
+import { deleteData } from "../utils/utils";
 import { UserData } from "../utils/types";
 import { CreateUserForm, UpdateUserForm } from "./UserForm";
 
 export function UsersList() {
   const [users, setUsers] = useData<UserData[]>("user");
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   return (
     <>
       <CreateUserForm setUsers={setUsers}></CreateUserForm>
       {userId && (
-        <UpdateUserForm userId={userId} setUserId={setUserId}></UpdateUserForm>
+        <UpdateUserForm
+          userId={userId}
+          setUserId={setUserId}
+          setUsers={setUsers}
+        ></UpdateUserForm>
       )}
       {users ? (
         <div>
@@ -24,14 +28,17 @@ export function UsersList() {
                 </p>
                 <button
                   data-user-id={user._id}
-                  onClick={(e) =>
-                    setUserId(e.target.getAttribute("data-user-id"))
-                  }
+                  onClick={(e) => {
+                    const { target } = e;
+                    setUserId(
+                      (target as HTMLButtonElement).getAttribute("data-user-id")
+                    );
+                  }}
                 >
                   Editar
                 </button>
                 <button
-                  onClick={() => deleteHelper(`user/${user._id}`, setUsers)}
+                  onClick={() => deleteData(`user/${user._id}`, setUsers)}
                 >
                   Eliminar
                 </button>
