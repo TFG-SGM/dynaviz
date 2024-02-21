@@ -1,47 +1,47 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models/user";
-import { validateUser, validatePartialUser } from "../schemas/user";
+import { TestModel } from "../models/test";
+import { validateTest, validatePartialTest } from "../schemas/test";
 
-export class UserController {
+export class TestController {
   static async getAll(req: Request, res: Response) {
-    const users = await UserModel.getAll();
-    res.json(users);
+    const tests = await TestModel.getAll();
+    res.json(tests);
   }
 
   static async getById(req: Request, res: Response) {
     const { id } = req.params;
-    const user = await UserModel.getById({ id });
-    if (user) return res.json(user);
+    const test = await TestModel.getById({ id });
+    if (test) return res.json(test);
     res.status(404).json({ message: "user not found" });
   }
 
   static async create(req: Request, res: Response) {
     console.log(req.body);
 
-    const result = validateUser(req.body);
+    const result = validateTest(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    const newUser = await UserModel.create({ input: result.data });
+    const newUser = await TestModel.create({ input: result.data });
     res.json(newUser);
   }
 
   static async update(req: Request, res: Response) {
-    const result = validatePartialUser(req.body);
+    const result = validatePartialTest(req.body);
 
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
     const { id } = req.params;
-    const updatedUser = await UserModel.update({ id, input: result.data });
+    const updatedUser = await TestModel.update({ id, input: result.data });
     return res.json(updatedUser);
   }
 
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
-    const result = await UserModel.delete({ id });
+    const result = await TestModel.delete({ id });
 
     if (result) return res.json(result);
     res.status(404).json({ message: "user not found" });

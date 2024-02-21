@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { URL } from "../utils/constants";
-import { HookData } from "../utils/types";
+import { Dispatch, SetStateAction } from "react";
+
+export type HookData<T> = [T | null, Dispatch<SetStateAction<T | null>>];
 
 export function useData<T>(endpoint: string): HookData<T> {
   const [data, setData] = useState<T | null>(null);

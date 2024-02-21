@@ -1,46 +1,46 @@
 import { ObjectId } from "mongodb";
 import { connectToMongoDB } from "../utils/connection";
-import { PartialUser, User } from "../utils/types";
+import { PartialTest, Test } from "../utils/types";
 
-export class UserModel {
+export class TestModel {
   static async getAll() {
-    const db = await connectToMongoDB("users");
+    const db = await connectToMongoDB("tests");
 
-    const users = await db.find({}).toArray();
-    return users;
+    const tests = await db.find({}).toArray();
+    return tests;
   }
 
   static async getById({ id }: { id: string }) {
-    const db = await connectToMongoDB("users");
+    const db = await connectToMongoDB("tests");
     const objectId = new ObjectId(id);
 
-    const user = await db.findOne({ _id: objectId });
-    return user;
+    const test = await db.findOne({ _id: objectId });
+    return test;
   }
 
-  static async create({ input }: { input: User }) {
-    const db = await connectToMongoDB("users");
+  static async create({ input }: { input: Test }) {
+    const db = await connectToMongoDB("tests");
 
     const { insertedId } = await db.insertOne(input);
     return { id: insertedId, ...input };
   }
 
-  static async update({ id, input }: { id: string; input: PartialUser }) {
-    const db = await connectToMongoDB("users");
+  static async update({ id, input }: { id: string; input: PartialTest }) {
+    const db = await connectToMongoDB("tests");
     const objectId = new ObjectId(id);
 
-    const updatedUser = await db.findOneAndUpdate(
+    const updatedTest = await db.findOneAndUpdate(
       { _id: objectId },
       { $set: input },
       { returnDocument: "after" }
     );
 
-    if (updatedUser) return updatedUser;
+    if (updatedTest) return updatedTest;
     return null;
   }
 
   static async delete({ id }: { id: string }) {
-    const db = await connectToMongoDB("users");
+    const db = await connectToMongoDB("tests");
     const objectId = new ObjectId(id);
 
     const { deletedCount } = await db.deleteOne({ _id: objectId });
