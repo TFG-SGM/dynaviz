@@ -37,6 +37,7 @@ export function UpdateForm<T>({
         fields={fields}
         action="Editar"
       ></UserForm>
+      <button onClick={() => setActualId(null)}>Cancelar</button>
     </>
   );
 }

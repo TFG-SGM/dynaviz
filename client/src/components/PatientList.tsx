@@ -12,19 +12,15 @@ export type PatientData = {
 };
 
 export function PatientsList() {
-  const endpoint = "test";
+  const endpoint = "patient";
   const fields = ["name", "surname", "age"];
 
   const [patients, setPatients] = useData<PatientData[]>(endpoint);
   const [patientId, setPatientId] = useState<string | null>(null);
 
-  const handleCreate = () => {
-    setPatientId("create");
-  };
-
   return (
     <div>
-      <button onClick={handleCreate}>Crear</button>
+      <button onClick={() => setPatientId("create")}>Crear</button>
       {patientId === "create" && (
         <CreateForm
           endpoint={endpoint}

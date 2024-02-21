@@ -24,13 +24,16 @@ export function CreateForm<T>({
   };
 
   return (
-    <UserForm
-      data={data}
-      setNewData={setNewData}
-      handleSubmit={handleSubmit}
-      action="Crear"
-      fields={fields}
-    ></UserForm>
+    <>
+      <UserForm
+        data={data}
+        setNewData={setNewData}
+        handleSubmit={handleSubmit}
+        action="Crear"
+        fields={fields}
+      ></UserForm>
+      <button onClick={() => setActualId(null)}>Cancelar</button>
+    </>
   );
 }
 
