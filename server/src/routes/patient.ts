@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { PatientController } from "../controllers/patient";
+import { checkRole } from "../middlewares/auth";
 
 export const patientRouter: Router = Router();
+
+patientRouter.use(checkRole("doctor"));
 
 patientRouter.get("/", PatientController.getAll);
 patientRouter.post("/", PatientController.create);

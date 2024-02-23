@@ -6,7 +6,7 @@ GET http://localhost:3000/user/65c664246397478013f9b2f6
 
 
 ### CREATE ADMIN
-POST http://localhost:3000/doctor
+POST http://localhost:3000/admin
 Content-Type: application/json
 
 {
@@ -30,3 +30,12 @@ Content-Type: application/json
 
 ### DELETE USER
 DELETE http://localhost:3000/user/65c6628fd5f4f13719e2c203
+
+### LOGIN
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+ "email": "sergioD@gmail.com",
+ "password": "123"
+}

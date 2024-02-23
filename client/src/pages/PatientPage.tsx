@@ -1,6 +1,6 @@
 import { PatientsList } from "../components/PatientList";
 
-export function PatientPage() {
+export function PatientListPage() {
   return (
     <>
       <h1>Pacientes</h1>

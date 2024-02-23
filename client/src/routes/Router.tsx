@@ -2,8 +2,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
 import { ErrorPage } from "../pages/ErrorPage";
 import { LoginPage } from "../pages/LoginPage";
-import { PatientPage } from "../pages/PatientPage";
-import { DoctorPage } from "../pages/DoctorPage";
+import { PatientListPage } from "../pages/PatientPage";
+import { DoctorHomePage } from "../pages/DoctorHomePage";
+import { AdminHomePage } from "../pages/AdminHomePage";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -16,8 +17,13 @@ export function Router() {
       element: <App></App>,
       errorElement: <ErrorPage></ErrorPage>,
       children: [
-        { path: "doctores", element: <DoctorPage></DoctorPage> },
-        { path: "pacientes", element: <PatientPage></PatientPage> },
+        { path: "admin", element: <AdminHomePage></AdminHomePage> },
+        { path: "doctor", element: <DoctorHomePage></DoctorHomePage> },
+
+        {
+          path: "lista-pacientes",
+          element: <PatientListPage></PatientListPage>,
+        },
       ],
     },
   ]);

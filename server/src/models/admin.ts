@@ -48,6 +48,13 @@ export class AdminModel {
     return null;
   }
 
+  static async findByEmail({ email }: { email: string }) {
+    const db = await connectToMongoDB("admins");
+
+    let admin = await db.findOne({ email });
+    return admin;
+  }
+
   static async validateEmail({ email }: { email: string }) {
     const db = await connectToMongoDB("admins");
 
