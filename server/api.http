@@ -5,14 +5,16 @@ GET http://localhost:3000/user
 GET http://localhost:3000/user/65c664246397478013f9b2f6
 
 
-### CREATE USER
-POST http://localhost:3000/user
+### CREATE ADMIN
+POST http://localhost:3000/doctor
 Content-Type: application/json
 
 {
  "name": "Sergio",
- "subName": "Garcia",
- "age": 21
+ "surname": "Garcia",
+ "age": 21,
+ "email": "sergioD@gmail.com",
+ "password": "123"
 }
 
 ### UPDATE USER

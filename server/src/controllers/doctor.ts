@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { DoctorModel } from "../models/doctor";
 import { validateDoctor, validatePartialDoctor } from "../schemas/doctor";
+import { AuthController } from "./auth";
 
 export class DoctorController {
   static async getAll(req: Request, res: Response) {
@@ -22,6 +23,17 @@ export class DoctorController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
+
+    const isEmail = await AuthController.validateGmail(result.data.email);
+    if (isEmail) {
+      return res.status(400).json({
+        message: `El correo ya esta registrado.`,
+      });
+    }
+
+    result.data.password = await AuthController.hashPassword(
+      result.data.password
+    );
 
     const newUser = await DoctorModel.create({ input: result.data });
     res.json(newUser);

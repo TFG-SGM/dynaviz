@@ -47,4 +47,11 @@ export class DoctorModel {
     if (deletedCount > 0) return id;
     return null;
   }
+
+  static async validateEmail({ email }: { email: string }) {
+    const db = await connectToMongoDB("doctors");
+
+    let doctor = await db.findOne({ email });
+    return doctor ? false : true;
+  }
 }

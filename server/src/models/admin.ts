@@ -47,4 +47,11 @@ export class AdminModel {
     if (deletedCount > 0) return id;
     return null;
   }
+
+  static async validateEmail({ email }: { email: string }) {
+    const db = await connectToMongoDB("admins");
+
+    let admin = await db.findOne({ email });
+    return admin ? false : true;
+  }
 }

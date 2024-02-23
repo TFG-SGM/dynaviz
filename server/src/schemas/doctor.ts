@@ -5,6 +5,8 @@ const DoctorSchema = z.object({
   name: z.string(),
   surname: z.string(),
   age: z.number(),
+  email: z.string(),
+  password: z.string(),
 });
 
 export function validateDoctor(input: Patient) {
