@@ -1,10 +1,11 @@
-import { AdminsList } from "../../components/lists/AdminsList";
+import { UsersList } from "../../components/lists/UsersList";
+import { ADMIN_ENDPOINT } from "../../utils/constants";
 
 export function AdminsListPage() {
   return (
     <>
       <h1>Administradores</h1>
-      <AdminsList></AdminsList>
+      <UsersList endpoint={ADMIN_ENDPOINT}></UsersList>
     </>
   );
 }

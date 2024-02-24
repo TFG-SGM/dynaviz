@@ -6,26 +6,26 @@ export const userAuth = (req: Request, res: Response, next: NextFunction) => {
   const appSecret = process.env.APP_SECRET as Secret; // assuming APP_SECRET is a string
 
   if (!authHeader) {
-    return res.status(403).send({ error: "Authorization header is missing." });
+    return res
+      .status(403)
+      .send({ error: "No está la cabecera de autorización." });
   }
 
   const tokenParts = authHeader.split(" ");
-  console.log(tokenParts);
   if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
-    return res
-      .status(403)
-      .send({ error: "Invalid authorization header format..." });
+    return res.status(403).send({
+      error: "La cabecera de autorización tiene un formato invalido.",
+    });
   }
 
   const token = tokenParts[1];
   verify(token, appSecret, (err: VerifyErrors | null, decoded: any) => {
     if (err) {
-      console.error("Token verification failed:", err);
-      return res.status(403).send({ error: "Invalid token." });
+      return res.status(403).send({ error: "Token invalido." });
     }
 
-    req.body.role = decoded.role;
-    console.log("Token decoded:", decoded);
+    req.body.userData = { email: decoded.email, role: decoded.role };
+    console.log("Token decodificado:", decoded);
     next();
   });
 };

@@ -3,8 +3,13 @@ export type UserData = {
   password: string;
   name: string;
   surname: string;
-  bornDate: Date;
+  bornDate: string;
   address: string;
   email: string;
   phone: string;
+};
+
+export type actual = {
+  action: string;
+  userId: string | null;
 };

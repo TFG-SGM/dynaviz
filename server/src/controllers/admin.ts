@@ -19,11 +19,8 @@ export class AdminController {
 
   static async create(req: Request, res: Response) {
     const result = validateAdmin(req.body);
-    console.log(req.body);
 
     if (!result.success) {
-      console.log(result.error.message);
-
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 

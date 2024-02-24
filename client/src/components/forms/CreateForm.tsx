@@ -2,39 +2,56 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
 import { UserData } from "../../utils/types";
+import { ErrorComponent } from "../other/ErrorComponent";
+import { AxiosError } from "axios";
 
 export interface CreateFormProps<T> {
   endpoint: string;
-  setActualId: Dispatch<SetStateAction<string | null>>;
-  setData: Dispatch<SetStateAction<T[] | null>>;
+  handleClean: () => void;
+  setUsers: Dispatch<SetStateAction<T[] | null>>;
+  isPass: boolean;
 }
 
 export function CreateForm<T>({
   endpoint,
-  setActualId,
-  setData,
+  handleClean,
+  setUsers,
+  isPass,
 }: CreateFormProps<T>) {
-  const [data, setNewData] = useState<UserData>(getInitialState());
+  const [newData, setNewData] = useState<UserData>(getInitialState());
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await DataService.createData<UserData>(endpoint, data, setData);
-    setActualId(null);
+    try {
+      const data = await DataService.createData<UserData>(endpoint, newData);
+      setUsers((prevState) => [...(prevState || []), data]);
+      handleClean();
+    } catch (error) {
+      if (error instanceof AxiosError && error.response)
+        setError(error.response.data.message);
+    }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <UserForm data={data} setNewData={setNewData} isPass={true}></UserForm>
+        <UserForm
+          data={newData}
+          setNewData={setNewData}
+          isPass={isPass}
+        ></UserForm>
         <button>Crear usuario</button>
       </form>
-      <button onClick={() => setActualId(null)}>Cancelar</button>
+      {error && <ErrorComponent error={error}></ErrorComponent>}
+      <button onClick={handleClean}>Cancelar</button>
     </>
   );
 }
 
 function getInitialState() {
   return {
+    _id: "",
     name: "",
     surname: "",
     bornDate: "",

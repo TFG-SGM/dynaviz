@@ -1,10 +1,11 @@
-import { PatientsList } from "../../components/lists/PatientsList";
+import { UsersList } from "../../components/lists/UsersList";
+import { PATIENT_ENDPOINT } from "../../utils/constants";
 
 export function PatientsListPage() {
   return (
     <>
       <h1>Pacientes</h1>
-      <PatientsList></PatientsList>
+      <UsersList endpoint={PATIENT_ENDPOINT}></UsersList>
     </>
   );
 }

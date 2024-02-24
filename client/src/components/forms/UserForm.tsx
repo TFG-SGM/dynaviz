@@ -1,5 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { UserData } from "../../utils/types";
+import { Loading } from "../other/Loading";
 
 export interface UserFormProps<T> {
   data: UserData | null;
@@ -21,7 +22,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
   };
 
   if (!data) {
-    return <p>Cargando...</p>;
+    return <Loading></Loading>;
   }
 
   return (

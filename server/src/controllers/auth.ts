@@ -4,6 +4,7 @@ import { DoctorModel } from "../models/doctor";
 import { hash, compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { validateLogin } from "../schemas/login";
+import { User } from "../utils/types";
 
 export class AuthController {
   static async validateEmail(email: string) {
@@ -18,6 +19,19 @@ export class AuthController {
   static async hashPassword(password: string) {
     const hashedPassword = await hash(password, 12);
     return hashedPassword;
+  }
+
+  static async getUserData(req: Request, res: Response) {
+    const { role, email } = req.body.userData;
+    let user = null;
+
+    if (role === "admin") {
+      user = await AdminModel.findByEmail({ email });
+    } else {
+      user = await DoctorModel.findByEmail({ email });
+    }
+
+    res.json(user);
   }
 
   static async login(req: Request, res: Response) {
@@ -83,7 +97,6 @@ export class AuthController {
         });
       }
     } catch (error) {
-      console.error("Error en loginUser:", error);
       return res.status(500).json({
         message: "Error interno de servidor.",
         success: false,

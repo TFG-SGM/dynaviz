@@ -1,6 +1,5 @@
 import axios from "axios";
 import { URL } from "../utils/constants";
-import { Dispatch, SetStateAction } from "react";
 
 export class DataService {
   private static async getToken(): Promise<string | null> {
@@ -30,74 +29,46 @@ export class DataService {
     return data;
   }
 
-  public static async createData<T>(
-    endpoint: string,
-    newData: T | null,
-    setData: Dispatch<SetStateAction<T[] | null>>
-  ) {
-    try {
-      const token = await DataService.getToken();
-      const { data } = await axios.post(URL + endpoint, newData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setData((prevState) => [...(prevState || []), data]);
-    } catch (error) {
-      console.error("Create data error:", error);
-    }
+  public static async createData<T>(endpoint: string, newData: T | null) {
+    const token = await DataService.getToken();
+    const { data } = await axios.post(URL + endpoint, newData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
   }
 
-  public static async deleteData<T extends { _id: string }>(
-    endpoint: string,
-    setData: Dispatch<SetStateAction<T[] | null>>
-  ) {
-    try {
-      const token = await DataService.getToken();
-      const { data } = await axios.delete(URL + endpoint, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setData((prevState) =>
-        prevState
-          ? prevState.filter((dataDict) => dataDict._id !== data)
-          : prevState
-      );
-    } catch (error) {
-      console.error("Delete data error:", error);
-    }
+  public static async deleteData(endpoint: string) {
+    const token = await DataService.getToken();
+    const { data } = await axios.delete(URL + endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
   }
 
-  public static async updateData<T>(
-    endpoint: string,
-    newData: T | null,
-    setData: Dispatch<SetStateAction<T[] | null>>
-  ) {
-    try {
-      const token = await DataService.getToken();
-      const { data } = await axios.put(URL + endpoint, newData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setData((prevState) => DataService.updateDataHelper(prevState, data));
-    } catch (error) {
-      console.error("Update data error:", error);
-    }
+  public static async updateData<T>(endpoint: string, newData: T | null) {
+    const token = await DataService.getToken();
+    const { data } = await axios.put(URL + endpoint, newData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
   }
 
-  private static updateDataHelper<T extends { _id: string }>(
-    prevState: T[] | null,
-    updatedData: T
-  ) {
-    if (!prevState) return [updatedData];
+  public static async getUserData() {
+    const token = await DataService.getToken();
 
-    const index = prevState.findIndex(
-      (user: T) => user._id === updatedData._id
-    );
-    const updatedState = [...prevState];
-    updatedState[index] = updatedData;
-    return updatedState;
+    const { data } = await axios.get(URL + "auth/user-data", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return data;
   }
 }

@@ -11,7 +11,7 @@ export async function connectToMongoDB(collection: string) {
     const database = client.db();
     return database.collection(collection);
   } catch (error) {
-    console.error("Failed to connect to MongoDB:", error);
+    console.error("Fallo al conectar con MongoDB:", error);
     throw error;
   }
 }
