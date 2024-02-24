@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { UserData } from "../../utils/types";
-import { Loading } from "../other/Loading";
+import { LoadingComponent } from "../other/LoadingComponent";
 
 export interface UserFormProps<T> {
   data: UserData | null;
@@ -22,7 +22,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
   };
 
   if (!data) {
-    return <Loading></Loading>;
+    return <LoadingComponent></LoadingComponent>;
   }
 
   return (

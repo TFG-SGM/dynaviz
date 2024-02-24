@@ -7,6 +7,7 @@ export type UserData = {
   address: string;
   email: string;
   phone: string;
+  role?: string;
 };
 
 export type actual = {

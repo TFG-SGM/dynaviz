@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { connectToMongoDB } from "../utils/connection";
-import { PartialUser, User } from "../utils/types";
+import { PartialPatient, PartialUser, Patient, User } from "../utils/types";
 
 export class PatientModel {
   static async getAll() {
@@ -18,14 +18,15 @@ export class PatientModel {
     return patient;
   }
 
-  static async create({ input }: { input: User }) {
+  static async create({ input }: { input: Patient }) {
     const db = await connectToMongoDB("patients");
 
+    input = { ...input, tests: [] };
     const { insertedId } = await db.insertOne(input);
     return { id: insertedId, ...input };
   }
 
-  static async update({ id, input }: { id: string; input: PartialUser }) {
+  static async update({ id, input }: { id: string; input: PartialPatient }) {
     const db = await connectToMongoDB("patients");
     const objectId = new ObjectId(id);
 

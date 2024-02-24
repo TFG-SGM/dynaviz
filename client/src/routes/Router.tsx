@@ -3,10 +3,10 @@ import { App } from "../App";
 import { ErrorPage } from "../pages/ErrorPage";
 import { LoginPage } from "../pages/LoginPage";
 import { PatientsListPage } from "../pages/lists/PatientsListPage";
-import { DoctorHomePage } from "../pages/DoctorHomePage";
-import { AdminHomePage } from "../pages/AdminHomePage";
+import { HomePage } from "../pages/HomePage";
 import { DoctorsListPage } from "../pages/lists/DoctorsListPage";
 import { AdminsListPage } from "../pages/lists/AdminsListPage";
+import { TestsListPage } from "../pages/lists/TestsListPage";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -18,21 +18,24 @@ export function Router() {
       path: "/app",
       element: <App></App>,
       errorElement: <ErrorPage></ErrorPage>,
-      children: [
-        { path: "admin", element: <AdminHomePage></AdminHomePage> },
-        { path: "medico", element: <DoctorHomePage></DoctorHomePage> },
 
+      children: [
+        { index: true, element: <HomePage></HomePage> },
         {
-          path: "lista-administradores",
+          path: "administradores",
           element: <AdminsListPage></AdminsListPage>,
         },
         {
-          path: "lista-medicos",
+          path: "medicos",
           element: <DoctorsListPage></DoctorsListPage>,
         },
         {
-          path: "lista-pacientes",
+          path: "pacientes",
           element: <PatientsListPage></PatientsListPage>,
+        },
+        {
+          path: "pacientes/:id",
+          element: <TestsListPage></TestsListPage>,
         },
       ],
     },

@@ -3,7 +3,7 @@ import { useData } from "../../hooks/useData";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
 import { UserData } from "../../utils/types";
-import { Loading } from "../other/Loading";
+import { LoadingComponent } from "../other/LoadingComponent";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 
@@ -36,7 +36,7 @@ export function UpdateForm<T>({
   };
 
   if (!newData) {
-    return <Loading></Loading>;
+    return <LoadingComponent></LoadingComponent>;
   }
 
   return (

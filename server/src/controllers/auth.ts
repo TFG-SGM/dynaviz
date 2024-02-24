@@ -31,6 +31,7 @@ export class AuthController {
       user = await DoctorModel.findByEmail({ email });
     }
 
+    user = { ...user, role };
     res.json(user);
   }
 

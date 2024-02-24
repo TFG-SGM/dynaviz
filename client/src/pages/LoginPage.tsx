@@ -14,9 +14,8 @@ export function LoginPage() {
     e.preventDefault();
 
     try {
-      const data = await DataService.login(email, password);
-      if (data.role === "admin") navigate("/app/admin");
-      else if (data.role === "doctor") navigate("/app/medico");
+      await DataService.login(email, password);
+      navigate("/app");
     } catch (error) {
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);

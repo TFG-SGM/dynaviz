@@ -23,6 +23,25 @@ export interface PartialUser {
   phone?: string | undefined;
 }
 
+export interface Patient {
+  name: string;
+  surname: string;
+  bornDate: Date;
+  address: string;
+  email: string;
+  phone: string;
+  tests?: Test[] | [];
+}
+
+export interface PartialPatient {
+  name?: string | undefined;
+  surname?: string | undefined;
+  bornDate?: Date | undefined;
+  address?: string | undefined;
+  email?: string | undefined;
+  phone?: string | undefined;
+}
+
 export interface Test {
   doctor: string;
   date: Date;

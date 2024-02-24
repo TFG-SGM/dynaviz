@@ -2,6 +2,8 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { UserData, actual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { DeleteUserButton } from "../buttons/DeleteUserButton";
+import { PATIENT_ENDPOINT } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 interface UsersCard {
   endpoint: string;
@@ -17,13 +19,22 @@ export function UserCard({
   setUsers,
 }: UsersCard) {
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleView = (e: FormEvent) => {
     const { target } = e;
-    setActual({
-      action: "get",
-      userId: (target as HTMLButtonElement).getAttribute("data-patient-id"),
-    });
+    const userId = (target as HTMLButtonElement).getAttribute(
+      "data-patient-id"
+    );
+
+    if (endpoint === PATIENT_ENDPOINT) {
+      navigate(`/app/pacientes/${userId}`);
+    } else {
+      setActual({
+        action: "get",
+        userId,
+      });
+    }
   };
 
   const handleEdit = (e: FormEvent) => {
@@ -46,7 +57,7 @@ export function UserCard({
         Editar
       </button>
       <DeleteUserButton
-        endpoint={endpoint}
+        endpoint={endpoint + userData._id}
         setUsers={setUsers}
         setError={setError}
       ></DeleteUserButton>

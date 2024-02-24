@@ -1,5 +1,5 @@
 import z from "zod";
-import { User } from "../utils/types";
+import { Patient } from "../utils/types";
 
 const patientSchema = z.object({
   password: z.string(),
@@ -11,10 +11,10 @@ const patientSchema = z.object({
   phone: z.string(),
 });
 
-export function validatePatient(input: User) {
+export function validatePatient(input: Patient) {
   return patientSchema.safeParse(input);
 }
 
-export function validatePartialPatient(input: User) {
+export function validatePartialPatient(input: Patient) {
   return patientSchema.partial().safeParse(input);
 }
