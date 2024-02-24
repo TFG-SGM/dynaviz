@@ -2,9 +2,9 @@ import z from "zod";
 import { Test } from "../utils/types";
 
 const testSchema = z.object({
-  name: z.string(),
-  surname: z.string(),
-  age: z.number(),
+  doctor: z.string(),
+  date: z.string().transform((str) => new Date(str)),
+  video: z.string(),
 });
 
 export function validateTest(input: Test) {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { PatientController } from "../controllers/patient";
-import { checkRole } from "../middlewares/auth";
+import { checkRole } from "../middlewares/checkRole";
 
 export const patientRouter: Router = Router();
 

@@ -1,46 +1,46 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { UserForm } from "./UserForm";
-import { createData } from "../../utils/utils";
+import { DataService } from "../../services/DataService";
+import { UserData } from "../../utils/types";
 
 export interface CreateFormProps<T> {
   endpoint: string;
   setActualId: Dispatch<SetStateAction<string | null>>;
   setData: Dispatch<SetStateAction<T[] | null>>;
-  fields: string[];
 }
 
 export function CreateForm<T>({
   endpoint,
   setActualId,
   setData,
-  fields,
 }: CreateFormProps<T>) {
-  const [data, setNewData] = useState<T>(generateInitialState<T>(fields));
+  const [data, setNewData] = useState<UserData>(getInitialState());
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await createData(endpoint, data, setData);
+    await DataService.createData<UserData>(endpoint, data, setData);
     setActualId(null);
   };
 
   return (
     <>
-      <UserForm
-        data={data}
-        setNewData={setNewData}
-        handleSubmit={handleSubmit}
-        action="Crear"
-        fields={fields}
-      ></UserForm>
+      <form onSubmit={handleSubmit}>
+        <UserForm data={data} setNewData={setNewData} isPass={true}></UserForm>
+        <button>Crear usuario</button>
+      </form>
       <button onClick={() => setActualId(null)}>Cancelar</button>
     </>
   );
 }
 
-function generateInitialState<T>(fields: string[]): T {
-  const initialState: Partial<Record<string, string | number>> = {};
-  fields.forEach((field) => {
-    initialState[field] = "";
-  });
-  return initialState as T;
+function getInitialState() {
+  return {
+    name: "",
+    surname: "",
+    bornDate: "",
+    address: "",
+    email: "",
+    phone: "",
+    password: "",
+  };
 }

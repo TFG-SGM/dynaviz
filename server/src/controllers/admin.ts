@@ -14,18 +14,20 @@ export class AdminController {
     const { id } = req.params;
     const admin = await AdminModel.getById({ id });
     if (admin) return res.json(admin);
-    res.status(404).json({ message: "admin not found" });
+    res.status(404).json({ message: "Admin no encontrado." });
   }
 
   static async create(req: Request, res: Response) {
+    const result = validateAdmin(req.body);
     console.log(req.body);
 
-    const result = validateAdmin(req.body);
     if (!result.success) {
+      console.log(result.error.message);
+
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    const isEmail = await AuthController.validateGmail(result.data.email);
+    const isEmail = await AuthController.validateEmail(result.data.email);
     if (isEmail) {
       return res.status(400).json({
         message: `El correo ya esta registrado.`,
@@ -57,6 +59,6 @@ export class AdminController {
     const result = await AdminModel.delete({ id });
 
     if (result) return res.json(result);
-    res.status(404).json({ message: "admin not found" });
+    res.status(404).json({ message: "Admin no encontrado." });
   }
 }

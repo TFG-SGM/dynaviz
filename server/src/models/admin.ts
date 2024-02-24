@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { connectToMongoDB } from "../utils/connection";
-import { PartialAdmin, Admin } from "../utils/types";
+import { PartialUser, User } from "../utils/types";
 
 export class AdminModel {
   static async getAll() {
@@ -18,14 +18,14 @@ export class AdminModel {
     return admin;
   }
 
-  static async create({ input }: { input: Admin }) {
+  static async create({ input }: { input: User }) {
     const db = await connectToMongoDB("admins");
 
     const { insertedId } = await db.insertOne(input);
     return { id: insertedId, ...input };
   }
 
-  static async update({ id, input }: { id: string; input: PartialAdmin }) {
+  static async update({ id, input }: { id: string; input: PartialUser }) {
     const db = await connectToMongoDB("admins");
     const objectId = new ObjectId(id);
 

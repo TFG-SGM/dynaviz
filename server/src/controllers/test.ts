@@ -12,19 +12,17 @@ export class TestController {
     const { id } = req.params;
     const test = await TestModel.getById({ id });
     if (test) return res.json(test);
-    res.status(404).json({ message: "user not found" });
+    res.status(404).json({ message: "Prueba no encontrada." });
   }
 
   static async create(req: Request, res: Response) {
-    console.log(req.body);
-
     const result = validateTest(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    const newUser = await TestModel.create({ input: result.data });
-    res.json(newUser);
+    const newTest = await TestModel.create({ input: result.data });
+    res.json(newTest);
   }
 
   static async update(req: Request, res: Response) {
@@ -35,8 +33,8 @@ export class TestController {
     }
 
     const { id } = req.params;
-    const updatedUser = await TestModel.update({ id, input: result.data });
-    return res.json(updatedUser);
+    const updatedTest = await TestModel.update({ id, input: result.data });
+    return res.json(updatedTest);
   }
 
   static async delete(req: Request, res: Response) {
@@ -44,6 +42,6 @@ export class TestController {
     const result = await TestModel.delete({ id });
 
     if (result) return res.json(result);
-    res.status(404).json({ message: "user not found" });
+    res.status(404).json({ message: "Prueba no encontrada." });
   }
 }

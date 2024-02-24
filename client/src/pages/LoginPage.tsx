@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { login } from "../utils/utils";
+import { DataService } from "../services/DataService";
 import { FormEvent, useState } from "react";
 
 export function LoginPage() {
@@ -9,9 +9,10 @@ export function LoginPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = await login(email, password);
+
+    const data = await DataService.login(email, password);
     if (data.role === "admin") navigate("/app/admin");
-    else if (data.role === "doctor") navigate("/app/doctor");
+    else if (data.role === "doctor") navigate("/app/medico");
   };
 
   return (

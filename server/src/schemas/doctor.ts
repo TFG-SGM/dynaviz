@@ -1,18 +1,20 @@
 import z from "zod";
-import { Patient } from "../utils/types";
+import { User } from "../utils/types";
 
 const DoctorSchema = z.object({
+  password: z.string(),
   name: z.string(),
   surname: z.string(),
-  age: z.number(),
+  bornDate: z.string().transform((str) => new Date(str)),
+  address: z.string(),
   email: z.string(),
-  password: z.string(),
+  phone: z.string(),
 });
 
-export function validateDoctor(input: Patient) {
+export function validateDoctor(input: User) {
   return DoctorSchema.safeParse(input);
 }
 
-export function validatePartialDoctor(input: Patient) {
+export function validatePartialDoctor(input: User) {
   return DoctorSchema.partial().safeParse(input);
 }

@@ -1,27 +1,21 @@
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { UserData } from "../../utils/types";
 
 export interface UserFormProps<T> {
-  data: T | null;
+  data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
-  handleSubmit: (e: FormEvent) => Promise<void>;
-  action: string;
-  fields: string[];
+  isPass: boolean;
 }
 
-export function UserForm<T>({
-  data,
-  setNewData,
-  handleSubmit,
-  action,
-  fields,
-}: UserFormProps<T>) {
+export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setNewData((prevState) => {
       if (!prevState) return prevState;
       return {
         ...prevState,
-        [name]: name === "age" ? parseInt(value) : value,
+        [name]: value,
       };
     });
   };
@@ -31,19 +25,72 @@ export function UserForm<T>({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {fields.map((field) => (
-        <label key={field}>
-          {field.charAt(0).toUpperCase() + field.slice(1)}:
+    <>
+      <label>
+        Nombre:{" "}
+        <input
+          name="name"
+          type="text"
+          value={data.name}
+          onChange={handleChange}
+        ></input>
+      </label>
+      <label>
+        Apellidos:{" "}
+        <input
+          name="surname"
+          type="text"
+          value={data.surname}
+          onChange={handleChange}
+        ></input>
+      </label>
+      <label>
+        Fecha de nacimiento:{" "}
+        <input
+          name="bornDate"
+          type="date"
+          value={data.bornDate}
+          onChange={handleChange}
+        ></input>
+      </label>
+      <label>
+        Dirección:{" "}
+        <input
+          name="address"
+          type="text"
+          value={data.address}
+          onChange={handleChange}
+        ></input>
+        <label>
+          Email:{" "}
           <input
-            type="text"
-            name={field}
-            value={data[field]}
+            name="email"
+            type="email"
+            value={data.email}
             onChange={handleChange}
           ></input>
         </label>
-      ))}
-      <button>{action} usuario</button>
-    </form>
+        {isPass && (
+          <label>
+            Contraseña:{" "}
+            <input
+              name="password"
+              type="password"
+              value={data.password}
+              onChange={handleChange}
+            ></input>
+          </label>
+        )}
+        <label>
+          Teléfono:{" "}
+          <input
+            name="phone"
+            type="phone"
+            value={data.phone}
+            onChange={handleChange}
+          ></input>
+        </label>
+      </label>
+    </>
   );
 }

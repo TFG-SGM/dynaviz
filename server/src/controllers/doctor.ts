@@ -13,18 +13,16 @@ export class DoctorController {
     const { id } = req.params;
     const doctor = await DoctorModel.getById({ id });
     if (doctor) return res.json(doctor);
-    res.status(404).json({ message: "user not found" });
+    res.status(404).json({ message: "Médico no encontrado." });
   }
 
   static async create(req: Request, res: Response) {
-    console.log(req.body);
-
     const result = validateDoctor(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    const isEmail = await AuthController.validateGmail(result.data.email);
+    const isEmail = await AuthController.validateEmail(result.data.email);
     if (isEmail) {
       return res.status(400).json({
         message: `El correo ya esta registrado.`,
@@ -35,8 +33,8 @@ export class DoctorController {
       result.data.password
     );
 
-    const newUser = await DoctorModel.create({ input: result.data });
-    res.json(newUser);
+    const newDoctor = await DoctorModel.create({ input: result.data });
+    res.json(newDoctor);
   }
 
   static async update(req: Request, res: Response) {
@@ -47,8 +45,8 @@ export class DoctorController {
     }
 
     const { id } = req.params;
-    const updatedUser = await DoctorModel.update({ id, input: result.data });
-    return res.json(updatedUser);
+    const updatedDoctor = await DoctorModel.update({ id, input: result.data });
+    return res.json(updatedDoctor);
   }
 
   static async delete(req: Request, res: Response) {
@@ -56,6 +54,6 @@ export class DoctorController {
     const result = await DoctorModel.delete({ id });
 
     if (result) return res.json(result);
-    res.status(404).json({ message: "user not found" });
+    res.status(404).json({ message: "Médico no encontrado." });
   }
 }

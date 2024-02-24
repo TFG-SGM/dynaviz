@@ -6,7 +6,7 @@ import { doctorRouter } from "./routes/doctor";
 import { adminRouter } from "./routes/admin";
 import { testRouter } from "./routes/test";
 import { authRouter } from "./routes/auth";
-import { userAuth } from "./middlewares/auth";
+import { userAuth } from "./middlewares/userAuth";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ app.use(json());
 app.use(cors());
 app.disable("x-powered-by");
 
-app.use("/login", authRouter);
+app.use("/auth", authRouter);
 
 app.use(userAuth);
 

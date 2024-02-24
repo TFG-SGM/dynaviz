@@ -1,12 +1,10 @@
-export interface PatientData {
+export type UserData = {
   _id: string;
+  password: string;
   name: string;
   surname: string;
-  age: number;
-}
-
-export interface CreatedPatientData {
-  name: string;
-  surname: string;
-  age: number;
-}
+  bornDate: Date;
+  address: string;
+  email: string;
+  phone: string;
+};

@@ -1,55 +1,36 @@
-export interface Patient {
-  name: string;
-  surname: string;
-  age: number;
-}
-
-export interface PartialPatient {
-  name?: string | undefined;
-  surname?: string | undefined;
-  age?: number | undefined;
-}
-
-export interface Doctor {
-  name: string;
-  surname: string;
-  age: number;
+export interface Login {
   email: string;
   password: string;
 }
 
-export interface PartialDoctor {
-  name?: string | undefined;
-  surname?: string | undefined;
-  age?: number | undefined;
-  email?: string | undefined;
-  password?: string | undefined;
-}
-
-export interface Admin {
+export interface User {
+  password: string;
   name: string;
   surname: string;
-  age: number;
+  bornDate: Date;
+  address: string;
   email: string;
-  password: string;
+  phone: string;
 }
 
-export interface PartialAdmin {
+export interface PartialUser {
+  password?: string | undefined;
   name?: string | undefined;
   surname?: string | undefined;
-  age?: number | undefined;
+  bornDate?: Date | undefined;
+  address?: string | undefined;
   email?: string | undefined;
-  password?: string | undefined;
+  phone?: string | undefined;
 }
 
 export interface Test {
-  name: string;
-  surname: string;
-  age: number;
+  doctor: string;
+  date: Date;
+  video: string;
 }
 
 export interface PartialTest {
-  name?: string | undefined;
-  surname?: string | undefined;
-  age?: number | undefined;
+  doctor?: string | undefined;
+  date?: Date | undefined;
+  video?: string | undefined;
 }

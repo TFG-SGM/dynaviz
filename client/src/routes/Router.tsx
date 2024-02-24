@@ -2,9 +2,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
 import { ErrorPage } from "../pages/ErrorPage";
 import { LoginPage } from "../pages/LoginPage";
-import { PatientListPage } from "../pages/PatientPage";
+import { PatientsListPage } from "../pages/lists/PatientsListPage";
 import { DoctorHomePage } from "../pages/DoctorHomePage";
 import { AdminHomePage } from "../pages/AdminHomePage";
+import { DoctorsListPage } from "../pages/lists/DoctorsListPage";
+import { AdminsListPage } from "../pages/lists/AdminsListPage";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -18,11 +20,19 @@ export function Router() {
       errorElement: <ErrorPage></ErrorPage>,
       children: [
         { path: "admin", element: <AdminHomePage></AdminHomePage> },
-        { path: "doctor", element: <DoctorHomePage></DoctorHomePage> },
+        { path: "medico", element: <DoctorHomePage></DoctorHomePage> },
 
         {
+          path: "lista-administradores",
+          element: <AdminsListPage></AdminsListPage>,
+        },
+        {
+          path: "lista-medicos",
+          element: <DoctorsListPage></DoctorsListPage>,
+        },
+        {
           path: "lista-pacientes",
-          element: <PatientListPage></PatientListPage>,
+          element: <PatientsListPage></PatientsListPage>,
         },
       ],
     },

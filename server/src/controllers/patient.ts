@@ -12,19 +12,17 @@ export class PatientController {
     const { id } = req.params;
     const patient = await PatientModel.getById({ id });
     if (patient) return res.json(patient);
-    res.status(404).json({ message: "user not found" });
+    res.status(404).json({ message: "Paciente no encontrado." });
   }
 
   static async create(req: Request, res: Response) {
-    console.log(req.body);
-
     const result = validatePatient(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    const newUser = await PatientModel.create({ input: result.data });
-    res.json(newUser);
+    const newPatient = await PatientModel.create({ input: result.data });
+    res.json(newPatient);
   }
 
   static async update(req: Request, res: Response) {
@@ -35,8 +33,11 @@ export class PatientController {
     }
 
     const { id } = req.params;
-    const updatedUser = await PatientModel.update({ id, input: result.data });
-    return res.json(updatedUser);
+    const updatedPatient = await PatientModel.update({
+      id,
+      input: result.data,
+    });
+    return res.json(updatedPatient);
   }
 
   static async delete(req: Request, res: Response) {
@@ -44,6 +45,6 @@ export class PatientController {
     const result = await PatientModel.delete({ id });
 
     if (result) return res.json(result);
-    res.status(404).json({ message: "user not found" });
+    res.status(404).json({ message: "Paciente no encontrado." });
   }
 }

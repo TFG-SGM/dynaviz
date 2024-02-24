@@ -3,9 +3,10 @@ import { AdminModel } from "../models/admin";
 import { DoctorModel } from "../models/doctor";
 import { hash, compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import { validateLogin } from "../schemas/login";
 
 export class AuthController {
-  static async validateGmail(email: string) {
+  static async validateEmail(email: string) {
     const isEmailAdmin = await AdminModel.validateEmail({ email });
     const isEmailDoctor = await DoctorModel.validateEmail({
       email,
@@ -19,10 +20,15 @@ export class AuthController {
     return hashedPassword;
   }
 
-  static async loginUser(req: Request, res: Response) {
+  static async login(req: Request, res: Response) {
     try {
-      const { email, password } = req.body;
-      console.log(req.body);
+      const result = validateLogin(req.body);
+      if (!result.success) {
+        return res
+          .status(400)
+          .json({ error: JSON.parse(result.error.message) });
+      }
+      const { email, password } = result.data;
 
       let user: {
         role: string;
@@ -55,7 +61,7 @@ export class AuthController {
             email: user.email,
             role: user.role,
           },
-          process.env.APP_SECRET || "", // Ensure APP_SECRET is defined in your environment
+          process.env.APP_SECRET || "",
           { expiresIn: "3 days" }
         );
 
@@ -69,7 +75,7 @@ export class AuthController {
 
         return res.status(200).json({
           ...result,
-          message: "Has iniciado sesión.",
+          message: "Has iniciado sesión correctamente.",
         });
       } else {
         return res.status(403).json({
@@ -77,9 +83,9 @@ export class AuthController {
         });
       }
     } catch (error) {
-      console.error("Error in loginUser:", error);
+      console.error("Error en loginUser:", error);
       return res.status(500).json({
-        message: "Internal Server Error",
+        message: "Error interno de servidor.",
         success: false,
       });
     }

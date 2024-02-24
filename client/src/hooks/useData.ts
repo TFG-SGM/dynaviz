@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { getData } from "../utils/utils";
+import { DataService } from "../services/DataService";
 
 export type HookData<T> = [T | null, Dispatch<SetStateAction<T | null>>];
 
@@ -10,7 +10,7 @@ export function useData<T>(endpoint: string): HookData<T> {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getData(endpoint);
+        const result = await DataService.getData(endpoint);
         setData(result);
       } catch (error) {
         console.log(error);

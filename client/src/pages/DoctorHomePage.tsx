@@ -4,6 +4,7 @@ export function DoctorHomePage() {
   return (
     <>
       <h1>Bienvenido doctor!</h1>
+      <Link to="/app/lista-medicos">Consultar Médicos</Link>
       <Link to="/app/lista-pacientes">Consultar Pacientes</Link>
     </>
   );
