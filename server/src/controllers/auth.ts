@@ -5,6 +5,7 @@ import { hash, compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { validateLogin } from "../schemas/login";
 import { User } from "../utils/types";
+import { PatientModel } from "../models/patient";
 
 export class AuthController {
   static async validateEmail(email: string) {
@@ -12,8 +13,11 @@ export class AuthController {
     const isEmailDoctor = await DoctorModel.validateEmail({
       email,
     });
+    const isEmailPatient = await PatientModel.validateEmail({
+      email,
+    });
 
-    return !(isEmailAdmin && isEmailDoctor);
+    return !(isEmailAdmin && isEmailDoctor && isEmailPatient);
   }
 
   static async hashPassword(password: string) {

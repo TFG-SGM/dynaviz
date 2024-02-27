@@ -46,6 +46,15 @@ export class AdminController {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
+    if (result.data.email) {
+      const isEmail = await AuthController.validateEmail(result.data.email);
+      if (isEmail) {
+        return res.status(400).json({
+          message: `El correo ya esta registrado.`,
+        });
+      }
+    }
+
     const { id } = req.params;
     const updatedAdmin = await AdminModel.update({ id, input: result.data });
     return res.json(updatedAdmin);

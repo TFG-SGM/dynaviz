@@ -1,6 +1,6 @@
 import { UserCard } from "../cards/UserCard";
 import { UpdateForm } from "../forms/UpdateForm";
-import { CreateForm } from "../forms/CreateForm";
+import { AddForm } from "../forms/AddForm";
 import { useState } from "react";
 import { UserData, actual } from "../../utils/types";
 import { useData } from "../../hooks/useData";
@@ -17,7 +17,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
     userId: "",
   });
 
-  const handleCreate = () => setActual({ action: "create", userId: "" });
+  const handleAdd = () => setActual({ action: "add", userId: "" });
   const handleClean = () => setActual({ action: "", userId: "" });
 
   if (error) {
@@ -26,14 +26,14 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
   return (
     <div>
-      <button onClick={handleCreate}>Crear</button>
-      {actual.action === "create" && (
-        <CreateForm
+      <button onClick={handleAdd}>Añadir</button>
+      {actual.action === "add" && (
+        <AddForm
           endpoint={endpoint}
           handleClean={handleClean}
           setUsers={setUsers}
           isPass={endpoint !== PATIENT_ENDPOINT}
-        ></CreateForm>
+        ></AddForm>
       )}
       {actual.action === "update" && (
         <UpdateForm
@@ -46,6 +46,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
       {actual.action === "get" && (
         <UserMenuView
           endpoint={endpoint + actual.userId}
+          handleClean={handleClean}
           setActual={setActual}
           setUsers={setUsers}
         ></UserMenuView>

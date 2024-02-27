@@ -23,26 +23,26 @@ export function UserCard({
 
   const handleView = (e: FormEvent) => {
     const { target } = e;
-    const userId = (target as HTMLButtonElement).getAttribute(
-      "data-patient-id"
-    );
+    const userId = (target as HTMLButtonElement).getAttribute("data-user-id");
 
-    if (endpoint === PATIENT_ENDPOINT) {
-      navigate(`/app/pacientes/${userId}`);
-    } else {
-      setActual({
-        action: "get",
-        userId,
-      });
-    }
+    setActual({
+      action: "get",
+      userId,
+    });
   };
 
   const handleEdit = (e: FormEvent) => {
     const { target } = e;
     setActual({
       action: "update",
-      userId: (target as HTMLButtonElement).getAttribute("data-patient-id"),
+      userId: (target as HTMLButtonElement).getAttribute("data-user-id"),
     });
+  };
+
+  const handleViewTests = (e: FormEvent) => {
+    const { target } = e;
+    const userId = (target as HTMLButtonElement).getAttribute("data-user-id");
+    navigate(`/app/pacientes/${userId}`);
   };
 
   return (
@@ -50,10 +50,10 @@ export function UserCard({
       <h2>
         {userData.name} {userData.surname}
       </h2>
-      <button data-patient-id={userData._id} onClick={handleView}>
+      <button data-user-id={userData._id} onClick={handleView}>
         Consultar
       </button>
-      <button data-patient-id={userData._id} onClick={handleEdit}>
+      <button data-user-id={userData._id} onClick={handleEdit}>
         Editar
       </button>
       <DeleteUserButton
@@ -62,6 +62,11 @@ export function UserCard({
         setError={setError}
       ></DeleteUserButton>
       {error && <ErrorComponent error={error}></ErrorComponent>}
+      {endpoint === PATIENT_ENDPOINT && (
+        <button data-user-id={userData._id} onClick={handleViewTests}>
+          Pruebas
+        </button>
+      )}
       <hr></hr>
     </article>
   );

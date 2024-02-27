@@ -18,6 +18,7 @@ export class DoctorController {
 
   static async create(req: Request, res: Response) {
     const result = validateDoctor(req.body);
+
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
@@ -42,6 +43,15 @@ export class DoctorController {
 
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
+    }
+
+    if (result.data.email) {
+      const isEmail = await AuthController.validateEmail(result.data.email);
+      if (isEmail) {
+        return res.status(400).json({
+          message: `El correo ya esta registrado.`,
+        });
+      }
     }
 
     const { id } = req.params;

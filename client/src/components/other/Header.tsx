@@ -6,11 +6,7 @@ export function Header() {
   const location = useLocation();
 
   const handleGoBack = () => {
-    if (
-      location.pathname === "/app/admin" ||
-      location.pathname === "/app/medico"
-    )
-      DataService.logout();
+    if (location.pathname === "/app") DataService.logout();
     navigate(-1);
   };
 

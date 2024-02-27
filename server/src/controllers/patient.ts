@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PatientModel } from "../models/patient";
 import { validatePatient, validatePartialPatient } from "../schemas/patient";
+import { AuthController } from "./auth";
 
 export class PatientController {
   static async getAll(req: Request, res: Response) {
@@ -21,6 +22,13 @@ export class PatientController {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
+    const isEmail = await AuthController.validateEmail(result.data.email);
+    if (isEmail) {
+      return res.status(400).json({
+        message: `El correo ya esta registrado.`,
+      });
+    }
+
     const newPatient = await PatientModel.create({ input: result.data });
     res.json(newPatient);
   }
@@ -30,6 +38,15 @@ export class PatientController {
 
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
+    }
+
+    if (result.data.email) {
+      const isEmail = await AuthController.validateEmail(result.data.email);
+      if (isEmail) {
+        return res.status(400).json({
+          message: `El correo ya esta registrado.`,
+        });
+      }
     }
 
     const { id } = req.params;

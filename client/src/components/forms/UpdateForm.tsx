@@ -6,6 +6,7 @@ import { UserData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
+import { CrossButton } from "../buttons/CrossButton";
 
 export interface UpdateFormProps<T> {
   endpoint: string;
@@ -41,13 +42,14 @@ export function UpdateForm<T>({
 
   return (
     <>
+      <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
         <UserForm
           data={newData}
           setNewData={setNewData}
           isPass={isPass}
         ></UserForm>
-        <button>Actualizar usuario</button>
+        <button>Confirmar</button>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>

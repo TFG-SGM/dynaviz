@@ -4,20 +4,21 @@ import { DataService } from "../../services/DataService";
 import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
+import { CrossButton } from "../buttons/CrossButton";
 
-export interface CreateFormProps<T> {
+export interface AddFormProps<T> {
   endpoint: string;
   handleClean: () => void;
   setUsers: Dispatch<SetStateAction<T[] | null>>;
   isPass: boolean;
 }
 
-export function CreateForm<T>({
+export function AddForm<T>({
   endpoint,
   handleClean,
   setUsers,
   isPass,
-}: CreateFormProps<T>) {
+}: AddFormProps<T>) {
   const [newData, setNewData] = useState<UserData>(getInitialState());
   const [error, setError] = useState<string | null>(null);
 
@@ -35,13 +36,14 @@ export function CreateForm<T>({
 
   return (
     <>
+      <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
         <UserForm
           data={newData}
           setNewData={setNewData}
           isPass={isPass}
         ></UserForm>
-        <button>Crear usuario</button>
+        <button>Añadir</button>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>
