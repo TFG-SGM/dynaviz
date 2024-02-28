@@ -6,7 +6,6 @@ export const checkRole =
     try {
       const { role } = req.body.userData;
 
-      console.log(allowRole);
       if (!role) {
         return res
           .status(400)

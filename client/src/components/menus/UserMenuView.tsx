@@ -12,6 +12,7 @@ export interface UserMenuView {
   handleClean: () => void;
   setActual: Dispatch<SetStateAction<actual>>;
   setUsers: Dispatch<SetStateAction<UserData[] | null>>;
+  handleUpdateList: (data: UserData) => void;
 }
 
 export function UserMenuView({
@@ -19,13 +20,18 @@ export function UserMenuView({
   handleClean,
   setActual,
   setUsers,
+  handleUpdateList,
 }: UserMenuView) {
-  const [user] = useData<UserData>(endpoint);
+  const [user, setUser] = useData<UserData>(endpoint);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleUpdate = () => setIsUpdate(true);
+  const handleStartUpdate = () => setIsUpdate(true);
   const handleCancelUpdate = () => setIsUpdate(false);
+  const handleUpdate = (data: UserData) => {
+    setUser(data);
+    handleUpdateList(data);
+  };
 
   return (
     <>
@@ -33,19 +39,19 @@ export function UserMenuView({
         <UpdateUserForm
           endpoint={endpoint}
           handleClean={handleCancelUpdate}
-          setUsers={setUsers}
+          handleUpdate={handleUpdate}
           isPass={false}
         ></UpdateUserForm>
       ) : (
         <article>
           <CrossButton handleClean={handleClean}></CrossButton>
           {user && <UserDataComponent user={user}></UserDataComponent>}
-          <button onClick={handleUpdate}>Editar</button>
+          <button onClick={handleStartUpdate}>Editar</button>
           <DeleteUserButton
             endpoint={endpoint}
             setActual={setActual}
-            setUsers={setUsers}
             setError={setError}
+            setUsers={setUsers}
           ></DeleteUserButton>
           {error && <ErrorComponent error={error}></ErrorComponent>}
         </article>

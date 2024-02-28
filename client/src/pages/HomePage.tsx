@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useData } from "../hooks/useData";
 import { UserData } from "../utils/types";
-import { UserDataComponent } from "../components/menus/UserDataComponent";
+import { ActualUserView } from "../components/menus/ActualUserView";
 
 export function HomePage() {
-  const [user] = useData<UserData>("auth/user-data");
+  const [user, setUser] = useData<UserData>("auth/user-data");
   return (
     <>
       <h1>Bienvenido {user?.name}</h1>
@@ -17,7 +17,7 @@ export function HomePage() {
         )}
 
         <li>
-          <Link to="/app/doctores">Consultar Doctores</Link>
+          <Link to="/app/medicos">Consultar Médicos</Link>
         </li>
 
         {user?.role === "doctor" && (
@@ -28,7 +28,7 @@ export function HomePage() {
       </ul>
       <hr></hr>
       <h2>Tus datos</h2>
-      {user && <UserDataComponent user={user}></UserDataComponent>}
+      {user && <ActualUserView user={user} setUser={setUser}></ActualUserView>}
     </>
   );
 }

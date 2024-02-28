@@ -16,12 +16,10 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
       if (!prevState) return prevState;
       return {
         ...prevState,
-        [name]: value,
+        [name]: name === "phone" ? parseInt(value) : value,
       };
     });
   };
-
-  console.log(data);
 
   if (!data) {
     return <LoadingComponent></LoadingComponent>;

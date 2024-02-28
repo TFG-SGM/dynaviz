@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { AdminController } from "../controllers/admin";
 import { checkRole } from "../middlewares/checkRole";
+import { ADMIN_ROLE } from "../utils/constants";
 
 export const adminRouter: Router = Router();
 
-adminRouter.use(checkRole("admin"));
+adminRouter.use(checkRole(ADMIN_ROLE));
 
 adminRouter.get("/", AdminController.getAll);
 adminRouter.post("/", AdminController.create);

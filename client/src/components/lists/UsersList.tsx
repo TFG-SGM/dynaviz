@@ -9,6 +9,7 @@ import { ErrorComponent } from "../other/ErrorComponent";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
 import { UserMenuView } from "../menus/UserMenuView";
 import { EmptyListComponent } from "../other/EmptyListComponent";
+import { updateDataHelper } from "../../utils/helpers";
 
 export function UsersList({ endpoint }: { endpoint: string }) {
   const [users, setUsers, error] = useData<UserData[]>(endpoint);
@@ -19,6 +20,8 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
   const handleAdd = () => setActual({ action: "add", userId: "" });
   const handleClean = () => setActual({ action: "", userId: "" });
+  const handleUpdateList = (data: UserData) =>
+    setUsers((prevState) => updateDataHelper(prevState, data));
 
   if (error) {
     return <ErrorComponent error={error}></ErrorComponent>;
@@ -39,7 +42,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
         <UpdateUserForm
           endpoint={endpoint + actual.userId}
           handleClean={handleClean}
-          setUsers={setUsers}
+          handleUpdate={handleUpdateList}
           isPass={false}
         ></UpdateUserForm>
       )}
@@ -49,6 +52,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           handleClean={handleClean}
           setActual={setActual}
           setUsers={setUsers}
+          handleUpdateList={handleUpdateList}
         ></UserMenuView>
       )}
       {!users ? (

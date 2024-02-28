@@ -6,6 +6,7 @@ import { sign } from "jsonwebtoken";
 import { validateLogin } from "../schemas/login";
 import { User } from "../utils/types";
 import { PatientModel } from "../models/patient";
+import { ADMIN_ROLE, DOCTOR_ROLE } from "../utils/constants";
 
 export class AuthController {
   static async validateEmail(email: string) {
@@ -61,10 +62,10 @@ export class AuthController {
 
       if (admin) {
         user = { ...user, ...admin };
-        user.role = "admin";
+        user.role = ADMIN_ROLE;
       } else if (doctor) {
         user = { ...user, ...doctor };
-        user.role = "doctor";
+        user.role = DOCTOR_ROLE;
       } else {
         return res.status(404).json({
           message: "Usuario no encontrado.",

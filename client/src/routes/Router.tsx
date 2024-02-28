@@ -26,7 +26,7 @@ export function Router() {
           element: <AdminsListPage></AdminsListPage>,
         },
         {
-          path: "doctores",
+          path: "medicos",
           element: <DoctorsListPage></DoctorsListPage>,
         },
         {

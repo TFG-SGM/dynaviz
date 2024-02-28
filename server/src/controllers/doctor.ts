@@ -13,7 +13,7 @@ export class DoctorController {
     const { id } = req.params;
     const doctor = await DoctorModel.getById({ id });
     if (doctor) return res.json(doctor);
-    res.status(404).json({ message: "Doctor no encontrado." });
+    res.status(404).json({ message: "Médico no encontrado." });
   }
 
   static async create(req: Request, res: Response) {
@@ -49,7 +49,7 @@ export class DoctorController {
     const existingDoctor = await DoctorModel.getById({ id });
 
     if (!existingDoctor) {
-      return res.status(404).json({ message: "Doctor no encontrado" });
+      return res.status(404).json({ message: "Médico no encontrado" });
     }
 
     if (result.data.email && result.data.email !== existingDoctor.email) {

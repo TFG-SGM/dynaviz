@@ -10,7 +10,7 @@ export interface User {
   bornDate: Date;
   address: string;
   email: string;
-  phone: string;
+  phone: number;
 }
 
 export interface PartialUser {
@@ -20,7 +20,7 @@ export interface PartialUser {
   bornDate?: Date | undefined;
   address?: string | undefined;
   email?: string | undefined;
-  phone?: string | undefined;
+  phone?: number | undefined;
 }
 
 export interface Patient {
@@ -29,7 +29,7 @@ export interface Patient {
   bornDate: Date;
   address: string;
   email: string;
-  phone: string;
+  phone: number;
   tests?: Test[] | [];
 }
 
@@ -39,7 +39,7 @@ export interface PartialPatient {
   bornDate?: Date | undefined;
   address?: string | undefined;
   email?: string | undefined;
-  phone?: string | undefined;
+  phone?: number | undefined;
 }
 
 export interface Test {
