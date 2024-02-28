@@ -17,7 +17,7 @@ export function HomePage() {
         )}
 
         <li>
-          <Link to="/app/medicos">Consultar Médicos</Link>
+          <Link to="/app/doctores">Consultar Doctores</Link>
         </li>
 
         {user?.role === "doctor" && (

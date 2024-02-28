@@ -46,7 +46,14 @@ export class AdminController {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    if (result.data.email) {
+    const { id } = req.params;
+    const existingAdmin = await AdminModel.getById({ id });
+
+    if (!existingAdmin) {
+      return res.status(404).json({ message: "Administrador no encontrado" });
+    }
+
+    if (result.data.email && result.data.email !== existingAdmin.email) {
       const isEmail = await AuthController.validateEmail(result.data.email);
       if (isEmail) {
         return res.status(400).json({
@@ -55,7 +62,6 @@ export class AdminController {
       }
     }
 
-    const { id } = req.params;
     const updatedAdmin = await AdminModel.update({ id, input: result.data });
     return res.json(updatedAdmin);
   }

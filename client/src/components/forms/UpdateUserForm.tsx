@@ -15,7 +15,7 @@ export interface UpdateFormProps<T> {
   isPass: boolean;
 }
 
-export function UpdateForm<T>({
+export function UpdateUserForm<T>({
   endpoint,
   handleClean,
   setUsers,

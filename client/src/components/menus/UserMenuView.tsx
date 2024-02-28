@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { UpdateForm } from "../forms/UpdateForm";
+import { UpdateUserForm } from "../forms/UpdateUserForm";
 import { DeleteUserButton } from "../buttons/DeleteUserButton";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { useData } from "../../hooks/useData";
@@ -30,17 +30,17 @@ export function UserMenuView({
   return (
     <>
       {isUpdate ? (
-        <UpdateForm
+        <UpdateUserForm
           endpoint={endpoint}
           handleClean={handleCancelUpdate}
           setUsers={setUsers}
           isPass={false}
-        ></UpdateForm>
+        ></UpdateUserForm>
       ) : (
         <article>
           <CrossButton handleClean={handleClean}></CrossButton>
           {user && <UserDataComponent user={user}></UserDataComponent>}
-          <button onClick={handleUpdate}>Actualizar</button>
+          <button onClick={handleUpdate}>Editar</button>
           <DeleteUserButton
             endpoint={endpoint}
             setActual={setActual}

@@ -1,6 +1,6 @@
 import { UserCard } from "../cards/UserCard";
-import { UpdateForm } from "../forms/UpdateForm";
-import { AddForm } from "../forms/AddForm";
+import { UpdateUserForm } from "../forms/UpdateUserForm";
+import { AddUserForm } from "../forms/AddUserForm";
 import { useState } from "react";
 import { UserData, actual } from "../../utils/types";
 import { useData } from "../../hooks/useData";
@@ -26,22 +26,22 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
   return (
     <div>
-      <button onClick={handleAdd}>Añadir</button>
+      <button onClick={handleAdd}>Añadir usuario</button>
       {actual.action === "add" && (
-        <AddForm
+        <AddUserForm
           endpoint={endpoint}
           handleClean={handleClean}
           setUsers={setUsers}
           isPass={endpoint !== PATIENT_ENDPOINT}
-        ></AddForm>
+        ></AddUserForm>
       )}
       {actual.action === "update" && (
-        <UpdateForm
+        <UpdateUserForm
           endpoint={endpoint + actual.userId}
           handleClean={handleClean}
           setUsers={setUsers}
           isPass={false}
-        ></UpdateForm>
+        ></UpdateUserForm>
       )}
       {actual.action === "get" && (
         <UserMenuView

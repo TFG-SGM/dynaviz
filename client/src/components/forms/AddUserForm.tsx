@@ -5,6 +5,7 @@ import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
+import { INITIAL_USER } from "../../utils/constants";
 
 export interface AddFormProps<T> {
   endpoint: string;
@@ -13,13 +14,13 @@ export interface AddFormProps<T> {
   isPass: boolean;
 }
 
-export function AddForm<T>({
+export function AddUserForm<T>({
   endpoint,
   handleClean,
   setUsers,
   isPass,
 }: AddFormProps<T>) {
-  const [newData, setNewData] = useState<UserData>(getInitialState());
+  const [newData, setNewData] = useState<UserData>(INITIAL_USER);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -49,17 +50,4 @@ export function AddForm<T>({
       <button onClick={handleClean}>Cancelar</button>
     </>
   );
-}
-
-function getInitialState() {
-  return {
-    _id: "",
-    name: "",
-    surname: "",
-    bornDate: "",
-    address: "",
-    email: "",
-    phone: "",
-    password: "",
-  };
 }

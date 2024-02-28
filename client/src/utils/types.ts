@@ -8,6 +8,7 @@ export type UserData = {
   email: string;
   phone: string;
   role?: string;
+  tests?: string;
 };
 
 export type actual = {

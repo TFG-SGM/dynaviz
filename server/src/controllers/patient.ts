@@ -39,8 +39,14 @@ export class PatientController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
+    const { id } = req.params;
+    const existingPatient = await PatientModel.getById({ id });
 
-    if (result.data.email) {
+    if (!existingPatient) {
+      return res.status(404).json({ message: "Paciente no encontrado" });
+    }
+
+    if (result.data.email && result.data.email !== existingPatient.email) {
       const isEmail = await AuthController.validateEmail(result.data.email);
       if (isEmail) {
         return res.status(400).json({
@@ -49,7 +55,6 @@ export class PatientController {
       }
     }
 
-    const { id } = req.params;
     const updatedPatient = await PatientModel.update({
       id,
       input: result.data,

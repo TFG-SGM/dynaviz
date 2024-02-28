@@ -6,7 +6,7 @@ export function UserDataComponent({ user }: { user: UserData }) {
     <>
       <p>Nombre: {name}</p>
       <p>Apellidos: {surname}</p>
-      <p>Fecha de nacimiento: {bornDate}</p>
+      <p>Fecha de nacimiento: {bornDate.split("T")[0]}</p>
       <p>Dirección: {address}</p>
       <p>Email: {email}</p>
       <p>Teléfono: {phone}</p>

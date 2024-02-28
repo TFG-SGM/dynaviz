@@ -21,6 +21,8 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
     });
   };
 
+  console.log(data);
+
   if (!data) {
     return <LoadingComponent></LoadingComponent>;
   }
@@ -34,6 +36,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
           type="text"
           value={data.name}
           onChange={handleChange}
+          required
         ></input>
       </label>
       <label>
@@ -43,6 +46,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
           type="text"
           value={data.surname}
           onChange={handleChange}
+          required
         ></input>
       </label>
       <label>
@@ -50,8 +54,10 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
         <input
           name="bornDate"
           type="date"
-          value={data.bornDate}
+          value={data.bornDate.split("T")[0]}
           onChange={handleChange}
+          max={new Date().toISOString().split("T")[0]}
+          required
         ></input>
       </label>
       <label>
@@ -61,6 +67,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
           type="text"
           value={data.address}
           onChange={handleChange}
+          required
         ></input>
         <label>
           Email:{" "}
@@ -69,6 +76,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
             type="email"
             value={data.email}
             onChange={handleChange}
+            required
           ></input>
         </label>
         {isPass && (
@@ -79,6 +87,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
               type="password"
               value={data.password}
               onChange={handleChange}
+              required
             ></input>
           </label>
         )}
@@ -86,9 +95,10 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
           Teléfono:{" "}
           <input
             name="phone"
-            type="phone"
+            pattern="[0-9]{9}"
             value={data.phone}
             onChange={handleChange}
+            required
           ></input>
         </label>
       </label>

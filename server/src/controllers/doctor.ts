@@ -13,7 +13,7 @@ export class DoctorController {
     const { id } = req.params;
     const doctor = await DoctorModel.getById({ id });
     if (doctor) return res.json(doctor);
-    res.status(404).json({ message: "Médico no encontrado." });
+    res.status(404).json({ message: "Doctor no encontrado." });
   }
 
   static async create(req: Request, res: Response) {
@@ -45,7 +45,14 @@ export class DoctorController {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
-    if (result.data.email) {
+    const { id } = req.params;
+    const existingDoctor = await DoctorModel.getById({ id });
+
+    if (!existingDoctor) {
+      return res.status(404).json({ message: "Doctor no encontrado" });
+    }
+
+    if (result.data.email && result.data.email !== existingDoctor.email) {
       const isEmail = await AuthController.validateEmail(result.data.email);
       if (isEmail) {
         return res.status(400).json({
@@ -54,7 +61,6 @@ export class DoctorController {
       }
     }
 
-    const { id } = req.params;
     const updatedDoctor = await DoctorModel.update({ id, input: result.data });
     return res.json(updatedDoctor);
   }
@@ -64,6 +70,6 @@ export class DoctorController {
     const result = await DoctorModel.delete({ id });
 
     if (result) return res.json(result);
-    res.status(404).json({ message: "Médico no encontrado." });
+    res.status(404).json({ message: "Doctor no encontrado." });
   }
 }
