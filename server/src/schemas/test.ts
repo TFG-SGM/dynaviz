@@ -3,6 +3,7 @@ import { Test } from "../utils/types";
 
 const testSchema = z.object({
   doctor: z.string(),
+  type: z.string(),
   date: z.string().transform((str) => new Date(str)),
   video: z.string(),
 });

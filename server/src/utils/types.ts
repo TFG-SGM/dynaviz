@@ -44,12 +44,14 @@ export interface PartialPatient {
 
 export interface Test {
   doctor: string;
+  type: string;
   date: Date;
   video: string;
 }
 
 export interface PartialTest {
   doctor?: string | undefined;
+  type?: string | undefined;
   date?: Date | undefined;
   video?: string | undefined;
 }

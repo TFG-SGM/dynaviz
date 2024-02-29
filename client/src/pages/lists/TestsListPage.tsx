@@ -10,7 +10,9 @@ export function TestsListPage() {
   return (
     <>
       <h1>Pruebas de {patient?.name}</h1>{" "}
-      <TestsList tests={patient?.tests}></TestsList>
+      {patient && (
+        <TestsList tests={patient.tests} setPatient={setPatient}></TestsList>
+      )}
     </>
   );
 }

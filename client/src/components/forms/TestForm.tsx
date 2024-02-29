@@ -5,10 +5,9 @@ import { LoadingComponent } from "../other/LoadingComponent";
 export interface TestFormProps<T> {
   data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
-  isPass: boolean;
 }
 
-export function TestForm<T>({ data, setNewData, isPass }: TestFormProps<T>) {
+export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -27,22 +26,39 @@ export function TestForm<T>({ data, setNewData, isPass }: TestFormProps<T>) {
 
   return (
     <>
-      <p>Profesional: ... </p>
+      <label>
+        Médico:{" "}
+        <input
+          name="doctor"
+          type="text"
+          value={data.doctor}
+          onChange={handleChange}
+        ></input>
+      </label>
       <label>
         Tipo:{" "}
         <input
-          name="surname"
+          name="type"
           type="text"
-          value={data.surname}
+          value={data.type}
+          onChange={handleChange}
+        ></input>
+      </label>
+      <label>
+        Video:{" "}
+        <input
+          name="video"
+          type="text"
+          value={data.video}
           onChange={handleChange}
         ></input>
       </label>
       <label>
         Fecha:{" "}
         <input
-          name="bornDate"
+          name="date"
           type="date"
-          value={data.bornDate}
+          value={data.date}
           onChange={handleChange}
         ></input>
       </label>
