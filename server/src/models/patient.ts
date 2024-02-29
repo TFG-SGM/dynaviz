@@ -21,7 +21,6 @@ export class PatientModel {
   static async create({ input }: { input: Patient }) {
     const db = await connectToMongoDB("patients");
 
-    input = { ...input, tests: [] };
     const { insertedId } = await db.insertOne(input);
     return { id: insertedId, ...input };
   }

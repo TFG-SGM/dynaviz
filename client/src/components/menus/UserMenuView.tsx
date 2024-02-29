@@ -6,6 +6,7 @@ import { useData } from "../../hooks/useData";
 import { UserData, actual } from "../../utils/types";
 import { UserDataComponent } from "./UserDataComponent";
 import { CrossButton } from "../buttons/CrossButton";
+import { TestsViewButton } from "../buttons/TestsViewButton";
 
 export interface UserMenuView {
   endpoint: string;
@@ -13,6 +14,7 @@ export interface UserMenuView {
   setActual: Dispatch<SetStateAction<actual>>;
   setUsers: Dispatch<SetStateAction<UserData[] | null>>;
   handleUpdateList: (data: UserData) => void;
+  isPatient?: boolean;
 }
 
 export function UserMenuView({
@@ -21,6 +23,7 @@ export function UserMenuView({
   setActual,
   setUsers,
   handleUpdateList,
+  isPatient = false,
 }: UserMenuView) {
   const [user, setUser] = useData<UserData>(endpoint);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
@@ -47,6 +50,9 @@ export function UserMenuView({
           <CrossButton handleClean={handleClean}></CrossButton>
           {user && <UserDataComponent user={user}></UserDataComponent>}
           <button onClick={handleStartUpdate}>Editar</button>
+          {user && isPatient && (
+            <TestsViewButton userId={user?._id}></TestsViewButton>
+          )}
           <DeleteUserButton
             endpoint={endpoint}
             setActual={setActual}

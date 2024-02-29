@@ -17,6 +17,7 @@ export const INITIAL_USER = {
 };
 
 export const INITIAL_TEST = {
+  _id: "",
   doctor: "",
   type: "",
   date: "",

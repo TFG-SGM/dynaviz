@@ -53,6 +53,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           setActual={setActual}
           setUsers={setUsers}
           handleUpdateList={handleUpdateList}
+          isPatient={endpoint === PATIENT_ENDPOINT}
         ></UserMenuView>
       )}
       {!users ? (

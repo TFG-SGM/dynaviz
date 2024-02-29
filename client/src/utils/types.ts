@@ -8,10 +8,18 @@ export type UserData = {
   email: string;
   phone: string;
   role?: string;
-  tests?: string;
 };
 
 export type actual = {
   action: string;
   userId: string | null;
 };
+
+export interface TestData {
+  _id: string;
+  doctor: string;
+  type: string;
+  date: string;
+  video: string;
+  patientId: string;
+}

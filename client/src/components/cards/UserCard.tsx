@@ -3,7 +3,7 @@ import { UserData, actual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { DeleteUserButton } from "../buttons/DeleteUserButton";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
-import { useNavigate } from "react-router-dom";
+import { TestsViewButton } from "../buttons/TestsViewButton";
 
 interface UsersCard {
   endpoint: string;
@@ -18,8 +18,8 @@ export function UserCard({
   userData,
   setUsers,
 }: UsersCard) {
+  const { _id, name, surname } = userData;
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const handleView = (e: FormEvent) => {
     const { target } = e;
@@ -39,33 +39,25 @@ export function UserCard({
     });
   };
 
-  const handleViewTests = (e: FormEvent) => {
-    const { target } = e;
-    const userId = (target as HTMLButtonElement).getAttribute("data-user-id");
-    navigate(`/app/pacientes/${userId}`);
-  };
-
   return (
     <article>
       <h2>
-        {userData.name} {userData.surname}
+        {name} {surname}
       </h2>
-      <button data-user-id={userData._id} onClick={handleView}>
+      <button data-user-id={_id} onClick={handleView}>
         Consultar
       </button>
-      <button data-user-id={userData._id} onClick={handleEdit}>
+      <button data-user-id={_id} onClick={handleEdit}>
         Editar
       </button>
       <DeleteUserButton
-        endpoint={endpoint + userData._id}
+        endpoint={endpoint + _id}
         setUsers={setUsers}
         setError={setError}
       ></DeleteUserButton>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       {endpoint === PATIENT_ENDPOINT && (
-        <button data-user-id={userData._id} onClick={handleViewTests}>
-          Pruebas
-        </button>
+        <TestsViewButton userId={_id}></TestsViewButton>
       )}
       <hr></hr>
     </article>

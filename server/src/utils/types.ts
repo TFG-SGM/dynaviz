@@ -30,7 +30,7 @@ export interface Patient {
   address: string;
   email: string;
   phone: number;
-  tests?: Test[] | [];
+  tests?: string[] | [];
 }
 
 export interface PartialPatient {
@@ -40,6 +40,7 @@ export interface PartialPatient {
   address?: string | undefined;
   email?: string | undefined;
   phone?: number | undefined;
+  tests?: string[] | [];
 }
 
 export interface Test {
@@ -47,6 +48,7 @@ export interface Test {
   type: string;
   date: Date;
   video: string;
+  patientId: string;
 }
 
 export interface PartialTest {
@@ -54,4 +56,5 @@ export interface PartialTest {
   type?: string | undefined;
   date?: Date | undefined;
   video?: string | undefined;
+  patientId?: string | undefined;
 }

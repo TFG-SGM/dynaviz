@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { UserData } from "../../utils/types";
+import { TestData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
 
 export interface TestFormProps<T> {
-  data: UserData | null;
+  data: TestData | null;
   setNewData: Dispatch<SetStateAction<T>>;
 }
 

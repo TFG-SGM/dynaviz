@@ -1,33 +1,33 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
 import { DataService } from "../../services/DataService";
-import { UserData } from "../../utils/types";
+import { TestData, UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
 import { INITIAL_TEST } from "../../utils/constants";
 import { TestForm } from "./TestForm";
 
-export interface AddTestProps<T> {
+export interface AddTestProps {
   endpoint: string;
   handleClean: () => void;
-  setTests: Dispatch<SetStateAction<T[] | null>>;
+  patient: UserData;
 }
 
 export function AddTestForm<T>({
   endpoint,
   handleClean,
-  setTests,
-}: AddTestProps<T>) {
-  const [newData, setNewData] = useState<UserData>(INITIAL_TEST);
+  patient,
+}: AddTestProps) {
+  const [newData, setNewData] = useState<TestData>({
+    ...INITIAL_TEST,
+    patientId: patient._id,
+  });
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await DataService.createData<UserData>(endpoint, newData);
-      setTests((prevState) => {
-        return { ...prevState, tests: data._id };
-      });
+      const data = await DataService.createData<TestData>(endpoint, newData);
       handleClean();
     } catch (error) {
       console.log(error);

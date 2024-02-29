@@ -47,4 +47,40 @@ export class TestModel {
     if (deletedCount > 0) return id;
     return null;
   }
+
+  static async getTestsByPatient({ patientId }: { patientId: string }) {
+    const db = await connectToMongoDB("tests");
+
+    const aggregationPipeline = [
+      { $match: { patientId: patientId } },
+      {
+        $group: {
+          _id: { $year: "$date" },
+          tests: { $push: "$$ROOT" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          year: { $toString: "$_id" },
+          tests: 1,
+        },
+      },
+      { $sort: { year: 1 } },
+      {
+        $group: {
+          _id: null,
+          testsByYear: { $push: { k: "$year", v: "$tests" } },
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: { $arrayToObject: "$testsByYear" },
+        },
+      },
+    ];
+
+    const result = await db.aggregate(aggregationPipeline).next();
+    return result;
+  }
 }

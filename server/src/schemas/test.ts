@@ -6,6 +6,7 @@ const testSchema = z.object({
   type: z.string(),
   date: z.string().transform((str) => new Date(str)),
   video: z.string(),
+  patientId: z.string(),
 });
 
 export function validateTest(input: Test) {
