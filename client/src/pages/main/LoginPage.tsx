@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { DataService } from "../services/DataService";
+import { DataService } from "../../services/DataService";
 import { FormEvent, useState } from "react";
-import { ErrorComponent } from "../components/other/ErrorComponent";
+import { ErrorComponent } from "../../components/other/ErrorComponent";
 import { AxiosError } from "axios";
 
 export function LoginPage() {

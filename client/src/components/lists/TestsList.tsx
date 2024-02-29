@@ -6,6 +6,7 @@ import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestCard } from "../cards/TestCard";
 import { useData } from "../../hooks/useData";
 import { TestData, UserData } from "../../utils/types";
+import { useNavigate } from "react-router-dom";
 
 interface AggregationResult {
   [year: string]: TestData[];
@@ -16,9 +17,12 @@ export function TestsList({ patient }: { patient: UserData }) {
   const [tests] = useData<AggregationResult>(
     TEST_ENDPOINT + "?patientId=" + patient._id
   );
+  const navigate = useNavigate();
 
   const handleStartCreating = () => setIsAdding(true);
   const handleClean = () => setIsAdding(false);
+  const handleViewEvolution = () =>
+    navigate(`/app/pacientes/${patient._id}/evolucion`);
 
   return (
     <>
@@ -36,7 +40,7 @@ export function TestsList({ patient }: { patient: UserData }) {
         <EmptyListComponent></EmptyListComponent>
       ) : (
         <>
-          <button>Consultar evolución</button>
+          <button onClick={handleViewEvolution}>Consultar evolución</button>
           {Object.keys(tests).map((year) => {
             return (
               <article key={year}>

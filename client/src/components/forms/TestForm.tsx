@@ -1,6 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { TestData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
+import { RecordVideoView } from "../menus/RecordVideoView";
 
 export interface TestFormProps<T> {
   data: TestData | null;
@@ -33,6 +34,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           type="text"
           value={data.doctor}
           onChange={handleChange}
+          required
         ></input>
       </label>
       <label>
@@ -42,15 +44,18 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           type="text"
           value={data.type}
           onChange={handleChange}
+          required
         ></input>
       </label>
       <label>
         Video:{" "}
         <input
           name="video"
-          type="text"
+          type="file"
+          accept="video/*"
           value={data.video}
           onChange={handleChange}
+          required
         ></input>
       </label>
       <label>
@@ -58,10 +63,13 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
         <input
           name="date"
           type="date"
-          value={data.date}
+          value={data.date.split("T")[0]}
           onChange={handleChange}
+          max={new Date().toISOString().split("T")[0]}
+          required
         ></input>
       </label>
+      <RecordVideoView></RecordVideoView>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { useData } from "../hooks/useData";
-import { UserData } from "../utils/types";
-import { ActualUserView } from "../components/menus/ActualUserView";
+import { useData } from "../../hooks/useData";
+import { UserData } from "../../utils/types";
+import { ActualUserView } from "../../components/menus/ActualUserView";
 
 export function HomePage() {
   const [user, setUser] = useData<UserData>("auth/user-data");

@@ -8,7 +8,6 @@ const patientSchema = z.object({
   address: z.string(),
   email: z.string(),
   phone: z.number(),
-  tests: z.string().array(),
 });
 
 export function validatePatient(input: Patient) {
