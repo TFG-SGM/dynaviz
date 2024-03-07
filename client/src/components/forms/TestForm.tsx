@@ -1,7 +1,8 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { TestData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
-import { RecordVideoView } from "../menus/RecordVideoView";
+import { RecordVideoView, RecordView } from "../menus/RecordVideoView";
+import { TEST_TYPES } from "../../utils/constants";
 
 export interface TestFormProps<T> {
   data: TestData | null;
@@ -9,7 +10,10 @@ export interface TestFormProps<T> {
 }
 
 export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const [isRecord, setIsRecord] = useState(false);
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     setNewData((prevState) => {
@@ -20,6 +24,9 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
       };
     });
   };
+
+  const handleRecordWindow = () => setIsRecord(true);
+  const handleClean = () => setIsRecord(false);
 
   if (!data) {
     return <LoadingComponent></LoadingComponent>;
@@ -39,24 +46,14 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
       </label>
       <label>
         Tipo:{" "}
-        <input
-          name="type"
-          type="text"
-          value={data.type}
-          onChange={handleChange}
-          required
-        ></input>
-      </label>
-      <label>
-        Video:{" "}
-        <input
-          name="video"
-          type="file"
-          accept="video/*"
-          value={data.video}
-          onChange={handleChange}
-          required
-        ></input>
+        <select name="type" value={data.type} onChange={handleChange} required>
+          <option value="">Selecciona un tipo</option>
+          {TEST_TYPES.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         Fecha:{" "}
@@ -69,7 +66,17 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           required
         ></input>
       </label>
-      <RecordVideoView></RecordVideoView>
+
+      <label>
+        Añadir video:{" "}
+        <input
+          name="video"
+          type="file"
+          onChange={handleChange}
+          accept="video/*"
+          required
+        ></input>
+      </label>
     </>
   );
 }

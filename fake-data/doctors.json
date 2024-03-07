@@ -1,0 +1,47 @@
+ [
+  {
+    "password": "$2a$12$5C.8iHbs5jGuGzPV6L/gi.mSYvh8m/LoynWJiED4S41.ZtZ2HkPwe",
+    "name": "Michael",
+    "surname": "Smith",
+    "bornDate": "1978-06-25",
+    "address": "123 Hospital Rd",
+    "email": "michael.smith@example.com",
+    "phone": 5551112222
+  },
+  {
+    "password": "$2a$12$5C.8iHbs5jGuGzPV6L/gi.mSYvh8m/LoynWJiED4S41.ZtZ2HkPwe",
+    "name": "Emily",
+    "surname": "Johnson",
+    "bornDate": "1985-03-12",
+    "address": "456 Medical Ave",
+    "email": "emily.johnson@example.com",
+    "phone": 5553334444
+  },
+  {
+    "password": "$2a$12$5C.8iHbs5jGuGzPV6L/gi.mSYvh8m/LoynWJiED4S41.ZtZ2HkPwe",
+    "name": "David",
+    "surname": "Garcia",
+    "bornDate": "1980-09-08",
+    "address": "789 Health St",
+    "email": "david.garcia@example.com",
+    "phone": 5555556666
+  },
+  {
+    "password": "$2a$12$5C.8iHbs5jGuGzPV6L/gi.mSYvh8m/LoynWJiED4S41.ZtZ2HkPwe",
+    "name": "Sarah",
+    "surname": "Martinez",
+    "bornDate": "1976-12-18",
+    "address": "987 Clinic Blvd",
+    "email": "sarah.martinez@example.com",
+    "phone": 5557778888
+  },
+  {
+    "password": "$2a$12$5C.8iHbs5jGuGzPV6L/gi.mSYvh8m/LoynWJiED4S41.ZtZ2HkPwe",
+    "name": "Christopher",
+    "surname": "Brown",
+    "bornDate": "1982-04-30",
+    "address": "654 Medical Center Dr",
+    "email": "christopher.brown@example.com",
+    "phone": 5559990000
+  }
+ ]

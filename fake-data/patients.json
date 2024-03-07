@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Alice Smith",
+    "bornDate": "1980-05-10",
+    "address": "123 Elm St",
+    "email": "alice.smith@example.com",
+    "phone": 5551112222
+  },
+  {
+    "name": "Bob Johnson",
+    "bornDate": "1975-08-20",
+    "address": "456 Oak St",
+    "email": "bob.johnson@example.com",
+    "phone": 5553334444
+  },
+  {
+    "name": "Catherine Brown",
+    "bornDate": "1982-01-15",
+    "address": "789 Maple Ave",
+    "email": "catherine.brown@example.com",
+    "phone": 5555556666
+  },
+  {
+    "name": "David Martinez",
+    "bornDate": "1979-11-05",
+    "address": "987 Pine Rd",
+    "email": "david.martinez@example.com",
+    "phone": 5557778888
+  },
+  {
+    "name": "Emily Jones",
+    "bornDate": "1984-03-25",
+    "address": "654 Birch Blvd",
+    "email": "emily.jones@example.com",
+    "phone": 5559990000
+  }
+]

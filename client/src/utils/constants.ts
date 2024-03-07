@@ -23,3 +23,12 @@ export const INITIAL_TEST = {
   date: "",
   video: "",
 };
+
+export const TEST_TYPES = [
+  "Cerrar las piernas juntas",
+  "Estiramiento simétrico",
+  "Estiramiento asimétrico",
+  "Arriba abajo a lo largo del eje vertical",
+  "Movimientos laterales",
+  "De marcha",
+];

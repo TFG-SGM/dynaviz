@@ -13,11 +13,7 @@ export interface AddTestProps {
   patient: UserData;
 }
 
-export function AddTestForm<T>({
-  endpoint,
-  handleClean,
-  patient,
-}: AddTestProps) {
+export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   const [newData, setNewData] = useState<TestData>({
     ...INITIAL_TEST,
     patientId: patient._id,
@@ -27,7 +23,7 @@ export function AddTestForm<T>({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await DataService.createData<TestData>(endpoint, newData);
+      await DataService.createData<TestData>(endpoint, newData);
       handleClean();
     } catch (error) {
       console.log(error);

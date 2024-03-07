@@ -4,7 +4,6 @@ import { DoctorModel } from "../models/doctor";
 import { hash, compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { validateLogin } from "../schemas/login";
-import { User } from "../utils/types";
 import { PatientModel } from "../models/patient";
 import { ADMIN_ROLE, DOCTOR_ROLE } from "../utils/constants";
 

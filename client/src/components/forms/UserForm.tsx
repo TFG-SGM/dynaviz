@@ -93,7 +93,7 @@ export function UserForm<T>({ data, setNewData, isPass }: UserFormProps<T>) {
           Teléfono:{" "}
           <input
             name="phone"
-            pattern="[0-9]{9}"
+            pattern="[0-9]{10}"
             value={data.phone}
             onChange={handleChange}
             required

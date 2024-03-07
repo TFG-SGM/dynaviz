@@ -15,7 +15,8 @@ interface AggregationResult {
 export function TestsList({ patient }: { patient: UserData }) {
   const [isAdding, setIsAdding] = useState(false);
   const [tests] = useData<AggregationResult>(
-    TEST_ENDPOINT + "?patientId=" + patient._id
+    TEST_ENDPOINT + "?patientId=" + patient._id,
+    isAdding
   );
   const navigate = useNavigate();
 
