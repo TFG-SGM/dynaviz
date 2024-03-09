@@ -1,12 +1,13 @@
 import express, { Express, Request, Response, json } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { authRouter } from "./routes/auth";
+import { userAuth } from "./middlewares/userAuth";
 import { patientRouter } from "./routes/patient";
 import { doctorRouter } from "./routes/doctor";
 import { adminRouter } from "./routes/admin";
 import { testRouter } from "./routes/test";
-import { authRouter } from "./routes/auth";
-import { userAuth } from "./middlewares/userAuth";
+import { testTypeRouter } from "./routes/testTypes";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use("/patient", patientRouter);
 app.use("/doctor", doctorRouter);
 app.use("/admin", adminRouter);
 app.use("/test", testRouter);
+app.use("/testType", testTypeRouter);
 
 app.listen(port, () => {
   console.log(`server is running at http://localhost:${port}`);

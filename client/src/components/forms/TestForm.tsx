@@ -1,8 +1,8 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { TestData } from "../../utils/types";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { TestData, TestType } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
-import { RecordVideoView, RecordView } from "../menus/RecordVideoView";
-import { TEST_TYPES } from "../../utils/constants";
+import { useData } from "../../hooks/useData";
+import { TEST_TYPE_ENDPOINT } from "../../utils/constants";
 
 export interface TestFormProps<T> {
   data: TestData | null;
@@ -10,7 +10,7 @@ export interface TestFormProps<T> {
 }
 
 export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
-  const [isRecord, setIsRecord] = useState(false);
+  const [testTypes] = useData<TestType[]>(TEST_TYPE_ENDPOINT);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
@@ -25,10 +25,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     });
   };
 
-  const handleRecordWindow = () => setIsRecord(true);
-  const handleClean = () => setIsRecord(false);
-
-  if (!data) {
+  if (!data || !testTypes) {
     return <LoadingComponent></LoadingComponent>;
   }
 
@@ -48,9 +45,9 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
         Tipo:{" "}
         <select name="type" value={data.type} onChange={handleChange} required>
           <option value="">Selecciona un tipo</option>
-          {TEST_TYPES.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
+          {testTypes.map((type, index) => (
+            <option key={index} value={type.name}>
+              {type.name}
             </option>
           ))}
         </select>

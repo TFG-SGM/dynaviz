@@ -4,10 +4,10 @@ export function TestButtons({ handleChangeChart }) {
       <button id="time" className="active-chart" onClick={handleChangeChart}>
         Tiempo
       </button>
-      <button id="ranking" onClick={handleChangeChart}>
+      <button id="ranking1" onClick={handleChangeChart}>
         Ranking
       </button>
-      <button id="whole" onClick={handleChangeChart}>
+      <button id="whole1" onClick={handleChangeChart}>
         Conjunto
       </button>
       <button id="distribution" onClick={handleChangeChart}>

@@ -21,6 +21,7 @@ export function useData<T>(
       try {
         const result = await DataService.getData(endpoint);
         setData(result);
+        console.log(result);
       } catch (error) {
         if (error instanceof AxiosError && error.response)
           setError(error.response.data.error);

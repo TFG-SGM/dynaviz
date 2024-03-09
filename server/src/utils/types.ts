@@ -56,3 +56,13 @@ export interface PartialTest {
   video?: string | undefined;
   patientId?: string | undefined;
 }
+
+export interface TestType {
+  name: string;
+  bodyParts: string[];
+}
+
+export interface PartialTestType {
+  name?: string | undefined;
+  bodyParts?: string[] | undefined;
+}

@@ -23,3 +23,9 @@ export interface TestData {
   video: string;
   patientId: string;
 }
+
+export interface TestType {
+  _id: string;
+  name: string;
+  bodyParts: string[];
+}
