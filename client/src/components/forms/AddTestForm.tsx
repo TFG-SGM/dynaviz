@@ -4,8 +4,9 @@ import { TestData, UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
-import { INITIAL_TEST } from "../../utils/constants";
+import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { TestForm } from "./TestForm";
+import { generateDataTest } from "../../utils/generateDataTest";
 
 export interface AddTestProps {
   endpoint: string;
@@ -23,7 +24,14 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await DataService.createData<TestData>(endpoint, newData);
+      const data = await DataService.getData(TEST_TYPE_ENDPOINT + newData.type);
+      const completeTest = {
+        ...newData,
+        data: generateDataTest(data.bodyParts),
+      };
+      console.log(completeTest);
+
+      await DataService.createData<TestData>(endpoint, completeTest);
       handleClean();
     } catch (error) {
       console.log(error);

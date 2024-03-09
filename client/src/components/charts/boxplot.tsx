@@ -2,7 +2,7 @@ import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 
-export function LineChart({
+export function BoxPlot({
   data,
   actualParts,
 }: {
@@ -11,22 +11,28 @@ export function LineChart({
 }) {
   if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
 
+  const realAngles = TestService.getRealAngles(data.parts, actualParts[0]);
+  const idealAngles = TestService.getIdealAngles(data.parts, actualParts[0]);
+
   const option = {
     xAxis: {
       type: "category",
-      data: data.time,
     },
     yAxis: {
       type: "value",
+      name: "Ángulos",
+    },
+    tooltip: {
+      trigger: "axis",
+      confine: true,
     },
     series: [
       {
-        data: TestService.getRealAngles(data.parts, actualParts[0]),
-        type: "line",
-      },
-      {
-        data: TestService.getIdealAngles(data.parts, actualParts[0]),
-        type: "line",
+        type: "boxplot",
+        data: [
+          TestService.getBoxPlotData(realAngles),
+          TestService.getBoxPlotData(idealAngles),
+        ],
       },
     ],
   };

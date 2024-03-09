@@ -15,6 +15,21 @@ export type actual = {
   userId: string | null;
 };
 
+export interface TestPartsData {
+  [key: string]: {
+    idealAngles: number[];
+    realAngles: number[];
+    problem: number;
+  };
+}
+
+export interface TestSubData {
+  time: number[];
+  probability: number;
+  problem: number;
+  parts: TestPartsData;
+}
+
 export interface TestData {
   _id: string;
   doctor: string;
@@ -22,9 +37,10 @@ export interface TestData {
   date: string;
   video: string;
   patientId: string;
+  data: TestSubData;
 }
 
-export interface TestType {
+export interface TestTypeData {
   _id: string;
   name: string;
   bodyParts: string[];

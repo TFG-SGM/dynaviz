@@ -1,21 +1,40 @@
-export function TestButtons({ handleChangeChart }) {
+import { MouseEventHandler } from "react";
+
+export function TestButtons({
+  handleChangeChart,
+}: {
+  handleChangeChart: MouseEventHandler<HTMLButtonElement>;
+}) {
   return (
     <div>
-      <button id="time" className="active-chart" onClick={handleChangeChart}>
-        Tiempo
+      <button id="line" className="active-chart" onClick={handleChangeChart}>
+        Línea
       </button>
-      <button id="ranking1" onClick={handleChangeChart}>
-        Ranking
+      <button id="bar" onClick={handleChangeChart}>
+        Barras
       </button>
-      <button id="whole1" onClick={handleChangeChart}>
-        Conjunto
+      <button id="radar" onClick={handleChangeChart}>
+        Radar
       </button>
-      <button id="distribution" onClick={handleChangeChart}>
-        Distribución
+      <button id="pie" onClick={handleChangeChart}>
+        Pastel
       </button>
-      <button id="correlation" onClick={handleChangeChart}>
-        Correlación
+      <button id="treemap" onClick={handleChangeChart}>
+        Mapa de árbol
       </button>
+      <button id="histogram" onClick={handleChangeChart}>
+        Histograma
+      </button>
+      <button id="boxplot" onClick={handleChangeChart}>
+        Boxplot
+      </button>
+      <button id="bubble" onClick={handleChangeChart}>
+        Burbujas
+      </button>
+      <button id="heatmap" onClick={handleChangeChart}>
+        Mapa de calor
+      </button>
+      <hr></hr>
     </div>
   );
 }

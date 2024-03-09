@@ -1,35 +1,23 @@
 import ReactECharts from "echarts-for-react";
+import { TestService } from "../../services/TestService";
+import { TestSubData } from "../../utils/types";
 
-export function RadarChart() {
-  const bodyParts = ["Pierna", "Brazo", "Cuello"];
+export function RadarChart({ data }: { data: TestSubData }) {
   const option = {
     radar: {
-      indicator: bodyParts.map((part) => {
-        return { name: part };
-      }),
+      indicator: TestService.getBodyPartsForRadial(data.parts),
     },
     series: [
       {
-        data: [{ value: generateBodyPartsProblem(bodyParts.length) }],
+        data: [
+          {
+            value: TestService.getBodyPartProblem(data.parts),
+          },
+        ],
         type: "radar",
       },
     ],
   };
 
   return <ReactECharts option={option}></ReactECharts>;
-}
-
-function generateBodyPartsProblem(bodyPartsNumber: number): number[] {
-  const numbersArray: number[] = [];
-
-  for (let i = 0; i < bodyPartsNumber; i++) {
-    const problem = generateRandomNumber(0, 100);
-    numbersArray.push(problem);
-  }
-
-  return numbersArray;
-}
-
-function generateRandomNumber(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

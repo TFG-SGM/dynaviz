@@ -1,37 +1,23 @@
 import ReactECharts from "echarts-for-react";
+import { TestService } from "../../services/TestService";
+import { TestSubData } from "../../utils/types";
 
-export function BarChart() {
-  const bodyParts = ["Pierna", "Brazo", "Cuello"];
+export function BarChart({ data }: { data: TestSubData }) {
   const option = {
     xAxis: {
       type: "category",
-      data: bodyParts,
+      data: TestService.getBodyParts(data.parts),
     },
     yAxis: {
       type: "value",
     },
     series: [
       {
-        data: generateBodyPartsProblem(bodyParts.length),
+        data: TestService.getBodyPartProblem(data.parts),
         type: "bar",
       },
     ],
   };
 
   return <ReactECharts option={option}></ReactECharts>;
-}
-
-function generateBodyPartsProblem(bodyPartsNumber: number): number[] {
-  const numbersArray: number[] = [];
-
-  for (let i = 0; i < bodyPartsNumber; i++) {
-    const problem = generateRandomNumber(0, 100);
-    numbersArray.push(problem);
-  }
-
-  return numbersArray;
-}
-
-function generateRandomNumber(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

@@ -4,48 +4,59 @@ import { TestData } from "../utils/types";
 import { TEST_ENDPOINT } from "../utils/constants";
 import { LoadingComponent } from "../components/other/LoadingComponent";
 import { TestButtons } from "../components/tests/TestButtons";
-import { useState } from "react";
-import { LineChart } from "../components/charts/line";
-import { BarChart } from "../components/charts/bar";
-import { RadarChart } from "../components/charts/radar";
-import { PieChart } from "../components/charts/pie";
+import { MouseEventHandler, useState } from "react";
+import { BodyPartsButtons } from "../components/tests/BodyPartsButtons";
+import { ActualChart } from "../components/tests/ActualChart";
+
+import "../assets/styles/testButtons.css";
+
+interface actual {
+  chart: string;
+  parts: string[];
+}
 
 export function TestPage() {
   const { testId } = useParams();
   const [test] = useData<TestData>(TEST_ENDPOINT + testId);
-  const [actualChart, setActualChart] = useState("time");
+  const [actual, setActual] = useState<actual>({ chart: "line", parts: [] });
 
-  const handleChangeChart = (e: Event) => {
+  const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const target = e.target as HTMLElement;
     const activeButton = document.querySelector(".active-chart");
     activeButton?.classList.remove("active-chart");
-    e.target?.classList.add("active-chart");
-    setActualChart(e.target?.id);
+    target.classList.add("active-chart");
+    setActual((prevState) => ({ ...prevState, chart: target.id }));
   };
 
-  if (!test) <LoadingComponent></LoadingComponent>;
+  const handleChangePart: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const target = e.target as HTMLElement;
+    const classButton = target.classList;
+    let newParts = [...actual.parts];
+
+    if (classButton.contains("active-part")) {
+      classButton.remove("active-part");
+      newParts = newParts.filter((part) => part !== target.id);
+    } else {
+      classButton.add("active-part");
+      newParts.push(target.id);
+    }
+    setActual((prevState) => ({
+      ...prevState,
+      parts: newParts,
+    }));
+  };
+
+  if (!test) return <LoadingComponent></LoadingComponent>;
 
   return (
     <>
-      <h1>Prueba del {test?.date}</h1>
+      <h1>Prueba del {test.date}</h1>
       <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
-      {getActualChart(actualChart)};
+      <BodyPartsButtons
+        parts={test.data.parts}
+        handleChangePart={handleChangePart}
+      ></BodyPartsButtons>
+      <ActualChart actual={actual} data={test.data}></ActualChart>
     </>
   );
-}
-
-function getActualChart(actualChart: string): JSX.Element | null {
-  switch (actualChart) {
-    case "time":
-      return <LineChart />;
-    case "ranking1":
-      return <BarChart />;
-    case "ranking2":
-      return <RadarChart />;
-    case "whole1":
-      return <PieChart type="pie" />;
-    case "whole2":
-      return <PieChart type="treemap" />;
-    default:
-      return <p>Cargando...</p>;
-  }
 }

@@ -1,17 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { useData } from "../../hooks/useData";
 import { TEST_ENDPOINT } from "../../utils/constants";
-import { TestData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { DataService } from "../../services/DataService";
+import { useTest } from "../../hooks/useTest";
 
 export function TestCard({ testId }: { testId: string }) {
-  const [data] = useData<TestData>(TEST_ENDPOINT + testId);
+  const [test] = useTest(testId);
   const navigate = useNavigate();
 
-  if (!data) return <LoadingComponent></LoadingComponent>;
+  if (!test) return <LoadingComponent></LoadingComponent>;
 
-  const { _id, doctor, type, date, patientId } = data;
+  const { _id, doctor, type, date, patientId } = test;
 
   const handleViewTest = () => navigate(`/app/pacientes/${patientId}/${_id}`);
   const handleDelete = async () =>

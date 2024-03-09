@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { TestData, TestType } from "../../utils/types";
+import { TestData, TestTypeData, UserData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { useData } from "../../hooks/useData";
-import { TEST_TYPE_ENDPOINT } from "../../utils/constants";
+import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 
 export interface TestFormProps<T> {
   data: TestData | null;
@@ -10,7 +10,9 @@ export interface TestFormProps<T> {
 }
 
 export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
-  const [testTypes] = useData<TestType[]>(TEST_TYPE_ENDPOINT);
+  const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
+  const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
@@ -25,7 +27,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     });
   };
 
-  if (!data || !testTypes) {
+  if (!data || !testTypes || !doctors) {
     return <LoadingComponent></LoadingComponent>;
   }
 
@@ -33,20 +35,26 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     <>
       <label>
         Médico:{" "}
-        <input
+        <select
           name="doctor"
-          type="text"
           value={data.doctor}
           onChange={handleChange}
           required
-        ></input>
+        >
+          <option value="">Selecciona un médico</option>
+          {doctors.map((doctor, index) => (
+            <option key={index} value={doctor._id}>
+              {doctor.name}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         Tipo:{" "}
         <select name="type" value={data.type} onChange={handleChange} required>
           <option value="">Selecciona un tipo</option>
           {testTypes.map((type, index) => (
-            <option key={index} value={type.name}>
+            <option key={index} value={type._id}>
               {type.name}
             </option>
           ))}

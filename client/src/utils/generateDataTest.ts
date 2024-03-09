@@ -1,36 +1,64 @@
-import { useData } from "../hooks/useData";
-import { TEST_TYPE_ENDPOINT } from "./constants";
-import { TestType } from "./types";
+import { TestSubData } from "./types";
 
-export async function generateDataTest(type) {
-  const [testType] = await useData<TestType>(TEST_TYPE_ENDPOINT + type);
+export function generateDataTest(bodyParts: string[]): TestSubData {
+  const videoLength: number = generateRandomNumber(60, 180);
+  const data: TestSubData = {
+    time: generateTime(videoLength),
+    probability: generateProblem(),
+    problem: generateProblem(),
+    parts: {},
+  };
+
+  bodyParts.forEach((part: string) => {
+    if (part !== "Nariz") {
+      data.parts[part + " izquierda"] = generateParts(videoLength);
+      data.parts[part + " derecha"] = generateParts(videoLength);
+    } else {
+      data.parts[part] = generateParts(videoLength);
+    }
+  });
+
+  return data;
 }
-/*
-{
- tiempo: x,
- probabilidad: %,
- problema total: %, 
- partes cuerpo: {
-  piernas: {
-   pierna izq: {
-    angulos ideales: x,
-    angulos reales: x,
-    problema: %
-   },
-   pierna der: {
-    angles ideales: x,
-    angulos reales: x,
-    problema: %
-   },
-   problema: %
-  },
-  nariz {
-   angulos ideales: x,
-   angulos reales: x,
-   problema: %
+
+function generateParts(videoLength: number) {
+  return {
+    idealAngles: generateAngles(videoLength),
+    realAngles: generateAngles(videoLength),
+    problem: generateProblem(),
+  };
+}
+
+function generateTime(videoLength: number): number[] {
+  const numbersArray: number[] = [];
+
+  let count = 1;
+  for (let i = 0; i < videoLength; i++) {
+    numbersArray.push(count);
+    count++;
+    if (count > 60) {
+      count = 1; // Reset count to 1 after reaching 60
+    }
   }
- },
+
+  return numbersArray;
 }
 
-Usar funciones map y reduce para añadir datos en gráficas
-*/
+function generateAngles(videoLength: number): number[] {
+  const numbersArray: number[] = [];
+
+  for (let i = 0; i < videoLength; i++) {
+    const angle = generateRandomNumber(1, 30);
+    numbersArray.push(angle);
+  }
+
+  return numbersArray;
+}
+
+function generateProblem() {
+  return generateRandomNumber(1, 100);
+}
+
+function generateRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

@@ -7,6 +7,12 @@ const testSchema = z.object({
   date: z.string().transform((str) => new Date(str)),
   video: z.string(),
   patientId: z.string(),
+  data: z.object({
+    time: z.array(z.number()),
+    probability: z.number(),
+    problem: z.number(),
+    parts: z.unknown(),
+  }),
 });
 
 export function validateTest(input: Test) {

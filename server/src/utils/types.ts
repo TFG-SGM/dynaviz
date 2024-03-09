@@ -47,6 +47,7 @@ export interface Test {
   date: Date;
   video: string;
   patientId: string;
+  data: object;
 }
 
 export interface PartialTest {
@@ -55,6 +56,7 @@ export interface PartialTest {
   date?: Date | undefined;
   video?: string | undefined;
   patientId?: string | undefined;
+  data?: object | object;
 }
 
 export interface TestType {
