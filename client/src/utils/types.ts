@@ -3,11 +3,26 @@ export type UserData = {
   password: string;
   name: string;
   surname: string;
-  bornDate: string;
-  address: string;
+  age: string;
+  city: string;
   email: string;
   phone: string;
   role?: string;
+};
+
+export type PatientData = {
+  _id: string;
+  name: string;
+  surname: string;
+  age: number;
+  city: string;
+  email: string;
+  phone: string;
+  activityLevel: number;
+  occupation: number;
+  diagnosisYears: number;
+  isFibro: boolean;
+  assignedDoctor: string;
 };
 
 export type actual = {
@@ -17,27 +32,26 @@ export type actual = {
 
 export interface TestPartsData {
   [key: string]: {
-    idealAngles: number[];
-    realAngles: number[];
-    problem: number;
+    idealMovement: number[];
+    realMovement: number[];
+    quality: number;
   };
 }
 
 export interface TestSubData {
   time: number[];
-  probability: number;
-  problem: number;
+  quality: number;
   parts: TestPartsData;
 }
 
 export interface TestData {
   _id: string;
-  doctor: string;
-  type: string;
+  doctorId: string;
+  typeId: string;
   date: string;
   video: string;
   patientId: string;
-  data: TestSubData;
+  data?: TestSubData;
 }
 
 export interface TestTypeData {

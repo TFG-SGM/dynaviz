@@ -2,32 +2,36 @@ import { FormEvent, useState } from "react";
 import { useData } from "../../hooks/useData";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
-import { UserData } from "../../utils/types";
+import { PatientData, UserData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
+import { PatientForm } from "./PatientForm";
+import { PATIENT_ENDPOINT } from "../../utils/constants";
 
 export interface UpdateFormProps {
   endpoint: string;
   handleClean: () => void;
   handleUpdate: (data: UserData) => void;
-  isPass: boolean;
 }
 
 export function UpdateUserForm({
   endpoint,
   handleClean,
   handleUpdate,
-  isPass,
 }: UpdateFormProps) {
-  const [newData, setNewData] = useData<UserData>(endpoint);
+  const typeUser = endpoint.split("/")[0] + "/";
+  const [newData, setNewData] = useData<UserData | PatientData>(endpoint);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await DataService.updateData<UserData>(endpoint, newData);
+      const data = await DataService.updateData<UserData | PatientData>(
+        endpoint,
+        newData
+      );
       handleUpdate(data);
       handleClean();
     } catch (error) {
@@ -46,12 +50,18 @@ export function UpdateUserForm({
     <>
       <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
-        <UserForm
-          data={newData}
-          setNewData={setNewData}
-          isPass={isPass}
-        ></UserForm>
-        <button>Confirmar</button>
+        {typeUser === PATIENT_ENDPOINT ? (
+          <PatientForm
+            data={newData as PatientData}
+            setNewData={setNewData}
+          ></PatientForm>
+        ) : (
+          <UserForm
+            data={newData as UserData}
+            setNewData={setNewData}
+          ></UserForm>
+        )}
+        <button>Editar</button>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>

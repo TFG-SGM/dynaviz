@@ -4,11 +4,9 @@ import { TestSubData } from "../../utils/types";
 
 export function PieChart({ type, data }: { type: string; data: TestSubData }) {
   const bodyParts = TestService.getBodyParts(data.parts);
-  const values = TestService.getBodyPartProblem(data.parts);
+  const values = TestService.getBodyPartQuality(data.parts);
   const option = {
-    tooltip: {
-      trigger: "item",
-    },
+    tooltip: {},
     series: [
       {
         data: bodyParts.map((part, index) => {

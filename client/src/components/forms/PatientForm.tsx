@@ -1,13 +1,15 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { UserData } from "../../utils/types";
+import { PatientData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
+import { SelectType } from "../selects/SelectType";
+import { DOCTOR_ENDPOINT } from "../../utils/constants";
 
-export interface UserFormProps<T> {
-  data: UserData | null;
+export interface PatientFormProps<T> {
+  data: PatientData | null;
   setNewData: Dispatch<SetStateAction<T>>;
 }
 
-export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
+export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -15,7 +17,13 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
       if (!prevState) return prevState;
       return {
         ...prevState,
-        [name]: name === "phone" || name === "age" ? parseInt(value) : value,
+        [name]:
+          name === "phone" ||
+          name === "activityLevel" ||
+          name === "diagnosisYears" ||
+          name === "age"
+            ? parseInt(value)
+            : value,
       };
     });
   };
@@ -59,7 +67,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
       <label>
         Ciudad:{" "}
         <input
-          name="address"
+          name="city"
           type="text"
           value={data.city}
           onChange={handleChange}
@@ -76,16 +84,6 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
           ></input>
         </label>
         <label>
-          Contraseña:{" "}
-          <input
-            name="password"
-            type="password"
-            value={data.password}
-            onChange={handleChange}
-            required
-          ></input>
-        </label>
-        <label>
           Teléfono:{" "}
           <input
             name="phone"
@@ -95,6 +93,55 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
             required
           ></input>
         </label>
+      </label>
+      <label>
+        Ocupación:{" "}
+        <input
+          name="occupation"
+          type="text"
+          value={data.occupation}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
+        Nivel de actividad física:{" "}
+        <input
+          name="activityLevel"
+          type="number"
+          value={data.activityLevel}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
+        Años con diagnostico:{" "}
+        <input
+          name="diagnosisYears"
+          type="number"
+          value={data.diagnosisYears}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
+        Tiene fibromialgia:{" "}
+        <input
+          name="diagnosisYears"
+          type="checkbox"
+          value={data.diagnosisYears}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
+        Selecciona el médico:{" "}
+        <SelectType
+          option="assignedDoctor"
+          value={data.assignedDoctor}
+          endpoint={DOCTOR_ENDPOINT}
+          handleChange={handleChange}
+        ></SelectType>
       </label>
     </>
   );

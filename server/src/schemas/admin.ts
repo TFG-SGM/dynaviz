@@ -5,8 +5,8 @@ const adminSchema = z.object({
   password: z.string(),
   name: z.string(),
   surname: z.string(),
-  bornDate: z.string().transform((str) => new Date(str)),
-  address: z.string(),
+  age: z.number(),
+  city: z.string(),
   email: z.string(),
   phone: z.number(),
 });

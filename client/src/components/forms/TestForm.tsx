@@ -1,8 +1,10 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { TestData, TestTypeData, UserData } from "../../utils/types";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
+import { SelectType } from "../selects/SelectType";
+import { RecordVideoView } from "../elements/RecordVideoView";
 
 export interface TestFormProps<T> {
   data: TestData | null;
@@ -12,6 +14,15 @@ export interface TestFormProps<T> {
 export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
+  const [isRecording, setIsRecording] = useState(false);
+
+  const handleChangeRecordingState = () => setIsRecording(!isRecording);
+  const handleAddRecordingVideo = () => {
+    handleChangeRecordingState();
+    setNewData((prevState) => {
+      return { ...prevState, video: "videoGrabado.mv4" };
+    });
+  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -35,30 +46,21 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     <>
       <label>
         Médico:{" "}
-        <select
-          name="doctor"
-          value={data.doctor}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Selecciona un médico</option>
-          {doctors.map((doctor, index) => (
-            <option key={index} value={doctor._id}>
-              {doctor.name}
-            </option>
-          ))}
-        </select>
+        <SelectType
+          option={"doctorId"}
+          value={data.doctorId}
+          endpoint={DOCTOR_ENDPOINT}
+          handleChange={handleChange}
+        ></SelectType>
       </label>
       <label>
         Tipo:{" "}
-        <select name="type" value={data.type} onChange={handleChange} required>
-          <option value="">Selecciona un tipo</option>
-          {testTypes.map((type, index) => (
-            <option key={index} value={type._id}>
-              {type.name}
-            </option>
-          ))}
-        </select>
+        <SelectType
+          option={"typeId"}
+          value={data.typeId}
+          endpoint={TEST_TYPE_ENDPOINT}
+          handleChange={handleChange}
+        ></SelectType>
       </label>
       <label>
         Fecha:{" "}
@@ -71,17 +73,34 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           required
         ></input>
       </label>
-
       <label>
-        Añadir video:{" "}
+        Vídeo seleccionado:{" "}
+        <input
+          name="video"
+          value={data.video}
+          type="text"
+          required
+          disabled
+        ></input>
+      </label>{" "}
+      <label>
+        Añadir vídeo:{" "}
         <input
           name="video"
           type="file"
           onChange={handleChange}
           accept="video/*"
-          required
         ></input>
       </label>
+      <button type="button" onClick={handleChangeRecordingState}>
+        Grabar vídeo
+      </button>
+      {isRecording && (
+        <RecordVideoView
+          handleChangeRecordingState={handleChangeRecordingState}
+          handleAddRecordingVideo={handleAddRecordingVideo}
+        ></RecordVideoView>
+      )}
     </>
   );
 }

@@ -2,15 +2,14 @@ import z from "zod";
 import { Test } from "../utils/types";
 
 const testSchema = z.object({
-  doctor: z.string(),
-  type: z.string(),
+  doctorId: z.string(),
+  typeId: z.string(),
   date: z.string().transform((str) => new Date(str)),
   video: z.string(),
   patientId: z.string(),
   data: z.object({
     time: z.array(z.number()),
-    probability: z.number(),
-    problem: z.number(),
+    quality: z.number(),
     parts: z.unknown(),
   }),
 });

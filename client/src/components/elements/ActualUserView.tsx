@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { UpdateUserForm } from "../forms/UpdateUserForm";
 import { UserData } from "../../utils/types";
-import { UserDataComponent } from "./UserDataComponent";
+import { UserDataElement } from "./UserDataElement";
 
 interface ActualUserViewProps {
   user: UserData;
@@ -24,11 +24,10 @@ export function ActualUserView({ user, setUser }: ActualUserViewProps) {
           endpoint={user.role + "/" + user._id}
           handleClean={handleCancelUpdate}
           handleUpdate={handleUpdate}
-          isPass={false}
         ></UpdateUserForm>
       ) : (
         <article>
-          {user && <UserDataComponent user={user}></UserDataComponent>}
+          {user && <UserDataElement user={user}></UserDataElement>}
           <button onClick={handleStartUpdate}>Editar</button>
         </article>
       )}

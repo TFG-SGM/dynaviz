@@ -48,11 +48,40 @@ export class TestModel {
     return null;
   }
 
-  static async getTestsByPatient({ patientId }: { patientId: string }) {
+  static async deleteByPatient({ patientId }: { patientId: string }) {
     const db = await connectToMongoDB("tests");
 
+    const { deletedCount } = await db.deleteMany({ patientId });
+    if (deletedCount > 0) return deletedCount;
+    return null;
+  }
+
+  static async getAttributes({ attribute }: { attribute: string }) {
+    const db = await connectToMongoDB("tests");
+    const attributes = await db.distinct(attribute);
+    return attributes;
+  }
+
+  static async getTestsByPatient({
+    patientId,
+    doctorId,
+    typeId,
+    date,
+  }: {
+    patientId: string;
+    doctorId: string;
+    typeId: string;
+    date: string;
+  }) {
+    const db = await connectToMongoDB("tests");
+    const matchStage: any = {};
+    if (patientId) matchStage.patientId = patientId;
+    if (doctorId) matchStage.doctorId = doctorId;
+    if (typeId) matchStage.typeId = typeId;
+    if (date) matchStage.date = new Date(date);
+
     const aggregationPipeline = [
-      { $match: { patientId: patientId } },
+      { $match: matchStage },
       {
         $group: {
           _id: { $year: "$date" },

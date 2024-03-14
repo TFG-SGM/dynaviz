@@ -4,17 +4,22 @@ import { validateTest, validatePartialTest } from "../schemas/test";
 
 export class TestController {
   static async getAll(req: Request, res: Response) {
-    const { patientId } = req.query;
-    let tests = null;
+    const { patientId, doctor, type, date } = req.query;
 
-    console.log(patientId);
-    if (!patientId) tests = await TestModel.getAll();
-    else
-      tests = await TestModel.getTestsByPatient({
-        patientId: patientId as string,
-      });
+    const tests = await TestModel.getTestsByPatient({
+      patientId: patientId as string,
+      typeId: type as string,
+      doctorId: doctor as string,
+      date: date as string,
+    });
 
     res.json(tests);
+  }
+
+  static async getAttributes(req: Request, res: Response) {
+    const { attribute } = req.params;
+    const attributes = await TestModel.getAttributes({ attribute });
+    res.json(attributes);
   }
 
   static async getById(req: Request, res: Response) {
@@ -49,6 +54,14 @@ export class TestController {
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     const result = await TestModel.delete({ id });
+
+    if (result) return res.json(result);
+    res.status(404).json({ message: "Prueba no encontrada." });
+  }
+
+  static async deleteByPatient(req: Request, res: Response) {
+    const { patientId } = req.params;
+    const result = await TestModel.deleteByPatient({ patientId });
 
     if (result) return res.json(result);
     res.status(404).json({ message: "Prueba no encontrada." });

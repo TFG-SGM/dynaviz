@@ -4,8 +4,7 @@ export function generateDataTest(bodyParts: string[]): TestSubData {
   const videoLength: number = generateRandomNumber(60, 180);
   const data: TestSubData = {
     time: generateTime(videoLength),
-    probability: generateProblem(),
-    problem: generateProblem(),
+    quality: generateQualityMovement(),
     parts: {},
   };
 
@@ -23,22 +22,17 @@ export function generateDataTest(bodyParts: string[]): TestSubData {
 
 function generateParts(videoLength: number) {
   return {
-    idealAngles: generateAngles(videoLength),
-    realAngles: generateAngles(videoLength),
-    problem: generateProblem(),
+    idealMovement: generateAngles(videoLength),
+    realMovement: generateAngles(videoLength),
+    quality: generateQualityMovement(),
   };
 }
 
 function generateTime(videoLength: number): number[] {
   const numbersArray: number[] = [];
 
-  let count = 1;
   for (let i = 0; i < videoLength; i++) {
-    numbersArray.push(count);
-    count++;
-    if (count > 60) {
-      count = 1; // Reset count to 1 after reaching 60
-    }
+    numbersArray.push(i);
   }
 
   return numbersArray;
@@ -48,14 +42,14 @@ function generateAngles(videoLength: number): number[] {
   const numbersArray: number[] = [];
 
   for (let i = 0; i < videoLength; i++) {
-    const angle = generateRandomNumber(1, 30);
+    const angle = generateRandomNumber(0, 100);
     numbersArray.push(angle);
   }
 
   return numbersArray;
 }
 
-function generateProblem() {
+function generateQualityMovement() {
   return generateRandomNumber(1, 100);
 }
 

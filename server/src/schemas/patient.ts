@@ -4,10 +4,15 @@ import { Patient } from "../utils/types";
 const patientSchema = z.object({
   name: z.string(),
   surname: z.string(),
-  bornDate: z.string().transform((str) => new Date(str)),
-  address: z.string(),
+  age: z.number(),
+  city: z.string(),
   email: z.string(),
   phone: z.number(),
+  occupation: z.string(),
+  activityLevel: z.number(),
+  diagnosisYears: z.number(),
+  isFibro: z.boolean(),
+  assignedDoctor: z.string(),
 });
 
 export function validatePatient(input: Patient) {

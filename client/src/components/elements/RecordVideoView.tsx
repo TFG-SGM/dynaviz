@@ -2,7 +2,13 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import { PreviewVideoView } from "./PreviewVideoView";
 import { CrossButton } from "../buttons/CrossButton";
 
-export function RecordVideoView({ handleClean }: { handleClean: () => void }) {
+export function RecordVideoView({
+  handleChangeRecordingState,
+  handleAddRecordingVideo,
+}: {
+  handleChangeRecordingState: () => void;
+  handleAddRecordingVideo: () => void;
+}) {
   return (
     <div>
       <hr></hr>
@@ -16,7 +22,7 @@ export function RecordVideoView({ handleClean }: { handleClean: () => void }) {
           previewStream,
         }) => (
           <div>
-            <CrossButton handleClean={handleClean}></CrossButton>
+            <CrossButton handleClean={handleChangeRecordingState}></CrossButton>
             {status === "idle" ? (
               <h3>No has grabando nada todavía</h3>
             ) : status === "recording" ? (
@@ -49,7 +55,7 @@ export function RecordVideoView({ handleClean }: { handleClean: () => void }) {
               Parar de grabar
             </button>
             {status === "stopped" && (
-              <button type="button" onClick={handleClean}>
+              <button type="button" onClick={handleAddRecordingVideo}>
                 Guardar video
               </button>
             )}

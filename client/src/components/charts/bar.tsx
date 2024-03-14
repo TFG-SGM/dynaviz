@@ -13,10 +13,11 @@ export function BarChart({ data }: { data: TestSubData }) {
     },
     series: [
       {
-        data: TestService.getBodyPartProblem(data.parts),
+        data: TestService.getBodyPartQuality(data.parts),
         type: "bar",
       },
     ],
+    tooltip: {},
   };
 
   return <ReactECharts option={option}></ReactECharts>;

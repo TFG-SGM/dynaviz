@@ -10,19 +10,34 @@ export const INITIAL_USER = {
   _id: "",
   name: "",
   surname: "",
-  bornDate: "",
-  address: "",
+  age: 0,
+  city: "",
   email: "",
   phone: "",
   password: "",
 };
 
+export const INITIAL_PATIENT = {
+  _id: "",
+  name: "",
+  surname: "",
+  age: 0,
+  city: "",
+  email: "",
+  phone: "",
+  activityLevel: 0,
+  occupation: "",
+  diagnosisYears: 0,
+  isFibro: false,
+};
+
 export const INITIAL_TEST = {
   _id: "",
-  doctor: "",
-  type: "",
+  doctorId: "",
+  typeId: "",
   date: "",
   video: "",
+  patientId: "",
 };
 
 export const TEST_TYPES = {

@@ -35,7 +35,6 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           endpoint={endpoint}
           handleClean={handleClean}
           setUsers={setUsers}
-          isPass={endpoint !== PATIENT_ENDPOINT}
         ></AddUserForm>
       )}
       {actual.action === "update" && (
@@ -43,7 +42,6 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           endpoint={endpoint + actual.userId}
           handleClean={handleClean}
           handleUpdate={handleUpdateList}
-          isPass={false}
         ></UpdateUserForm>
       )}
       {actual.action === "get" && (

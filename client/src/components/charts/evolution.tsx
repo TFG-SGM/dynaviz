@@ -2,7 +2,9 @@ import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 
-export function BoxPlot({
+export function EvolutionChart({
+  chartType,
+  testType,
   data,
   actualParts,
 }: {
@@ -11,30 +13,25 @@ export function BoxPlot({
 }) {
   if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
 
-  const realAngles = TestService.getRealMovements(data.parts, actualParts[0]);
-  const idealAngles = TestService.getIdealMovements(data.parts, actualParts[0]);
-
   const option = {
     xAxis: {
       type: "category",
+      data: data.time,
     },
     yAxis: {
       type: "value",
-      name: "Ángulos",
-    },
-    tooltip: {
-      trigger: "axis",
-      confine: true,
     },
     series: [
       {
-        type: "boxplot",
-        data: [
-          TestService.getBoxPlotData(realAngles),
-          TestService.getBoxPlotData(idealAngles),
-        ],
+        data: TestService.getRealMovements(data.parts, actualParts[0]),
+        type: "line",
+      },
+      {
+        data: TestService.getIdealMovements(data.parts, actualParts[0]),
+        type: "line",
       },
     ],
+    tooltip: {},
   };
 
   return <ReactECharts option={option}></ReactECharts>;

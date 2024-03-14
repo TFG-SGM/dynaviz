@@ -14,12 +14,10 @@ export function BubbleChart({
   const option = {
     xAxis: {},
     yAxis: {},
-    tooltip: {
-      trigger: "item",
-    },
+    tooltip: {},
     series: [
       {
-        data: TestService.getCorrelatedAngles(data.parts, actualParts),
+        data: TestService.getCorrelatedMovements(data.parts, actualParts),
         type: "scatter",
         symbolSize: function (data: number[]) {
           return data[2] * 10;

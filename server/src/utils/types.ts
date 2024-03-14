@@ -7,8 +7,8 @@ export interface User {
   password: string;
   name: string;
   surname: string;
-  bornDate: Date;
-  address: string;
+  age: number;
+  city: string;
   email: string;
   phone: number;
 }
@@ -17,8 +17,8 @@ export interface PartialUser {
   password?: string | undefined;
   name?: string | undefined;
   surname?: string | undefined;
-  bornDate?: Date | undefined;
-  address?: string | undefined;
+  age?: number | undefined;
+  city?: string | undefined;
   email?: string | undefined;
   phone?: number | undefined;
 }
@@ -26,24 +26,34 @@ export interface PartialUser {
 export interface Patient {
   name: string;
   surname: string;
-  bornDate: Date;
-  address: string;
+  age: number;
+  city: string;
   email: string;
   phone: number;
+  occupation: string;
+  activityLevel: number;
+  diagnosisYears: number;
+  isFibro: boolean;
+  assignedDoctor: string;
 }
 
 export interface PartialPatient {
   name?: string | undefined;
   surname?: string | undefined;
-  bornDate?: Date | undefined;
-  address?: string | undefined;
+  age?: number | undefined;
+  city?: string | undefined;
   email?: string | undefined;
   phone?: number | undefined;
+  occupation?: string | undefined;
+  activityLevel?: number | undefined;
+  diagnosisYears?: number | undefined;
+  isFibro?: boolean | undefined;
+  assignedDoctor?: string | undefined;
 }
 
 export interface Test {
-  doctor: string;
-  type: string;
+  doctorId: string;
+  typeId: string;
   date: Date;
   video: string;
   patientId: string;
@@ -51,8 +61,8 @@ export interface Test {
 }
 
 export interface PartialTest {
-  doctor?: string | undefined;
-  type?: string | undefined;
+  doctorId?: string | undefined;
+  typeId?: string | undefined;
   date?: Date | undefined;
   video?: string | undefined;
   patientId?: string | undefined;

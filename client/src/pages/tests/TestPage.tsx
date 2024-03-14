@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useData } from "../hooks/useData";
-import { TestData } from "../utils/types";
-import { TEST_ENDPOINT } from "../utils/constants";
-import { LoadingComponent } from "../components/other/LoadingComponent";
-import { TestButtons } from "../components/tests/TestButtons";
+import { useData } from "../../hooks/useData";
+import { TestData } from "../../utils/types";
+import { TEST_ENDPOINT } from "../../utils/constants";
+import { LoadingComponent } from "../../components/other/LoadingComponent";
+import { TestButtons } from "../../components/buttons/TestButtons";
 import { MouseEventHandler, useState } from "react";
-import { BodyPartsButtons } from "../components/tests/BodyPartsButtons";
-import { ActualChart } from "../components/tests/ActualChart";
+import { BodyPartsButtons } from "../../components/buttons/BodyPartsButtons";
+import { ActualChart } from "../../components/elements/ActualChart";
 
-import "../assets/styles/testButtons.css";
+import "../../assets/styles/testButtons.css";
+import { TestMenuView } from "../../components/menus/TestMenuView";
 
 interface actual {
   chart: string;
@@ -19,6 +20,7 @@ export function TestPage() {
   const { testId } = useParams();
   const [test] = useData<TestData>(TEST_ENDPOINT + testId);
   const [actual, setActual] = useState<actual>({ chart: "line", parts: [] });
+  const [isViewing, setIsViewing] = useState(false);
 
   const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
@@ -46,11 +48,18 @@ export function TestPage() {
     }));
   };
 
-  if (!test) return <LoadingComponent></LoadingComponent>;
+  if (!test || !test.data) return <LoadingComponent></LoadingComponent>;
 
   return (
     <>
-      <h1>Prueba del {test.date}</h1>
+      {isViewing && (
+        <TestMenuView
+          test={test}
+          handleClean={() => setIsViewing(false)}
+        ></TestMenuView>
+      )}
+      <h1>Prueba de Paciente</h1>
+      <button onClick={() => setIsViewing(true)}>Consultar detalles</button>
       <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
       <BodyPartsButtons
         parts={test.data.parts}

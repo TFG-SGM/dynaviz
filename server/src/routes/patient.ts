@@ -5,8 +5,6 @@ import { DOCTOR_ROLE } from "../utils/constants";
 
 export const patientRouter: Router = Router();
 
-patientRouter.use(checkRole(DOCTOR_ROLE));
-
 patientRouter.get("/", PatientController.getAll);
 patientRouter.post("/", PatientController.create);
 

@@ -11,12 +11,13 @@ export function RadarChart({ data }: { data: TestSubData }) {
       {
         data: [
           {
-            value: TestService.getBodyPartProblem(data.parts),
+            value: TestService.getBodyPartQuality(data.parts),
           },
         ],
         type: "radar",
       },
     ],
+    tooltip: {},
   };
 
   return <ReactECharts option={option}></ReactECharts>;

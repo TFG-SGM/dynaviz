@@ -1,32 +1,40 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
-import { UserData } from "../../utils/types";
+import { PatientData, UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
-import { INITIAL_USER } from "../../utils/constants";
+import {
+  INITIAL_PATIENT,
+  INITIAL_USER,
+  PATIENT_ENDPOINT,
+} from "../../utils/constants";
+import { PatientForm } from "./PatientForm";
 
 export interface AddFormProps<T> {
   endpoint: string;
   handleClean: () => void;
   setUsers: Dispatch<SetStateAction<T[] | null>>;
-  isPass: boolean;
 }
 
 export function AddUserForm<T>({
   endpoint,
   handleClean,
   setUsers,
-  isPass,
 }: AddFormProps<T>) {
-  const [newData, setNewData] = useState<UserData>(INITIAL_USER);
+  const [newData, setNewData] = useState<UserData | PatientData>(
+    endpoint === PATIENT_ENDPOINT ? INITIAL_PATIENT : INITIAL_USER
+  );
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await DataService.createData<UserData>(endpoint, newData);
+      const data = await DataService.createData<UserData | PatientData>(
+        endpoint,
+        newData
+      );
       setUsers((prevState) => [...(prevState || []), data]);
       handleClean();
     } catch (error) {
@@ -40,11 +48,17 @@ export function AddUserForm<T>({
     <>
       <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
-        <UserForm
-          data={newData}
-          setNewData={setNewData}
-          isPass={isPass}
-        ></UserForm>
+        {endpoint === PATIENT_ENDPOINT ? (
+          <PatientForm
+            data={newData as PatientData}
+            setNewData={setNewData}
+          ></PatientForm>
+        ) : (
+          <UserForm
+            data={newData as UserData}
+            setNewData={setNewData}
+          ></UserForm>
+        )}
         <button>Añadir</button>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}

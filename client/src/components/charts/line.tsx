@@ -21,14 +21,11 @@ export function LineChart({
     },
     series: [
       {
-        data: TestService.getRealAngles(data.parts, actualParts[0]),
-        type: "line",
-      },
-      {
-        data: TestService.getIdealAngles(data.parts, actualParts[0]),
+        data: TestService.getRealMovements(data.parts, actualParts[0]),
         type: "line",
       },
     ],
+    tooltip: {},
   };
 
   return <ReactECharts option={option}></ReactECharts>;

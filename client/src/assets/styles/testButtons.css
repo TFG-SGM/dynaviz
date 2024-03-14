@@ -5,3 +5,15 @@
 .active-chart {
   background-color: rgb(141, 141, 221);
 }
+
+.key-points {
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+.key-points > img {
+  position: absolute;
+}
+.key-points > svg {
+  position: absolute;
+}

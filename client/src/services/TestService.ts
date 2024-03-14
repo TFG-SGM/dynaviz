@@ -1,12 +1,12 @@
 import { TestPartsData } from "../utils/types";
 
 export class TestService {
-  static getRealAngles(parts: TestPartsData, actualPart: string) {
-    return parts[actualPart].realAngles;
+  static getRealMovements(parts: TestPartsData, actualPart: string) {
+    return parts[actualPart].realMovement;
   }
 
-  static getIdealAngles(parts: TestPartsData, actualPart: string) {
-    return parts[actualPart].idealAngles;
+  static getIdealMovements(parts: TestPartsData, actualPart: string) {
+    return parts[actualPart].idealMovement;
   }
 
   static getBodyParts(parts: TestPartsData) {
@@ -19,62 +19,62 @@ export class TestService {
     });
   }
 
-  static getBodyPartProblem(parts: TestPartsData) {
-    return Object.keys(parts).map((part) => parts[part].problem);
+  static getBodyPartQuality(parts: TestPartsData) {
+    return Object.keys(parts).map((part) => parts[part].quality);
   }
 
-  static getUniqueAngles(parts: TestPartsData, actualPart: string) {
-    const realAngles = this.getRealAngles(parts, actualPart);
-    const idealAngles = this.getIdealAngles(parts, actualPart);
-    const combinedArray = [...realAngles, ...idealAngles];
+  static getUniqueMovements(parts: TestPartsData, actualPart: string) {
+    const realMovements = this.getRealMovements(parts, actualPart);
+    const idealMovements = this.getIdealMovements(parts, actualPart);
+    const combinedArray = [...realMovements, ...idealMovements];
 
-    const uniqueAnglesSet = new Set<number>();
+    const uniqueMovementsSet = new Set<number>();
     for (const num of combinedArray) {
-      uniqueAnglesSet.add(num);
+      uniqueMovementsSet.add(num);
     }
 
-    const uniqueAngles = Array.from(uniqueAnglesSet);
+    const uniqueMovements = Array.from(uniqueMovementsSet);
 
-    return uniqueAngles;
+    return uniqueMovements;
   }
 
-  static getRealCountAngles(
+  static getRealCountMovements(
     parts: TestPartsData,
     actualPart: string,
-    uniqueAngles: number[]
+    uniqueMovements: number[]
   ) {
-    const realAngles = this.getRealAngles(parts, actualPart);
+    const realMovements = this.getRealMovements(parts, actualPart);
 
-    console.log(realAngles);
+    console.log(realMovements);
 
-    const countAngles = uniqueAngles.map((angle) => {
-      const count = realAngles.filter(
-        (realAngle) => realAngle === angle
+    const countMovements = uniqueMovements.map((movement) => {
+      const count = realMovements.filter(
+        (realMovement) => realMovement === movement
       ).length;
       return count;
     });
 
-    return countAngles;
+    return countMovements;
   }
 
-  static getIdealCountAngles(
+  static getIdealCountMovements(
     parts: TestPartsData,
     actualPart: string,
-    uniqueAngles: number[]
+    uniqueMovements: number[]
   ) {
-    const idealAngles = this.getIdealAngles(parts, actualPart);
+    const idealMovements = this.getIdealMovements(parts, actualPart);
 
-    const countAngles = uniqueAngles.map((angle) => {
-      const count = idealAngles.filter(
-        (idealAngle) => idealAngle === angle
+    const countMovements = uniqueMovements.map((movement) => {
+      const count = idealMovements.filter(
+        (idealMovement) => idealMovement === movement
       ).length;
       return count;
     });
-    return countAngles;
+    return countMovements;
   }
 
-  static getBoxPlotData(angles: number[]) {
-    const sortedData = angles.sort((a, b) => a - b);
+  static getBoxPlotData(movements: number[]) {
+    const sortedData = movements.sort((a, b) => a - b);
 
     const min = sortedData[0];
     const q1 = this.findQuartile(sortedData, 0.25);
@@ -97,13 +97,13 @@ export class TestService {
     );
   }
 
-  static getCorrelatedAngles(parts: TestPartsData, actualParts: string[]) {
-    const realAngles1 = this.getRealAngles(parts, actualParts[0]);
-    const realAngles2 = this.getRealAngles(parts, actualParts[1]);
+  static getCorrelatedMovements(parts: TestPartsData, actualParts: string[]) {
+    const movements1 = this.getRealMovements(parts, actualParts[0]);
+    const movements2 = this.getRealMovements(parts, actualParts[1]);
 
-    const combine = realAngles1.map((angle, index) => [
-      angle,
-      realAngles2[index],
+    const combine = movements1.map((movement, index) => [
+      movement,
+      movements2[index],
     ]);
 
     // Use a Set to keep track of unique pairs
