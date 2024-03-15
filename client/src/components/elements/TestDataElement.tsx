@@ -19,7 +19,7 @@ export function TestDataElement({ test }: { test: TestData }) {
 
   return (
     <>
-      <p>Médico: {doctor?.name}</p>
+      <p>Médico: {doctor ? doctor.name : "Ninguno"}</p>
       <p>Tipo: {type?.name}</p>
       <p>Fecha: {date.split("T")[0]}</p>
       <p>Video: {video}</p>

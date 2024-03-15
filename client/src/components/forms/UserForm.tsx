@@ -59,7 +59,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
       <label>
         Ciudad:{" "}
         <input
-          name="address"
+          name="city"
           type="text"
           value={data.city}
           onChange={handleChange}
@@ -89,7 +89,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
           Teléfono:{" "}
           <input
             name="phone"
-            pattern="[0-9]{10}"
+            pattern="[0-9]{9}"
             value={data.phone}
             onChange={handleChange}
             required

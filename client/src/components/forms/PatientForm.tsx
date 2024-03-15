@@ -10,8 +10,8 @@ export interface PatientFormProps<T> {
 }
 
 export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
-  const handleChange = (e: ChangeEvent) => {
-    const { name, value } = e.target as HTMLSelectElement;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
 
     setNewData((prevState) => {
       if (!prevState) return prevState;
@@ -23,6 +23,8 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
           name === "diagnosisYears" ||
           name === "age"
             ? parseInt(value)
+            : name === "isFibro"
+            ? checked
             : value,
       };
     });
@@ -127,11 +129,10 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
       <label>
         Tiene fibromialgia:{" "}
         <input
-          name="diagnosisYears"
+          name="isFibro"
           type="checkbox"
-          value={data.diagnosisYears}
+          checked={data.isFibro}
           onChange={handleChange}
-          required
         ></input>
       </label>
       <label>

@@ -29,7 +29,7 @@ export function PatientDataElement({ user }: { user: PatientData }) {
       <p>Ocupación: {occupation}</p>
       <p>Años con diagnostico: {diagnosisYears}</p>
       <p>Diagnosticado con fibromialgia: {isFibro ? "Si" : "No"}</p>
-      <p>Médico asignado: {doctor?.name}</p>
+      <p>Médico asignado: {doctor ? doctor.name : "Ninguno"}</p>
     </>
   );
 }
