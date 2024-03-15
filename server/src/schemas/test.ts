@@ -7,6 +7,7 @@ const testSchema = z.object({
   date: z.string().transform((str) => new Date(str)),
   video: z.string(),
   patientId: z.string(),
+  evaScale: z.number(),
   data: z.object({
     time: z.array(z.number()),
     quality: z.number(),

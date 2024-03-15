@@ -1,34 +1,47 @@
 import ReactECharts from "echarts-for-react";
-import { TestService } from "../../services/TestService";
-import { TestSubData } from "../../utils/types";
+import { useEffect, useState } from "react";
+import { TestData } from "../../utils/types";
 
 export function EvolutionChart({
+  tests,
   chartType,
-  testType,
-  data,
-  actualParts,
 }: {
-  data: TestSubData;
-  actualParts: string[];
+  tests: TestData[];
+  chartType: string;
 }) {
-  if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
+  const [data, setData] = useState<{ dates: string[]; qualities: number[] }>({
+    dates: [],
+    qualities: [],
+  });
+
+  useEffect(() => {
+    const newQualities: number[] = [];
+    const newDates: string[] = [];
+
+    for (const year in tests) {
+      if (tests.hasOwnProperty(year)) {
+        tests[year].forEach((test) => {
+          newQualities.push(test.data.quality);
+          newDates.push(test.date.split("T")[0]);
+        });
+      }
+    }
+
+    setData({ dates: newDates, qualities: newQualities });
+  }, [tests]);
 
   const option = {
     xAxis: {
       type: "category",
-      data: data.time,
+      data: data.dates,
     },
     yAxis: {
       type: "value",
     },
     series: [
       {
-        data: TestService.getRealMovements(data.parts, actualParts[0]),
-        type: "line",
-      },
-      {
-        data: TestService.getIdealMovements(data.parts, actualParts[0]),
-        type: "line",
+        data: data.qualities,
+        type: chartType,
       },
     ],
     tooltip: {},

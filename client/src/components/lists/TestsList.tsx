@@ -73,8 +73,6 @@ export function TestsList({ patient }: { patient: UserData }) {
               <article key={year}>
                 <h2>{year}</h2>
                 {tests[year].map((test) => {
-                  console.log(tests);
-
                   return <TestCard key={test._id} testId={test._id}></TestCard>;
                 })}
               </article>

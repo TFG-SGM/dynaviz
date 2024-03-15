@@ -45,8 +45,6 @@ export class TestService {
   ) {
     const realMovements = this.getRealMovements(parts, actualPart);
 
-    console.log(realMovements);
-
     const countMovements = uniqueMovements.map((movement) => {
       const count = realMovements.filter(
         (realMovement) => realMovement === movement
@@ -81,7 +79,6 @@ export class TestService {
     const median = this.findQuartile(sortedData, 0.5);
     const q3 = this.findQuartile(sortedData, 0.75);
     const max = sortedData[sortedData.length - 1];
-    console.log([min, q1, median, q3, max]);
 
     return [min, q1, median, q3, max];
   }

@@ -4,7 +4,7 @@ import { CrossButton } from "../buttons/CrossButton";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { ActualUserView } from "../elements/ActualUserView";
 
-export function MyAccount({ handleClean }) {
+export function MyAccount({ handleClean }: { handleClean: () => void }) {
   const [user, setUser] = useData<UserData>("auth/user-data");
 
   if (!user) return <LoadingComponent></LoadingComponent>;

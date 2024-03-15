@@ -21,7 +21,7 @@ export class DataService {
 
   public static async getData(endpoint: string) {
     const token = await DataService.getToken();
-
+    console.log(endpoint);
     const { data } = await axios.get(URL + endpoint, {
       headers: { Authorization: `Bearer ${token}` },
     });

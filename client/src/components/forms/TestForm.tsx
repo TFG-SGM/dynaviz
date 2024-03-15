@@ -33,7 +33,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
       if (!prevState) return prevState;
       return {
         ...prevState,
-        [name]: value,
+        [name]: name === "evaScale" ? parseInt(value) : value,
       };
     });
   };
@@ -72,6 +72,22 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           max={new Date().toISOString().split("T")[0]}
           required
         ></input>
+      </label>
+      <label>
+        Escala EVA:
+        <input
+          name="evaScale"
+          type="range"
+          value={data.evaScale}
+          onChange={handleChange}
+          min={1}
+          max={10}
+          required
+        ></input>
+        <p>
+          {data.evaScale < 4 ? "😞" : data.evaScale > 6 ? "😀" : "😐"}{" "}
+          {data.evaScale}
+        </p>
       </label>
       <label>
         Vídeo seleccionado:{" "}

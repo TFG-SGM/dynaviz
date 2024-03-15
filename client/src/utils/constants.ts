@@ -29,6 +29,7 @@ export const INITIAL_PATIENT = {
   occupation: "",
   diagnosisYears: 0,
   isFibro: false,
+  assignedDoctor: "",
 };
 
 export const INITIAL_TEST = {
@@ -38,6 +39,7 @@ export const INITIAL_TEST = {
   date: "",
   video: "",
   patientId: "",
+  evaScale: 5,
 };
 
 export const TEST_TYPES = {

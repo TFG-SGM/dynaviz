@@ -80,6 +80,7 @@ export class TestModel {
     if (typeId) matchStage.typeId = typeId;
     if (date) matchStage.date = new Date(date);
 
+    console.log(matchStage);
     const aggregationPipeline = [
       { $match: matchStage },
       {

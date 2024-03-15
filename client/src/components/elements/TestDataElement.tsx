@@ -12,7 +12,7 @@ import {
 } from "../../utils/types";
 
 export function TestDataElement({ test }: { test: TestData }) {
-  const { doctorId, typeId, date, video, patientId } = test;
+  const { doctorId, typeId, date, video, patientId, evaScale } = test;
   const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + doctorId);
   const [type] = useData<TestTypeData>(TEST_TYPE_ENDPOINT + typeId);
   const [patient] = useData<PatientData>(PATIENT_ENDPOINT + patientId);
@@ -24,6 +24,7 @@ export function TestDataElement({ test }: { test: TestData }) {
       <p>Fecha: {date.split("T")[0]}</p>
       <p>Video: {video}</p>
       <p>Paciente: {patient?.name}</p>
+      <p>Escala EVA: {evaScale}</p>
     </>
   );
 }

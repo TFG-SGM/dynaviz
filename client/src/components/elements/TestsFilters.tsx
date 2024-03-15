@@ -1,8 +1,18 @@
+import { ChangeEvent } from "react";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { SelectDate } from "../selects/SelectDate";
 import { SelectType } from "../selects/SelectType";
 
-export function TestsFilters({ filters, handleChange }) {
+interface TestFiltersProps {
+  filters: {
+    typeId: string;
+    doctorId: string;
+    date: string;
+  };
+  handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export function TestsFilters({ filters, handleChange }: TestFiltersProps) {
   return (
     <>
       <SelectType

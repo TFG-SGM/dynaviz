@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+import { TestData } from "../utils/types";
+interface AggregationResult {
+  [year: string]: TestData[];
+}
 
-export function useTestsCount(tests) {
+export function useTestsCount(tests: AggregationResult | null) {
   const [numTests, setNumTests] = useState(0);
   useEffect(() => {
     if (tests) {
@@ -12,7 +16,7 @@ export function useTestsCount(tests) {
   return [numTests];
 }
 
-function countTests(tests) {
+function countTests(tests: AggregationResult) {
   let numTests = 0;
   for (const key in tests) {
     if (typeof tests[key] === "object") {

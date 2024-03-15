@@ -3,7 +3,7 @@ export type UserData = {
   password: string;
   name: string;
   surname: string;
-  age: string;
+  age: number;
   city: string;
   email: string;
   phone: string;
@@ -19,7 +19,7 @@ export type PatientData = {
   email: string;
   phone: string;
   activityLevel: number;
-  occupation: number;
+  occupation: string;
   diagnosisYears: number;
   isFibro: boolean;
   assignedDoctor: string;
@@ -51,6 +51,7 @@ export interface TestData {
   date: string;
   video: string;
   patientId: string;
+  evaScale: number;
   data?: TestSubData;
 }
 

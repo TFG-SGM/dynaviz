@@ -55,6 +55,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>
+      <hr></hr>
     </>
   );
 }

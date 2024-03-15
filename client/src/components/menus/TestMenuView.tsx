@@ -3,8 +3,12 @@ import { TestDataElement } from "../elements/TestDataElement";
 import { DataService } from "../../services/DataService";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { TestData } from "../../utils/types";
 
-export interface TestMenuView {}
+export interface TestMenuView {
+  test: TestData;
+  handleClean: () => void;
+}
 
 export function TestMenuView({ test, handleClean }: TestMenuView) {
   const navigate = useNavigate();

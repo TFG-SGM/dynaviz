@@ -4,12 +4,12 @@ import { validateTest, validatePartialTest } from "../schemas/test";
 
 export class TestController {
   static async getAll(req: Request, res: Response) {
-    const { patientId, doctor, type, date } = req.query;
+    const { patientId, doctorId, typeId, date } = req.query;
 
     const tests = await TestModel.getTestsByPatient({
       patientId: patientId as string,
-      typeId: type as string,
-      doctorId: doctor as string,
+      typeId: typeId as string,
+      doctorId: doctorId as string,
       date: date as string,
     });
 

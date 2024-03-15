@@ -10,8 +10,8 @@ export interface PatientFormProps<T> {
 }
 
 export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (e: ChangeEvent) => {
+    const { name, value } = e.target as HTMLSelectElement;
 
     setNewData((prevState) => {
       if (!prevState) return prevState;
@@ -87,7 +87,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
           Teléfono:{" "}
           <input
             name="phone"
-            pattern="[0-9]{10}"
+            pattern="[0-9]{9}"
             value={data.phone}
             onChange={handleChange}
             required
