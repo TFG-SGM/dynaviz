@@ -19,12 +19,12 @@ export function TestMenuView({ test, handleClean }: TestMenuView) {
 
   if (!test) return;
   return (
-    <>
+    <dialog open>
       <article>
         <CrossButton handleClean={handleClean}></CrossButton>
         <TestDataElement test={test}></TestDataElement>
         <button onClick={handleDelete}>Eliminar</button>
       </article>
-    </>
+    </dialog>
   );
 }

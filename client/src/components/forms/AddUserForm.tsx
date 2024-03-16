@@ -45,7 +45,7 @@ export function AddUserForm<T>({
   };
 
   return (
-    <>
+    <dialog open>
       <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
         {endpoint === PATIENT_ENDPOINT ? (
@@ -63,6 +63,6 @@ export function AddUserForm<T>({
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>
-    </>
+    </dialog>
   );
 }

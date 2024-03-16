@@ -47,7 +47,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   };
 
   return (
-    <>
+    <dialog open>
       <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
         <TestForm data={newData} setNewData={setNewData}></TestForm>
@@ -56,6 +56,6 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>
       <hr></hr>
-    </>
+    </dialog>
   );
 }

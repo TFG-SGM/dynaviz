@@ -23,21 +23,25 @@ export function LoginPage() {
   };
 
   return (
-    <div>
-      <h1>DiPAMIA</h1>
+    <div className="login-container">
+      <h1>DynaViz</h1>
       <form onSubmit={handleSubmit}>
-        <label>Correo</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <label>Contraseña</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
+        <label>
+          Correo
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Contraseña
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>
+        </label>
         <button>Iniciar Sesión</button>
         {error && <ErrorComponent error={error}></ErrorComponent>}
       </form>

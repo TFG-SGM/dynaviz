@@ -1,14 +1,13 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { UpdateUserForm } from "../forms/UpdateUserForm";
 import { UserData } from "../../utils/types";
 import { UserDataElement } from "./UserDataElement";
+import { LoadingComponent } from "../other/LoadingComponent";
+import { useData } from "../../hooks/useData";
+import { CrossButton } from "../buttons/CrossButton";
 
-interface ActualUserViewProps {
-  user: UserData;
-  setUser: Dispatch<SetStateAction<UserData | null>>;
-}
-
-export function ActualUserView({ user, setUser }: ActualUserViewProps) {
+export function MyAccount({ handleClean }: { handleClean: () => void }) {
+  const [user, setUser] = useData<UserData>("auth/user-data");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
   const handleStartUpdate = () => setIsUpdate(true);
@@ -17,6 +16,9 @@ export function ActualUserView({ user, setUser }: ActualUserViewProps) {
     setUser((prevState) => {
       return { ...prevState, ...data };
     });
+
+  if (!user) return <LoadingComponent></LoadingComponent>;
+
   return (
     <>
       {isUpdate ? (
@@ -26,10 +28,11 @@ export function ActualUserView({ user, setUser }: ActualUserViewProps) {
           handleUpdate={handleUpdate}
         ></UpdateUserForm>
       ) : (
-        <article>
+        <dialog>
+          <CrossButton handleClean={handleClean}></CrossButton>
           {user && <UserDataElement user={user}></UserDataElement>}
           <button onClick={handleStartUpdate}>Editar</button>
-        </article>
+        </dialog>
       )}
     </>
   );

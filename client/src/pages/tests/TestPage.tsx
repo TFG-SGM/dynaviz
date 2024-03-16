@@ -8,7 +8,7 @@ import { MouseEventHandler, useState } from "react";
 import { BodyPartsButtons } from "../../components/buttons/BodyPartsButtons";
 import { ActualChart } from "../../components/elements/ActualChart";
 
-import "../../assets/styles/testButtons.css";
+import "../../styles/test-buttons.css";
 import { TestMenuView } from "../../components/menus/TestMenuView";
 
 interface actual {

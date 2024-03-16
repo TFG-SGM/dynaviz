@@ -47,7 +47,7 @@ export function UpdateUserForm({
   }
 
   return (
-    <>
+    <dialog open>
       <CrossButton handleClean={handleClean}></CrossButton>
       <form onSubmit={handleSubmit}>
         {typeUser === PATIENT_ENDPOINT ? (
@@ -61,10 +61,10 @@ export function UpdateUserForm({
             setNewData={setNewData}
           ></UserForm>
         )}
-        <button>Editar</button>
+        <button>Guardar</button>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
       <button onClick={handleClean}>Cancelar</button>
-    </>
+    </dialog>
   );
 }

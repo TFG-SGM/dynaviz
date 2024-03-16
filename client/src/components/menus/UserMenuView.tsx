@@ -39,7 +39,7 @@ export function UserMenuView({
 
   if (!user) return;
   return (
-    <>
+    <dialog open>
       {isUpdate ? (
         <UpdateUserForm
           endpoint={endpoint}
@@ -65,6 +65,6 @@ export function UserMenuView({
           {error && <ErrorComponent error={error}></ErrorComponent>}
         </article>
       )}
-    </>
+    </dialog>
   );
 }

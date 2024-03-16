@@ -1,0 +1,35 @@
+:root {
+  --main-color: #54a57e;
+  --background-color: #eeeeee;
+  --black-letter: #1e1e1e;
+  --white-letter: #f0f2f5;
+  --radius: 5px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--black-letter);
+  font-size: 16px;
+}
+
+button {
+  padding: 10px;
+  border-radius: var(--radius);
+  border: none;
+  background-color: var(--main-color);
+  color: var(--white-letter);
+
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 200ms;
+}
+
+button:hover {
+  transform: scale(1.05);
+}

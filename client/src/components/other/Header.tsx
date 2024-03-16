@@ -9,7 +9,6 @@ export function Header() {
   const [isMyAccount, setIsMyAccount] = useState(false);
 
   const handleGoBack = () => {
-    if (location.pathname === "/app") DataService.logout();
     navigate(-1);
   };
 
@@ -21,12 +20,15 @@ export function Header() {
   const handleMyAccount = () => setIsMyAccount(!isMyAccount);
 
   return (
-    <>
+    <nav className="header-container">
       {isMyAccount && <MyAccount handleClean={handleMyAccount}></MyAccount>}
-      <button onClick={handleGoBack}>Atrás</button>
-      <button onClick={handleMyAccount}>Mi Cuenta</button>
-      <button onClick={handleLogout}>Cerrar Sesión</button>
-      <hr></hr>
-    </>
+      {location.pathname !== "/app" && (
+        <button onClick={handleGoBack}>Atrás</button>
+      )}
+      <div>
+        <button onClick={handleMyAccount}>Mi Cuenta</button>
+        <button onClick={handleLogout}>Cerrar Sesión</button>
+      </div>
+    </nav>
   );
 }

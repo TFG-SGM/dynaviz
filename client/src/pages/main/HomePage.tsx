@@ -5,7 +5,7 @@ import { UserData } from "../../utils/types";
 export function HomePage() {
   const [user] = useData<UserData>("auth/user-data");
   return (
-    <>
+    <div className="homepage-container">
       <ul>
         {user?.role === "admin" && (
           <>
@@ -23,6 +23,6 @@ export function HomePage() {
         </li>
       </ul>
       <hr></hr>
-    </>
+    </div>
   );
 }

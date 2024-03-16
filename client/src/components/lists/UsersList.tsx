@@ -28,7 +28,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
   }
 
   return (
-    <div>
+    <>
       <button onClick={handleAdd}>Añadir usuario</button>
       {actual.action === "add" && (
         <AddUserForm
@@ -73,6 +73,6 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           })}
         </div>
       )}
-    </div>
+    </>
   );
 }

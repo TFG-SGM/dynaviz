@@ -24,6 +24,10 @@ export function LineChart({
         data: TestService.getRealMovements(data.parts, actualParts[0]),
         type: "line",
       },
+      {
+        data: TestService.getIdealMovements(data.parts, actualParts[0]),
+        type: "line",
+      },
     ],
     tooltip: {},
   };
