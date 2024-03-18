@@ -59,7 +59,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
       ) : users.length === 0 ? (
         <EmptyListComponent></EmptyListComponent>
       ) : (
-        <div>
+        <div className="user-list">
           {users.map((user: UserData) => {
             return (
               <UserCard

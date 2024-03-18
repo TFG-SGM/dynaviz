@@ -59,10 +59,14 @@ export function AddUserForm<T>({
             setNewData={setNewData}
           ></UserForm>
         )}
-        <button>Añadir</button>
+        <div className="buttons-container">
+          <button className="cancel-button" onClick={handleClean}>
+            Cancelar
+          </button>
+          <button>Añadir</button>
+        </div>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
-      <button onClick={handleClean}>Cancelar</button>
     </dialog>
   );
 }

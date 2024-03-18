@@ -30,7 +30,8 @@ export function UserMenuView({
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleStartUpdate = () => setIsUpdate(true);
+  const handleStartUpdate = () =>
+    setActual({ action: "update", userId: user?._id });
   const handleCancelUpdate = () => setIsUpdate(false);
   const handleUpdate = (data: UserData) => {
     setUser(data);
@@ -39,7 +40,7 @@ export function UserMenuView({
 
   if (!user) return;
   return (
-    <dialog open>
+    <dialog className="user-view-menu" open>
       {isUpdate ? (
         <UpdateUserForm
           endpoint={endpoint}
@@ -47,23 +48,27 @@ export function UserMenuView({
           handleUpdate={handleUpdate}
         ></UpdateUserForm>
       ) : (
-        <article>
+        <>
           <CrossButton handleClean={handleClean}></CrossButton>
           {isPatient ? (
             <PatientDataElement user={user as PatientData}></PatientDataElement>
           ) : (
             <UserDataElement user={user as UserData}></UserDataElement>
           )}
-          <button onClick={handleStartUpdate}>Editar</button>
-          {isPatient && <TestsViewButton userId={user?._id}></TestsViewButton>}
-          <DeleteUserButton
-            endpoint={endpoint}
-            setActual={setActual}
-            setError={setError}
-            setUsers={setUsers}
-          ></DeleteUserButton>
+          <div className="buttons-container">
+            <DeleteUserButton
+              endpoint={endpoint}
+              setActual={setActual}
+              setError={setError}
+              setUsers={setUsers}
+            ></DeleteUserButton>
+            {isPatient && (
+              <TestsViewButton userId={user?._id}></TestsViewButton>
+            )}
+            <button onClick={handleStartUpdate}>Editar</button>
+          </div>
           {error && <ErrorComponent error={error}></ErrorComponent>}
-        </article>
+        </>
       )}
     </dialog>
   );

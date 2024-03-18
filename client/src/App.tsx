@@ -5,6 +5,7 @@ import "./styles/app.css";
 import "./styles/login.css";
 import "./styles/header.css";
 import "./styles/homepage.css";
+import "./styles/list.css";
 
 export function App() {
   return (

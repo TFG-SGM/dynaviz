@@ -30,5 +30,9 @@ export function DeleteUserButton({
         setError("Error al eliminar. " + error.response.data.error);
     }
   };
-  return <button onClick={handleDelete}>Eliminar usuario</button>;
+  return (
+    <button className="delete-user-button" onClick={handleDelete}>
+      Eliminar usuario
+    </button>
+  );
 }

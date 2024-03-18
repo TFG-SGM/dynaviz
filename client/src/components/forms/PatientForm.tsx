@@ -75,26 +75,26 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
           onChange={handleChange}
           required
         ></input>
-        <label>
-          Email:{" "}
-          <input
-            name="email"
-            type="email"
-            value={data.email}
-            onChange={handleChange}
-            required
-          ></input>
-        </label>
-        <label>
-          Teléfono:{" "}
-          <input
-            name="phone"
-            pattern="[0-9]{9}"
-            value={data.phone}
-            onChange={handleChange}
-            required
-          ></input>
-        </label>
+      </label>
+      <label>
+        Email:{" "}
+        <input
+          name="email"
+          type="email"
+          value={data.email}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
+        Teléfono:{" "}
+        <input
+          name="phone"
+          pattern="[0-9]{9}"
+          value={data.phone}
+          onChange={handleChange}
+          required
+        ></input>
       </label>
       <label>
         Ocupación:{" "}

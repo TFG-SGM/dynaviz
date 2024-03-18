@@ -1,3 +1,3 @@
 export function ErrorComponent({ error }: { error: string }) {
-  return <p>{error}</p>;
+  return <p className="error-message">{error}</p>;
 }

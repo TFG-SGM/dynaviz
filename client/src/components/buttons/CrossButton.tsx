@@ -1,3 +1,7 @@
 export function CrossButton({ handleClean }: { handleClean: () => void }) {
-  return <button onClick={handleClean}>&#10005;</button>;
+  return (
+    <button className="cross-button" onClick={handleClean}>
+      &#10005;
+    </button>
+  );
 }

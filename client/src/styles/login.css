@@ -1,8 +1,9 @@
 .login-container {
-  margin: 20% auto;
+  margin: 10% auto;
   display: flex;
   gap: 100px;
   width: fit-content;
+  align-items: center;
 }
 
 .login-container > form {
@@ -18,14 +19,6 @@
   background-color: var(--white-letter);
 }
 
-.login-container > form > label {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-}
-
-.login-container > form > label > input {
-  padding: 10px;
-  border-radius: var(--radius);
-  border: 1px solid var(--black-letter);
+.login-button {
+  width: 100%;
 }

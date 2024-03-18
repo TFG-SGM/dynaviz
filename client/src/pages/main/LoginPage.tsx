@@ -42,7 +42,7 @@ export function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </label>
-        <button>Iniciar Sesión</button>
+        <button className="login-button">Iniciar Sesión</button>
         {error && <ErrorComponent error={error}></ErrorComponent>}
       </form>
     </div>

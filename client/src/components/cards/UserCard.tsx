@@ -40,10 +40,14 @@ export function UserCard({
   };
 
   return (
+    <h2 className="user-card" data-user-id={_id} onClick={handleView}>
+      {name} {surname}
+    </h2>
+  );
+}
+
+/*
     <article>
-      <h2>
-        {name} {surname}
-      </h2>
       <button data-user-id={_id} onClick={handleView}>
         Consultar
       </button>
@@ -55,11 +59,12 @@ export function UserCard({
         setUsers={setUsers}
         setError={setError}
       ></DeleteUserButton>
+      
       {error && <ErrorComponent error={error}></ErrorComponent>}
       {endpoint === PATIENT_ENDPOINT && (
         <TestsViewButton userId={_id}></TestsViewButton>
       )}
+      
       <hr></hr>
     </article>
-  );
-}
+    */

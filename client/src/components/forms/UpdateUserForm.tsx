@@ -61,10 +61,14 @@ export function UpdateUserForm({
             setNewData={setNewData}
           ></UserForm>
         )}
-        <button>Guardar</button>
+        <div className="buttons-container">
+          <button className="cancel-button" type="button" onClick={handleClean}>
+            Cancelar
+          </button>
+          <button>Guardar</button>
+        </div>
       </form>
       {error && <ErrorComponent error={error}></ErrorComponent>}
-      <button onClick={handleClean}>Cancelar</button>
     </dialog>
   );
 }
