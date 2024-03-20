@@ -10,8 +10,7 @@ export function RecordVideoView({
   handleAddRecordingVideo: () => void;
 }) {
   return (
-    <div>
-      <hr></hr>
+    <dialog open>
       <ReactMediaRecorder
         video
         render={({
@@ -59,11 +58,10 @@ export function RecordVideoView({
                 Guardar video
               </button>
             )}
-            <hr></hr>
           </div>
         )}
       />
-    </div>
+    </dialog>
   );
 }
 export const RecordView = () => (

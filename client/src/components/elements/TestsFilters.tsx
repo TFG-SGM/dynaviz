@@ -14,7 +14,7 @@ interface TestFiltersProps {
 
 export function TestsFilters({ filters, handleChange }: TestFiltersProps) {
   return (
-    <>
+    <div className="test-filters">
       <SelectType
         option={"typeId"}
         value={filters.typeId}
@@ -28,6 +28,6 @@ export function TestsFilters({ filters, handleChange }: TestFiltersProps) {
         handleChange={handleChange}
       ></SelectType>
       <SelectDate filters={filters} handleChange={handleChange}></SelectDate>{" "}
-    </>
+    </div>
   );
 }

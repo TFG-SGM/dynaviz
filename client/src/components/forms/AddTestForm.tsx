@@ -49,13 +49,14 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   return (
     <dialog open>
       <CrossButton handleClean={handleClean}></CrossButton>
-      <form onSubmit={handleSubmit}>
-        <TestForm data={newData} setNewData={setNewData}></TestForm>
+      <TestForm data={newData} setNewData={setNewData}></TestForm>
+      <div className="buttons-container">
         <button>Añadir</button>
-      </form>
+        <button type="button" className="cancel-button" onClick={handleClean}>
+          Cancelar
+        </button>
+      </div>
       {error && <ErrorComponent error={error}></ErrorComponent>}
-      <button onClick={handleClean}>Cancelar</button>
-      <hr></hr>
     </dialog>
   );
 }

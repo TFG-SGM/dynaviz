@@ -6,6 +6,8 @@ import "./styles/login.css";
 import "./styles/header.css";
 import "./styles/homepage.css";
 import "./styles/list.css";
+import "./styles/cards.css";
+import "./styles/menus.css";
 
 export function App() {
   return (

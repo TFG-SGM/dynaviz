@@ -13,16 +13,13 @@ export function SelectDate({ filters, handleChange }: SelectDateProps) {
 
   if (!dates) return <LoadingComponent></LoadingComponent>;
   return (
-    <label>
-      Fecha:{" "}
-      <select name="date" value={filters.date} onChange={handleChange} required>
-        <option value="">Selecciona una fecha</option>
-        {dates.map((date, index) => (
-          <option key={index} value={date}>
-            {date.split("T")[0]}
-          </option>
-        ))}
-      </select>
-    </label>
+    <select name="date" value={filters.date} onChange={handleChange} required>
+      <option value="">Selecciona una fecha</option>
+      {dates.map((date, index) => (
+        <option key={index} value={date}>
+          {date.split("T")[0]}
+        </option>
+      ))}
+    </select>
   );
 }

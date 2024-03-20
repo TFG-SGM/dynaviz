@@ -48,7 +48,6 @@ export function TestsList({ patient }: { patient: UserData }) {
 
   return (
     <>
-      <button onClick={handleStartCreating}>Añadir prueba</button>
       {isAdding && (
         <AddTestForm
           endpoint={TEST_ENDPOINT}
@@ -57,7 +56,15 @@ export function TestsList({ patient }: { patient: UserData }) {
         ></AddTestForm>
       )}
 
-      {numTests > 1 && <button onClick={handleViewEvolution}>Evolución</button>}
+      <button className="add-test-button" onClick={handleStartCreating}>
+        Añadir prueba
+      </button>
+
+      {numTests > 1 && (
+        <button className="evolution-button" onClick={handleViewEvolution}>
+          Evolución
+        </button>
+      )}
 
       <TestsFilters
         filters={filters}
@@ -71,7 +78,6 @@ export function TestsList({ patient }: { patient: UserData }) {
           {Object.keys(tests).map((year) => {
             return (
               <article key={year}>
-                <h2>{year}</h2>
                 {tests[year].map((test) => {
                   return <TestCard key={test._id} testId={test._id}></TestCard>;
                 })}

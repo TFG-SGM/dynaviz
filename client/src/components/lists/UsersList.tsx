@@ -29,7 +29,9 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
   return (
     <>
-      <button onClick={handleAdd}>Añadir usuario</button>
+      <button className="add-user-button" onClick={handleAdd}>
+        Añadir usuario
+      </button>
       {actual.action === "add" && (
         <AddUserForm
           endpoint={endpoint}

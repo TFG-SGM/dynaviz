@@ -20,7 +20,13 @@ body {
 }
 
 dialog {
-  margin: -100px auto;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
   width: 900px;
   padding: 20px;
   display: flex;
@@ -44,6 +50,16 @@ button {
 
 button:hover {
   opacity: 0.8;
+}
+
+select {
+  font-size: 20px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
 }
 
 form > label {

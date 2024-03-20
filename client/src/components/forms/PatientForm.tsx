@@ -126,13 +126,15 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
           required
         ></input>
       </label>
-      <label>
+      <label className="fibro-label">
         Tiene fibromialgia:{" "}
         <input
+          className="fibro-input"
           name="isFibro"
           type="checkbox"
           checked={data.isFibro}
           onChange={handleChange}
+          role="switch"
         ></input>
       </label>
       <label>

@@ -13,14 +13,19 @@ export function TestCard({ testId }: { testId: string }) {
   const handleViewTest = () => navigate(`/app/pacientes/${patientId}/${_id}`);
 
   return (
-    <article>
-      <p>Médico: {doctorId}</p>
-      <p>Tipo: {typeId}</p>
-      <p>Fecha: {date}</p>
-      <button data-test-id={_id} onClick={handleViewTest}>
-        Consultar
-      </button>
-      <hr></hr>
+    <article className="test-card" data-test-id={_id} onClick={handleViewTest}>
+      <p>
+        <strong>Médico: </strong>
+        {doctorId}
+      </p>
+      <p>
+        <strong>Tipo: </strong>
+        {typeId}
+      </p>
+      <p>
+        <strong>Fecha: </strong>
+        {date}
+      </p>
     </article>
   );
 }
