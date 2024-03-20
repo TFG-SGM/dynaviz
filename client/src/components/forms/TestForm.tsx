@@ -50,7 +50,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           handleAddRecordingVideo={handleAddRecordingVideo}
         ></RecordVideoView>
       ) : (
-        <form>
+        <>
           <label>
             Médico:{" "}
             <SelectType
@@ -117,7 +117,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
               {data.evaScale}
             </p>
           </label>
-        </form>
+        </>
       )}
     </>
   );

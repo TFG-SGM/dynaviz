@@ -8,6 +8,7 @@ import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { TestForm } from "./TestForm";
 import { generateDataTest } from "../../utils/generateDataTest";
 import { useNavigate } from "react-router-dom";
+import { Overlay } from "../other/Overlay";
 
 export interface AddTestProps {
   endpoint: string;
@@ -47,16 +48,25 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   };
 
   return (
-    <dialog open>
-      <CrossButton handleClean={handleClean}></CrossButton>
-      <TestForm data={newData} setNewData={setNewData}></TestForm>
-      <div className="buttons-container">
-        <button>Añadir</button>
-        <button type="button" className="cancel-button" onClick={handleClean}>
-          Cancelar
-        </button>
-      </div>
-      {error && <ErrorComponent error={error}></ErrorComponent>}
-    </dialog>
+    <>
+      <Overlay></Overlay>
+      <dialog open>
+        <CrossButton handleClean={handleClean}></CrossButton>
+        <form onSubmit={handleSubmit}>
+          <TestForm data={newData} setNewData={setNewData}></TestForm>
+          <div className="buttons-container">
+            <button>Añadir</button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={handleClean}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+        {error && <ErrorComponent error={error}></ErrorComponent>}
+      </dialog>
+    </>
   );
 }

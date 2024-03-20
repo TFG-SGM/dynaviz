@@ -9,7 +9,7 @@ export function BodyPartsButtons({
   handleChangePart: MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <div>
+    <div className="body-parts-buttons">
       {Object.keys(parts).map((key) => {
         return (
           <button key={key} id={key} onClick={handleChangePart}>
@@ -17,7 +17,6 @@ export function BodyPartsButtons({
           </button>
         );
       })}
-      <hr></hr>
     </div>
   );
 }

@@ -4,7 +4,7 @@ export function generateDataTest(bodyParts: string[]): TestSubData {
   const videoLength: number = generateRandomNumber(60, 180);
   const data: TestSubData = {
     time: generateTime(videoLength),
-    quality: generateQualityMovement(),
+    restriction: generateRandomRestriction(),
     parts: {},
   };
 
@@ -21,10 +21,18 @@ export function generateDataTest(bodyParts: string[]): TestSubData {
 }
 
 function generateParts(videoLength: number) {
+  const idealMovement = generateMovements(videoLength);
+  const realMovement = generateMovements(videoLength);
+  const variations = idealMovement.map((move, index) =>
+    Math.abs(move - realMovement[index])
+  );
+  const restriction = generateRestriction(variations);
+
   return {
-    idealMovement: generateAngles(videoLength),
-    realMovement: generateAngles(videoLength),
-    quality: generateQualityMovement(),
+    idealMovement,
+    realMovement,
+    variations,
+    restriction,
   };
 }
 
@@ -38,7 +46,7 @@ function generateTime(videoLength: number): number[] {
   return numbersArray;
 }
 
-function generateAngles(videoLength: number): number[] {
+function generateMovements(videoLength: number): number[] {
   const numbersArray: number[] = [];
 
   for (let i = 0; i < videoLength; i++) {
@@ -49,8 +57,20 @@ function generateAngles(videoLength: number): number[] {
   return numbersArray;
 }
 
-function generateQualityMovement() {
-  return generateRandomNumber(1, 100);
+function generateRestriction(variations: number[]) {
+  if (variations.length === 0) {
+    return 0; // return 0 if the array is empty to avoid division by zero
+  }
+
+  const sum = variations.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+  return sum / variations.length;
+}
+
+function generateRandomRestriction() {
+  return generateRandomNumber(0, 100);
 }
 
 function generateRandomNumber(min: number, max: number): number {

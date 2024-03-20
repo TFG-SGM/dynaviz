@@ -8,6 +8,7 @@ import { UserDataElement } from "../elements/UserDataElement";
 import { CrossButton } from "../buttons/CrossButton";
 import { TestsViewButton } from "../buttons/TestsViewButton";
 import { PatientDataElement } from "../elements/PatientDataElement";
+import { Overlay } from "../other/Overlay";
 
 export interface UserMenuView {
   endpoint: string;
@@ -40,36 +41,41 @@ export function UserMenuView({
 
   if (!user) return;
   return (
-    <dialog className="user-view-menu" open>
-      {isUpdate ? (
-        <UpdateUserForm
-          endpoint={endpoint}
-          handleClean={handleCancelUpdate}
-          handleUpdate={handleUpdate}
-        ></UpdateUserForm>
-      ) : (
-        <>
-          <CrossButton handleClean={handleClean}></CrossButton>
-          {isPatient ? (
-            <PatientDataElement user={user as PatientData}></PatientDataElement>
-          ) : (
-            <UserDataElement user={user as UserData}></UserDataElement>
-          )}
-          <div className="buttons-container">
-            <DeleteUserButton
-              endpoint={endpoint}
-              setActual={setActual}
-              setError={setError}
-              setUsers={setUsers}
-            ></DeleteUserButton>
-            {isPatient && (
-              <TestsViewButton userId={user?._id}></TestsViewButton>
+    <>
+      <Overlay></Overlay>
+      <dialog className="user-view-menu" open>
+        {isUpdate ? (
+          <UpdateUserForm
+            endpoint={endpoint}
+            handleClean={handleCancelUpdate}
+            handleUpdate={handleUpdate}
+          ></UpdateUserForm>
+        ) : (
+          <>
+            <CrossButton handleClean={handleClean}></CrossButton>
+            {isPatient ? (
+              <PatientDataElement
+                user={user as PatientData}
+              ></PatientDataElement>
+            ) : (
+              <UserDataElement user={user as UserData}></UserDataElement>
             )}
-            <button onClick={handleStartUpdate}>Editar</button>
-          </div>
-          {error && <ErrorComponent error={error}></ErrorComponent>}
-        </>
-      )}
-    </dialog>
+            <div className="buttons-container">
+              <DeleteUserButton
+                endpoint={endpoint}
+                setActual={setActual}
+                setError={setError}
+                setUsers={setUsers}
+              ></DeleteUserButton>
+              {isPatient && (
+                <TestsViewButton userId={user?._id}></TestsViewButton>
+              )}
+              <button onClick={handleStartUpdate}>Editar</button>
+            </div>
+            {error && <ErrorComponent error={error}></ErrorComponent>}
+          </>
+        )}
+      </dialog>
+    </>
   );
 }

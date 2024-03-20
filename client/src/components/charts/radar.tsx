@@ -11,7 +11,7 @@ export function RadarChart({ data }: { data: TestSubData }) {
       {
         data: [
           {
-            value: TestService.getBodyPartQuality(data.parts),
+            value: TestService.getBodyPartRestriction(data.parts),
           },
         ],
         type: "radar",

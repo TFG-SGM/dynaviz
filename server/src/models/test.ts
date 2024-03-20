@@ -3,13 +3,6 @@ import { connectToMongoDB } from "../utils/connection";
 import { PartialTest, Test } from "../utils/types";
 
 export class TestModel {
-  static async getAll() {
-    const db = await connectToMongoDB("tests");
-
-    const tests = await db.find({}).toArray();
-    return tests;
-  }
-
   static async getById({ id }: { id: string }) {
     const db = await connectToMongoDB("tests");
     const objectId = new ObjectId(id);
@@ -62,7 +55,7 @@ export class TestModel {
     return attributes;
   }
 
-  static async getTestsByPatient({
+  static async getAll({
     patientId,
     doctorId,
     typeId,
@@ -80,37 +73,12 @@ export class TestModel {
     if (typeId) matchStage.typeId = typeId;
     if (date) matchStage.date = new Date(date);
 
-    console.log(matchStage);
     const aggregationPipeline = [
       { $match: matchStage },
-      {
-        $group: {
-          _id: { $year: "$date" },
-          tests: { $push: "$$ROOT" },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          year: { $toString: "$_id" },
-          tests: 1,
-        },
-      },
-      { $sort: { year: 1 } },
-      {
-        $group: {
-          _id: null,
-          testsByYear: { $push: { k: "$year", v: "$tests" } },
-        },
-      },
-      {
-        $replaceRoot: {
-          newRoot: { $arrayToObject: "$testsByYear" },
-        },
-      },
+      { $sort: { date: 1 } },
     ];
 
-    const result = await db.aggregate(aggregationPipeline).next();
+    const result = await db.aggregate(aggregationPipeline).toArray();
     return result;
   }
 }

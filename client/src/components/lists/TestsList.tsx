@@ -7,12 +7,7 @@ import { useData } from "../../hooks/useData";
 import { TestData, UserData } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 import { useFilters } from "../../hooks/useFilters";
-import { useTestsCount } from "../../hooks/useTestsCount";
 import { TestsFilters } from "../elements/TestsFilters";
-
-interface AggregationResult {
-  [year: string]: TestData[];
-}
 
 export function TestsList({ patient }: { patient: UserData }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -22,10 +17,9 @@ export function TestsList({ patient }: { patient: UserData }) {
     date: "",
   });
   const [filtersText] = useFilters(filters);
-  const [tests] = useData<AggregationResult>(
+  const [tests] = useData<TestData[]>(
     TEST_ENDPOINT + "?patientId=" + patient._id + filtersText
   );
-  const [numTests] = useTestsCount(tests);
 
   const navigate = useNavigate();
 
@@ -60,32 +54,26 @@ export function TestsList({ patient }: { patient: UserData }) {
         Añadir prueba
       </button>
 
-      {numTests > 1 && (
-        <button className="evolution-button" onClick={handleViewEvolution}>
-          Evolución
-        </button>
-      )}
+      <button className="evolution-button" onClick={handleViewEvolution}>
+        Evolución
+      </button>
 
       <TestsFilters
         filters={filters}
         handleChange={handleChange}
       ></TestsFilters>
 
-      {!tests || numTests === 0 ? (
-        <EmptyListComponent></EmptyListComponent>
-      ) : (
-        <>
-          {Object.keys(tests).map((year) => {
-            return (
-              <article key={year}>
-                {tests[year].map((test) => {
-                  return <TestCard key={test._id} testId={test._id}></TestCard>;
-                })}
-              </article>
-            );
-          })}
-        </>
-      )}
+      <div className="test-list">
+        {!tests ? (
+          <EmptyListComponent></EmptyListComponent>
+        ) : (
+          <>
+            {tests.map((test) => {
+              return <TestCard key={test._id} testId={test._id}></TestCard>;
+            })}
+          </>
+        )}
+      </div>
     </>
   );
 }

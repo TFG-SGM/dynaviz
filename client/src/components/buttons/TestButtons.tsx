@@ -6,7 +6,7 @@ export function TestButtons({
   handleChangeChart: MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <div>
+    <div className="tests-buttons">
       <button id="line" className="active-chart" onClick={handleChangeChart}>
         Línea
       </button>
@@ -34,7 +34,6 @@ export function TestButtons({
       <button id="heatmap" onClick={handleChangeChart}>
         Mapa de calor
       </button>
-      <hr></hr>
     </div>
   );
 }

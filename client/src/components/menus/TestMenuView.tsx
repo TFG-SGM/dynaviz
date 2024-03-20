@@ -4,6 +4,7 @@ import { DataService } from "../../services/DataService";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { TestData } from "../../utils/types";
+import { Overlay } from "../other/Overlay";
 
 export interface TestMenuView {
   test: TestData;
@@ -19,12 +20,15 @@ export function TestMenuView({ test, handleClean }: TestMenuView) {
 
   if (!test) return;
   return (
-    <dialog open>
-      <article>
-        <CrossButton handleClean={handleClean}></CrossButton>
-        <TestDataElement test={test}></TestDataElement>
-        <button onClick={handleDelete}>Eliminar</button>
-      </article>
-    </dialog>
+    <>
+      <Overlay></Overlay>
+      <dialog open>
+        <article>
+          <CrossButton handleClean={handleClean}></CrossButton>
+          <TestDataElement test={test}></TestDataElement>
+          <button onClick={handleDelete}>Eliminar</button>
+        </article>
+      </dialog>
+    </>
   );
 }

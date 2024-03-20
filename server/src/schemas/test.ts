@@ -10,7 +10,7 @@ const testSchema = z.object({
   evaScale: z.number(),
   data: z.object({
     time: z.array(z.number()),
-    quality: z.number(),
+    restriction: z.number(),
     parts: z.unknown(),
   }),
 });

@@ -5,6 +5,7 @@ import { UserDataElement } from "../elements/UserDataElement";
 import { LoadingComponent } from "../other/LoadingComponent";
 import { useData } from "../../hooks/useData";
 import { CrossButton } from "../buttons/CrossButton";
+import { Overlay } from "../other/Overlay";
 
 export function MyAccount({ handleClean }: { handleClean: () => void }) {
   const [user, setUser] = useData<UserData>("auth/user-data");
@@ -28,11 +29,14 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
           handleUpdate={handleUpdate}
         ></UpdateUserForm>
       ) : (
-        <dialog open>
-          <CrossButton handleClean={handleClean}></CrossButton>
-          {user && <UserDataElement user={user}></UserDataElement>}
-          <button onClick={handleStartUpdate}>Editar</button>
-        </dialog>
+        <>
+          <Overlay></Overlay>
+          <dialog open>
+            <CrossButton handleClean={handleClean}></CrossButton>
+            {user && <UserDataElement user={user}></UserDataElement>}
+            <button onClick={handleStartUpdate}>Editar</button>
+          </dialog>
+        </>
       )}
     </>
   );

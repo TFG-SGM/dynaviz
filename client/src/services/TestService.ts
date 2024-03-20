@@ -19,56 +19,34 @@ export class TestService {
     });
   }
 
-  static getBodyPartQuality(parts: TestPartsData) {
-    return Object.keys(parts).map((part) => parts[part].quality);
+  static getBodyPartRestriction(parts: TestPartsData) {
+    return Object.keys(parts).map((part) => parts[part].restriction);
   }
 
-  static getUniqueMovements(parts: TestPartsData, actualPart: string) {
-    const realMovements = this.getRealMovements(parts, actualPart);
-    const idealMovements = this.getIdealMovements(parts, actualPart);
-    const combinedArray = [...realMovements, ...idealMovements];
-
-    const uniqueMovementsSet = new Set<number>();
-    for (const num of combinedArray) {
-      uniqueMovementsSet.add(num);
+  static getUniqueVariations(parts: TestPartsData, actualPart: string) {
+    const uniqueVariationsSet = new Set<number>();
+    for (const num of parts[actualPart].variations) {
+      uniqueVariationsSet.add(num);
     }
 
-    const uniqueMovements = Array.from(uniqueMovementsSet);
-
-    return uniqueMovements;
+    return Array.from(uniqueVariationsSet);
   }
 
-  static getRealCountMovements(
+  static getVariationsCount(
     parts: TestPartsData,
     actualPart: string,
-    uniqueMovements: number[]
+    uniqueVariations: number[]
   ) {
-    const realMovements = this.getRealMovements(parts, actualPart);
+    const variations = parts[actualPart].variations;
 
-    const countMovements = uniqueMovements.map((movement) => {
-      const count = realMovements.filter(
-        (realMovement) => realMovement === movement
+    const countVariations = uniqueVariations.map((movement) => {
+      const count = variations.filter(
+        (variations) => variations === movement
       ).length;
       return count;
     });
 
-    return countMovements;
-  }
-
-  static getIdealCountMovements(
-    parts: TestPartsData,
-    actualPart: string,
-    uniqueMovements: number[]
-  ) {
-    const idealMovements = this.getIdealMovements(parts, actualPart);
-
-    const countMovements = uniqueMovements.map((movement) => {
-      const count = idealMovements.filter(
-        (idealMovement) => idealMovement === movement
-      ).length;
-      return count;
-    });
-    return countMovements;
+    return countVariations;
   }
 
   static getBoxPlotData(movements: number[]) {

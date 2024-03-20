@@ -34,13 +34,14 @@ export interface TestPartsData {
   [key: string]: {
     idealMovement: number[];
     realMovement: number[];
-    quality: number;
+    variations: number[];
+    restriction: number;
   };
 }
 
 export interface TestSubData {
   time: number[];
-  quality: number;
+  restriction: number;
   parts: TestPartsData;
 }
 

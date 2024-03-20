@@ -11,14 +11,14 @@ export function Histogram({
 }) {
   if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
 
-  const uniqueAngles = TestService.getUniqueMovements(
+  const uniqueVariations = TestService.getUniqueVariations(
     data.parts,
     actualParts[0]
   );
   const option = {
     xAxis: {
       type: "category",
-      data: uniqueAngles,
+      data: uniqueVariations,
     },
     yAxis: {
       type: "value",
@@ -26,18 +26,10 @@ export function Histogram({
     tooltip: {},
     series: [
       {
-        data: TestService.getRealCountMovements(
+        data: TestService.getVariationsCount(
           data.parts,
           actualParts[0],
-          uniqueAngles
-        ),
-        type: "bar",
-      },
-      {
-        data: TestService.getIdealCountMovements(
-          data.parts,
-          actualParts[0],
-          uniqueAngles
+          uniqueVariations
         ),
         type: "bar",
       },

@@ -4,7 +4,7 @@ import { TestSubData } from "../../utils/types";
 
 export function PieChart({ type, data }: { type: string; data: TestSubData }) {
   const bodyParts = TestService.getBodyParts(data.parts);
-  const values = TestService.getBodyPartQuality(data.parts);
+  const values = TestService.getBodyPartRestriction(data.parts);
   const option = {
     tooltip: {},
     series: [

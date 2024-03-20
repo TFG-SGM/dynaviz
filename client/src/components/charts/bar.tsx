@@ -13,7 +13,7 @@ export function BarChart({ data }: { data: TestSubData }) {
     },
     series: [
       {
-        data: TestService.getBodyPartQuality(data.parts),
+        data: TestService.getBodyPartRestriction(data.parts),
         type: "bar",
       },
     ],

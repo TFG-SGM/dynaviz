@@ -9,6 +9,7 @@ import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
 import { PatientForm } from "./PatientForm";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
+import { Overlay } from "../other/Overlay";
 
 export interface UpdateFormProps {
   endpoint: string;
@@ -47,28 +48,35 @@ export function UpdateUserForm({
   }
 
   return (
-    <dialog open>
-      <CrossButton handleClean={handleClean}></CrossButton>
-      <form onSubmit={handleSubmit}>
-        {typeUser === PATIENT_ENDPOINT ? (
-          <PatientForm
-            data={newData as PatientData}
-            setNewData={setNewData}
-          ></PatientForm>
-        ) : (
-          <UserForm
-            data={newData as UserData}
-            setNewData={setNewData}
-          ></UserForm>
-        )}
-        <div className="buttons-container">
-          <button className="cancel-button" type="button" onClick={handleClean}>
-            Cancelar
-          </button>
-          <button>Guardar</button>
-        </div>
-      </form>
-      {error && <ErrorComponent error={error}></ErrorComponent>}
-    </dialog>
+    <>
+      <Overlay></Overlay>
+      <dialog open>
+        <CrossButton handleClean={handleClean}></CrossButton>
+        <form onSubmit={handleSubmit}>
+          {typeUser === PATIENT_ENDPOINT ? (
+            <PatientForm
+              data={newData as PatientData}
+              setNewData={setNewData}
+            ></PatientForm>
+          ) : (
+            <UserForm
+              data={newData as UserData}
+              setNewData={setNewData}
+            ></UserForm>
+          )}
+          <div className="buttons-container">
+            <button
+              className="cancel-button"
+              type="button"
+              onClick={handleClean}
+            >
+              Cancelar
+            </button>
+            <button>Guardar</button>
+          </div>
+        </form>
+        {error && <ErrorComponent error={error}></ErrorComponent>}
+      </dialog>
+    </>
   );
 }

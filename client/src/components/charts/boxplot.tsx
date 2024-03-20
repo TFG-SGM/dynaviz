@@ -11,8 +11,14 @@ export function BoxPlot({
 }) {
   if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
 
-  const realAngles = TestService.getRealMovements(data.parts, actualParts[0]);
-  const idealAngles = TestService.getIdealMovements(data.parts, actualParts[0]);
+  const realMovements = TestService.getRealMovements(
+    data.parts,
+    actualParts[0]
+  );
+  const idealMovements = TestService.getIdealMovements(
+    data.parts,
+    actualParts[0]
+  );
 
   const option = {
     xAxis: {
@@ -30,8 +36,8 @@ export function BoxPlot({
       {
         type: "boxplot",
         data: [
-          TestService.getBoxPlotData(realAngles),
-          TestService.getBoxPlotData(idealAngles),
+          TestService.getBoxPlotData(realMovements),
+          TestService.getBoxPlotData(idealMovements),
         ],
       },
     ],

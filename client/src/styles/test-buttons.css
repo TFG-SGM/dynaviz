@@ -1,3 +1,33 @@
+.test-container {
+  display: grid;
+  grid-template-rows: 50px auto;
+  grid-template-columns: 1fr 3fr;
+  gap: 20px;
+  height: 75vh;
+
+  margin: 25px 50px;
+  padding: 20px;
+  border: 2px solid var(--black-letter);
+  border-radius: var(--radius);
+  background-color: white;
+}
+
+.tests-buttons {
+  grid-column: span 2;
+  display: flex;
+  gap: 10px;
+}
+
+.body-parts-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.body-parts-buttons > button {
+  text-align: left;
+}
+
 .active-part {
   background-color: rgb(141, 141, 221);
 }

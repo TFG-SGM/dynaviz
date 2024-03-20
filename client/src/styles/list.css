@@ -1,3 +1,4 @@
+.test-page-container > h1,
 .list > h1 {
   display: inline-block;
   margin-left: 50px;
@@ -6,7 +7,7 @@
 
 .test-list,
 .user-list {
-  height: 80vh;
+  height: 75vh;
   background-color: #fff;
   margin: 20px 50px;
   padding: 20px;
@@ -22,6 +23,7 @@
   font-size: 16px;
 }
 
+.test-details-button,
 .add-user-button,
 .add-test-button {
   position: absolute;
