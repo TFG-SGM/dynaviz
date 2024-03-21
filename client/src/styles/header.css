@@ -8,10 +8,17 @@
   padding: 10px 50px;
 }
 
+.back-button,
+.account-button,
+.logout-button {
+  background-color: var(--white-letter);
+  padding: 0;
+}
+
 .back-button {
   margin: 0 auto 0 0;
 }
 
-.close-session-button {
-  margin-left: 10px;
+.logout-button {
+  margin-left: 20px;
 }

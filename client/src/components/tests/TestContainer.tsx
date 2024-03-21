@@ -7,8 +7,6 @@ import { TestButtons } from "../../components/buttons/TestButtons";
 import { MouseEventHandler, useState } from "react";
 import { BodyPartsButtons } from "../../components/buttons/BodyPartsButtons";
 import { ActualChart } from "../../components/elements/ActualChart";
-
-import "../../styles/test-buttons.css";
 import { TestMenuView } from "../../components/menus/TestMenuView";
 
 interface actual {

@@ -55,7 +55,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
         <form onSubmit={handleSubmit}>
           <TestForm data={newData} setNewData={setNewData}></TestForm>
           <div className="buttons-container">
-            <button>Añadir</button>
+            <button className="add-button">Añadir</button>
             <button
               type="button"
               className="cancel-button"

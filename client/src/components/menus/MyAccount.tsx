@@ -2,7 +2,6 @@ import { useState } from "react";
 import { UpdateUserForm } from "../forms/UpdateUserForm";
 import { UserData } from "../../utils/types";
 import { UserDataElement } from "../elements/UserDataElement";
-import { LoadingComponent } from "../other/LoadingComponent";
 import { useData } from "../../hooks/useData";
 import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
@@ -18,7 +17,7 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
       return { ...prevState, ...data };
     });
 
-  if (!user) return <LoadingComponent></LoadingComponent>;
+  if (!user) return;
 
   return (
     <>
@@ -31,10 +30,12 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
       ) : (
         <>
           <Overlay></Overlay>
-          <dialog open>
+          <dialog open className="view-menu">
             <CrossButton handleClean={handleClean}></CrossButton>
             {user && <UserDataElement user={user}></UserDataElement>}
-            <button onClick={handleStartUpdate}>Editar</button>
+            <button className="edit-button" onClick={handleStartUpdate}>
+              Editar
+            </button>
           </dialog>
         </>
       )}

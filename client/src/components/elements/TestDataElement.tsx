@@ -19,12 +19,25 @@ export function TestDataElement({ test }: { test: TestData }) {
 
   return (
     <>
-      <p>Médico: {doctor ? doctor.name : "Ninguno"}</p>
-      <p>Tipo: {type?.name}</p>
-      <p>Fecha: {date.split("T")[0]}</p>
-      <p>Video: {video}</p>
-      <p>Paciente: {patient?.name}</p>
-      <p>Escala EVA: {evaScale}</p>
+      <p>
+        <strong>Médico:</strong>{" "}
+        {doctor ? doctor.name + " " + doctor.surname : "Ninguno"}
+      </p>
+      <p>
+        <strong>Tipo:</strong> {type?.name}
+      </p>
+      <p>
+        <strong>Fecha:</strong> {date.split("T")[0]}
+      </p>
+      <p>
+        <strong>Video:</strong> {video}
+      </p>
+      <p>
+        <strong>Paciente:</strong> {patient?.name} {patient?.surname}
+      </p>
+      <p>
+        <strong>Escala EVA:</strong> {evaScale}
+      </p>
     </>
   );
 }

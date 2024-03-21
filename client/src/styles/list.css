@@ -8,11 +8,12 @@
 .test-list,
 .user-list {
   height: 75vh;
-  background-color: #fff;
+  background-color: var(--list-background-color);
   margin: 20px 50px;
   padding: 20px;
   border-radius: var(--radius);
   border: 1px solid var(--black-letter);
+  overflow-y: auto;
 }
 
 .test-filters {

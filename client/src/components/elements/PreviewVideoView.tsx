@@ -11,5 +11,5 @@ export function PreviewVideoView({ stream }: { stream: MediaStream | null }) {
   if (!stream) {
     return <p>No esta grabando</p>;
   }
-  return <video ref={videoRef} width={500} height={500} autoPlay />;
+  return <video ref={videoRef} autoPlay />;
 }

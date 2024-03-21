@@ -66,7 +66,7 @@ export function AddUserForm<T>({
             <button className="cancel-button" onClick={handleClean}>
               Cancelar
             </button>
-            <button>Añadir</button>
+            <button className="add-button">Añadir</button>
           </div>
         </form>
         {error && <ErrorComponent error={error}></ErrorComponent>}

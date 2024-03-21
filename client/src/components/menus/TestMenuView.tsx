@@ -22,12 +22,12 @@ export function TestMenuView({ test, handleClean }: TestMenuView) {
   return (
     <>
       <Overlay></Overlay>
-      <dialog open>
-        <article>
-          <CrossButton handleClean={handleClean}></CrossButton>
-          <TestDataElement test={test}></TestDataElement>
-          <button onClick={handleDelete}>Eliminar</button>
-        </article>
+      <dialog open className="view-menu">
+        <CrossButton handleClean={handleClean}></CrossButton>
+        <TestDataElement test={test}></TestDataElement>
+        <button className="delete-button" onClick={handleDelete}>
+          Eliminar
+        </button>
       </dialog>
     </>
   );

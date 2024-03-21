@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { DataService } from "../../services/DataService";
 import { useState } from "react";
 import { MyAccount } from "../menus/MyAccount";
+import { Account, ArrowBack, Logout } from "./Icons";
 
 export function Header() {
   const navigate = useNavigate();
@@ -24,15 +25,15 @@ export function Header() {
       {isMyAccount && <MyAccount handleClean={handleMyAccount}></MyAccount>}
       {location.pathname !== "/app" && (
         <button className="back-button" onClick={handleGoBack}>
-          Atrás
+          <ArrowBack></ArrowBack>
         </button>
       )}
       <div>
         <button className="account-button" onClick={handleMyAccount}>
-          Mi Cuenta
+          <Account></Account>
         </button>
-        <button className="close-session-button" onClick={handleLogout}>
-          Cerrar Sesión
+        <button className="logout-button" onClick={handleLogout}>
+          <Logout></Logout>
         </button>
       </div>
     </nav>

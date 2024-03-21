@@ -43,7 +43,7 @@ export function UserMenuView({
   return (
     <>
       <Overlay></Overlay>
-      <dialog className="user-view-menu" open>
+      <dialog className="view-menu" open>
         {isUpdate ? (
           <UpdateUserForm
             endpoint={endpoint}
@@ -67,10 +67,10 @@ export function UserMenuView({
                 setError={setError}
                 setUsers={setUsers}
               ></DeleteUserButton>
+              <button onClick={handleStartUpdate}>Editar</button>
               {isPatient && (
                 <TestsViewButton userId={user?._id}></TestsViewButton>
               )}
-              <button onClick={handleStartUpdate}>Editar</button>
             </div>
             {error && <ErrorComponent error={error}></ErrorComponent>}
           </>

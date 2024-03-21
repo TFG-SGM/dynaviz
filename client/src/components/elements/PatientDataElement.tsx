@@ -19,17 +19,39 @@ export function PatientDataElement({ user }: { user: PatientData }) {
   const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + assignedDoctor);
   return (
     <>
-      <p>Nombre: {name}</p>
-      <p>Apellidos: {surname}</p>
-      <p>Edad: {age}</p>
-      <p>Ciudad: {city}</p>
-      <p>Email: {email}</p>
-      <p>Teléfono: {phone}</p>
-      <p>Actividad física: {activityLevel}</p>
-      <p>Ocupación: {occupation}</p>
-      <p>Años con diagnostico: {diagnosisYears}</p>
-      <p>Diagnosticado con fibromialgia: {isFibro ? "Si" : "No"}</p>
-      <p>Médico asignado: {doctor ? doctor.name : "Ninguno"}</p>
+      <p>
+        <strong>Nombre:</strong> {name}
+      </p>
+      <p>
+        <strong>Apellidos:</strong> {surname}
+      </p>
+      <p>
+        <strong>Edad:</strong> {age}
+      </p>
+      <p>
+        <strong>Ciudad:</strong> {city}
+      </p>
+      <p>
+        <strong>Email:</strong> {email}
+      </p>
+      <p>
+        <strong>Teléfono:</strong> {phone}
+      </p>
+      <p>
+        <strong>Actividad física:</strong> {activityLevel}
+      </p>
+      <p>
+        <strong>Ocupación:</strong> {occupation}
+      </p>
+      <p>
+        <strong>Años con diagnostico:</strong> {diagnosisYears}
+      </p>
+      <p>
+        <strong>Diagnosticado con fibromialgia:</strong> {isFibro ? "Si" : "No"}
+      </p>
+      <p>
+        <strong>Médico asignado:</strong> {doctor ? doctor.name : "Ninguno"}
+      </p>
     </>
   );
 }

@@ -3,7 +3,6 @@ import { useData } from "../../hooks/useData";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
 import { PatientData, UserData } from "../../utils/types";
-import { LoadingComponent } from "../other/LoadingComponent";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
@@ -43,9 +42,7 @@ export function UpdateUserForm({
     }
   };
 
-  if (!newData) {
-    return <LoadingComponent></LoadingComponent>;
-  }
+  if (!newData) return;
 
   return (
     <>

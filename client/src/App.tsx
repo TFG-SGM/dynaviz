@@ -8,6 +8,7 @@ import "./styles/homepage.css";
 import "./styles/list.css";
 import "./styles/cards.css";
 import "./styles/menus.css";
+import "./styles/tests.css";
 
 export function App() {
   return (

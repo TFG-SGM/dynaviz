@@ -1,10 +1,17 @@
-.user-view-menu {
+.view-menu {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
 .cross-button {
+  align-self: flex-end;
+  background-color: var(--form-background);
+  color: var(--black-letter);
+  font-size: xx-large;
+}
+
+.view-menu > button {
   align-self: flex-end;
 }
 
@@ -16,14 +23,25 @@
 }
 
 .cancel-button {
-  background-color: #fff;
+  background-color: var(--form-background);
   color: var(--red);
   transition: 200ms;
   margin-left: auto;
 }
 
-.buttons-container > .delete-user-button {
+.delete-button {
   background-color: var(--red);
+}
+
+.record-dialog {
+  width: 800px;
+}
+
+.record-dialog video {
+  width: 90%;
+  height: 500px;
+  border-radius: var(--radius);
+  margin: 50px 0;
 }
 
 /*FIBRO INPUT*/

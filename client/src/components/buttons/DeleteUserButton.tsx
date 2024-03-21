@@ -31,8 +31,8 @@ export function DeleteUserButton({
     }
   };
   return (
-    <button className="delete-user-button" onClick={handleDelete}>
-      Eliminar usuario
+    <button className="delete-button" onClick={handleDelete}>
+      Eliminar
     </button>
   );
 }

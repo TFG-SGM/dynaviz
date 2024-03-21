@@ -138,7 +138,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Selecciona el médico:{" "}
+        Médico:{" "}
         <SelectType
           option="assignedDoctor"
           value={data.assignedDoctor}

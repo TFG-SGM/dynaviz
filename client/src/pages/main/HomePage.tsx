@@ -1,28 +1,27 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/useData";
 import { UserData } from "../../utils/types";
 
 export function HomePage() {
+  const navigate = useNavigate();
   const [user] = useData<UserData>("auth/user-data");
+
   return (
     <div className="homepage-container">
-      <ul>
-        {user?.role === "admin" && (
-          <>
-            <li>
-              <Link to="/app/administradores">Consultar Administradores</Link>
-            </li>
-            <li>
-              <Link to="/app/medicos">Consultar Médicos</Link>
-            </li>
-          </>
-        )}
+      {user?.role === "admin" && (
+        <>
+          <button onClick={() => navigate("/app/administradores")}>
+            Consultar Administradores
+          </button>
+          <button onClick={() => navigate("/app/medicos")}>
+            Consultar Médicos
+          </button>
+        </>
+      )}
 
-        <li>
-          <Link to="/app/pacientes">Consultar Pacientes</Link>
-        </li>
-      </ul>
-      <hr></hr>
+      <button onClick={() => navigate("/app/pacientes")}>
+        Consultar Pacientes
+      </button>
     </div>
   );
 }

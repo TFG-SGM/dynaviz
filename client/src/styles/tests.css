@@ -24,16 +24,25 @@
   gap: 10px;
 }
 
+.tests-buttons > button,
+.body-parts-buttons > button {
+  background-color: var(--background-color);
+  color: var(--black-letter);
+  border: 1px solid var(--black-letter);
+}
+
 .body-parts-buttons > button {
   text-align: left;
 }
 
-.active-part {
-  background-color: rgb(141, 141, 221);
+.tests-buttons > .active-chart {
+  background-color: var(--main-color);
+  color: var(--white-letter);
 }
 
-.active-chart {
-  background-color: rgb(141, 141, 221);
+.body-parts-buttons > .active-part {
+  background-color: var(--main-color);
+  color: var(--white-letter);
 }
 
 .key-points {
