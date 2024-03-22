@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { EmptyListComponent } from "../other/EmptyListComponent";
 import { AddTestForm } from "../forms/AddTestForm";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestCard } from "../cards/TestCard";
@@ -40,6 +39,8 @@ export function TestsList({ patient }: { patient: UserData }) {
     });
   };
 
+  if (!tests) return;
+
   return (
     <>
       {isAdding && (
@@ -51,11 +52,11 @@ export function TestsList({ patient }: { patient: UserData }) {
       )}
 
       <button className="add-test-button" onClick={handleStartCreating}>
-        Añadir prueba
+        Añadir Prueba
       </button>
 
       <button className="evolution-button" onClick={handleViewEvolution}>
-        Evolución
+        Evolución de Paciente
       </button>
 
       <TestsFilters
@@ -64,15 +65,9 @@ export function TestsList({ patient }: { patient: UserData }) {
       ></TestsFilters>
 
       <div className="test-list">
-        {!tests ? (
-          <EmptyListComponent></EmptyListComponent>
-        ) : (
-          <>
-            {tests.map((test) => {
-              return <TestCard key={test._id} testId={test._id}></TestCard>;
-            })}
-          </>
-        )}
+        {tests.map((test) => {
+          return <TestCard key={test._id} testId={test._id}></TestCard>;
+        })}
       </div>
     </>
   );

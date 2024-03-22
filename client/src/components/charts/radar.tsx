@@ -1,6 +1,7 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
+import { CHART_HEIGHT } from "../../utils/constants";
 
 export function RadarChart({ data }: { data: TestSubData }) {
   const option = {
@@ -9,6 +10,8 @@ export function RadarChart({ data }: { data: TestSubData }) {
     },
     series: [
       {
+        name: "Restricción de movimiento",
+
         data: [
           {
             value: TestService.getBodyPartRestriction(data.parts),
@@ -17,8 +20,15 @@ export function RadarChart({ data }: { data: TestSubData }) {
         type: "radar",
       },
     ],
-    tooltip: {},
+    tooltip: {
+      trigger: "item",
+    },
   };
 
-  return <ReactECharts option={option}></ReactECharts>;
+  return (
+    <ReactECharts
+      style={{ height: CHART_HEIGHT }}
+      option={option}
+    ></ReactECharts>
+  );
 }

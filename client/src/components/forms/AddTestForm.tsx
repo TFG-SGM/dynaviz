@@ -1,14 +1,19 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { DataService } from "../../services/DataService";
 import { TestData, UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
-import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
+import {
+  ACTUAL_USER_ENDPOINT,
+  INITIAL_TEST,
+  TEST_TYPE_ENDPOINT,
+} from "../../utils/constants";
 import { TestForm } from "./TestForm";
 import { generateDataTest } from "../../utils/generateDataTest";
 import { useNavigate } from "react-router-dom";
 import { Overlay } from "../other/Overlay";
+import { useData } from "../../hooks/useData";
 
 export interface AddTestProps {
   endpoint: string;
@@ -52,7 +57,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
       <Overlay></Overlay>
       <dialog open>
         <CrossButton handleClean={handleClean}></CrossButton>
-        <form onSubmit={handleSubmit}>
+        <form className="test-form" onSubmit={handleSubmit}>
           <TestForm data={newData} setNewData={setNewData}></TestForm>
           <div className="buttons-container">
             <button className="add-button">Añadir</button>

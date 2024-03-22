@@ -29,7 +29,11 @@ export class TestService {
       uniqueVariationsSet.add(num);
     }
 
-    return Array.from(uniqueVariationsSet);
+    const uniqueVariationsArray = Array.from(uniqueVariationsSet).sort(
+      (a, b) => a - b
+    );
+
+    return uniqueVariationsArray;
   }
 
   static getVariationsCount(
@@ -39,9 +43,9 @@ export class TestService {
   ) {
     const variations = parts[actualPart].variations;
 
-    const countVariations = uniqueVariations.map((movement) => {
+    const countVariations = uniqueVariations.map((uniqueVariation) => {
       const count = variations.filter(
-        (variations) => variations === movement
+        (variation) => variation === uniqueVariation
       ).length;
       return count;
     });
@@ -72,31 +76,21 @@ export class TestService {
     );
   }
 
-  static getCorrelatedMovements(parts: TestPartsData, actualParts: string[]) {
-    const movements1 = this.getRealMovements(parts, actualParts[0]);
-    const movements2 = this.getRealMovements(parts, actualParts[1]);
+  static getCorrelatedVariations(parts: TestPartsData, actualParts: string[]) {
+    const variations1 = parts[actualParts[0]].variations;
+    const variations2 = parts[actualParts[1]].variations;
 
-    const combine = movements1.map((movement, index) => [
-      movement,
-      movements2[index],
+    const combine = variations1.map((variation, index) => [
+      variation,
+      variations2[index],
     ]);
 
-    // Use a Set to keep track of unique pairs
-    const uniquePairs = new Set<string>();
-
-    // Count occurrences of each unique pair [x, y]
     const occurrencesMap = combine.reduce((map, pair) => {
       const key = JSON.stringify(pair);
-      if (!uniquePairs.has(key)) {
-        uniquePairs.add(key);
-        map.set(key, 1);
-      } else {
-        map.set(key, map.get(key)! + 1);
-      }
+      map.set(key, (map.get(key) || 0) + 1);
       return map;
-    }, new Map<string, number>());
+    }, new Map());
 
-    // Transform map entries into arrays with three elements
     const result = Array.from(occurrencesMap.entries()).map(([key, count]) => {
       const pair = JSON.parse(key);
       return [...pair, count];

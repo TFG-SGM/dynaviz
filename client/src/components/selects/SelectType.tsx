@@ -1,7 +1,6 @@
 import { ChangeEventHandler } from "react";
 import { useData } from "../../hooks/useData";
 import { TestTypeData } from "../../utils/types";
-import { LoadingComponent } from "../other/LoadingComponent";
 
 interface SelectTypeProps {
   option: string;
@@ -19,7 +18,7 @@ export function SelectType({
   const [testTypes] = useData<TestTypeData[]>(endpoint);
 
   const label = option[0] === "t" ? "tipo" : "médico";
-  if (!testTypes) return <LoadingComponent></LoadingComponent>;
+  if (!testTypes) return;
 
   return (
     <select name={option} value={value} onChange={handleChange} required>

@@ -6,7 +6,7 @@ import { Histogram } from "../charts/histogram";
 import { BubbleChart } from "../charts/bubble";
 import { Heatmap } from "../charts/heatmap";
 import { TestSubData } from "../../utils/types";
-import { BoxPlot } from "../charts/boxplot";
+import { BoxPlot1 } from "../charts/boxplot1";
 
 interface ActualChartProps {
   actual: { chart: string; parts: string[] };
@@ -29,7 +29,7 @@ export function ActualChart({ actual, data }: ActualChartProps) {
     case "histogram":
       return <Histogram data={data} actualParts={parts}></Histogram>;
     case "boxplot":
-      return <BoxPlot data={data} actualParts={parts}></BoxPlot>;
+      return <BoxPlot1 data={data} actualParts={parts}></BoxPlot1>;
     case "bubble":
       return <BubbleChart data={data} actualParts={parts}></BubbleChart>;
     case "heatmap":

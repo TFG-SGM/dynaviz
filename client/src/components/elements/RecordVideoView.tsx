@@ -50,14 +50,18 @@ export function RecordVideoView({
                   Cancelar
                 </button>
                 <button type="button" onClick={stopRecording}>
-                  Parar de grabar
+                  Parar de Grabar
                 </button>
                 <button type="button" onClick={startRecording}>
-                  Empezar a grabar
+                  Empezar a Grabar
                 </button>
-                {status === "stopped" && (
+                {status === "stopped" ? (
                   <button type="button" onClick={handleAddRecordingVideo}>
-                    Guardar video
+                    Guardar Vídeo
+                  </button>
+                ) : (
+                  <button className="save-video-disable" type="button">
+                    Guardar Vídeo
                   </button>
                 )}
               </div>

@@ -1,3 +1,4 @@
+.test-evolution-container,
 .test-container {
   display: grid;
   grid-template-rows: 50px auto;
@@ -9,7 +10,20 @@
   padding: 20px;
   border: 2px solid var(--black-letter);
   border-radius: var(--radius);
-  background-color: white;
+  background-color: var(--list-background-color);
+}
+
+.test-evolution-container {
+  grid-template-rows: 50px 50px auto;
+}
+
+.test-evolution-container > .tests-buttons {
+  grid-column: span 1;
+}
+
+.test-container > .body-parts-container {
+  display: flex;
+  gap: 20px;
 }
 
 .tests-buttons {
@@ -45,14 +59,6 @@
   color: var(--white-letter);
 }
 
-.key-points {
-  width: 400px;
-  height: 400px;
-  position: relative;
-}
-.key-points > img {
-  position: absolute;
-}
-.key-points > svg {
-  position: absolute;
+.echarts-for-react {
+  height: 100%;
 }

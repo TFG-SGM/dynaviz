@@ -1,6 +1,7 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
+import { CHART_HEIGHT } from "../../utils/constants";
 
 export function Histogram({
   data,
@@ -17,10 +18,12 @@ export function Histogram({
   );
   const option = {
     xAxis: {
+      name: "Variación",
       type: "category",
       data: uniqueVariations,
     },
     yAxis: {
+      name: "Número",
       type: "value",
     },
     tooltip: {},
@@ -36,5 +39,10 @@ export function Histogram({
     ],
   };
 
-  return <ReactECharts option={option}></ReactECharts>;
+  return (
+    <ReactECharts
+      style={{ height: CHART_HEIGHT }}
+      option={option}
+    ></ReactECharts>
+  );
 }

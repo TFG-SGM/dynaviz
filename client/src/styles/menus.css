@@ -33,6 +33,18 @@
   background-color: var(--red);
 }
 
+/*VIDEO MENU*/
+
+.test-form-part {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.selected-video {
+  background-color: rgba(0, 0, 0, 0.415);
+}
+
 .record-dialog {
   width: 800px;
 }
@@ -44,8 +56,16 @@
   margin: 50px 0;
 }
 
-/*FIBRO INPUT*/
+.save-video-disable {
+  background-color: gray;
+  cursor: inherit;
+}
 
+.save-video-disable:hover {
+  opacity: 1;
+}
+
+/*FIBRO INPUT*/
 .fibro-label {
   flex-direction: row;
 }

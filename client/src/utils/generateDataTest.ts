@@ -26,7 +26,7 @@ function generateParts(videoLength: number) {
   const variations = idealMovement.map((move, index) =>
     Math.abs(move - realMovement[index])
   );
-  const restriction = generateRestriction(variations);
+  const restriction = generateRandomRestriction();
 
   return {
     idealMovement,
@@ -55,18 +55,6 @@ function generateMovements(videoLength: number): number[] {
   }
 
   return numbersArray;
-}
-
-function generateRestriction(variations: number[]) {
-  if (variations.length === 0) {
-    return 0; // return 0 if the array is empty to avoid division by zero
-  }
-
-  const sum = variations.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  );
-  return sum / variations.length;
 }
 
 function generateRandomRestriction() {

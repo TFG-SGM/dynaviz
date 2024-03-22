@@ -1,6 +1,7 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
+import { CHART_HEIGHT } from "../../utils/constants";
 
 export function LineChart({
   data,
@@ -21,16 +22,28 @@ export function LineChart({
     },
     series: [
       {
+        name: "Real",
         data: TestService.getRealMovements(data.parts, actualParts[0]),
         type: "line",
       },
       {
+        name: "Ideal",
         data: TestService.getIdealMovements(data.parts, actualParts[0]),
         type: "line",
       },
     ],
+    legend: {
+      orient: "vertical",
+      right: 10,
+      top: "center",
+    },
     tooltip: {},
   };
 
-  return <ReactECharts option={option}></ReactECharts>;
+  return (
+    <ReactECharts
+      style={{ height: CHART_HEIGHT }}
+      option={option}
+    ></ReactECharts>
+  );
 }

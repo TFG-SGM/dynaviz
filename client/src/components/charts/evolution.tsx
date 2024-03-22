@@ -1,6 +1,7 @@
 import ReactECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
 import { TestData } from "../../utils/types";
+import { CHART_HEIGHT } from "../../utils/constants";
 
 export function EvolutionChart({
   tests,
@@ -9,25 +10,25 @@ export function EvolutionChart({
   tests: TestData[];
   chartType: string;
 }) {
-  const [data, setData] = useState<{ dates: string[]; qualities: number[] }>({
-    dates: [],
-    qualities: [],
-  });
+  const [data, setData] = useState<{ dates: string[]; restrictions: number[] }>(
+    {
+      dates: [],
+      restrictions: [],
+    }
+  );
 
   useEffect(() => {
-    const newQualities: number[] = [];
+    const newRestrictions: number[] = [];
     const newDates: string[] = [];
 
-    for (const year in tests) {
-      if (tests.hasOwnProperty(year)) {
-        tests[year].forEach((test) => {
-          newQualities.push(test.data.quality);
-          newDates.push(test.date.split("T")[0]);
-        });
+    tests.forEach((test) => {
+      if (test.data) {
+        newRestrictions.push(test.data.restriction);
+        newDates.push(test.date.split("T")[0]);
       }
-    }
+    });
 
-    setData({ dates: newDates, qualities: newQualities });
+    setData({ dates: newDates, restrictions: newRestrictions });
   }, [tests]);
 
   const option = {
@@ -40,12 +41,17 @@ export function EvolutionChart({
     },
     series: [
       {
-        data: data.qualities,
+        data: data.restrictions,
         type: chartType,
       },
     ],
     tooltip: {},
   };
 
-  return <ReactECharts option={option}></ReactECharts>;
+  return (
+    <ReactECharts
+      style={{ height: CHART_HEIGHT }}
+      option={option}
+    ></ReactECharts>
+  );
 }

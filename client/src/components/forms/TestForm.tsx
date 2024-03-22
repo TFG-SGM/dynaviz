@@ -1,10 +1,10 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { TestData, TestTypeData, UserData } from "../../utils/types";
-import { LoadingComponent } from "../other/LoadingComponent";
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { SelectType } from "../selects/SelectType";
 import { RecordVideoView } from "../elements/RecordVideoView";
+import { useActualDoctor } from "../../hooks/useActualDoctor";
 
 export interface TestFormProps<T> {
   data: TestData | null;
@@ -12,6 +12,7 @@ export interface TestFormProps<T> {
 }
 
 export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
+  useActualDoctor(setNewData);
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
   const [isRecording, setIsRecording] = useState(false);
@@ -38,9 +39,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     });
   };
 
-  if (!data || !testTypes || !doctors) {
-    return <LoadingComponent></LoadingComponent>;
-  }
+  if (!data || !testTypes || !doctors) return;
 
   return (
     <>
@@ -50,58 +49,63 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           handleAddRecordingVideo={handleAddRecordingVideo}
         ></RecordVideoView>
       )}
+      <div className="test-form-part">
+        <label>
+          Médico{" "}
+          <SelectType
+            option={"doctorId"}
+            value={data.doctorId}
+            endpoint={DOCTOR_ENDPOINT}
+            handleChange={handleChange}
+          ></SelectType>
+        </label>
+        <label>
+          Tipo{" "}
+          <SelectType
+            option={"typeId"}
+            value={data.typeId}
+            endpoint={TEST_TYPE_ENDPOINT}
+            handleChange={handleChange}
+          ></SelectType>
+        </label>
+        <label>
+          Fecha{" "}
+          <input
+            name="date"
+            type="date"
+            value={data.date.split("T")[0]}
+            onChange={handleChange}
+            max={new Date().toISOString().split("T")[0]}
+            required
+          ></input>
+        </label>
+      </div>
+      <div className="test-form-part">
+        <label>
+          Vídeo seleccionado{" "}
+          <input
+            className="selected-video"
+            name="video"
+            value={data.video}
+            type="text"
+            required
+            disabled
+          ></input>
+        </label>{" "}
+        <label>
+          <input
+            name="video"
+            type="file"
+            onChange={handleChange}
+            accept="video/*"
+          ></input>
+          <button type="button" onClick={handleChangeRecordingState}>
+            Grabar Vídeo
+          </button>
+        </label>
+      </div>
       <label>
-        Médico:{" "}
-        <SelectType
-          option={"doctorId"}
-          value={data.doctorId}
-          endpoint={DOCTOR_ENDPOINT}
-          handleChange={handleChange}
-        ></SelectType>
-      </label>
-      <label>
-        Tipo:{" "}
-        <SelectType
-          option={"typeId"}
-          value={data.typeId}
-          endpoint={TEST_TYPE_ENDPOINT}
-          handleChange={handleChange}
-        ></SelectType>
-      </label>
-      <label>
-        Fecha:{" "}
-        <input
-          name="date"
-          type="date"
-          value={data.date.split("T")[0]}
-          onChange={handleChange}
-          max={new Date().toISOString().split("T")[0]}
-          required
-        ></input>
-      </label>
-      <label>
-        Vídeo seleccionado:{" "}
-        <input
-          name="video"
-          value={data.video}
-          type="text"
-          required
-          disabled
-        ></input>
-      </label>{" "}
-      <label>
-        <input
-          name="video"
-          type="file"
-          onChange={handleChange}
-          accept="video/*"
-        ></input>
-        <button type="button" onClick={handleChangeRecordingState}>
-          Grabar vídeo
-        </button>
-      </label>
-      <label>
-        Escala EVA:
+        Escala EVA
         <input
           name="evaScale"
           type="range"

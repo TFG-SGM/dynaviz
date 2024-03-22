@@ -1,8 +1,9 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
+import { CHART_HEIGHT } from "../../utils/constants";
 
-export function BoxPlot({
+export function BoxPlot1({
   data,
   actualParts,
 }: {
@@ -26,22 +27,35 @@ export function BoxPlot({
     },
     yAxis: {
       type: "value",
-      name: "Ángulos",
+      name: "Desplazamiento",
     },
     tooltip: {
-      trigger: "axis",
+      trigger: "item",
       confine: true,
     },
     series: [
       {
         type: "boxplot",
-        data: [
-          TestService.getBoxPlotData(realMovements),
-          TestService.getBoxPlotData(idealMovements),
-        ],
+        data: [TestService.getBoxPlotData(realMovements)],
+        name: "Real",
+      },
+      {
+        type: "boxplot",
+        data: [TestService.getBoxPlotData(idealMovements)],
+        name: "Ideal",
       },
     ],
+    legend: {
+      orient: "vertical",
+      right: 10,
+      top: "center",
+    },
   };
 
-  return <ReactECharts option={option}></ReactECharts>;
+  return (
+    <ReactECharts
+      style={{ height: CHART_HEIGHT }}
+      option={option}
+    ></ReactECharts>
+  );
 }

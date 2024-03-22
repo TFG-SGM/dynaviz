@@ -1,8 +1,8 @@
-.test-page-container > h1,
+.test-evolution-page > h1,
+.test-page > h1,
 .list > h1 {
   display: inline-block;
   margin-left: 50px;
-  vertical-align: middle;
 }
 
 .test-list,

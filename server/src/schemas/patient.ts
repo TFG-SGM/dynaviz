@@ -12,7 +12,7 @@ const patientSchema = z.object({
   activityLevel: z.number(),
   diagnosisYears: z.number(),
   isFibro: z.boolean(),
-  assignedDoctor: z.string(),
+  doctorId: z.string(),
 });
 
 export function validatePatient(input: Patient) {

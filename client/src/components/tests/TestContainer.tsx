@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useData } from "../../hooks/useData";
 import { TestData } from "../../utils/types";
 import { TEST_ENDPOINT } from "../../utils/constants";
-import { LoadingComponent } from "../../components/other/LoadingComponent";
 import { TestButtons } from "../../components/buttons/TestButtons";
 import { MouseEventHandler, useState } from "react";
 import { BodyPartsButtons } from "../../components/buttons/BodyPartsButtons";
@@ -31,7 +30,18 @@ export function TestContainer() {
   const handleChangePart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
     const classButton = target.classList;
-    let newParts = [...actual.parts];
+
+    let newParts: string[] = [];
+    if (
+      actual.chart === "line" ||
+      actual.chart === "histogram" ||
+      actual.chart === "boxplot"
+    ) {
+      const activeButtons = document.querySelectorAll(".active-part");
+      activeButtons.forEach((button) => button.classList.remove("active-part"));
+    } else {
+      newParts = [...actual.parts];
+    }
 
     if (classButton.contains("active-part")) {
       classButton.remove("active-part");
@@ -40,13 +50,14 @@ export function TestContainer() {
       classButton.add("active-part");
       newParts.push(target.id);
     }
+
     setActual((prevState) => ({
       ...prevState,
       parts: newParts,
     }));
   };
 
-  if (!test || !test.data) return <LoadingComponent></LoadingComponent>;
+  if (!test || !test.data) return;
 
   return (
     <>
@@ -65,10 +76,19 @@ export function TestContainer() {
           ></TestMenuView>
         )}
         <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
-        <BodyPartsButtons
-          parts={test.data.parts}
-          handleChangePart={handleChangePart}
-        ></BodyPartsButtons>
+        <div className="body-parts-container">
+          <BodyPartsButtons
+            parts={test.data.parts}
+            handleChangePart={handleChangePart}
+          ></BodyPartsButtons>
+          {actual.chart === "bubble" ||
+            (actual.chart === "heatmap" && (
+              <BodyPartsButtons
+                parts={test.data.parts}
+                handleChangePart={handleChangePart}
+              ></BodyPartsButtons>
+            ))}
+        </div>
         <ActualChart actual={actual} data={test.data}></ActualChart>
       </div>
     </>

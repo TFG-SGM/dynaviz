@@ -1,12 +1,13 @@
 import { ObjectId } from "mongodb";
 import { connectToMongoDB } from "../utils/connection";
-import { PartialPatient, PartialUser, Patient, User } from "../utils/types";
+import { PartialPatient, Patient } from "../utils/types";
 
 export class PatientModel {
-  static async getAll() {
+  static async getAll({ doctorId }: { doctorId: string }) {
     const db = await connectToMongoDB("patients");
+    const query = doctorId ? { doctorId } : {};
 
-    const patients = await db.find({}).toArray();
+    const patients = await db.find(query).toArray();
     return patients;
   }
 

@@ -9,11 +9,13 @@ export type HookData<T> = [
   string | null
 ];
 
-export function useData<T>(endpoint: string): HookData<T> {
+export function useData<T>(endpoint: string | null): HookData<T> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!endpoint) return;
+
     const fetchData = async () => {
       try {
         const result = await DataService.getData(endpoint);

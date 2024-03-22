@@ -9,6 +9,7 @@ import { CrossButton } from "../buttons/CrossButton";
 import { TestsViewButton } from "../buttons/TestsViewButton";
 import { PatientDataElement } from "../elements/PatientDataElement";
 import { Overlay } from "../other/Overlay";
+import { ACTUAL_USER_ENDPOINT } from "../../utils/constants";
 
 export interface UserMenuView {
   endpoint: string;
@@ -27,6 +28,7 @@ export function UserMenuView({
   handleUpdateList,
   isPatient = false,
 }: UserMenuView) {
+  const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
   const [user, setUser] = useData<UserData | PatientData>(endpoint);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +70,7 @@ export function UserMenuView({
                 setUsers={setUsers}
               ></DeleteUserButton>
               <button onClick={handleStartUpdate}>Editar</button>
-              {isPatient && (
+              {isPatient && actualUser?.role !== "admin" && (
                 <TestsViewButton userId={user?._id}></TestsViewButton>
               )}
             </div>

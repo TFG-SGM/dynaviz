@@ -60,6 +60,7 @@ button:hover {
 
 select {
   font-size: 20px;
+  padding: 10px;
   color: var(--black-letter);
 }
 
@@ -69,13 +70,13 @@ form {
   gap: 50px;
 }
 
-form > label {
+form label {
   display: flex;
   flex-direction: column;
   font-weight: bold;
 }
 
-form > label > input {
+form label input {
   padding: 10px;
   border-radius: var(--radius);
   border: 1px solid var(--black-letter);

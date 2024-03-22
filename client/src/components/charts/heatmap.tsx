@@ -1,6 +1,7 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
+import { CHART_HEIGHT } from "../../utils/constants";
 
 export function Heatmap({
   data,
@@ -21,12 +22,12 @@ export function Heatmap({
       top: "10%",
     },
     xAxis: {
+      name: `Var. ${actualParts[0]}`,
       type: "category",
-      data: Array.from(Array(100).keys()),
     },
     yAxis: {
+      name: `Var. ${actualParts[1]}`,
       type: "category",
-      data: Array.from(Array(100).keys()),
     },
     visualMap: {
       min: 0,
@@ -39,10 +40,15 @@ export function Heatmap({
     series: [
       {
         type: "heatmap",
-        data: TestService.getCorrelatedMovements(data.parts, actualParts),
+        data: TestService.getCorrelatedVariations(data.parts, actualParts),
       },
     ],
   };
 
-  return <ReactECharts option={option}></ReactECharts>;
+  return (
+    <ReactECharts
+      style={{ height: CHART_HEIGHT }}
+      option={option}
+    ></ReactECharts>
+  );
 }

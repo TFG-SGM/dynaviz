@@ -5,7 +5,10 @@ import { AuthController } from "./auth";
 
 export class PatientController {
   static async getAll(req: Request, res: Response) {
-    const patients = await PatientModel.getAll();
+    const { doctorId } = req.query;
+    const patients = await PatientModel.getAll({
+      doctorId: doctorId as string,
+    });
     res.json(patients);
   }
 

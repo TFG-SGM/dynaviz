@@ -2,48 +2,48 @@
  {
   "name": "Cerrar las piernas juntas",
   "bodyParts": [
-   "Dedos gordos de pies",
-   "Rodillas"
+   "Dedo gordo de pie",
+   "Rodilla"
   ]
  },
  {
   "name": "Estiramiento simétrico",
   "bodyParts": [
-   "Dedos gordos de pies",
-   "Rodillas",
-   "Espinas iliacas",
-   "Hombros",
-   "Muñecas"
+   "Dedo gordo de pie",
+   "Rodilla",
+   "Espina iliaca",
+   "Hombro",
+   "Muñeca"
   ]
  },
  {
   "name": "Estiramiento asimétrico",
   "bodyParts": [
-   "Dedos gordos de pies",
-   "Rodillas",
-   "Espinas iliacas",
-   "Hombros",
-   "Muñecas"
+   "Dedo gordo de pie",
+   "Rodilla",
+   "Espina iliaca",
+   "Hombro",
+   "Muñeca"
   ]
  },
  {
   "name": "Arriba abajo a lo largo del eje vertical",
   "bodyParts": [
    "Nariz",
-   "Rodillas",
-   "Espinas iliacas",
-   "Hombros",
-   "Tobillos"
+   "Rodilla",
+   "Espina iliaca",
+   "Hombro",
+   "Tobillo"
   ]
  },
  {
   "name": "Movimientos laterales",
   "bodyParts": [
    "Nariz",
-   "Orejas",
-   "Hombros",
-   "Rodillas",
-   "Tobillos"
+   "Oreja",
+   "Hombro",
+   "Rodilla",
+   "Tobillo"
   ]
  }
 ]

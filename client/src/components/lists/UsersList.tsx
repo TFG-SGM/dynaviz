@@ -3,16 +3,16 @@ import { UpdateUserForm } from "../forms/UpdateUserForm";
 import { AddUserForm } from "../forms/AddUserForm";
 import { useState } from "react";
 import { UserData, actual } from "../../utils/types";
-import { useData } from "../../hooks/useData";
-import { LoadingComponent } from "../other/LoadingComponent";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
 import { UserMenuView } from "../menus/UserMenuView";
-import { EmptyListComponent } from "../other/EmptyListComponent";
 import { updateDataHelper } from "../../utils/helpers";
+import { useUserEndpoint } from "../../hooks/useUserEndpoint";
+import { useData } from "../../hooks/useData";
 
 export function UsersList({ endpoint }: { endpoint: string }) {
-  const [users, setUsers, error] = useData<UserData[]>(endpoint);
+  const [finalEndpoint] = useUserEndpoint(endpoint);
+  const [users, setUsers, error] = useData<UserData[]>(finalEndpoint);
   const [actual, setActual] = useState<actual>({
     action: "",
     userId: "",
@@ -27,10 +27,12 @@ export function UsersList({ endpoint }: { endpoint: string }) {
     return <ErrorComponent error={error}></ErrorComponent>;
   }
 
+  if (!users) return;
+
   return (
     <>
       <button className="add-user-button" onClick={handleAdd}>
-        Añadir usuario
+        Añadir Usuario
       </button>
       {actual.action === "add" && (
         <AddUserForm
@@ -56,25 +58,20 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           isPatient={endpoint === PATIENT_ENDPOINT}
         ></UserMenuView>
       )}
-      {!users ? (
-        <LoadingComponent></LoadingComponent>
-      ) : users.length === 0 ? (
-        <EmptyListComponent></EmptyListComponent>
-      ) : (
-        <div className="user-list">
-          {users.map((user: UserData) => {
-            return (
-              <UserCard
-                key={user._id}
-                endpoint={endpoint}
-                setActual={setActual}
-                userData={user}
-                setUsers={setUsers}
-              ></UserCard>
-            );
-          })}
-        </div>
-      )}
+
+      <div className="user-list">
+        {users.map((user: UserData) => {
+          return (
+            <UserCard
+              key={user._id}
+              endpoint={endpoint}
+              setActual={setActual}
+              userData={user}
+              setUsers={setUsers}
+            ></UserCard>
+          );
+        })}
+      </div>
     </>
   );
 }

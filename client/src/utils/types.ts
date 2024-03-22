@@ -22,7 +22,7 @@ export type PatientData = {
   occupation: string;
   diagnosisYears: number;
   isFibro: boolean;
-  assignedDoctor: string;
+  doctorId: string;
 };
 
 export type actual = {

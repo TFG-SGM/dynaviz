@@ -5,6 +5,9 @@ export const DOCTOR_ENDPOINT = "doctor/";
 export const PATIENT_ENDPOINT = "patient/";
 export const TEST_ENDPOINT = "test/";
 export const TEST_TYPE_ENDPOINT = "testType/";
+export const ACTUAL_USER_ENDPOINT = "auth/user-data";
+
+export const CHART_HEIGHT = "80%";
 
 export const INITIAL_USER = {
   _id: "",
@@ -29,7 +32,7 @@ export const INITIAL_PATIENT = {
   occupation: "",
   diagnosisYears: 0,
   isFibro: false,
-  assignedDoctor: "",
+  doctorId: "",
 };
 
 export const INITIAL_TEST = {

@@ -9,16 +9,12 @@ export function Header() {
   const location = useLocation();
   const [isMyAccount, setIsMyAccount] = useState(false);
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
+  const handleGoBack = () => navigate(-1);
+  const handleMyAccount = () => setIsMyAccount(!isMyAccount);
   const handleLogout = () => {
     navigate("/");
     DataService.logout();
   };
-
-  const handleMyAccount = () => setIsMyAccount(!isMyAccount);
 
   return (
     <nav className="header-container">

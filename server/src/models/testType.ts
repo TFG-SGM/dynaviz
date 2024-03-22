@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
 import { connectToMongoDB } from "../utils/connection";
-import { PartialTestType, TestType } from "../utils/types";
 
 export class TestTypeModel {
   static async getAll() {

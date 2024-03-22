@@ -1,7 +1,6 @@
 import { ChangeEvent } from "react";
 import { useData } from "../../hooks/useData";
 import { TEST_ENDPOINT } from "../../utils/constants";
-import { LoadingComponent } from "../other/LoadingComponent";
 
 interface SelectDateProps {
   filters: { date: string };
@@ -11,7 +10,7 @@ interface SelectDateProps {
 export function SelectDate({ filters, handleChange }: SelectDateProps) {
   const [dates] = useData<string[]>(TEST_ENDPOINT + "attributes/date");
 
-  if (!dates) return <LoadingComponent></LoadingComponent>;
+  if (!dates) return;
   return (
     <select name="date" value={filters.date} onChange={handleChange} required>
       <option value="">Selecciona una fecha</option>

@@ -14,9 +14,9 @@ export function PatientDataElement({ user }: { user: PatientData }) {
     occupation,
     diagnosisYears,
     isFibro,
-    assignedDoctor,
+    doctorId,
   } = user;
-  const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + assignedDoctor);
+  const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + doctorId);
   return (
     <>
       <p>

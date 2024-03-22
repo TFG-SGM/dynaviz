@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { UserData } from "../../utils/types";
-import { LoadingComponent } from "../other/LoadingComponent";
 
 export interface UserFormProps<T> {
   data: UserData | null;
@@ -20,14 +19,12 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
     });
   };
 
-  if (!data) {
-    return <LoadingComponent></LoadingComponent>;
-  }
+  if (!data) return;
 
   return (
     <>
       <label>
-        Nombre:{" "}
+        Nombre{" "}
         <input
           name="name"
           type="text"
@@ -37,7 +34,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
         ></input>
       </label>
       <label>
-        Apellidos:{" "}
+        Apellidos{" "}
         <input
           name="surname"
           type="text"
@@ -47,7 +44,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
         ></input>
       </label>
       <label>
-        Edad:{" "}
+        Edad{" "}
         <input
           name="age"
           type="number"
@@ -57,7 +54,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
         ></input>
       </label>
       <label>
-        Ciudad:{" "}
+        Ciudad{" "}
         <input
           name="city"
           type="text"
@@ -67,7 +64,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
         ></input>
       </label>
       <label>
-        Email:{" "}
+        Email{" "}
         <input
           name="email"
           type="email"
@@ -77,7 +74,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
         ></input>
       </label>
       <label>
-        Contraseña:{" "}
+        Contraseña{" "}
         <input
           name="password"
           type="password"
@@ -87,7 +84,7 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
         ></input>
       </label>
       <label>
-        Teléfono:{" "}
+        Teléfono{" "}
         <input
           name="phone"
           pattern="[0-9]{9}"

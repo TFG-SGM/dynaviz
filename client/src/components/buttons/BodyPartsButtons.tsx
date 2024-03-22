@@ -1,6 +1,8 @@
 import { MouseEventHandler } from "react";
 import { TestPartsData } from "../../utils/types";
 
+import keyPoints from "../../assets/keyPoints.png";
+
 export function BodyPartsButtons({
   parts,
   handleChangePart,

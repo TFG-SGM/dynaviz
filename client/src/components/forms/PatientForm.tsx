@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { PatientData } from "../../utils/types";
-import { LoadingComponent } from "../other/LoadingComponent";
 import { SelectType } from "../selects/SelectType";
 import { DOCTOR_ENDPOINT } from "../../utils/constants";
+import { useActualDoctor } from "../../hooks/useActualDoctor";
 
 export interface PatientFormProps<T> {
   data: PatientData | null;
@@ -10,6 +10,8 @@ export interface PatientFormProps<T> {
 }
 
 export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
+  useActualDoctor(setNewData);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
 
@@ -30,14 +32,12 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
     });
   };
 
-  if (!data) {
-    return <LoadingComponent></LoadingComponent>;
-  }
+  if (!data) return;
 
   return (
     <>
       <label>
-        Nombre:{" "}
+        Nombre{" "}
         <input
           name="name"
           type="text"
@@ -47,7 +47,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Apellidos:{" "}
+        Apellidos{" "}
         <input
           name="surname"
           type="text"
@@ -57,7 +57,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Edad:{" "}
+        Edad{" "}
         <input
           name="age"
           type="number"
@@ -67,7 +67,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Ciudad:{" "}
+        Ciudad{" "}
         <input
           name="city"
           type="text"
@@ -77,7 +77,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Email:{" "}
+        Email{" "}
         <input
           name="email"
           type="email"
@@ -87,7 +87,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Teléfono:{" "}
+        Teléfono{" "}
         <input
           name="phone"
           pattern="[0-9]{9}"
@@ -97,7 +97,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Ocupación:{" "}
+        Ocupación{" "}
         <input
           name="occupation"
           type="text"
@@ -107,7 +107,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Nivel de actividad física:{" "}
+        Nivel de actividad física{" "}
         <input
           name="activityLevel"
           type="number"
@@ -117,7 +117,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Años con diagnostico:{" "}
+        Años con diagnostico{" "}
         <input
           name="diagnosisYears"
           type="number"
@@ -127,7 +127,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label className="fibro-label">
-        Tiene fibromialgia:{" "}
+        Tiene fibromialgia{" "}
         <input
           className="fibro-input"
           name="isFibro"
@@ -138,10 +138,10 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Médico:{" "}
+        Médico{" "}
         <SelectType
-          option="assignedDoctor"
-          value={data.assignedDoctor}
+          option="doctorId"
+          value={data.doctorId}
           endpoint={DOCTOR_ENDPOINT}
           handleChange={handleChange}
         ></SelectType>

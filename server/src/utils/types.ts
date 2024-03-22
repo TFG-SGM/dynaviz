@@ -34,7 +34,7 @@ export interface Patient {
   activityLevel: number;
   diagnosisYears: number;
   isFibro: boolean;
-  assignedDoctor: string;
+  doctorId: string;
 }
 
 export interface PartialPatient {
@@ -48,7 +48,7 @@ export interface PartialPatient {
   activityLevel?: number | undefined;
   diagnosisYears?: number | undefined;
   isFibro?: boolean | undefined;
-  assignedDoctor?: string | undefined;
+  doctorId?: string | undefined;
 }
 
 export interface Test {
