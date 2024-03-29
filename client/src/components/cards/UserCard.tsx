@@ -1,9 +1,5 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { UserData, actual } from "../../utils/types";
-import { ErrorComponent } from "../other/ErrorComponent";
-import { DeleteUserButton } from "../buttons/DeleteUserButton";
-import { PATIENT_ENDPOINT } from "../../utils/constants";
-import { TestsViewButton } from "../buttons/TestsViewButton";
 
 interface UsersCard {
   endpoint: string;

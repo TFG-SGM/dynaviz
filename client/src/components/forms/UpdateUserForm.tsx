@@ -13,12 +13,14 @@ import { Overlay } from "../other/Overlay";
 export interface UpdateFormProps {
   endpoint: string;
   handleClean: () => void;
+  handleCancel: () => void;
   handleUpdate: (data: UserData) => void;
 }
 
 export function UpdateUserForm({
   endpoint,
   handleClean,
+  handleCancel,
   handleUpdate,
 }: UpdateFormProps) {
   const typeUser = endpoint.split("/")[0] + "/";
@@ -65,7 +67,7 @@ export function UpdateUserForm({
             <button
               className="cancel-button"
               type="button"
-              onClick={handleClean}
+              onClick={handleCancel}
             >
               Cancelar
             </button>

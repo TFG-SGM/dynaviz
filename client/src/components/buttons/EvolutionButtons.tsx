@@ -13,9 +13,6 @@ export function EvolutionButtons({
       <button id="bar" onClick={handleChangeChart}>
         Barras
       </button>
-      <button id="radar" onClick={handleChangeChart}>
-        Radar
-      </button>
     </div>
   );
 }

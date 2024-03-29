@@ -10,6 +10,8 @@ import { TestsViewButton } from "../buttons/TestsViewButton";
 import { PatientDataElement } from "../elements/PatientDataElement";
 import { Overlay } from "../other/Overlay";
 import { ACTUAL_USER_ENDPOINT } from "../../utils/constants";
+import { DeleteMenu } from "./DeleteMenu";
+import { DataService } from "../../services/DataService";
 
 export interface UserMenuView {
   endpoint: string;
@@ -31,29 +33,49 @@ export function UserMenuView({
   const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
   const [user, setUser] = useData<UserData | PatientData>(endpoint);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isDelete, setIsDelete] = useState<boolean>(false);
 
-  const handleStartUpdate = () =>
-    setActual({ action: "update", userId: user?._id });
+  const handleStartDelete = () => setIsDelete(true);
+  const handleCancelDelete = () => setIsDelete(false);
+
+  const handleStartUpdate = () => setIsUpdate(true);
   const handleCancelUpdate = () => setIsUpdate(false);
+
   const handleUpdate = (data: UserData) => {
     setUser(data);
     handleUpdateList(data);
+  };
+
+  const handleDelete = async () => {
+    const data = await DataService.deleteData(endpoint);
+    setUsers((prevState) =>
+      prevState
+        ? prevState.filter((dataDict) => dataDict._id !== data)
+        : prevState
+    );
+    if (setActual) setActual({ action: "", userId: "" });
   };
 
   if (!user) return;
   return (
     <>
       <Overlay></Overlay>
-      <dialog className="view-menu" open>
-        {isUpdate ? (
-          <UpdateUserForm
-            endpoint={endpoint}
-            handleClean={handleCancelUpdate}
-            handleUpdate={handleUpdate}
-          ></UpdateUserForm>
-        ) : (
+      {isUpdate ? (
+        <UpdateUserForm
+          endpoint={endpoint}
+          handleClean={handleClean}
+          handleCancel={handleCancelUpdate}
+          handleUpdate={handleUpdate}
+        ></UpdateUserForm>
+      ) : (
+        <dialog className="view-menu" open>
           <>
+            {isDelete && (
+              <DeleteMenu
+                handleDelete={handleDelete}
+                handleClean={handleCancelDelete}
+              ></DeleteMenu>
+            )}
             <CrossButton handleClean={handleClean}></CrossButton>
             {isPatient ? (
               <PatientDataElement
@@ -63,21 +85,17 @@ export function UserMenuView({
               <UserDataElement user={user as UserData}></UserDataElement>
             )}
             <div className="buttons-container">
-              <DeleteUserButton
-                endpoint={endpoint}
-                setActual={setActual}
-                setError={setError}
-                setUsers={setUsers}
-              ></DeleteUserButton>
+              <button className="delete-button" onClick={handleStartDelete}>
+                Eliminar
+              </button>
               <button onClick={handleStartUpdate}>Editar</button>
               {isPatient && actualUser?.role !== "admin" && (
                 <TestsViewButton userId={user?._id}></TestsViewButton>
               )}
             </div>
-            {error && <ErrorComponent error={error}></ErrorComponent>}
           </>
-        )}
-      </dialog>
+        </dialog>
+      )}
     </>
   );
 }

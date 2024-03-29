@@ -44,6 +44,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
       {actual.action === "update" && (
         <UpdateUserForm
           endpoint={endpoint + actual.userId}
+          handleCancel={handleClean}
           handleClean={handleClean}
           handleUpdate={handleUpdateList}
         ></UpdateUserForm>

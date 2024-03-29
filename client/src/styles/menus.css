@@ -33,6 +33,13 @@
   background-color: var(--red);
 }
 
+/*DELETE MENU*/
+.delete-menu {
+  display: flex;
+  gap: 20px;
+  width: 50%;
+}
+
 /*VIDEO MENU*/
 
 .test-form-part {

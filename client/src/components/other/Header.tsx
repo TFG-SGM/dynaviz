@@ -16,6 +16,8 @@ export function Header() {
     DataService.logout();
   };
 
+  const pathParts = location.pathname.split("/");
+
   return (
     <nav className="header-container">
       {isMyAccount && <MyAccount handleClean={handleMyAccount}></MyAccount>}
@@ -24,6 +26,29 @@ export function Header() {
           <ArrowBack></ArrowBack>
         </button>
       )}
+      <p className="location-text">
+        <span>DynaViz</span>{" "}
+        {pathParts[2] && (
+          <>
+            &#x276F; <span>{pathParts[2]}</span>
+          </>
+        )}{" "}
+        {pathParts[3] && (
+          <>
+            &#x276F; <span>Pruebas</span>
+          </>
+        )}
+        {pathParts[4] && pathParts[4] !== "evolucion" && (
+          <>
+            &#x276F; <span>Prueba</span>
+          </>
+        )}
+        {pathParts[4] && pathParts[4] === "evolucion" && (
+          <>
+            &#x276F; <span>Evolución</span>
+          </>
+        )}
+      </p>
       <div>
         <button className="account-button" onClick={handleMyAccount}>
           <Account></Account>

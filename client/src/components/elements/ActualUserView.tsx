@@ -23,7 +23,8 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
       {isUpdate ? (
         <UpdateUserForm
           endpoint={user.role + "/" + user._id}
-          handleClean={handleCancelUpdate}
+          handleClean={handleClean}
+          handleCancel={handleCancelUpdate}
           handleUpdate={handleUpdate}
         ></UpdateUserForm>
       ) : (

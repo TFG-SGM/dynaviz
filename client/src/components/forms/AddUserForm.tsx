@@ -60,6 +60,7 @@ export function AddUserForm<T>({
             <UserForm
               data={newData as UserData}
               setNewData={setNewData}
+              isPass={true}
             ></UserForm>
           )}
           <div className="buttons-container">

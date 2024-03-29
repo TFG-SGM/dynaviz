@@ -1,6 +1,7 @@
 .header-container {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   background-color: var(--white-letter);
   border-bottom: 2px solid var(--black-letter);
 
@@ -15,8 +16,14 @@
   padding: 0;
 }
 
-.back-button {
-  margin: 0 auto 0 0;
+.location-text {
+  margin: 0 auto 0 25px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.location-text > span:last-of-type {
+  color: var(--main-color);
 }
 
 .logout-button {

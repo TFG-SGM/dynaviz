@@ -5,6 +5,8 @@ import { TEST_ENDPOINT } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { TestData } from "../../utils/types";
 import { Overlay } from "../other/Overlay";
+import { DeleteMenu } from "./DeleteMenu";
+import { useState } from "react";
 
 export interface TestMenuView {
   test: TestData;
@@ -13,6 +15,12 @@ export interface TestMenuView {
 
 export function TestMenuView({ test, handleClean }: TestMenuView) {
   const navigate = useNavigate();
+
+  const [isDelete, setIsDelete] = useState(false);
+
+  const handleStartDelete = () => setIsDelete(true);
+  const handleCancelDelete = () => setIsDelete(false);
+
   const handleDelete = async () => {
     navigate(-1);
     await DataService.deleteData(TEST_ENDPOINT + test?._id);
@@ -23,9 +31,15 @@ export function TestMenuView({ test, handleClean }: TestMenuView) {
     <>
       <Overlay></Overlay>
       <dialog open className="view-menu">
+        {isDelete && (
+          <DeleteMenu
+            handleDelete={handleDelete}
+            handleClean={handleCancelDelete}
+          ></DeleteMenu>
+        )}
         <CrossButton handleClean={handleClean}></CrossButton>
         <TestDataElement test={test}></TestDataElement>
-        <button className="delete-button" onClick={handleDelete}>
+        <button className="delete-button" onClick={handleStartDelete}>
           Eliminar
         </button>
       </dialog>

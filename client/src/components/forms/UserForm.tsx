@@ -4,9 +4,14 @@ import { UserData } from "../../utils/types";
 export interface UserFormProps<T> {
   data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
+  isPass?: boolean;
 }
 
-export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
+export function UserForm<T>({
+  data,
+  setNewData,
+  isPass = false,
+}: UserFormProps<T>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -73,16 +78,18 @@ export function UserForm<T>({ data, setNewData }: UserFormProps<T>) {
           required
         ></input>
       </label>
-      <label>
-        Contraseña{" "}
-        <input
-          name="password"
-          type="password"
-          value={data.password}
-          onChange={handleChange}
-          required
-        ></input>
-      </label>
+      {isPass && (
+        <label>
+          Contraseña{" "}
+          <input
+            name="password"
+            type="password"
+            value={data.password}
+            onChange={handleChange}
+            required
+          ></input>
+        </label>
+      )}
       <label>
         Teléfono{" "}
         <input
