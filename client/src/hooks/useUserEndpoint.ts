@@ -9,14 +9,16 @@ export function useUserEndpoint(endpoint: string) {
 
   useEffect(() => {
     if (!actualUser) return;
-    if (endpoint !== PATIENT_ENDPOINT) return;
+    if (endpoint !== PATIENT_ENDPOINT) {
+      setEndpoint(endpoint);
+    } else {
+      let patientFilter = "";
+      if (actualUser.role === "doctor") {
+        patientFilter = `?doctorId=${actualUser._id}`;
+      }
 
-    let patientFilter = "";
-    if (actualUser.role === "doctor") {
-      patientFilter = `?doctorId=${actualUser._id}`;
+      setEndpoint(endpoint + patientFilter);
     }
-
-    setEndpoint(endpoint + patientFilter);
   }, [actualUser, endpoint]);
 
   return [finalEndpoint];

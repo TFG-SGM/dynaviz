@@ -1,8 +1,8 @@
 import { useData } from "../../hooks/useData";
 import { TEST_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
-import { ChangeEvent, MouseEventHandler, useState } from "react";
+import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { EvolutionChart } from "../../components/charts/evolution";
-import { TestData } from "../../utils/types";
+import { TestData, TestPartsData } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
 import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
 import { EvolutionButtons } from "../buttons/EvolutionButtons";
@@ -18,6 +18,20 @@ export function TestEvolutionContainer() {
   const [tests] = useData<TestData[]>(
     TEST_ENDPOINT + "?patientId=" + "&typeId=" + typeId
   );
+  const [parts, setParts] = useState<TestPartsData | null>(null);
+
+  useEffect(() => {
+    if (typeId === "" || !tests || !tests[0] || !tests[0].data) {
+      setParts(null);
+    } else {
+      console.log(tests[0]);
+      if (tests[0].data.parts) {
+        setParts(tests[0].data.parts);
+      } else {
+        setParts(null);
+      }
+    }
+  }, [typeId, tests]);
 
   const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
@@ -29,8 +43,35 @@ export function TestEvolutionContainer() {
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
-
+    setActual((prevState) => ({
+      ...prevState,
+      parts: [],
+    }));
     setTypeId(value);
+  };
+
+  const handleChangePart: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const target = e.target as HTMLElement;
+    const classButton = target.classList;
+
+    const newParts = [...actual.parts];
+
+    const partId = target.id;
+
+    const partIndex = newParts.indexOf(partId);
+
+    if (partIndex !== -1) {
+      classButton.remove("active-part");
+      newParts.splice(partIndex, 1); // Remove the part from newParts
+    } else {
+      classButton.add("active-part");
+      newParts.push(partId);
+    }
+
+    setActual((prevState) => ({
+      ...prevState,
+      parts: newParts,
+    }));
   };
 
   if (!tests) return;
@@ -48,19 +89,12 @@ export function TestEvolutionContainer() {
         handleChangeChart={handleChangeChart}
       ></EvolutionButtons>
 
-      <div className="body-parts-buttons">
-        <button>Part1</button>
-        <button>Part2</button>
-        <button>Part3</button>
-      </div>
-      {/*
       <BodyPartsButtons
-        parts={test.data.parts}
+        parts={parts}
         handleChangePart={handleChangePart}
       ></BodyPartsButtons>
-      */}
 
-      <EvolutionChart tests={tests} chartType={actual.chart}></EvolutionChart>
+      <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
     </div>
   );
 }

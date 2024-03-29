@@ -5,31 +5,66 @@ import { CHART_HEIGHT } from "../../utils/constants";
 
 export function EvolutionChart({
   tests,
-  chartType,
+  actual,
 }: {
   tests: TestData[];
-  chartType: string;
+  actual: {
+    chart: string;
+    parts: string[];
+  };
 }) {
-  const [data, setData] = useState<{ dates: string[]; restrictions: number[] }>(
-    {
-      dates: [],
-      restrictions: [],
-    }
-  );
+  const [data, setData] = useState<{
+    dates: string[];
+    restrictionSeries: object;
+  }>({
+    dates: [],
+    restrictionSeries: {},
+  });
 
   useEffect(() => {
-    const newRestrictions: number[] = [];
     const newDates: string[] = [];
+    const newRestrictions: { [key: string]: number[] } = {};
+
+    if (actual.parts.length === 0) {
+      newRestrictions["total"] = [];
+    } else {
+      actual.parts.forEach((part: string) => {
+        newRestrictions[part] = [];
+      });
+    }
 
     tests.forEach((test) => {
       if (test.data) {
-        newRestrictions.push(test.data.restriction);
+        if (actual.parts.length === 0)
+          newRestrictions["total"].push(test.data.restriction);
+        else {
+          Object.keys(test.data.parts).forEach((part) => {
+            if (part in newRestrictions)
+              newRestrictions[part] = [
+                ...newRestrictions[part],
+                test.data.parts[part].restriction,
+              ];
+          });
+        }
         newDates.push(test.date.split("T")[0]);
       }
     });
 
-    setData({ dates: newDates, restrictions: newRestrictions });
-  }, [tests]);
+    const restrictionSeries = Object.keys(newRestrictions).map((key) => {
+      return {
+        data: newRestrictions[key],
+        type: actual.chart,
+        name: key,
+        stack: "Total",
+        areaStyle: actual.parts.length !== 0 ? {} : undefined,
+      };
+    });
+
+    setData({
+      dates: newDates,
+      restrictionSeries: restrictionSeries,
+    });
+  }, [tests, actual.parts, actual.chart]);
 
   const option = {
     xAxis: {
@@ -39,19 +74,17 @@ export function EvolutionChart({
     yAxis: {
       type: "value",
     },
-    series: [
-      {
-        data: data.restrictions,
-        type: chartType,
-      },
-    ],
-    tooltip: {},
+    series: data.restrictionSeries,
+    tooltip: {
+      trigger: "axis",
+    },
   };
 
   return (
     <ReactECharts
       style={{ height: CHART_HEIGHT }}
       option={option}
+      notMerge={true}
     ></ReactECharts>
   );
 }
