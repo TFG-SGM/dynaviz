@@ -3,19 +3,10 @@ import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function Histogram({
-  data,
-  actualParts,
-}: {
-  data: TestSubData;
-  actualParts: string[];
-}) {
-  if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
+export function Histogram({ data, part }: { data: TestSubData; part: string }) {
+  if (part === "") return <p>Selecciona una parte del cuerpo</p>;
 
-  const uniqueVariations = TestService.getUniqueVariations(
-    data.parts,
-    actualParts[0]
-  );
+  const uniqueVariations = TestService.getUniqueVariations(data.parts, part);
   const option = {
     xAxis: {
       name: "Variación",
@@ -31,7 +22,7 @@ export function Histogram({
       {
         data: TestService.getVariationsCount(
           data.parts,
-          actualParts[0],
+          part,
           uniqueVariations
         ),
         type: "bar",

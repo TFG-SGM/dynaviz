@@ -3,23 +3,11 @@ import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function BoxPlot({
-  data,
-  actualParts,
-}: {
-  data: TestSubData;
-  actualParts: string[];
-}) {
-  if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
+export function BoxPlot({ data, part }: { data: TestSubData; part: string }) {
+  if (part === "") return <p>Selecciona una parte del cuerpo</p>;
 
-  const realMovements = TestService.getRealMovements(
-    data.parts,
-    actualParts[0]
-  );
-  const idealMovements = TestService.getIdealMovements(
-    data.parts,
-    actualParts[0]
-  );
+  const realMovements = TestService.getRealMovements(data.parts, part);
+  const idealMovements = TestService.getIdealMovements(data.parts, part);
 
   const option = {
     xAxis: {

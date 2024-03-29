@@ -76,9 +76,13 @@ export class TestService {
     );
   }
 
-  static getCorrelatedVariations(parts: TestPartsData, actualParts: string[]) {
-    const variations1 = parts[actualParts[0]].variations;
-    const variations2 = parts[actualParts[1]].variations;
+  static getCorrelatedVariations(
+    parts: TestPartsData,
+    part1: string,
+    part2: string
+  ) {
+    const variations1 = parts[part1].variations;
+    const variations2 = parts[part2].variations;
 
     const combine = variations1.map((variation, index) => [
       variation,

@@ -24,7 +24,6 @@ export function TestEvolutionContainer() {
     if (typeId === "" || !tests || !tests[0] || !tests[0].data) {
       setParts(null);
     } else {
-      console.log(tests[0]);
       if (tests[0].data.parts) {
         setParts(tests[0].data.parts);
       } else {

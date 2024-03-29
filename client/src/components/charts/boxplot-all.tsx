@@ -3,13 +3,7 @@ import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 import { TestService } from "../../services/TestService";
 
-export function BoxPlotAll({
-  data,
-  actualParts,
-}: {
-  data: TestSubData;
-  actualParts: string[];
-}) {
+export function BoxPlotAll({ data }: { data: TestSubData }) {
   const variations = Object.keys(data.parts).map((part) => {
     return {
       type: "boxplot",
@@ -17,7 +11,6 @@ export function BoxPlotAll({
       name: part,
     };
   });
-  console.log(variations);
 
   const option = {
     xAxis: {

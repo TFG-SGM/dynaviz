@@ -4,6 +4,13 @@
   gap: 20px;
 }
 
+.menu-title {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--black-letter);
+  margin-bottom: 30px;
+}
+
 .cross-button {
   align-self: flex-end;
   background-color: var(--form-background);

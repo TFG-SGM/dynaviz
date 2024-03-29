@@ -29,3 +29,9 @@
 .logout-button {
   margin-left: 20px;
 }
+
+@media screen and (width < 900px) {
+  .location-text {
+    display: none;
+  }
+}

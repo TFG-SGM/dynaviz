@@ -3,14 +3,8 @@ import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function LineChart({
-  data,
-  actualParts,
-}: {
-  data: TestSubData;
-  actualParts: string[];
-}) {
-  if (actualParts.length !== 1) return <p>Selecciona una parte del cuerpo</p>;
+export function LineChart({ data, part }: { data: TestSubData; part: string }) {
+  if (part === "") return <p>Selecciona una parte del cuerpo</p>;
 
   const option = {
     xAxis: {
@@ -23,12 +17,12 @@ export function LineChart({
     series: [
       {
         name: "Real",
-        data: TestService.getRealMovements(data.parts, actualParts[0]),
+        data: TestService.getRealMovements(data.parts, part),
         type: "line",
       },
       {
         name: "Ideal",
-        data: TestService.getIdealMovements(data.parts, actualParts[0]),
+        data: TestService.getIdealMovements(data.parts, part),
         type: "line",
       },
     ],

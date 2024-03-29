@@ -9,9 +9,10 @@ import { CrossButton } from "../buttons/CrossButton";
 import { TestsViewButton } from "../buttons/TestsViewButton";
 import { PatientDataElement } from "../elements/PatientDataElement";
 import { Overlay } from "../other/Overlay";
-import { ACTUAL_USER_ENDPOINT } from "../../utils/constants";
+import { ACTUAL_USER_ENDPOINT, TEST_ENDPOINT } from "../../utils/constants";
 import { DeleteMenu } from "./DeleteMenu";
 import { DataService } from "../../services/DataService";
+import { getUserType } from "../../utils/helpers";
 
 export interface UserMenuView {
   endpoint: string;
@@ -30,6 +31,9 @@ export function UserMenuView({
   handleUpdateList,
   isPatient = false,
 }: UserMenuView) {
+  const endpointParts = endpoint.split("/");
+  const userType = endpointParts[0] + "/";
+
   const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
   const [user, setUser] = useData<UserData | PatientData>(endpoint);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
@@ -48,6 +52,10 @@ export function UserMenuView({
 
   const handleDelete = async () => {
     const data = await DataService.deleteData(endpoint);
+    if (isPatient)
+      await DataService.deleteData(
+        TEST_ENDPOINT + "patient/" + endpointParts[1]
+      );
     setUsers((prevState) =>
       prevState
         ? prevState.filter((dataDict) => dataDict._id !== data)
@@ -76,7 +84,10 @@ export function UserMenuView({
                 handleClean={handleCancelDelete}
               ></DeleteMenu>
             )}
-            <CrossButton handleClean={handleClean}></CrossButton>
+            <div className="menu-title">
+              <h2>Detalles de {getUserType(userType)}</h2>
+              <CrossButton handleClean={handleClean}></CrossButton>
+            </div>{" "}
             {isPatient ? (
               <PatientDataElement
                 user={user as PatientData}

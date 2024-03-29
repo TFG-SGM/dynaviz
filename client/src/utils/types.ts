@@ -22,6 +22,8 @@ export type PatientData = {
   occupation: string;
   diagnosisYears: number;
   isFibro: boolean;
+  weight: number;
+  height: number;
   doctorId: string;
 };
 

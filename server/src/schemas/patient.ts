@@ -8,6 +8,8 @@ const patientSchema = z.object({
   city: z.string(),
   email: z.string(),
   phone: z.number(),
+  weight: z.number(),
+  height: z.number(),
   occupation: z.string(),
   activityLevel: z.number(),
   diagnosisYears: z.number(),

@@ -5,8 +5,8 @@ import { UserData } from "../../utils/types";
 import { TestsList } from "../../components/lists/TestsList";
 
 export function TestsListPage() {
-  const { id } = useParams();
-  const [patient] = useData<UserData>(PATIENT_ENDPOINT + id);
+  const { patientId } = useParams();
+  const [patient] = useData<UserData>(PATIENT_ENDPOINT + patientId);
   return (
     <div className="tests-list-container list">
       <h1>Pruebas de {patient?.name}</h1>{" "}

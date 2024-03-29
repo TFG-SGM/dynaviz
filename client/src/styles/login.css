@@ -1,6 +1,7 @@
 .login-container {
   margin: 10% auto;
   display: flex;
+  flex-wrap: wrap;
   gap: 100px;
   width: fit-content;
   align-items: center;

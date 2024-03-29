@@ -30,6 +30,8 @@ export interface Patient {
   city: string;
   email: string;
   phone: number;
+  weight: number;
+  height: number;
   occupation: string;
   activityLevel: number;
   diagnosisYears: number;
@@ -44,6 +46,8 @@ export interface PartialPatient {
   city?: string | undefined;
   email?: string | undefined;
   phone?: number | undefined;
+  weight?: number | undefined;
+  height?: number | undefined;
   occupation?: string | undefined;
   activityLevel?: number | undefined;
   diagnosisYears?: number | undefined;

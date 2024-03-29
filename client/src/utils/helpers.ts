@@ -9,3 +9,11 @@ export function updateDataHelper<T extends { _id: string }>(
   updatedState[index] = updatedData;
   return updatedState;
 }
+
+export function getUserType(endpoint: string) {
+  return {
+    "admin/": "Administrador",
+    "doctor/": "Médico",
+    "patient/": "Paciente",
+  }[endpoint];
+}

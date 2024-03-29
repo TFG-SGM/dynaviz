@@ -9,6 +9,7 @@ import { CrossButton } from "../buttons/CrossButton";
 import { PatientForm } from "./PatientForm";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
 import { Overlay } from "../other/Overlay";
+import { getUserType } from "../../utils/helpers";
 
 export interface UpdateFormProps {
   endpoint: string;
@@ -35,7 +36,7 @@ export function UpdateUserForm({
         newData
       );
       handleUpdate(data);
-      handleClean();
+      handleCancel();
     } catch (error) {
       console.log(error);
 
@@ -50,7 +51,10 @@ export function UpdateUserForm({
     <>
       <Overlay></Overlay>
       <dialog open>
-        <CrossButton handleClean={handleClean}></CrossButton>
+        <div className="menu-title">
+          <h2>Editar {getUserType(typeUser)}</h2>
+          <CrossButton handleClean={handleClean}></CrossButton>
+        </div>
         <form onSubmit={handleSubmit}>
           {typeUser === PATIENT_ENDPOINT ? (
             <PatientForm

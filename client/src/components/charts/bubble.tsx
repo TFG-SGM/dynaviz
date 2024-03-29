@@ -5,24 +5,27 @@ import { CHART_HEIGHT } from "../../utils/constants";
 
 export function BubbleChart({
   data,
-  actualParts,
+  part1,
+  part2,
 }: {
   data: TestSubData;
-  actualParts: string[];
+  part1: string;
+  part2: string;
 }) {
-  if (actualParts.length !== 2) return <p>Selecciona dos partes del cuerpo</p>;
+  if (part1 === "" || part2 === "")
+    return <p>Selecciona dos partes del cuerpo</p>;
 
   const option = {
     xAxis: {
-      name: `Var. ${actualParts[0]}`,
+      name: `Var. ${part1}`,
     },
     yAxis: {
-      name: `Var. ${actualParts[1]}`,
+      name: `Var. ${part2}`,
     },
     tooltip: {},
     series: [
       {
-        data: TestService.getCorrelatedVariations(data.parts, actualParts),
+        data: TestService.getCorrelatedVariations(data.parts, part1, part2),
         type: "scatter",
         symbolSize: function (data: number[]) {
           return data[2] * 10;

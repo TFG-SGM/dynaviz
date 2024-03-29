@@ -53,8 +53,9 @@
   background-color: var(--main-color);
   color: var(--white-letter);
 }
-
-.body-parts-buttons > .active-part {
+.body-parts-buttons > .active-part,
+.body-parts-buttons > .active-part1,
+.body-parts-buttons > .active-part2 {
   background-color: var(--main-color);
   color: var(--white-letter);
 }

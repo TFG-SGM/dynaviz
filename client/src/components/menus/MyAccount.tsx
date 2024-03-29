@@ -32,7 +32,10 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
         <>
           <Overlay></Overlay>
           <dialog open className="view-menu">
-            <CrossButton handleClean={handleClean}></CrossButton>
+            <div className="menu-title">
+              <h2>Mi Cuenta</h2>
+              <CrossButton handleClean={handleClean}></CrossButton>
+            </div>
             {user && <UserDataElement user={user}></UserDataElement>}
             <button className="edit-button" onClick={handleStartUpdate}>
               Editar

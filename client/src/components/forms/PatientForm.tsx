@@ -27,6 +27,8 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
             ? parseInt(value)
             : name === "isFibro"
             ? checked
+            : name === "weight" || name === "height"
+            ? parseFloat(value)
             : value,
       };
     });
@@ -97,6 +99,26 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
+        Peso{" "}
+        <input
+          name="weight"
+          type="number"
+          value={data.weight}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
+        Altura{" "}
+        <input
+          name="height"
+          type="number"
+          value={data.height}
+          onChange={handleChange}
+          required
+        ></input>
+      </label>
+      <label>
         Ocupación{" "}
         <input
           name="occupation"
@@ -107,14 +129,25 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Nivel de actividad física{" "}
+        Nivel de actividad física
         <input
           name="activityLevel"
-          type="number"
+          type="range"
           value={data.activityLevel}
           onChange={handleChange}
+          min={1}
+          max={5}
           required
         ></input>
+        <p>
+          {" "}
+          {data.activityLevel < 3
+            ? "😞"
+            : data.activityLevel > 3
+            ? "😀"
+            : "😐"}{" "}
+          {data.activityLevel}
+        </p>
       </label>
       <label>
         Años con diagnostico{" "}

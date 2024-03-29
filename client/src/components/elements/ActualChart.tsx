@@ -10,15 +10,15 @@ import { BoxPlot } from "../charts/boxplot";
 import { BoxPlotAll } from "../charts/boxplot-all";
 
 interface ActualChartProps {
-  actual: { chart: string; parts: string[] };
+  actual: { chart: string; part1: string; part2: string };
   data: TestSubData;
 }
 
 export function ActualChart({ actual, data }: ActualChartProps) {
-  const { chart, parts } = actual;
+  const { chart, part1, part2 } = actual;
   switch (chart) {
     case "line":
-      return <LineChart data={data} actualParts={parts} />;
+      return <LineChart data={data} part={part1} />;
     case "bar":
       return <BarChart data={data} />;
     case "radar":
@@ -28,15 +28,17 @@ export function ActualChart({ actual, data }: ActualChartProps) {
     case "treemap":
       return <PieChart type="treemap" data={data} />;
     case "histogram":
-      return <Histogram data={data} actualParts={parts}></Histogram>;
+      return <Histogram data={data} part={part1}></Histogram>;
     case "boxplot1":
-      return <BoxPlot data={data} actualParts={parts}></BoxPlot>;
+      return <BoxPlot data={data} part={part1}></BoxPlot>;
     case "boxplot2":
-      return <BoxPlotAll data={data} actualParts={parts}></BoxPlotAll>;
+      return <BoxPlotAll data={data}></BoxPlotAll>;
     case "bubble":
-      return <BubbleChart data={data} actualParts={parts}></BubbleChart>;
+      return (
+        <BubbleChart data={data} part1={part1} part2={part2}></BubbleChart>
+      );
     case "heatmap":
-      return <Heatmap data={data} actualParts={parts}></Heatmap>;
+      return <Heatmap data={data} part1={part1} part2={part2}></Heatmap>;
     default:
       return <p>Cargando...</p>;
   }

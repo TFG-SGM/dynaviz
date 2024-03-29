@@ -36,15 +36,15 @@ export function Router() {
           element: <PatientsListPage></PatientsListPage>,
         },
         {
-          path: "pacientes/:id",
+          path: "pacientes/:patientId",
           element: <TestsListPage></TestsListPage>,
         },
         {
-          path: "pacientes/:id/:testId",
+          path: "pacientes/:patientId/:testId",
           element: <TestPage></TestPage>,
         },
         {
-          path: "pacientes/:id/evolucion",
+          path: "pacientes/:patientId/evolucion",
           element: <TestEvolutionPage></TestEvolutionPage>,
         },
       ],

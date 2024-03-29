@@ -41,14 +41,6 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           setUsers={setUsers}
         ></AddUserForm>
       )}
-      {actual.action === "update" && (
-        <UpdateUserForm
-          endpoint={endpoint + actual.userId}
-          handleCancel={handleClean}
-          handleClean={handleClean}
-          handleUpdate={handleUpdateList}
-        ></UpdateUserForm>
-      )}
       {actual.action === "get" && (
         <UserMenuView
           endpoint={endpoint + actual.userId}
@@ -65,10 +57,8 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           return (
             <UserCard
               key={user._id}
-              endpoint={endpoint}
               setActual={setActual}
               userData={user}
-              setUsers={setUsers}
             ></UserCard>
           );
         })}

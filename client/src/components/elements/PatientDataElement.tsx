@@ -10,6 +10,8 @@ export function PatientDataElement({ user }: { user: PatientData }) {
     city,
     email,
     phone,
+    weight,
+    height,
     activityLevel,
     occupation,
     diagnosisYears,
@@ -36,6 +38,12 @@ export function PatientDataElement({ user }: { user: PatientData }) {
       </p>
       <p>
         <strong>Teléfono:</strong> {phone}
+      </p>
+      <p>
+        <strong>Peso:</strong> {weight}
+      </p>
+      <p>
+        <strong>Altura:</strong> {height}
       </p>
       <p>
         <strong>Actividad física:</strong> {activityLevel}

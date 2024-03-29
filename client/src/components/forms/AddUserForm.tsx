@@ -12,6 +12,7 @@ import {
 } from "../../utils/constants";
 import { PatientForm } from "./PatientForm";
 import { Overlay } from "../other/Overlay";
+import { getUserType } from "../../utils/helpers";
 
 export interface AddFormProps<T> {
   endpoint: string;
@@ -49,7 +50,10 @@ export function AddUserForm<T>({
     <>
       <Overlay></Overlay>
       <dialog open>
-        <CrossButton handleClean={handleClean}></CrossButton>
+        <div className="menu-title">
+          <h2>Nuevo {getUserType(endpoint)}</h2>
+          <CrossButton handleClean={handleClean}></CrossButton>
+        </div>
         <form onSubmit={handleSubmit}>
           {endpoint === PATIENT_ENDPOINT ? (
             <PatientForm
