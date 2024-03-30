@@ -1,15 +1,30 @@
+.list {
+  flex: 0.9;
+  margin: 0 50px 0 50px;
+  display: grid;
+  height: 85vh;
+  grid-template-rows: 1fr 9fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "title button" "list list";
+  gap: 10px;
+}
+
+.tests-list-container {
+  grid-template-rows: 1fr 0.5fr 8.5fr;
+  grid-template-areas: "title buttons" "filters filters" "list list";
+}
+
 .test-evolution-page > h1,
 .test-page > h1,
 .list > h1 {
-  display: inline-block;
-  margin-left: 50px;
+  grid-area: title;
 }
 
 .test-list,
 .user-list {
-  height: 75vh;
+  grid-area: list;
+
   background-color: var(--list-background-color);
-  margin: 20px 50px;
   padding: 20px;
   border-radius: var(--radius);
   border: 1px solid var(--black-letter);
@@ -17,21 +32,44 @@
 }
 
 .test-filters {
+  grid-area: filters;
+  justify-self: flex-end;
+  align-self: center;
+
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  margin: 10px 50px 0 auto;
   width: fit-content;
   font-size: 16px;
 }
 
 .test-details-button,
-.add-user-button,
-.add-test-button {
-  position: absolute;
-  right: 50px;
+.add-user-button {
+  grid-area: button;
+  justify-self: flex-end;
+  align-self: center;
 }
 
-.evolution-button {
-  position: absolute;
-  right: 250px;
+.tests-buttons {
+  display: flex;
+  grid-area: buttons;
+  justify-self: flex-end;
+  align-self: center;
+  gap: 20px;
+}
+
+@media screen and (width < 1000px) {
+  .list {
+    margin: 0 25px 0 25px;
+  }
+
+  .tests-list-container {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "title" "buttons" "list" "filters";
+  }
+
+  .tests-buttons {
+    justify-self: flex-start;
+  }
 }

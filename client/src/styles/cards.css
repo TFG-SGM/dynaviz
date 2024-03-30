@@ -14,10 +14,9 @@
   transform: scale(1.05);
 }
 
-@media screen and (width < 900px) {
+@media screen and (width < 1000px) {
   .test-card,
   .user-card {
     margin: 5px;
-    font-size: 1rem;
   }
 }

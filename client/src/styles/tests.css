@@ -1,23 +1,37 @@
+.test-evolution-page,
+.test-page {
+  margin: 0 50px 0 50px;
+  display: grid;
+  height: 85vh;
+  grid-template-rows: 1fr 9fr;
+  gap: 10px;
+  grid-template-areas: "title button" "container container";
+}
+
 .test-evolution-container,
 .test-container {
+  grid-area: container;
   display: grid;
   grid-template-rows: 50px auto;
   grid-template-columns: 1fr 3fr;
   gap: 20px;
-  height: 75vh;
 
-  margin: 25px 50px;
   padding: 20px;
   border: 2px solid var(--black-letter);
   border-radius: var(--radius);
   background-color: var(--list-background-color);
+  overflow-y: auto;
+}
+
+.test-details-button {
+  grid-area: button;
 }
 
 .test-evolution-container {
   grid-template-rows: 50px auto;
 }
 
-.test-evolution-container > .tests-buttons {
+.test-evolution-container > .charts-buttons {
   grid-column: span 1;
 }
 
@@ -26,7 +40,7 @@
   gap: 20px;
 }
 
-.tests-buttons {
+.charts-buttons {
   grid-column: span 2;
   display: flex;
   gap: 10px;
@@ -38,7 +52,7 @@
   gap: 10px;
 }
 
-.tests-buttons > button,
+.charts-buttons > button,
 .body-parts-buttons > button {
   background-color: var(--background-color);
   color: var(--black-letter);
@@ -49,7 +63,7 @@
   text-align: left;
 }
 
-.tests-buttons > .active-chart {
+.charts-buttons > .active-chart {
   background-color: var(--main-color);
   color: var(--white-letter);
 }
@@ -62,4 +76,17 @@
 
 .echarts-for-react {
   height: 100%;
+}
+
+@media screen and (width < 1000px) {
+  .test-evolution-page,
+  .test-page {
+    margin: 0 25px 0 25px;
+  }
+
+  .test-evolution-container,
+  .test-container {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+  }
 }

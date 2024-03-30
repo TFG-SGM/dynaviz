@@ -54,12 +54,10 @@ export function TestContainer() {
         )}
         <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
         <div className="body-parts-container">
-          {isParts1(actual.chart) && (
-            <BodyPartsButtons
-              parts={test.data.parts}
-              handleChangePart={handleChangePart1}
-            ></BodyPartsButtons>
-          )}
+          <BodyPartsButtons
+            parts={test.data.parts}
+            handleChangePart={handleChangePart1}
+          ></BodyPartsButtons>
 
           {isParts2(actual.chart) && (
             <BodyPartsButtons
@@ -71,16 +69,6 @@ export function TestContainer() {
         <ActualChart actual={actual} data={test.data}></ActualChart>
       </div>
     </>
-  );
-}
-
-function isParts1(chart: string) {
-  return (
-    chart === "line" ||
-    chart === "histogram" ||
-    chart == "boxplot1" ||
-    chart === "bubble" ||
-    chart === "heatmap"
   );
 }
 

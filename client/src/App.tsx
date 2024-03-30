@@ -13,9 +13,9 @@ import "./styles/test-form.css";
 
 export function App() {
   return (
-    <>
+    <div className="page">
       <Header></Header>
       <Outlet></Outlet>
-    </>
+    </div>
   );
 }

@@ -52,13 +52,15 @@ export function TestsList({ patient }: { patient: UserData }) {
         ></AddTestForm>
       )}
 
-      <button className="add-test-button" onClick={handleStartCreating}>
-        Añadir Pruebas
-      </button>
+      <div className="tests-buttons">
+        <button className="add-test-button" onClick={handleStartCreating}>
+          Añadir Pruebas
+        </button>
 
-      <button className="evolution-button" onClick={handleViewEvolution}>
-        Evolución de Paciente
-      </button>
+        <button className="evolution-button" onClick={handleViewEvolution}>
+          Evolución de Paciente
+        </button>
+      </div>
 
       <TestsFilters
         patientId={patient._id}

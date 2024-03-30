@@ -23,6 +23,12 @@ body {
   overflow: hidden;
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 dialog {
   position: absolute;
   top: 20px;
@@ -31,8 +37,8 @@ dialog {
   margin-left: auto;
   margin-right: auto;
 
-  width: 900px;
-  max-height: 900px;
+  width: 1000px;
+  max-height: 1000px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -98,4 +104,19 @@ form label input {
 
 .error-message {
   color: var(--red);
+}
+
+@media screen and (width < 1000px) {
+  body {
+    font-size: 1rem;
+  }
+  dialog {
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
 }

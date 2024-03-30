@@ -6,7 +6,7 @@ export function EvolutionButtons({
   handleChangeChart: MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <div className="tests-buttons">
+    <div className="charts-buttons">
       <button id="line" className="active-chart" onClick={handleChangeChart}>
         Línea
       </button>
