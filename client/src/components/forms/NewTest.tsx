@@ -7,9 +7,21 @@ export function NewTest({
   handleChange,
   handleChangeRecordingState,
   videoId,
+  handleRemoveNewTest,
 }) {
   return (
     <div className="new-test">
+      {id !== "0" && (
+        <button
+          className="remove-new-test-button"
+          id={id}
+          onClick={handleRemoveNewTest}
+          type="button"
+        >
+          &#x2716;
+        </button>
+      )}
+
       <label>
         Tipo{" "}
         <SelectType
@@ -21,14 +33,15 @@ export function NewTest({
       </label>
       <div className="video-container">
         <label>
-          Vídeo seleccionado{" "}
+          Vídeo{" "}
           <input
             className="selected-video"
             name={`dataTests.${id}.video`}
             value={data.dataTests[id].video}
             type="text"
-            required
+            placeholder="Selecciona o graba un vídeo >>"
             disabled
+            required
           ></input>
         </label>{" "}
         <label>

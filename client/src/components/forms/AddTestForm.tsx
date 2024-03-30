@@ -19,25 +19,29 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
     patientId: patient._id,
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { doctorId, date, patientId, evaScale } = newData;
-    Object.keys(newData.dataTests).forEach(async (dataKey) => {
-      const { typeId, video } = newData.dataTests[dataKey];
-      const data = await DataService.getData(TEST_TYPE_ENDPOINT + typeId);
-      const completeTest = {
-        _id: "",
-        doctorId,
-        date,
-        patientId,
-        evaScale,
-        typeId,
-        video,
-        data: generateDataTest(data.bodyParts),
-      };
+    const fetchPromises = Object.keys(newData.dataTests).map(
+      async (dataKey) => {
+        const { typeId, video } = newData.dataTests[dataKey];
+        const data = await DataService.getData(TEST_TYPE_ENDPOINT + typeId);
+        const completeTest = {
+          _id: "",
+          doctorId,
+          date,
+          patientId,
+          evaScale,
+          typeId,
+          video,
+          data: generateDataTest(data.bodyParts),
+        };
 
-      await DataService.createData<TestData>(endpoint, completeTest);
-    });
+        await DataService.createData<TestData>(endpoint, completeTest);
+      }
+    );
+
+    await Promise.all(fetchPromises);
     handleClean();
   };
 
@@ -45,7 +49,10 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
     <>
       <Overlay></Overlay>
       <dialog open>
-        <CrossButton handleClean={handleClean}></CrossButton>
+        <div className="menu-title">
+          <h2>Nueva Prueba</h2>
+          <CrossButton handleClean={handleClean}></CrossButton>
+        </div>{" "}
         <form className="test-form" onSubmit={handleSubmit}>
           <TestForm data={newData} setNewData={setNewData}></TestForm>
           <div className="buttons-container">

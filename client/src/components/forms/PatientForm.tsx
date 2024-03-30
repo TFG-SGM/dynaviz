@@ -176,6 +176,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
       <label>
         Médico{" "}
         <SelectType
+          label="médico"
           option="doctorId"
           value={data.doctorId}
           endpoint={DOCTOR_ENDPOINT}

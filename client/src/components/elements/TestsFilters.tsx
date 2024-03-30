@@ -22,6 +22,7 @@ export function TestsFilters({ filters, handleChange }: TestFiltersProps) {
         handleChange={handleChange}
       ></SelectType>
       <SelectType
+        label="médico"
         option={"doctorId"}
         value={filters.doctorId}
         endpoint={DOCTOR_ENDPOINT}

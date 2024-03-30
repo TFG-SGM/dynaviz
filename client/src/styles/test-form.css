@@ -19,13 +19,27 @@
   background-color: var(--white-letter);
 }
 
+.remove-new-test-button {
+  align-self: flex-end;
+  background-color: var(--form-background);
+  margin-bottom: -50px;
+  color: var(--red);
+  font-size: x-large;
+}
+
+.add-new-test-button {
+  align-self: flex-start;
+  background-color: var(--form-background);
+  color: var(--main-color);
+}
+
 .video-container {
   display: flex;
   gap: 20px;
 }
 
 .selected-video {
-  background-color: rgba(0, 0, 0, 0.415);
+  color: var(--black-letter);
 }
 
 .record-dialog {

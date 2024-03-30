@@ -37,7 +37,10 @@ export function TestMenuView({ test, handleClean }: TestMenuView) {
             handleClean={handleCancelDelete}
           ></DeleteMenu>
         )}
-        <CrossButton handleClean={handleClean}></CrossButton>
+        <div className="menu-title">
+          <h2>Detalles de Prueba</h2>
+          <CrossButton handleClean={handleClean}></CrossButton>
+        </div>
         <TestDataElement test={test}></TestDataElement>
         <button className="delete-button" onClick={handleStartDelete}>
           Eliminar

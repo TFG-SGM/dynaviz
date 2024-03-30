@@ -17,7 +17,8 @@ export function TestsList({ patient }: { patient: UserData }) {
   });
   const [filtersText] = useFilters(filters);
   const [tests] = useData<TestData[]>(
-    TEST_ENDPOINT + "?patientId=" + patient._id + filtersText
+    TEST_ENDPOINT + "?patientId=" + patient._id + filtersText,
+    isAdding
   );
 
   const navigate = useNavigate();

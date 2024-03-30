@@ -3,6 +3,7 @@ import { useData } from "../../hooks/useData";
 import { TestTypeData } from "../../utils/types";
 
 interface SelectTypeProps {
+  label?: string;
   option: string;
   value: string;
   endpoint: string;
@@ -10,6 +11,7 @@ interface SelectTypeProps {
 }
 
 export function SelectType({
+  label = "tipo",
   option,
   value,
   endpoint,
@@ -17,7 +19,6 @@ export function SelectType({
 }: SelectTypeProps) {
   const [testTypes] = useData<TestTypeData[]>(endpoint);
 
-  const label = option[0] === "t" ? "tipo" : "médico";
   if (!testTypes) return;
 
   return (

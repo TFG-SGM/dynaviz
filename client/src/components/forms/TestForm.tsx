@@ -47,7 +47,6 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     if (name.includes(".")) {
       const [dataTests, id, nameType] = name.split(".");
       setNewData((prevState) => {
-        console.log(dataTests, id, nameType);
         if (!prevState) return prevState;
         if (!prevState[dataTests]) prevState[dataTests] = {};
         if (!prevState[dataTests][id]) prevState[dataTests][id] = {};
@@ -69,11 +68,28 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     setNewData((prevState) => {
       if (!prevState) return prevState;
 
-      const nextId = Object.keys(prevState.dataTests).length;
+      const maxId = Math.max(...Object.keys(prevState.dataTests).map(Number));
+      const nextId = maxId + 1;
+
       const newDataTests = {
         ...prevState.dataTests,
         [nextId]: { typeId: "", video: "" },
       };
+
+      return {
+        ...prevState,
+        dataTests: newDataTests,
+      };
+    });
+  };
+
+  const handleRemoveNewTest = (e) => {
+    const { id } = e.target;
+    setNewData((prevState) => {
+      if (!prevState) return prevState;
+
+      const newDataTests = { ...prevState.dataTests };
+      delete newDataTests[id];
 
       return {
         ...prevState,
@@ -95,6 +111,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
       <label>
         Médico{" "}
         <SelectType
+          label="médico"
           option={"doctorId"}
           value={data.doctorId}
           endpoint={DOCTOR_ENDPOINT}
@@ -138,11 +155,16 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
               handleChange={handleChange}
               handleChangeRecordingState={handleChangeRecordingState}
               videoId={videoId}
+              handleRemoveNewTest={handleRemoveNewTest}
             ></NewTest>
           );
         })}
-        <button type="button" onClick={handleAddNewTest}>
-          Añadir más
+        <button
+          className="add-new-test-button"
+          type="button"
+          onClick={handleAddNewTest}
+        >
+          + Añadir tipo de prueba
         </button>
       </div>
     </>

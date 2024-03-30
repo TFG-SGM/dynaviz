@@ -9,7 +9,10 @@ export type HookData<T> = [
   string | null
 ];
 
-export function useData<T>(endpoint: string | null): HookData<T> {
+export function useData<T>(
+  endpoint: string | null,
+  dependency?: boolean
+): HookData<T> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +31,7 @@ export function useData<T>(endpoint: string | null): HookData<T> {
     };
 
     fetchData();
-  }, [endpoint]);
+  }, [endpoint, dependency]);
 
   return [data, setData, error];
 }
