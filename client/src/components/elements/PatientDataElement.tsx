@@ -4,6 +4,7 @@ import { PatientData, UserData } from "../../utils/types";
 
 export function PatientDataElement({ user }: { user: PatientData }) {
   const {
+    uId,
     name,
     surname,
     age,
@@ -21,6 +22,9 @@ export function PatientDataElement({ user }: { user: PatientData }) {
   const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + doctorId);
   return (
     <>
+      <p>
+        <strong>uID:</strong> {uId}
+      </p>
       <p>
         <strong>Nombre:</strong> {name}
       </p>

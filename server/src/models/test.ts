@@ -49,9 +49,27 @@ export class TestModel {
     return null;
   }
 
-  static async getAttributes({ attribute }: { attribute: string }) {
+  static async getAttributes({
+    attribute,
+    patientId,
+  }: {
+    attribute: string;
+    patientId: string;
+  }) {
     const db = await connectToMongoDB("tests");
-    const attributes = await db.distinct(attribute);
+
+    const aggregationPipeline = [
+      { $match: { patientId: patientId } },
+      { $sort: { date: 1 } },
+      {
+        $group: {
+          _id: "$" + attribute,
+        },
+      },
+    ];
+
+    const distinctValues = await db.aggregate(aggregationPipeline).toArray();
+    const attributes = distinctValues.map((entry) => entry._id);
     return attributes;
   }
 

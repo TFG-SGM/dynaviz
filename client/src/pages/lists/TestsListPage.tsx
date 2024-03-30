@@ -9,7 +9,7 @@ export function TestsListPage() {
   const [patient] = useData<UserData>(PATIENT_ENDPOINT + patientId);
   return (
     <div className="tests-list-container list">
-      <h1>Pruebas de {patient?.name}</h1>{" "}
+      <h1>Pruebas de {patient?.name}</h1>
       {patient && <TestsList patient={patient}></TestsList>}
     </div>
   );

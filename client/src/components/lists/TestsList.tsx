@@ -61,6 +61,7 @@ export function TestsList({ patient }: { patient: UserData }) {
       </button>
 
       <TestsFilters
+        patientId={patient._id}
         filters={filters}
         handleChange={handleChange}
       ></TestsFilters>

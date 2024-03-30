@@ -41,13 +41,16 @@ export class DataService {
 
   public static async deleteData(endpoint: string) {
     const token = await DataService.getToken();
-    const { data } = await axios.delete(URL + endpoint, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return data;
+    try {
+      const { data } = await axios.delete(URL + endpoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    } catch (e) {
+      return;
+    }
   }
 
   public static async updateData<T>(endpoint: string, newData: T | null) {

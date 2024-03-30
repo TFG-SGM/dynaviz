@@ -4,6 +4,7 @@ import { SelectDate } from "../selects/SelectDate";
 import { SelectType } from "../selects/SelectType";
 
 interface TestFiltersProps {
+  patientId: string;
   filters: {
     typeId: string;
     doctorId: string;
@@ -12,7 +13,11 @@ interface TestFiltersProps {
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export function TestsFilters({ filters, handleChange }: TestFiltersProps) {
+export function TestsFilters({
+  patientId,
+  filters,
+  handleChange,
+}: TestFiltersProps) {
   return (
     <div className="test-filters">
       <SelectType
@@ -28,7 +33,11 @@ export function TestsFilters({ filters, handleChange }: TestFiltersProps) {
         endpoint={DOCTOR_ENDPOINT}
         handleChange={handleChange}
       ></SelectType>
-      <SelectDate filters={filters} handleChange={handleChange}></SelectDate>{" "}
+      <SelectDate
+        patientId={patientId}
+        filters={filters}
+        handleChange={handleChange}
+      ></SelectDate>{" "}
     </div>
   );
 }

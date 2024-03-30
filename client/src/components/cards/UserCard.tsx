@@ -7,7 +7,7 @@ interface UsersCard {
 }
 
 export function UserCard({ setActual, userData }: UsersCard) {
-  const { _id, name, surname } = userData;
+  const { _id, uId, name, surname } = userData;
 
   const handleView = (e: FormEvent) => {
     const { target } = e;
@@ -21,7 +21,7 @@ export function UserCard({ setActual, userData }: UsersCard) {
 
   return (
     <h2 className="user-card" data-user-id={_id} onClick={handleView}>
-      {name} {surname}
+      {name} {surname} ({uId})
     </h2>
   );
 }

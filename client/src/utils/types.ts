@@ -1,6 +1,5 @@
-import { number } from "echarts";
-
 export type UserData = {
+  uId?: string;
   _id: string;
   password: string;
   name: string;
@@ -13,6 +12,7 @@ export type UserData = {
 };
 
 export type PatientData = {
+  uId?: string;
   _id: string;
   name: string;
   surname: string;

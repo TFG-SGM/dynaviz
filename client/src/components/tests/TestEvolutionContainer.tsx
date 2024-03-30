@@ -8,14 +8,14 @@ import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
 import { EvolutionButtons } from "../buttons/EvolutionButtons";
 import { useEvolutionParts } from "../../hooks/useEvolutionParts";
 
-export function TestEvolutionContainer() {
+export function TestEvolutionContainer({ patientId }: { patientId: string }) {
   const [actual, setActual] = useState<evolutionActual>({
     chart: "line",
     parts: [],
   });
   const [typeId, setTypeId] = useState("");
   const [tests] = useData<TestData[]>(
-    TEST_ENDPOINT + "?patientId=" + "&typeId=" + typeId
+    TEST_ENDPOINT + "?patientId=" + patientId + "&typeId=" + typeId
   );
   const [parts] = useEvolutionParts(typeId, tests);
 

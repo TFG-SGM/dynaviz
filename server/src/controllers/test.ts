@@ -17,8 +17,13 @@ export class TestController {
   }
 
   static async getAttributes(req: Request, res: Response) {
-    const { attribute } = req.params;
-    const attributes = await TestModel.getAttributes({ attribute });
+    const { attribute, patientId } = req.query;
+
+    const attributes = await TestModel.getAttributes({
+      attribute: attribute as string,
+      patientId: patientId as string,
+    });
+
     res.json(attributes);
   }
 

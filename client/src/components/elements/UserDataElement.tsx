@@ -1,9 +1,12 @@
 import { UserData } from "../../utils/types";
 
 export function UserDataElement({ user }: { user: UserData }) {
-  const { name, surname, age, city, email, phone } = user;
+  const { uId, name, surname, age, city, email, phone } = user;
   return (
     <>
+      <p>
+        <strong>uID:</strong> {uId}
+      </p>
       <p>
         <strong>Nombre:</strong> {name}
       </p>

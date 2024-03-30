@@ -3,12 +3,19 @@ import { useData } from "../../hooks/useData";
 import { TEST_ENDPOINT } from "../../utils/constants";
 
 interface SelectDateProps {
+  patientId: string;
   filters: { date: string };
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export function SelectDate({ filters, handleChange }: SelectDateProps) {
-  const [dates] = useData<string[]>(TEST_ENDPOINT + "attributes/date");
+export function SelectDate({
+  patientId,
+  filters,
+  handleChange,
+}: SelectDateProps) {
+  const [dates] = useData<string[]>(
+    TEST_ENDPOINT + `attribute?attribute=date&patientId=${patientId}`
+  );
 
   if (!dates) return;
   return (

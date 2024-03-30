@@ -5,13 +5,14 @@ import { checkRole } from "../middlewares/checkRole";
 
 export const testRouter: Router = Router();
 
+testRouter.delete("/patient/:patientId", TestController.deleteByPatient);
+
 testRouter.use(checkRole(DOCTOR_ROLE));
 
 testRouter.get("/", TestController.getAll);
 testRouter.post("/", TestController.create);
 
-testRouter.get("/attributes/:attribute", TestController.getAttributes);
-testRouter.delete("/patient/:patientId", TestController.deleteByPatient);
+testRouter.get("/attribute", TestController.getAttributes);
 
 testRouter.get("/:id", TestController.getById);
 testRouter.put("/:id", TestController.update);
