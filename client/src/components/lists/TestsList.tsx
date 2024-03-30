@@ -69,9 +69,13 @@ export function TestsList({ patient }: { patient: UserData }) {
       ></TestsFilters>
 
       <div className="test-list">
-        {tests.map((test) => {
-          return <TestCard key={test._id} testId={test._id}></TestCard>;
-        })}
+        {tests.length === 0 ? (
+          <p className="empty-text">¡No hay ninguna!</p>
+        ) : (
+          tests.map((test) => {
+            return <TestCard key={test._id} testId={test._id}></TestCard>;
+          })
+        )}
       </div>
     </>
   );

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.doctorRouter = void 0;
+const express_1 = require("express");
+const doctor_1 = require("../controllers/doctor");
+const checkRole_1 = require("../middlewares/checkRole");
+const constants_1 = require("../utils/constants");
+exports.doctorRouter = (0, express_1.Router)();
+exports.doctorRouter.get("/:id", doctor_1.DoctorController.getById);
+exports.doctorRouter.get("/", doctor_1.DoctorController.getAll);
+exports.doctorRouter.put("/:id", doctor_1.DoctorController.update);
+exports.doctorRouter.use((0, checkRole_1.checkRole)(constants_1.ADMIN_ROLE));
+exports.doctorRouter.post("/", doctor_1.DoctorController.create);
+exports.doctorRouter.delete("/:id", doctor_1.DoctorController.delete);

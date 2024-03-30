@@ -1,5 +1,16 @@
+import { ChangeEventHandler } from "react";
 import { TEST_TYPE_ENDPOINT } from "../../utils/constants";
+import { ManyTestsData } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
+
+interface NewTestProps {
+  id: string;
+  data: ManyTestsData;
+  handleChange: () => ChangeEventHandler<HTMLInputElement>;
+  handleChangeRecordingState: () => void;
+  videoId: string;
+  handleRemoveNewTest: () => void;
+}
 
 export function NewTest({
   id,
@@ -8,7 +19,7 @@ export function NewTest({
   handleChangeRecordingState,
   videoId,
   handleRemoveNewTest,
-}) {
+}: NewTestProps) {
   return (
     <div className="new-test">
       {id !== "0" && (

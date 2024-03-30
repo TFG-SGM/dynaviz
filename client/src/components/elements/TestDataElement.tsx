@@ -21,7 +21,9 @@ export function TestDataElement({ test }: { test: TestData }) {
     <>
       <p>
         <strong>Médico:</strong>{" "}
-        {doctor ? doctor.name + " " + doctor.surname : "Ninguno"}
+        {doctor
+          ? `${doctor.name} ${doctor.surname} (${doctor.uId})`
+          : "Ninguno"}
       </p>
       <p>
         <strong>Tipo:</strong> {type?.name}
@@ -33,7 +35,8 @@ export function TestDataElement({ test }: { test: TestData }) {
         <strong>Video:</strong> {video}
       </p>
       <p>
-        <strong>Paciente:</strong> {patient?.name} {patient?.surname}
+        <strong>Paciente:</strong> {patient?.name} {patient?.surname} (
+        {patient?.uId})
       </p>
       <p>
         <strong>Escala EVA:</strong> {evaScale}

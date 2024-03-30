@@ -73,16 +73,22 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
         handleChange={handleChange}
       ></SelectType>
 
-      <EvolutionButtons
-        handleChangeChart={handleChangeChart}
-      ></EvolutionButtons>
+      {tests.length === 0 ? (
+        <p className="empty-text">¡No hay ninguna!</p>
+      ) : (
+        <>
+          <EvolutionButtons
+            handleChangeChart={handleChangeChart}
+          ></EvolutionButtons>
 
-      <BodyPartsButtons
-        parts={parts}
-        handleChangePart={handleChangePart}
-      ></BodyPartsButtons>
+          <BodyPartsButtons
+            parts={parts}
+            handleChangePart={handleChangePart}
+          ></BodyPartsButtons>
 
-      <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
+          <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
+        </>
+      )}
     </div>
   );
 }

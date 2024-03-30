@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.testRouter = void 0;
+const express_1 = require("express");
+const test_1 = require("../controllers/test");
+const constants_1 = require("../utils/constants");
+const checkRole_1 = require("../middlewares/checkRole");
+exports.testRouter = (0, express_1.Router)();
+exports.testRouter.delete("/patient/:patientId", test_1.TestController.deleteByPatient);
+exports.testRouter.use((0, checkRole_1.checkRole)(constants_1.DOCTOR_ROLE));
+exports.testRouter.get("/", test_1.TestController.getAll);
+exports.testRouter.post("/", test_1.TestController.create);
+exports.testRouter.get("/attribute", test_1.TestController.getAttributes);
+exports.testRouter.get("/:id", test_1.TestController.getById);
+exports.testRouter.put("/:id", test_1.TestController.update);
+exports.testRouter.delete("/:id", test_1.TestController.delete);

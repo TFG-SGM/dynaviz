@@ -78,6 +78,10 @@
   height: 100%;
 }
 
+.empty-text {
+  font-size: xx-large;
+}
+
 @media screen and (width < 1000px) {
   .test-evolution-page,
   .test-page {

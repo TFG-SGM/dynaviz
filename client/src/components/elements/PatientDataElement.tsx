@@ -62,7 +62,10 @@ export function PatientDataElement({ user }: { user: PatientData }) {
         <strong>Diagnosticado con fibromialgia:</strong> {isFibro ? "Si" : "No"}
       </p>
       <p>
-        <strong>Médico asignado:</strong> {doctor ? doctor.name : "Ninguno"}
+        <strong>Médico asignado:</strong>{" "}
+        {doctor
+          ? `${doctor.name} ${doctor.surname} (${doctor.uId})`
+          : "Ninguno"}
       </p>
     </>
   );
