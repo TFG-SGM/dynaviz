@@ -1,8 +1,8 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { UserData, actual } from "../../utils/types";
+import { Dispatch, FormEvent, SetStateAction } from "react";
+import { UserData, userActual } from "../../utils/types";
 
 interface UsersCard {
-  setActual: Dispatch<SetStateAction<actual>>;
+  setActual: Dispatch<SetStateAction<userActual>>;
   userData: UserData;
 }
 

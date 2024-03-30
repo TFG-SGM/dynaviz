@@ -1,36 +1,23 @@
 import { useData } from "../../hooks/useData";
 import { TEST_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
-import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, MouseEventHandler, useState } from "react";
 import { EvolutionChart } from "../../components/charts/evolution";
-import { TestData, TestPartsData } from "../../utils/types";
+import { TestData, evolutionActual } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
 import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
 import { EvolutionButtons } from "../buttons/EvolutionButtons";
-
-interface actual {
-  chart: string;
-  parts: string[];
-}
+import { useEvolutionParts } from "../../hooks/useEvolutionParts";
 
 export function TestEvolutionContainer() {
-  const [actual, setActual] = useState<actual>({ chart: "line", parts: [] });
+  const [actual, setActual] = useState<evolutionActual>({
+    chart: "line",
+    parts: [],
+  });
   const [typeId, setTypeId] = useState("");
   const [tests] = useData<TestData[]>(
     TEST_ENDPOINT + "?patientId=" + "&typeId=" + typeId
   );
-  const [parts, setParts] = useState<TestPartsData | null>(null);
-
-  useEffect(() => {
-    if (typeId === "" || !tests || !tests[0] || !tests[0].data) {
-      setParts(null);
-    } else {
-      if (tests[0].data.parts) {
-        setParts(tests[0].data.parts);
-      } else {
-        setParts(null);
-      }
-    }
-  }, [typeId, tests]);
+  const [parts] = useEvolutionParts(typeId, tests);
 
   const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
@@ -42,6 +29,8 @@ export function TestEvolutionContainer() {
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
+    const activeParts = document.querySelectorAll(".active-part");
+    activeParts.forEach((part) => part.classList.remove("active-part"));
     setActual((prevState) => ({
       ...prevState,
       parts: [],

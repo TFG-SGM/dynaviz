@@ -1,9 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { UpdateUserForm } from "../forms/UpdateUserForm";
-import { DeleteUserButton } from "../buttons/DeleteUserButton";
-import { ErrorComponent } from "../other/ErrorComponent";
 import { useData } from "../../hooks/useData";
-import { PatientData, UserData, actual } from "../../utils/types";
+import { PatientData, UserData, userActual } from "../../utils/types";
 import { UserDataElement } from "../elements/UserDataElement";
 import { CrossButton } from "../buttons/CrossButton";
 import { TestsViewButton } from "../buttons/TestsViewButton";
@@ -17,7 +15,7 @@ import { getUserType } from "../../utils/helpers";
 export interface UserMenuView {
   endpoint: string;
   handleClean: () => void;
-  setActual: Dispatch<SetStateAction<actual>>;
+  setActual: Dispatch<SetStateAction<userActual>>;
   setUsers: Dispatch<SetStateAction<UserData[] | null>>;
   handleUpdateList: (data: UserData) => void;
   isPatient?: boolean;

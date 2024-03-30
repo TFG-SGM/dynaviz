@@ -1,19 +1,11 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { DataService } from "../../services/DataService";
-import { TestData, UserData } from "../../utils/types";
-import { ErrorComponent } from "../other/ErrorComponent";
-import { AxiosError } from "axios";
+import { ManyTestsData, TestData, UserData } from "../../utils/types";
 import { CrossButton } from "../buttons/CrossButton";
-import {
-  ACTUAL_USER_ENDPOINT,
-  INITIAL_TEST,
-  TEST_TYPE_ENDPOINT,
-} from "../../utils/constants";
+import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { TestForm } from "./TestForm";
 import { generateDataTest } from "../../utils/generateDataTest";
-import { useNavigate } from "react-router-dom";
 import { Overlay } from "../other/Overlay";
-import { useData } from "../../hooks/useData";
 
 export interface AddTestProps {
   endpoint: string;
@@ -22,34 +14,31 @@ export interface AddTestProps {
 }
 
 export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
-  const [newData, setNewData] = useState<TestData>({
+  const [newData, setNewData] = useState<ManyTestsData>({
     ...INITIAL_TEST,
     patientId: patient._id,
   });
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const data = await DataService.getData(
-        TEST_TYPE_ENDPOINT + newData.typeId
-      );
+    const { doctorId, date, patientId, evaScale } = newData;
+    Object.keys(newData.dataTests).forEach(async (dataKey) => {
+      const { typeId, video } = newData.dataTests[dataKey];
+      const data = await DataService.getData(TEST_TYPE_ENDPOINT + typeId);
       const completeTest = {
-        ...newData,
+        _id: "",
+        doctorId,
+        date,
+        patientId,
+        evaScale,
+        typeId,
+        video,
         data: generateDataTest(data.bodyParts),
       };
 
-      const { _id } = await DataService.createData<TestData>(
-        endpoint,
-        completeTest
-      );
-      navigate(`/app/pacientes/${patient._id}/${_id}`);
-    } catch (error) {
-      console.log(error);
-      if (error instanceof AxiosError && error.response)
-        setError(error.response.data.message);
-    }
+      await DataService.createData<TestData>(endpoint, completeTest);
+    });
+    handleClean();
   };
 
   return (
@@ -70,7 +59,6 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
             </button>
           </div>
         </form>
-        {error && <ErrorComponent error={error}></ErrorComponent>}
       </dialog>
     </>
   );

@@ -38,7 +38,12 @@ export function RecordVideoView({
                 </>
               ) : (
                 <>
-                  <video src={mediaBlobUrl} controls autoPlay loop />
+                  <video
+                    src={mediaBlobUrl ? mediaBlobUrl : undefined}
+                    controls
+                    autoPlay
+                    loop
+                  />
                 </>
               )}
               <div className="buttons-container">

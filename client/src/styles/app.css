@@ -32,6 +32,7 @@ dialog {
   margin-right: auto;
 
   width: 900px;
+  max-height: 900px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -39,6 +40,7 @@ dialog {
   border-radius: var(--radius);
 
   z-index: 2;
+  overflow-y: auto;
 }
 
 button {

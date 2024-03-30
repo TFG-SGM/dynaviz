@@ -5,12 +5,12 @@ import { PieChart } from "../charts/pie";
 import { Histogram } from "../charts/histogram";
 import { BubbleChart } from "../charts/bubble";
 import { Heatmap } from "../charts/heatmap";
-import { TestSubData } from "../../utils/types";
+import { TestSubData, testActual } from "../../utils/types";
 import { BoxPlot } from "../charts/boxplot";
 import { BoxPlotAll } from "../charts/boxplot-all";
 
 interface ActualChartProps {
-  actual: { chart: string; part1: string; part2: string };
+  actual: testActual;
   data: TestSubData;
 }
 
@@ -40,6 +40,6 @@ export function ActualChart({ actual, data }: ActualChartProps) {
     case "heatmap":
       return <Heatmap data={data} part1={part1} part2={part2}></Heatmap>;
     default:
-      return <p>Cargando...</p>;
+      return;
   }
 }

@@ -47,38 +47,6 @@
   width: 50%;
 }
 
-/*VIDEO MENU*/
-
-.test-form-part {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.selected-video {
-  background-color: rgba(0, 0, 0, 0.415);
-}
-
-.record-dialog {
-  width: 800px;
-}
-
-.record-dialog video {
-  width: 90%;
-  height: 500px;
-  border-radius: var(--radius);
-  margin: 50px 0;
-}
-
-.save-video-disable {
-  background-color: gray;
-  cursor: inherit;
-}
-
-.save-video-disable:hover {
-  opacity: 1;
-}
-
 /*FIBRO INPUT*/
 .fibro-label {
   flex-direction: row;

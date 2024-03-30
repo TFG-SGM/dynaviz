@@ -1,3 +1,5 @@
+import { number } from "echarts";
+
 export type UserData = {
   _id: string;
   password: string;
@@ -27,9 +29,20 @@ export type PatientData = {
   doctorId: string;
 };
 
-export type actual = {
+export type userActual = {
   action: string;
   userId: string | null;
+};
+
+export type testActual = {
+  chart: string;
+  part1: string;
+  part2: string;
+};
+
+export type evolutionActual = {
+  chart: string;
+  parts: string[];
 };
 
 export interface TestPartsData {
@@ -56,6 +69,17 @@ export interface TestData {
   patientId: string;
   evaScale: number;
   data?: TestSubData;
+}
+
+export interface ManyTestsData {
+  _id: string;
+  doctorId: string;
+  date: string;
+  patientId: string;
+  evaScale: number;
+  dataTests: {
+    [key: number]: { typeId: string; video: string };
+  };
 }
 
 export interface TestTypeData {

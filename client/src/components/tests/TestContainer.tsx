@@ -1,23 +1,17 @@
 import { useParams } from "react-router-dom";
 import { useData } from "../../hooks/useData";
-import { TestData } from "../../utils/types";
+import { TestData, testActual } from "../../utils/types";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestButtons } from "../../components/buttons/TestButtons";
-import { MouseEventHandler, useState } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
 import { BodyPartsButtons } from "../../components/buttons/BodyPartsButtons";
 import { ActualChart } from "../../components/elements/ActualChart";
 import { TestMenuView } from "../../components/menus/TestMenuView";
 
-interface actual {
-  chart: string;
-  part1: string;
-  part2: string;
-}
-
 export function TestContainer() {
   const { testId } = useParams();
   const [test] = useData<TestData>(TEST_ENDPOINT + testId);
-  const [actual, setActual] = useState<actual>({
+  const [actual, setActual] = useState<testActual>({
     chart: "line",
     part1: "",
     part2: "",
@@ -95,8 +89,8 @@ function isParts2(chart: string) {
 }
 
 const createButtonHandler = (
-  part,
-  setActual
+  part: string,
+  setActual: Dispatch<SetStateAction<testActual>>
 ): MouseEventHandler<HTMLButtonElement> => {
   return (e) => {
     const target = e.target as HTMLElement;

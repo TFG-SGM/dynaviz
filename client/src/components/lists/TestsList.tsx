@@ -52,7 +52,7 @@ export function TestsList({ patient }: { patient: UserData }) {
       )}
 
       <button className="add-test-button" onClick={handleStartCreating}>
-        Añadir Prueba
+        Añadir Pruebas
       </button>
 
       <button className="evolution-button" onClick={handleViewEvolution}>

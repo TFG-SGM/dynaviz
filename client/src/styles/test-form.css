@@ -1,0 +1,49 @@
+.new-tests-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  grid-column: 1/-1;
+  border: 2px solid var(--black-letter);
+  padding: 20px;
+  border-radius: var(--radius);
+  background-color: var(--background-color);
+}
+
+.new-test {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid var(--black-letter);
+  border-radius: var(--radius);
+  background-color: var(--white-letter);
+}
+
+.video-container {
+  display: flex;
+  gap: 20px;
+}
+
+.selected-video {
+  background-color: rgba(0, 0, 0, 0.415);
+}
+
+.record-dialog {
+  width: 800px;
+}
+
+.record-dialog video {
+  width: 90%;
+  height: 500px;
+  border-radius: var(--radius);
+  margin: 50px 0;
+}
+
+.save-video-disable {
+  background-color: gray;
+  cursor: inherit;
+}
+
+.save-video-disable:hover {
+  opacity: 1;
+}

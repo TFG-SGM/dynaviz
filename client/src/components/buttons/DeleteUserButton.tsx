@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 import { DataService } from "../../services/DataService";
-import { UserData, actual } from "../../utils/types";
+import { UserData, userActual } from "../../utils/types";
 import { AxiosError } from "axios";
 
 interface DeleteUserButton {
   endpoint: string;
-  setActual?: Dispatch<SetStateAction<actual>> | null;
+  setActual?: Dispatch<SetStateAction<userActual>> | null;
   setUsers: Dispatch<SetStateAction<UserData[] | null>>;
   setError: Dispatch<SetStateAction<string | null>>;
 }

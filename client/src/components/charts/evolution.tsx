@@ -1,6 +1,6 @@
 import ReactECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
-import { TestData } from "../../utils/types";
+import { TestData, evolutionActual } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
 export function EvolutionChart({
@@ -8,10 +8,7 @@ export function EvolutionChart({
   actual,
 }: {
   tests: TestData[];
-  actual: {
-    chart: string;
-    parts: string[];
-  };
+  actual: evolutionActual;
 }) {
   const [data, setData] = useState<{
     dates: string[];
@@ -37,11 +34,11 @@ export function EvolutionChart({
       if (test.data) {
         if (actual.parts.length === 0)
           newRestrictions["total"].push(test.data.restriction);
-        else {
+        else if (test.data.parts) {
           Object.keys(test.data.parts).forEach((part) => {
             if (part in newRestrictions)
               newRestrictions[part] = [
-                ...newRestrictions[part],
+                ...(newRestrictions[part] ?? []),
                 test.data.parts[part].restriction,
               ];
           });

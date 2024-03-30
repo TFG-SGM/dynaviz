@@ -7,7 +7,7 @@ export const TEST_ENDPOINT = "test/";
 export const TEST_TYPE_ENDPOINT = "testType/";
 export const ACTUAL_USER_ENDPOINT = "auth/user-data";
 
-export const CHART_HEIGHT = "80%";
+export const CHART_HEIGHT = "500px";
 
 export const INITIAL_USER = {
   _id: "",
@@ -40,11 +40,12 @@ export const INITIAL_PATIENT = {
 export const INITIAL_TEST = {
   _id: "",
   doctorId: "",
-  typeId: "",
   date: "",
-  video: "",
-  patientId: "",
   evaScale: 5,
+  patientId: "",
+  dataTests: {
+    0: { typeId: "", video: "" },
+  },
 };
 
 export const TEST_TYPES = {

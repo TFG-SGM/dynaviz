@@ -1,8 +1,7 @@
 import { UserCard } from "../cards/UserCard";
-import { UpdateUserForm } from "../forms/UpdateUserForm";
 import { AddUserForm } from "../forms/AddUserForm";
 import { useState } from "react";
-import { UserData, actual } from "../../utils/types";
+import { UserData, userActual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
 import { UserMenuView } from "../menus/UserMenuView";
@@ -13,7 +12,7 @@ import { useData } from "../../hooks/useData";
 export function UsersList({ endpoint }: { endpoint: string }) {
   const [finalEndpoint] = useUserEndpoint(endpoint);
   const [users, setUsers, error] = useData<UserData[]>(finalEndpoint);
-  const [actual, setActual] = useState<actual>({
+  const [actual, setActual] = useState<userActual>({
     action: "",
     userId: "",
   });

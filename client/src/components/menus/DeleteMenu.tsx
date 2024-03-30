@@ -1,6 +1,11 @@
 import { Overlay } from "../other/Overlay";
 
-export function DeleteMenu({ handleDelete, handleClean }) {
+interface DeleteMenuProps {
+  handleDelete: () => void;
+  handleClean: () => void;
+}
+
+export function DeleteMenu({ handleDelete, handleClean }: DeleteMenuProps) {
   return (
     <>
       <Overlay></Overlay>

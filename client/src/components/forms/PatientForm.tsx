@@ -12,8 +12,11 @@ export interface PatientFormProps<T> {
 export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
   useActualDoctor(setNewData);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked } = e.target;
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
 
     setNewData((prevState) => {
       if (!prevState) return prevState;
