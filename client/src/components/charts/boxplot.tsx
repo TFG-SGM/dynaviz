@@ -2,9 +2,13 @@ import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
+import { WarnComponent } from "../other/WarnComponent";
 
 export function BoxPlot({ data, part }: { data: TestSubData; part: string }) {
-  if (part === "") return <p>Selecciona una parte del cuerpo</p>;
+  if (part === "")
+    return (
+      <WarnComponent text="Selecciona una parte del cuerpo"></WarnComponent>
+    );
 
   const realMovements = TestService.getRealMovements(data.parts, part);
   const idealMovements = TestService.getIdealMovements(data.parts, part);

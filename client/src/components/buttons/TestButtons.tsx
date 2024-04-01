@@ -26,10 +26,10 @@ export function TestButtons({
         Histograma
       </button>
       <button id="boxplot1" onClick={handleChangeChart}>
-        Boxplot 1
+        Cajas y Bigotes 1
       </button>
       <button id="boxplot2" onClick={handleChangeChart}>
-        Boxplot 2
+        Cajas y Bigotes 2
       </button>
       <button id="bubble" onClick={handleChangeChart}>
         Burbujas

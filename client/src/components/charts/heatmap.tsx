@@ -2,6 +2,7 @@ import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
+import { WarnComponent } from "../other/WarnComponent";
 
 export function Heatmap({
   data,
@@ -13,7 +14,9 @@ export function Heatmap({
   part2: string;
 }) {
   if (part1 === "" || part2 === "")
-    return <p>Selecciona dos partes del cuerpo</p>;
+    return (
+      <WarnComponent text="Selecciona dos partes del cuerpo"></WarnComponent>
+    );
 
   const option = {
     tooltip: {

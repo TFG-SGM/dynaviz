@@ -70,7 +70,7 @@ export function TestsList({ patient }: { patient: UserData }) {
 
       <div className="test-list">
         {tests.length === 0 ? (
-          <p className="empty-text">¡No hay ninguna!</p>
+          <p className="empty-text">¡No hay ninguna prueba!</p>
         ) : (
           tests.map((test) => {
             return <TestCard key={test._id} testId={test._id}></TestCard>;

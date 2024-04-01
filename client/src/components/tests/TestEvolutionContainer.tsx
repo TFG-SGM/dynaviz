@@ -74,7 +74,7 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
       ></SelectType>
 
       {tests.length === 0 ? (
-        <p className="empty-text">¡No hay ninguna!</p>
+        <p className="empty-text">¡No hay ninguna prueba!</p>
       ) : (
         <>
           <EvolutionButtons

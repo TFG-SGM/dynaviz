@@ -82,6 +82,17 @@
   font-size: xx-large;
 }
 
+.warn-text {
+  font-size: xx-large;
+  border: 1px solid var(--red);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  margin: 10% auto;
+  height: fit-content;
+  width: fit-content;
+}
+
 @media screen and (width < 1000px) {
   .test-page {
     margin: 0 5px 0 5px;
