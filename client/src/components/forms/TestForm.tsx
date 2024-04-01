@@ -1,5 +1,10 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { ManyTestsData, TestTypeData, UserData } from "../../utils/types";
+import {
+  ManyTestsData,
+  TestTypeData,
+  UserData,
+  dataTests,
+} from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { SelectType } from "../selects/SelectType";
@@ -7,21 +12,23 @@ import { RecordVideoView } from "../elements/RecordVideoView";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { NewTest } from "./NewTest";
 
-export interface TestFormProps<T> {
+export interface TestFormProps {
   data: ManyTestsData | null;
-  setNewData: Dispatch<SetStateAction<T>>;
+  setNewData: Dispatch<SetStateAction<ManyTestsData>>;
 }
 
-export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
+export function TestForm({ data, setNewData }: TestFormProps) {
   useActualDoctor(setNewData);
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
   const [isRecording, setIsRecording] = useState(false);
   const [videoId, setVideoId] = useState("0");
 
-  const handleChangeRecordingState = (e = null) => {
+  const handleChangeRecordingState = (
+    e?: React.MouseEvent<HTMLButtonElement, MouseEvent> | null
+  ) => {
     setIsRecording(!isRecording);
-    if (e) setVideoId(e.target.id);
+    if (e) setVideoId(e.currentTarget.id);
   };
 
   const handleAddRecordingVideo = () => {
@@ -32,25 +39,27 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
         dataTests: {
           ...prevState.dataTests,
           [videoId]: {
-            ...prevState.dataTests[videoId],
+            ...prevState.dataTests[parseInt(videoId)],
             video: "videoGrabado.mv4",
           },
         },
       };
     });
   };
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
     if (name.includes(".")) {
-      const [dataTests, id, nameType] = name.split(".");
+      const [id, nameType] = name.split(".");
       setNewData((prevState) => {
         if (!prevState) return prevState;
-        if (!prevState[dataTests]) prevState[dataTests] = {};
-        if (!prevState[dataTests][id]) prevState[dataTests][id] = {};
-        prevState[dataTests][id][nameType] = value;
+        if (!prevState.dataTests) prevState.dataTests = {};
+        if (!prevState.dataTests[+id])
+          prevState.dataTests[+id] = { typeId: "", video: "" };
+        prevState.dataTests[+id][nameType as keyof dataTests] = value;
         return { ...prevState };
       });
     } else {
@@ -83,13 +92,15 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
     });
   };
 
-  const handleRemoveNewTest = (e) => {
-    const { id } = e.target;
+  const handleRemoveNewTest = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    const { id } = e.currentTarget;
     setNewData((prevState) => {
       if (!prevState) return prevState;
 
       const newDataTests = { ...prevState.dataTests };
-      delete newDataTests[id];
+      delete newDataTests[parseInt(id)];
 
       return {
         ...prevState,
@@ -150,7 +161,7 @@ export function TestForm<T>({ data, setNewData }: TestFormProps<T>) {
           return (
             <NewTest
               key={dataKey}
-              id={dataKey}
+              id={parseInt(dataKey)}
               data={data}
               handleChange={handleChange}
               handleChangeRecordingState={handleChangeRecordingState}

@@ -71,15 +71,14 @@ export interface TestData {
   data?: TestSubData;
 }
 
+export type dataTests = { typeId: string; video: string };
 export interface ManyTestsData {
   _id: string;
   doctorId: string;
   date: string;
   patientId: string;
   evaScale: number;
-  dataTests: {
-    [key: number]: { typeId: string; video: string };
-  };
+  dataTests: { [key: number]: dataTests };
 }
 
 export interface TestTypeData {

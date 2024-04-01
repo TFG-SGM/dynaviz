@@ -4,12 +4,14 @@ import { ManyTestsData } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
 
 interface NewTestProps {
-  id: string;
+  id: number;
   data: ManyTestsData;
-  handleChange: () => ChangeEventHandler<HTMLInputElement>;
+  handleChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
   handleChangeRecordingState: () => void;
   videoId: string;
-  handleRemoveNewTest: () => void;
+  handleRemoveNewTest: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 }
 
 export function NewTest({
@@ -22,10 +24,10 @@ export function NewTest({
 }: NewTestProps) {
   return (
     <div className="new-test">
-      {id !== "0" && (
+      {id !== 0 && (
         <button
           className="remove-new-test-button"
-          id={id}
+          id={id.toString()}
           onClick={handleRemoveNewTest}
           type="button"
         >

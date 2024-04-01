@@ -1,6 +1,6 @@
 import ReactECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
-import { TestData, evolutionActual } from "../../utils/types";
+import { TestData, TestSubData, evolutionActual } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
 export function EvolutionChart({
@@ -39,7 +39,7 @@ export function EvolutionChart({
             if (part in newRestrictions)
               newRestrictions[part] = [
                 ...(newRestrictions[part] ?? []),
-                test.data.parts[part].restriction,
+                (test.data as TestSubData).parts[part].restriction,
               ];
           });
         }

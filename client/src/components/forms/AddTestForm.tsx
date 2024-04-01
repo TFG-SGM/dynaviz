@@ -24,7 +24,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
     const { doctorId, date, patientId, evaScale } = newData;
     const fetchPromises = Object.keys(newData.dataTests).map(
       async (dataKey) => {
-        const { typeId, video } = newData.dataTests[dataKey];
+        const { typeId, video } = newData.dataTests[parseInt(dataKey)];
         const data = await DataService.getData(TEST_TYPE_ENDPOINT + typeId);
         const completeTest = {
           _id: "",
