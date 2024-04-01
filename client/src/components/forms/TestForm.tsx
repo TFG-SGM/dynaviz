@@ -40,7 +40,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
           ...prevState.dataTests,
           [videoId]: {
             ...prevState.dataTests[parseInt(videoId)],
-            video: "videoGrabado.mv4",
+            video: "videoGrabado.mp4",
           },
         },
       };
@@ -165,7 +165,6 @@ export function TestForm({ data, setNewData }: TestFormProps) {
               data={data}
               handleChange={handleChange}
               handleChangeRecordingState={handleChangeRecordingState}
-              videoId={videoId}
               handleRemoveNewTest={handleRemoveNewTest}
             ></NewTest>
           );

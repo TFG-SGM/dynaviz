@@ -18,7 +18,7 @@ export function BoxPlotAll({ data }: { data: TestSubData }) {
     },
     yAxis: {
       type: "value",
-      name: "Desplazamiento",
+      name: "Variación",
     },
     tooltip: {
       trigger: "item",

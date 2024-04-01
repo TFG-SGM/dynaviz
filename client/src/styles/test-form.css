@@ -43,6 +43,8 @@
 }
 
 .record-dialog {
+  position: fixed;
+  margin-top: 20px;
   width: 800px;
 }
 
