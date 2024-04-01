@@ -83,9 +83,46 @@
 }
 
 @media screen and (width < 1000px) {
-  .test-evolution-page,
   .test-page {
-    margin: 0 25px 0 25px;
+    margin: 0 5px 0 5px;
+    grid-template-areas: "title" "button" "container";
+    grid-template-rows: 0.5fr 0.5fr 9fr;
+  }
+
+  .test-evolution-page {
+    margin: 0 5px 0 5px;
+    grid-template-rows: auto;
+  }
+
+  .test-evolution-container,
+  .test-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .test-container > .body-parts-container {
+    display: block;
+  }
+
+  .test-evolution-container,
+  .test-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .charts-buttons,
+  .body-parts-buttons {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+
+    padding: 5px;
+
+    border: 1px solid var(--black-letter);
+    background-color: var(--background-color);
+    border-radius: var(--radius);
   }
 
   .test-evolution-container,

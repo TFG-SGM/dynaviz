@@ -88,7 +88,7 @@ form label input {
   padding: 10px;
   border-radius: var(--radius);
   border: 1px solid var(--black-letter);
-  font-size: 20px;
+  font-size: var(--font-size);
 }
 
 .overlay {
@@ -119,13 +119,31 @@ form label input {
   body {
     font-size: 1rem;
   }
+
+  button {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+
   dialog {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 95%;
+    max-height: 95%;
+  }
+
+  select {
+    width: 100%;
   }
 
   form {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    gap: 5px;
+  }
+
+  form label input,
+  select {
+    padding: 5px;
+    font-size: 1rem;
   }
 }
