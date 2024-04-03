@@ -22,31 +22,8 @@ export function TestForm({ data, setNewData }: TestFormProps) {
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
   const [isRecording, setIsRecording] = useState(false);
-  const [videoId, setVideoId] = useState("0");
 
-  const handleChangeRecordingState = (
-    e?: React.MouseEvent<HTMLButtonElement, MouseEvent> | null
-  ) => {
-    setIsRecording(!isRecording);
-    if (e) setVideoId(e.currentTarget.id);
-  };
-
-  const handleAddRecordingVideo = () => {
-    handleChangeRecordingState();
-    setNewData((prevState) => {
-      return {
-        ...prevState,
-        dataTests: {
-          ...prevState.dataTests,
-          [videoId]: {
-            ...prevState.dataTests[parseInt(videoId)],
-            video: "videoGrabado.mp4",
-          },
-        },
-      };
-    });
-  };
-
+  const handleChangeRecordingState = () => setIsRecording(!isRecording);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
@@ -54,6 +31,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
 
     if (name.includes(".")) {
       const [id, nameType] = name.split(".");
+
       setNewData((prevState) => {
         if (!prevState) return prevState;
         if (!prevState.dataTests) prevState.dataTests = {};
@@ -116,7 +94,6 @@ export function TestForm({ data, setNewData }: TestFormProps) {
       {isRecording && (
         <RecordVideoView
           handleChangeRecordingState={handleChangeRecordingState}
-          handleAddRecordingVideo={handleAddRecordingVideo}
         ></RecordVideoView>
       )}
       <label>
@@ -140,7 +117,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
           required
         ></input>
       </label>
-      <label>
+      <label className="eva-scale">
         Escala EVA
         <input
           name="evaScale"

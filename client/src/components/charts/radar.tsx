@@ -7,6 +7,9 @@ export function RadarChart({ data }: { data: TestSubData }) {
   const option = {
     radar: {
       indicator: TestService.getBodyPartsForRadial(data.parts),
+      axisName: {
+        color: "#444",
+      },
     },
     series: [
       {

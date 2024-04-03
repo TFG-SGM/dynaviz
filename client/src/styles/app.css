@@ -6,8 +6,15 @@
   --white-letter: #f0f2f5;
   --list-background-color: #fff;
 
-  --font-size: 1.5rem;
+  --font-size: 1.3rem;
   --radius: 5px;
+  --font-family: "my-font";
+}
+
+@font-face {
+  font-family: "my-font";
+  src: url("../assets/Rubik-VariableFont_wght.ttf");
+  font-weight: 100;
 }
 
 * {
@@ -21,6 +28,7 @@ body {
   color: var(--black-letter);
   font-size: var(--font-size);
   overflow: hidden;
+  font-family: var(--font-family);
 }
 
 .page {
@@ -47,6 +55,7 @@ dialog {
 
   z-index: 2;
   overflow-y: auto;
+  transition: ease-in 200ms;
 }
 
 button {
@@ -60,6 +69,7 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: opacity 200ms;
+  font-family: var(--font-family);
 }
 
 button:hover {
@@ -70,6 +80,7 @@ select {
   font-size: 20px;
   padding: 10px;
   color: var(--black-letter);
+  font-family: var(--font-family);
 }
 
 form {
@@ -89,6 +100,7 @@ form label input {
   border-radius: var(--radius);
   border: 1px solid var(--black-letter);
   font-size: var(--font-size);
+  font-family: var(--font-family);
 }
 
 .overlay {

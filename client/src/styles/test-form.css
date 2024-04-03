@@ -1,12 +1,17 @@
+.eva-scale {
+  grid-column: 1/-1;
+  margin-bottom: 20px;
+}
+
+.eva-scale > p {
+  align-self: center;
+}
+
 .new-tests-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   grid-column: 1/-1;
-  border: 2px solid var(--black-letter);
-  padding: 20px;
-  border-radius: var(--radius);
-  background-color: var(--background-color);
 }
 
 .new-test {
@@ -16,7 +21,7 @@
   padding: 20px;
   border: 1px solid var(--black-letter);
   border-radius: var(--radius);
-  background-color: var(--white-letter);
+  background-color: var(--background-color);
 }
 
 .remove-new-test-button {
@@ -75,5 +80,9 @@
 
   .record-dialog video {
     width: 100%;
+  }
+
+  .remove-new-test-button {
+    margin-bottom: -40px;
   }
 }

@@ -4,11 +4,17 @@ import { Overlay } from "../other/Overlay";
 
 export function RecordVideoView({
   handleChangeRecordingState,
-  handleAddRecordingVideo,
 }: {
   handleChangeRecordingState: () => void;
-  handleAddRecordingVideo: () => void;
 }) {
+  const downloadVideo = (url: string | null) => {
+    if (!url) return;
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "video.mp4";
+    anchor.click();
+    handleChangeRecordingState();
+  };
   return (
     <>
       <Overlay></Overlay>
@@ -64,7 +70,10 @@ export function RecordVideoView({
                   </button>
                 )}
                 {status === "stopped" ? (
-                  <button type="button" onClick={handleAddRecordingVideo}>
+                  <button
+                    type="button"
+                    onClick={() => downloadVideo(mediaBlobUrl)}
+                  >
                     Guardar Vídeo
                   </button>
                 ) : (

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { TestContainer } from "../../components/tests/TestContainer";
+import { TestContainer } from "../../components/tests-containers/TestContainer";
 import { useData } from "../../hooks/useData";
 import { PatientData } from "../../utils/types";
 import { PATIENT_ENDPOINT } from "../../utils/constants";

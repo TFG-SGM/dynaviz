@@ -42,35 +42,23 @@ export function NewTest({
           handleChange={handleChange}
         ></SelectType>
       </label>
-      <div className="video-container">
-        <label>
-          Vídeo{" "}
-          <input
-            className="selected-video"
-            name={`${id}.video`}
-            value={data.dataTests[id].video}
-            type="text"
-            placeholder="Selecciona o graba un vídeo >>"
-            disabled
-            required
-          ></input>
-        </label>{" "}
-        <label>
-          <input
-            name={`${id}.video`}
-            type="file"
-            onChange={handleChange}
-            accept="video/*"
-          ></input>
-          <button
-            type="button"
-            id={id.toString()}
-            onClick={handleChangeRecordingState}
-          >
-            Grabar Vídeo
-          </button>
-        </label>
-      </div>
+      <label>
+        Video
+        <input
+          name={`${id}.video`}
+          type="file"
+          onChange={handleChange}
+          accept="video/*"
+          required
+        ></input>
+        <button
+          type="button"
+          id={id.toString()}
+          onClick={handleChangeRecordingState}
+        >
+          Grabar Vídeo
+        </button>
+      </label>
     </div>
   );
 }

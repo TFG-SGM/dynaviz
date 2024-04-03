@@ -102,7 +102,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Peso{" "}
+        Peso (kg){" "}
         <input
           name="weight"
           type="number"
@@ -112,7 +112,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
         ></input>
       </label>
       <label>
-        Altura{" "}
+        Altura (cm){" "}
         <input
           name="height"
           type="number"

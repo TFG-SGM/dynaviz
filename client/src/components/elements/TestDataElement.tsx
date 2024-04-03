@@ -39,7 +39,7 @@ export function TestDataElement({ test }: { test: TestData }) {
         {patient?.uId})
       </p>
       <p>
-        <strong>Escala EVA:</strong> {evaScale}
+        <strong>Escala EVA:</strong> {evaScale} / 10
       </p>
     </>
   );

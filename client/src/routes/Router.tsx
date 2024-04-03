@@ -7,8 +7,8 @@ import { HomePage } from "../pages/main/HomePage";
 import { DoctorsListPage } from "../pages/lists/DoctorsListPage";
 import { AdminsListPage } from "../pages/lists/AdminsListPage";
 import { TestsListPage } from "../pages/lists/TestsListPage";
-import { TestPage } from "../pages/tests/TestPage";
-import { TestEvolutionPage } from "../pages/tests/TestEvolutionPage";
+import { TestPage } from "../pages/tests-pages/TestPage";
+import { TestEvolutionPage } from "../pages/tests-pages/TestEvolutionPage";
 
 export function Router() {
   const router = createBrowserRouter([

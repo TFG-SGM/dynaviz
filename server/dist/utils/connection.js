@@ -8,12 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectToMongoDB = void 0;
+exports.getBucket = exports.connectToMongoDB = void 0;
 const mongodb_1 = require("mongodb");
-const DEFAULT_URL = "mongodb://localhost:27017/dipamia";
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const DEFAULT_URL = "mongodb://localhost:27017/dynaviz";
 const connectionSting = (_a = process.env.DATABASE_URL) !== null && _a !== void 0 ? _a : DEFAULT_URL;
+console.log(connectionSting);
 const client = new mongodb_1.MongoClient(connectionSting);
 function connectToMongoDB(collection) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,3 +35,18 @@ function connectToMongoDB(collection) {
     });
 }
 exports.connectToMongoDB = connectToMongoDB;
+function getBucket() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield client.connect();
+            const database = client.db();
+            const bucket = new mongodb_1.GridFSBucket(database);
+            return bucket;
+        }
+        catch (error) {
+            console.error("Fallo al conectar con MongoDB:", error);
+            throw error;
+        }
+    });
+}
+exports.getBucket = getBucket;

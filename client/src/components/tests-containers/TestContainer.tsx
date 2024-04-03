@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import { useData } from "../../hooks/useData";
 import { TestData, testActual } from "../../utils/types";
 import { TEST_ENDPOINT } from "../../utils/constants";
-import { TestButtons } from "../../components/buttons/TestButtons";
+import { TestButtons } from "../buttons/TestButtons";
 import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
-import { BodyPartsButtons } from "../../components/buttons/BodyPartsButtons";
-import { ActualChart } from "../../components/elements/ActualChart";
-import { TestMenuView } from "../../components/menus/TestMenuView";
+import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
+import { ActualChart } from "../elements/ActualChart";
+import { TestMenuView } from "../menus/TestMenuView";
 
 export function TestContainer() {
   const { testId } = useParams();

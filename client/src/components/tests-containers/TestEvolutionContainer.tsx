@@ -1,7 +1,7 @@
 import { useData } from "../../hooks/useData";
 import { TEST_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { ChangeEvent, MouseEventHandler, useState } from "react";
-import { EvolutionChart } from "../../components/charts/evolution";
+import { EvolutionChart } from "../charts/evolution";
 import { TestData, evolutionActual } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
 import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
