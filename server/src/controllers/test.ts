@@ -35,6 +35,15 @@ export class TestController {
   }
 
   static async create(req: Request, res: Response) {
+    console.log(req.file);
+    req.body = {
+      ...req.body,
+      evaScale: parseInt(req.body.evaScale),
+      data: JSON.parse(req.body.data),
+      video: { name: req.file?.originalname, id: req.file?.metadata.id },
+    };
+    console.log(req.body);
+
     const result = validateTest(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
@@ -42,18 +51,6 @@ export class TestController {
 
     const newTest = await TestModel.create({ input: result.data });
     res.json(newTest);
-  }
-
-  static async update(req: Request, res: Response) {
-    const result = validatePartialTest(req.body);
-
-    if (!result.success) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) });
-    }
-
-    const { id } = req.params;
-    const updatedTest = await TestModel.update({ id, input: result.data });
-    return res.json(updatedTest);
   }
 
   static async delete(req: Request, res: Response) {

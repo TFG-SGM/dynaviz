@@ -5,9 +5,12 @@ const testSchema = z.object({
   doctorId: z.string(),
   typeId: z.string(),
   date: z.string().transform((str) => new Date(str)),
-  video: z.string(),
   patientId: z.string(),
   evaScale: z.number(),
+  video: z.object({
+    name: z.string(),
+    id: z.string(),
+  }),
   data: z.object({
     time: z.array(z.number()),
     restriction: z.number(),

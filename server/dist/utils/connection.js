@@ -18,7 +18,7 @@ const mongodb_1 = require("mongodb");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const DEFAULT_URL = "mongodb://localhost:27017/dynaviz";
-const connectionSting = (_a = process.env.DATABASE_URL) !== null && _a !== void 0 ? _a : DEFAULT_URL;
+const connectionSting = (_a = process.env.LOCAL_URL) !== null && _a !== void 0 ? _a : DEFAULT_URL;
 console.log(connectionSting);
 const client = new mongodb_1.MongoClient(connectionSting);
 function connectToMongoDB(collection) {

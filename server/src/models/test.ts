@@ -93,7 +93,7 @@ export class TestModel {
 
     const aggregationPipeline = [
       { $match: matchStage },
-      { $sort: { date: 1 } },
+      { $sort: { date: -1 } },
     ];
 
     const result = await db.aggregate(aggregationPipeline).toArray();

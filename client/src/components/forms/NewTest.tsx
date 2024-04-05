@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, LegacyRef, useRef } from "react";
 import { TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { ManyTestsData } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
@@ -19,6 +19,7 @@ export function NewTest({
   handleChange,
   handleChangeRecordingState,
   handleRemoveNewTest,
+  inputRef,
 }: NewTestProps) {
   return (
     <div className="new-test">
@@ -49,6 +50,7 @@ export function NewTest({
           type="file"
           onChange={handleChange}
           accept="video/*"
+          ref={inputRef}
           required
         ></input>
         <button

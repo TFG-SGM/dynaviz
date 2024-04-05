@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 import {
   ManyTestsData,
   TestTypeData,
@@ -22,6 +22,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
   const [isRecording, setIsRecording] = useState(false);
+  const inputRef = useRef(null);
 
   const handleChangeRecordingState = () => setIsRecording(!isRecording);
   const handleChange = (
@@ -37,7 +38,11 @@ export function TestForm({ data, setNewData }: TestFormProps) {
         if (!prevState.dataTests) prevState.dataTests = {};
         if (!prevState.dataTests[+id])
           prevState.dataTests[+id] = { typeId: "", video: "" };
-        prevState.dataTests[+id][nameType as keyof dataTests] = value;
+        if (nameType === "video" && inputRef.current) {
+          prevState.dataTests[+id][nameType as keyof dataTests] =
+            inputRef.current.files[0];
+          console.log(inputRef.current.files[0]);
+        } else prevState.dataTests[+id][nameType as keyof dataTests] = value;
         return { ...prevState };
       });
     } else {
@@ -143,6 +148,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
               handleChange={handleChange}
               handleChangeRecordingState={handleChangeRecordingState}
               handleRemoveNewTest={handleRemoveNewTest}
+              inputRef={inputRef}
             ></NewTest>
           );
         })}

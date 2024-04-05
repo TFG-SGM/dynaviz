@@ -37,7 +37,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
           data: generateDataTest(data.bodyParts),
         };
 
-        await DataService.createData<TestData>(endpoint, completeTest);
+        await DataService.createTestData<TestData>(endpoint, completeTest);
       }
     );
 

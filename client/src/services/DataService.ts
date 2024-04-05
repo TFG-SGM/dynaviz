@@ -30,9 +30,25 @@ export class DataService {
 
   public static async createData<T>(endpoint: string, newData: T | null) {
     const token = await DataService.getToken();
+
     const { data } = await axios.post(URL + endpoint, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  }
+
+  public static async createTestData<T>(endpoint: string, newData: T | null) {
+    const token = await DataService.getToken();
+
+    const formData = this.formDataFromObject(newData);
+
+    const { data } = await axios.post(URL + endpoint, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     });
 
@@ -73,4 +89,15 @@ export class DataService {
 
     return data;
   }
+
+  private static formDataFromObject = (data: object) => {
+    const formData = new FormData();
+    for (const key in data) {
+      if (Object.hasOwnProperty.call(data, key)) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    return formData;
+  };
 }

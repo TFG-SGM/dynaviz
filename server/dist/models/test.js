@@ -88,7 +88,7 @@ class TestModel {
                 matchStage.date = new Date(date);
             const aggregationPipeline = [
                 { $match: matchStage },
-                { $sort: { date: 1 } },
+                { $sort: { date: -1 } },
             ];
             const result = yield db.aggregate(aggregationPipeline).toArray();
             return result;

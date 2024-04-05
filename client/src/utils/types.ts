@@ -60,12 +60,16 @@ export interface TestSubData {
   parts: TestPartsData;
 }
 
+export interface TestVideo {
+  name: string;
+  data: Buffer;
+}
 export interface TestData {
   _id: string;
   doctorId: string;
   typeId: string;
   date: string;
-  video: string;
+  video: TestVideo;
   patientId: string;
   evaScale: number;
   data?: TestSubData;

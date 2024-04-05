@@ -1,6 +1,6 @@
 import { TestSubData } from "./types";
 
-export function generateDataTest(bodyParts: string[]): TestSubData {
+export function generateDataTest(bodyParts: string[]) {
   const videoLength: number = generateRandomNumber(60, 180);
   const data: TestSubData = {
     time: generateTime(videoLength),
@@ -17,7 +17,7 @@ export function generateDataTest(bodyParts: string[]): TestSubData {
     }
   });
 
-  return data;
+  return JSON.stringify(data);
 }
 
 function generateParts(videoLength: number) {

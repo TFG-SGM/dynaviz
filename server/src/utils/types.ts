@@ -59,7 +59,7 @@ export interface Test {
   doctorId: string;
   typeId: string;
   date: Date;
-  video: string;
+  video: object;
   patientId: string;
   evaScale: number;
   data: object;
@@ -69,7 +69,7 @@ export interface PartialTest {
   doctorId?: string | undefined;
   typeId?: string | undefined;
   date?: Date | undefined;
-  video?: string | undefined;
+  video?: object | undefined;
   patientId?: string | undefined;
   evaScale?: number | undefined;
   data?: object | object;

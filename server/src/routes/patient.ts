@@ -1,7 +1,5 @@
 import { Router } from "express";
 import { PatientController } from "../controllers/patient";
-import { checkRole } from "../middlewares/checkRole";
-import { DOCTOR_ROLE } from "../utils/constants";
 
 export const patientRouter: Router = Router();
 

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useData } from "../../hooks/useData";
 import {
   DOCTOR_ENDPOINT,
@@ -32,7 +33,7 @@ export function TestDataElement({ test }: { test: TestData }) {
         <strong>Fecha:</strong> {date.split("T")[0]}
       </p>
       <p>
-        <strong>Video:</strong> {video}
+        <strong>Video:</strong> {video.name}
       </p>
       <p>
         <strong>Paciente:</strong> {patient?.name} {patient?.surname} (
