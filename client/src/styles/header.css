@@ -18,9 +18,16 @@
 }
 
 .location-text {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   margin: 0 auto 0 25px;
   font-weight: bold;
   text-transform: capitalize;
+}
+
+.location-text img {
+  width: 65px;
 }
 
 .location-text > span:last-of-type {

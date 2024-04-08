@@ -3,7 +3,7 @@ import { DataService } from "../../services/DataService";
 import { useState } from "react";
 import { MyAccount } from "../menus/MyAccount";
 import { Account, ArrowBack, Logout } from "./Icons";
-
+import DynaViz from "../../../public/dynaviz.png";
 export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,6 +27,7 @@ export function Header() {
         </button>
       )}
       <p className="location-text">
+        <img src={DynaViz}></img>
         <span>DynaViz</span>{" "}
         {pathParts[2] && (
           <>
