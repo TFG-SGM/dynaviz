@@ -37,6 +37,7 @@ const doctor_1 = require("./routes/doctor");
 const admin_1 = require("./routes/admin");
 const test_1 = require("./routes/test");
 const testTypes_1 = require("./routes/testTypes");
+const video_1 = require("./routes/video");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
@@ -50,6 +51,7 @@ app.use("/doctor", doctor_1.doctorRouter);
 app.use("/admin", admin_1.adminRouter);
 app.use("/test", test_1.testRouter);
 app.use("/testType", testTypes_1.testTypeRouter);
+app.use("/video", video_1.videoRouter);
 app.listen(port, () => {
     console.log(`server is running at http://localhost:${port}`);
 });

@@ -1,49 +1,39 @@
 import { Request, Response } from "express";
-import { TestModel } from "../models/test";
-import { VideoModel } from "../models/video";
-import { connectToMongoDB } from "../utils/connection";
-import { Db, GridFSBucket } from "mongodb";
+import { getMongoDB } from "../utils/connection";
+import { GridFSBucket, ObjectId } from "mongodb";
 
 export class VideoController {
   static async getById(req: Request, res: Response) {
-    const range = req.headers.range;
-    if (!range) {
-      res.status(400).send("Requires Range header");
-    }
+    const _id = new ObjectId(req.params.id);
+    if (!_id) return res.status(400).send("Requiere id");
 
-    const db = (await connectToMongoDB()) as Db;
-    db.collection("fs.files").findOne({}, (err, video) => {
-      if (!video) {
-        res.status(404).send("No video uploaded!");
-        return;
-      }
+    const db = await getMongoDB();
+    const fileMetadata = await db.collection("fs.files").findOne({ _id });
 
-      // Create response headers
-      const videoSize = video.length;
-      const start = Number(range.replace(/\D/g, ""));
-      const end = videoSize - 1;
+    if (!fileMetadata) return res.status(404).send("Video no encontrado");
 
-      const contentLength = end - start + 1;
-      const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4",
-      };
+    const videoSize = fileMetadata.length;
 
-      // HTTP Status 206 for Partial Content
-      res.writeHead(206, headers);
+    const headers = {
+      "Content-Length": videoSize,
+      "Content-Type": "video/mp4",
+    };
 
-      // Get the bucket and download stream from GridFS
-      const bucket = new GridFSBucket(db);
-      const downloadStream = bucket.openDownloadStreamByName("bigbuck", {
-        start,
-      });
+    res.writeHead(200, headers);
 
-      // Finally pipe video to response
-      downloadStream.pipe(res);
-    });
+    const bucket = new GridFSBucket(db);
+    const downloadStream = bucket.openDownloadStream(_id);
+
+    downloadStream.pipe(res);
   }
 
-  static async delete(req: Request, res: Response) {}
+  static async delete(req: Request, res: Response) {
+    const _id = new ObjectId(req.params.id);
+    if (!_id) return res.status(400).send("Requiere id");
+
+    const db = await getMongoDB();
+    const bucket = new GridFSBucket(db);
+
+    await bucket.delete(_id);
+  }
 }

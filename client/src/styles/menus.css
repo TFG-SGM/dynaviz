@@ -43,6 +43,10 @@
 
 /*DELETE MENU*/
 .delete-menu {
+  position: fixed;
+  margin-top: 20px;
+  width: 500px;
+
   display: flex;
   gap: 20px;
   width: 50%;

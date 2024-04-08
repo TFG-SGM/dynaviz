@@ -14,15 +14,30 @@ const admin_1 = require("../models/admin");
 const doctor_1 = require("../models/doctor");
 const patient_1 = require("../models/patient");
 const faker_1 = require("@faker-js/faker");
+const connection_1 = require("./connection");
+const testTypes_1 = require("../data/testTypes");
 generateData();
 function generateData() {
     return __awaiter(this, void 0, void 0, function* () {
+        createTestTypes();
         for (let index = 0; index < 2; index++) {
             yield createAdmin();
             const { id } = yield createDoctor();
             for (let index = 0; index < 2; index++) {
                 yield createPatient(id.toString());
             }
+        }
+    });
+}
+function createTestTypes() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield (0, connection_1.getMongoDB)();
+        const collectionExists = yield db
+            .listCollections({ name: "testTypes" })
+            .hasNext();
+        if (!collectionExists) {
+            const collection = db.collection("testTypes");
+            yield collection.insertMany(testTypes_1.testTypes);
         }
     });
 }

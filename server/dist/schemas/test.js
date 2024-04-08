@@ -9,9 +9,12 @@ const testSchema = zod_1.default.object({
     doctorId: zod_1.default.string(),
     typeId: zod_1.default.string(),
     date: zod_1.default.string().transform((str) => new Date(str)),
-    video: zod_1.default.string(),
     patientId: zod_1.default.string(),
     evaScale: zod_1.default.number(),
+    video: zod_1.default.object({
+        name: zod_1.default.string(),
+        id: zod_1.default.string(),
+    }),
     data: zod_1.default.object({
         time: zod_1.default.array(zod_1.default.number()),
         restriction: zod_1.default.number(),

@@ -40,7 +40,7 @@ export class TestController {
       ...req.body,
       evaScale: parseInt(req.body.evaScale),
       data: JSON.parse(req.body.data),
-      video: { name: req.file?.originalname, id: req.file?.metadata.id },
+      video: { name: req.file?.originalname, id: req.file?.id.toString() },
     };
     console.log(req.body);
 

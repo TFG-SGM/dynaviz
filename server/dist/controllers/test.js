@@ -45,24 +45,17 @@ class TestController {
         });
     }
     static create(req, res) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.file);
+            req.body = Object.assign(Object.assign({}, req.body), { evaScale: parseInt(req.body.evaScale), data: JSON.parse(req.body.data), video: { name: (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, id: (_b = req.file) === null || _b === void 0 ? void 0 : _b.id.toString() } });
+            console.log(req.body);
             const result = (0, test_2.validateTest)(req.body);
             if (!result.success) {
                 return res.status(400).json({ error: JSON.parse(result.error.message) });
             }
             const newTest = yield test_1.TestModel.create({ input: result.data });
             res.json(newTest);
-        });
-    }
-    static update(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = (0, test_2.validatePartialTest)(req.body);
-            if (!result.success) {
-                return res.status(400).json({ error: JSON.parse(result.error.message) });
-            }
-            const { id } = req.params;
-            const updatedTest = yield test_1.TestModel.update({ id, input: result.data });
-            return res.json(updatedTest);
         });
     }
     static delete(req, res) {

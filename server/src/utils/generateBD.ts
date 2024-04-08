@@ -3,16 +3,30 @@ import { AdminModel } from "../models/admin";
 import { DoctorModel } from "../models/doctor";
 import { PatientModel } from "../models/patient";
 import { faker } from "@faker-js/faker";
+import { getMongoDB } from "./connection";
+import { testTypes } from "../data/testTypes";
 
 generateData();
 
 async function generateData() {
+  createTestTypes();
   for (let index = 0; index < 2; index++) {
     await createAdmin();
     const { id } = await createDoctor();
     for (let index = 0; index < 2; index++) {
       await createPatient(id.toString());
     }
+  }
+}
+
+async function createTestTypes() {
+  const db = await getMongoDB();
+  const collectionExists = await db
+    .listCollections({ name: "testTypes" })
+    .hasNext();
+  if (!collectionExists) {
+    const collection = db.collection("testTypes");
+    await collection.insertMany(testTypes);
   }
 }
 

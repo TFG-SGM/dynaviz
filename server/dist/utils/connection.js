@@ -11,14 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBucket = exports.connectToMongoDB = void 0;
+exports.getMongoDB = exports.connectToMongoDB = void 0;
 const mongodb_1 = require("mongodb");
 const dotenv_1 = __importDefault(require("dotenv"));
+const constants_1 = require("./constants");
 dotenv_1.default.config();
-const DEFAULT_URL = "mongodb://localhost:27017/dynaviz";
-const connectionSting = (_a = process.env.LOCAL_URL) !== null && _a !== void 0 ? _a : DEFAULT_URL;
+const connectionSting = constants_1.MONGO_URL;
 console.log(connectionSting);
 const client = new mongodb_1.MongoClient(connectionSting);
 function connectToMongoDB(collection) {
@@ -35,13 +34,11 @@ function connectToMongoDB(collection) {
     });
 }
 exports.connectToMongoDB = connectToMongoDB;
-function getBucket() {
+function getMongoDB() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield client.connect();
-            const database = client.db();
-            const bucket = new mongodb_1.GridFSBucket(database);
-            return bucket;
+            return client.db();
         }
         catch (error) {
             console.error("Fallo al conectar con MongoDB:", error);
@@ -49,4 +46,4 @@ function getBucket() {
         }
     });
 }
-exports.getBucket = getBucket;
+exports.getMongoDB = getMongoDB;

@@ -1,7 +1,7 @@
 import { CrossButton } from "../buttons/CrossButton";
 import { TestDataElement } from "../elements/TestDataElement";
 import { DataService } from "../../services/DataService";
-import { TEST_ENDPOINT } from "../../utils/constants";
+import { TEST_ENDPOINT, VIDEO_ENDPOINT } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { TestData } from "../../utils/types";
 import { Overlay } from "../other/Overlay";
@@ -23,7 +23,11 @@ export function TestMenuView({ test, handleClean }: TestMenuView) {
 
   const handleDelete = async () => {
     navigate(-1);
-    await DataService.deleteData(TEST_ENDPOINT + test?._id);
+
+    await Promise.all([
+      DataService.deleteData(VIDEO_ENDPOINT + test.video.id),
+      DataService.deleteData(TEST_ENDPOINT + test._id),
+    ]);
   };
 
   if (!test) return;

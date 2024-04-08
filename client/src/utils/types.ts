@@ -62,7 +62,7 @@ export interface TestSubData {
 
 export interface TestVideo {
   name: string;
-  data: Buffer;
+  id: string;
 }
 export interface TestData {
   _id: string;

@@ -4,7 +4,6 @@ import { DOCTOR_ROLE, MONGO_URL } from "../utils/constants";
 import { checkRole } from "../middlewares/checkRole";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
-import { ObjectId } from "mongodb";
 
 export const testRouter: Router = Router();
 const storage = new GridFsStorage({
@@ -12,9 +11,6 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     return {
       filename: file.originalname,
-      metadata: {
-        id: new ObjectId().toString(),
-      },
     };
   },
 });

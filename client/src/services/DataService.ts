@@ -2,7 +2,7 @@ import axios from "axios";
 import { URL } from "../utils/constants";
 
 export class DataService {
-  private static async getToken(): Promise<string | null> {
+  public static async getToken(): Promise<string | null> {
     return localStorage.getItem("token");
   }
 

@@ -4,7 +4,7 @@ Aplicación Web DynaViz sobre el Trabajo Fin de Grado de Sergio García Muñoz
 
 ## Requisitos
 
-- Tener un gestor de paquetes (como pnpm) para instalar dependencias
+- Tener un gestor de paquetes (ej. *pnpm*) para instalar dependencias
 - Tener una base de datos de mongo en local
 
 ## Guía de Uso
