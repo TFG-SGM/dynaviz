@@ -1,4 +1,4 @@
-import { ChangeEventHandler, LegacyRef, useRef } from "react";
+import { ChangeEventHandler, RefObject } from "react";
 import { TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { ManyTestsData } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
@@ -11,6 +11,7 @@ interface NewTestProps {
   handleRemoveNewTest: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
+  inputRef: RefObject<HTMLInputElement>;
 }
 
 export function NewTest({

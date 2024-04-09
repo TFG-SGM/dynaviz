@@ -3,7 +3,7 @@ import { DataService } from "../services/DataService";
 import { URL, VIDEO_ENDPOINT } from "../utils/constants";
 
 export function useVideo(id: string) {
-  const [videoBlob, setVideoBlob] = useState(null);
+  const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
     const fetchVideo = async () => {

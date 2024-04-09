@@ -1,5 +1,6 @@
 import axios from "axios";
 import { URL } from "../utils/constants";
+import { CreateTestData } from "../utils/types";
 
 export class DataService {
   public static async getToken(): Promise<string | null> {
@@ -40,7 +41,10 @@ export class DataService {
     return data;
   }
 
-  public static async createTestData<T>(endpoint: string, newData: T | null) {
+  public static async createTestData(
+    endpoint: string,
+    newData: CreateTestData
+  ) {
     const token = await DataService.getToken();
 
     const formData = this.formDataFromObject(newData);
@@ -90,14 +94,14 @@ export class DataService {
     return data;
   }
 
-  private static formDataFromObject = (data: object) => {
+  private static formDataFromObject(data: CreateTestData) {
     const formData = new FormData();
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
-        formData.append(key, data[key]);
+        formData.append(key, data[key as keyof CreateTestData] as string);
       }
     }
 
     return formData;
-  };
+  }
 }

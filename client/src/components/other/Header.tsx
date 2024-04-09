@@ -27,7 +27,8 @@ export function Header() {
         </button>
       )}
       <p className="location-text">
-        <img src={DynaViz}></img>
+        {/*<img src={DynaViz}></img>
+         */}
         <span>DynaViz</span>{" "}
         {pathParts[2] && (
           <>

@@ -1,10 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
-import {
-  ManyTestsData,
-  TestTypeData,
-  UserData,
-  dataTests,
-} from "../../utils/types";
+import { ManyTestsData, TestTypeData, UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { SelectType } from "../selects/SelectType";
@@ -22,7 +17,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
   const [isRecording, setIsRecording] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChangeRecordingState = () => setIsRecording(!isRecording);
   const handleChange = (
@@ -37,12 +32,17 @@ export function TestForm({ data, setNewData }: TestFormProps) {
         if (!prevState) return prevState;
         if (!prevState.dataTests) prevState.dataTests = {};
         if (!prevState.dataTests[+id])
-          prevState.dataTests[+id] = { typeId: "", video: "" };
-        if (nameType === "video" && inputRef.current) {
-          prevState.dataTests[+id][nameType as keyof dataTests] =
-            inputRef.current.files[0];
-          console.log(inputRef.current.files[0]);
-        } else prevState.dataTests[+id][nameType as keyof dataTests] = value;
+          prevState.dataTests[+id] = {
+            typeId: "",
+            video: "",
+          };
+        if (
+          nameType === "video" &&
+          inputRef.current &&
+          inputRef.current.files
+        ) {
+          prevState.dataTests[+id].video = inputRef.current.files[0];
+        } else prevState.dataTests[+id].typeId = value;
         return { ...prevState };
       });
     } else {

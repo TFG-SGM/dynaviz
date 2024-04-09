@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { DataService } from "../../services/DataService";
-import { ManyTestsData, TestData, UserData } from "../../utils/types";
+import { ManyTestsData, UserData } from "../../utils/types";
 import { CrossButton } from "../buttons/CrossButton";
 import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { TestForm } from "./TestForm";
@@ -37,7 +37,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
           data: generateDataTest(data.bodyParts),
         };
 
-        await DataService.createTestData<TestData>(endpoint, completeTest);
+        await DataService.createTestData(endpoint, completeTest);
       }
     );
 

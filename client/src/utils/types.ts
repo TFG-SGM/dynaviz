@@ -64,6 +64,7 @@ export interface TestVideo {
   name: string;
   id: string;
 }
+
 export interface TestData {
   _id: string;
   doctorId: string;
@@ -74,8 +75,20 @@ export interface TestData {
   evaScale: number;
   data?: TestSubData;
 }
-
-export type dataTests = { typeId: string; video: string };
+export interface CreateTestData {
+  _id: string;
+  doctorId: string;
+  typeId: string;
+  date: string;
+  video: File | string;
+  patientId: string;
+  evaScale: number;
+  data: string;
+}
+export type dataTests = {
+  typeId: string;
+  video: string | File;
+};
 export interface ManyTestsData {
   _id: string;
   doctorId: string;
