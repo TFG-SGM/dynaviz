@@ -77,7 +77,7 @@ export class DataService {
       },
     });
 
-    return data;
+    return data.value;
   }
 
   public static async getUserData() {

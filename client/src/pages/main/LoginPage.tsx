@@ -3,6 +3,7 @@ import { DataService } from "../../services/DataService";
 import { FormEvent, useState } from "react";
 import { ErrorComponent } from "../../components/other/ErrorComponent";
 import { AxiosError } from "axios";
+import DynaViz from "../../../public/dynaviz.png";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -24,7 +25,10 @@ export function LoginPage() {
 
   return (
     <div className="login-container">
-      <h1>DynaViz</h1>
+      <div className="title-container">
+        <img src={DynaViz}></img>
+        <h1>DynaViz</h1>
+      </div>
       <form onSubmit={handleSubmit}>
         <label>
           Correo

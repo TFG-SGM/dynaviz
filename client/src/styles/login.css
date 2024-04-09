@@ -7,6 +7,15 @@
   align-items: center;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.title-container img {
+  width: 100px;
+}
+
 .login-container > form {
   width: fit-content;
   display: flex;
