@@ -16,7 +16,11 @@ const app: Express = express();
 const port = process.env.PORT ?? 3000;
 
 app.use(json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://dynaviz-8jiu.onrender.com",
+  })
+);
 app.disable("x-powered-by");
 
 app.use("/auth", authRouter);
