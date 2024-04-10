@@ -1,4 +1,4 @@
-export const URL = "http://localhost:3000/";
+export const URL = "https://dynaviz.onrender.com/";
 
 export const ADMIN_ENDPOINT = "admin/";
 export const DOCTOR_ENDPOINT = "doctor/";
