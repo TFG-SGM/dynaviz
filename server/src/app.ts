@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, json } from "express";
+import express, { Express, json } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { authRouter } from "./routes/auth";
@@ -16,11 +16,7 @@ const app: Express = express();
 const port = process.env.PORT ?? 3000;
 
 app.use(json());
-app.use(
-  cors({
-    origin: "https://dynaviz-8jiu.onrender.com",
-  })
-);
+app.use(cors());
 app.disable("x-powered-by");
 
 app.use("/auth", authRouter);

@@ -1,8 +1,5 @@
-import { GridFSBucket, MongoClient, ServerApiVersion } from "mongodb";
-import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
 import { MONGO_URL } from "./constants";
-
-dotenv.config();
 
 const connectionSting = MONGO_URL;
 
