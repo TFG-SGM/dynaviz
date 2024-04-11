@@ -5,7 +5,7 @@ import { UserData, userActual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
 import { UserMenuView } from "../menus/UserMenuView";
-import { updateDataHelper } from "../../utils/helpers";
+import { getUserType, updateDataHelper } from "../../utils/helpers";
 import { useUserEndpoint } from "../../hooks/useUserEndpoint";
 import { useData } from "../../hooks/useData";
 import { Feedback } from "../elements/Feedback";
@@ -39,7 +39,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
     <>
       {feedback && <Feedback feedback={feedback}></Feedback>}
       <button className="add-user-button" onClick={handleAdd}>
-        Añadir Usuario
+        Añadir {getUserType(endpoint)}
       </button>
       {actual.action === "add" && (
         <AddUserForm

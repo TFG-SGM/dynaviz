@@ -32,7 +32,7 @@ export function UserMenuView({
   setFeedback,
 }: UserMenuView) {
   const endpointParts = endpoint.split("/");
-  const userType = endpointParts[0] + "/";
+  const userType = getUserType(endpointParts[0] + "/");
 
   const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
   const [user, setUser] = useData<UserData | PatientData>(endpoint);
@@ -68,9 +68,9 @@ export function UserMenuView({
           : prevState
       );
       if (setActual) setActual({ action: "", userId: "" });
-      setFeedback("Usuario eliminado correctamente");
+      setFeedback(`${userType} eliminado correctamente`);
     } catch (e) {
-      setFeedback("Error: Usuario no eliminado correctamente");
+      setFeedback(`Error: ${userType} no eliminado correctamente`);
     }
   };
 
@@ -95,7 +95,7 @@ export function UserMenuView({
               ></DeleteMenu>
             )}
             <div className="menu-title">
-              <h2>Detalles de {getUserType(userType)}</h2>
+              <h2>Detalles de {userType}</h2>
               <CrossButton handleClean={handleClean}></CrossButton>
             </div>{" "}
             {isPatient ? (

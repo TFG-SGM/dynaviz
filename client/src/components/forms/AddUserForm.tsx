@@ -31,6 +31,7 @@ export function AddUserForm<T>({
     endpoint === PATIENT_ENDPOINT ? INITIAL_PATIENT : INITIAL_USER
   );
   const [error, setError] = useState<string | null>(null);
+  const userType = getUserType(endpoint);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,10 +42,10 @@ export function AddUserForm<T>({
       );
       setUsers((prevState) => [...(prevState || []), data]);
       handleClean();
-      setFeedback("Usuario añadido correctamente");
+      setFeedback(`${userType} añadido correctamente`);
     } catch (error) {
       console.log(error);
-      setFeedback("Error: Usuario no añadido correctamente");
+      setFeedback(`Error: ${userType} no añadido correctamente`);
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);
     }
@@ -55,7 +56,7 @@ export function AddUserForm<T>({
       <Overlay></Overlay>
       <dialog open>
         <div className="menu-title">
-          <h2>Nuevo {getUserType(endpoint)}</h2>
+          <h2>Nuevo {userType}</h2>
           <CrossButton handleClean={handleClean}></CrossButton>
         </div>
         <form onSubmit={handleSubmit}>

@@ -85,6 +85,7 @@
 @media screen and (width < 1000px) {
   .list {
     margin: 0 5px 0 5px;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas: "title" "button" "list";
   }
 
@@ -106,5 +107,10 @@
 
   .test-filters {
     display: none;
+  }
+
+  .feedback {
+    width: 100%;
+    right: 0;
   }
 }

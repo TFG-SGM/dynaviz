@@ -1,10 +1,10 @@
 .login-container {
   margin: 10% auto;
   display: flex;
-  flex-wrap: wrap;
   gap: 100px;
   width: fit-content;
   align-items: center;
+  width: fit-content;
 }
 
 .title-container {
@@ -12,6 +12,7 @@
   align-items: center;
   gap: 10px;
 }
+
 .title-container img {
   width: 100px;
 }
@@ -31,4 +32,10 @@
 
 .login-button {
   width: 100%;
+}
+
+@media screen and (width < 1000px) {
+  .login-container {
+    flex-direction: column;
+  }
 }

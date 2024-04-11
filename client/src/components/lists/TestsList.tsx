@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AddTestForm } from "../forms/AddTestForm";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestCard } from "../cards/TestCard";
@@ -7,6 +7,7 @@ import { TestData, UserData } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 import { useFilters } from "../../hooks/useFilters";
 import { TestsFilters } from "../elements/TestsFilters";
+import { Feedback } from "../elements/Feedback";
 
 export function TestsList({ patient }: { patient: UserData }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -20,6 +21,12 @@ export function TestsList({ patient }: { patient: UserData }) {
     TEST_ENDPOINT + "?patientId=" + patient._id + filtersText,
     isAdding
   );
+  const [feedback, setFeedback] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!feedback) return;
+    setTimeout(() => setFeedback(null), 2000);
+  }, [feedback]);
 
   const navigate = useNavigate();
 
@@ -44,11 +51,14 @@ export function TestsList({ patient }: { patient: UserData }) {
 
   return (
     <>
+      {feedback && <Feedback feedback={feedback}></Feedback>}
+
       {isAdding && (
         <AddTestForm
           endpoint={TEST_ENDPOINT}
           handleClean={handleClean}
           patient={patient}
+          setFeedback={setFeedback}
         ></AddTestForm>
       )}
 

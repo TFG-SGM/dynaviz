@@ -106,7 +106,7 @@
 
   .test-evolution-page {
     margin: 0 5px 0 5px;
-    grid-template-rows: auto;
+    grid-template-rows: auto 1fr;
   }
 
   .test-evolution-container,
@@ -129,9 +129,10 @@
 
   .charts-buttons,
   .body-parts-buttons {
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     flex-direction: row;
-    overflow-x: auto;
 
     padding: 5px;
 

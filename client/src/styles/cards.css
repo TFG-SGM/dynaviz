@@ -17,6 +17,6 @@
 @media screen and (width < 1000px) {
   .test-card,
   .user-card {
-    margin: 5px;
+    margin: 10px;
   }
 }
