@@ -47,7 +47,7 @@ export class DataService {
   ) {
     const token = await DataService.getToken();
 
-    const formData = this.formDataFromObject(newData);
+    const formData = this.getFormDataFromObject(newData);
 
     const { data } = await axios.post(URL + endpoint, formData, {
       headers: {
@@ -94,7 +94,7 @@ export class DataService {
     return data;
   }
 
-  private static formDataFromObject(data: CreateTestData) {
+  private static getFormDataFromObject(data: CreateTestData) {
     const formData = new FormData();
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {

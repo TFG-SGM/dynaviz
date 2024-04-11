@@ -4,10 +4,14 @@ import { useState } from "react";
 import { MyAccount } from "../menus/MyAccount";
 import { Account, ArrowBack, Logout } from "./Icons";
 import DynaViz from "../../../public/dynaviz.png";
+import { useData } from "../../hooks/useData";
+import { ACTUAL_USER_ENDPOINT } from "../../utils/constants";
+import { UserData } from "../../utils/types";
 export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMyAccount, setIsMyAccount] = useState(false);
+  const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
 
   const handleGoBack = () => navigate(-1);
   const handleMyAccount = () => setIsMyAccount(!isMyAccount);
@@ -21,11 +25,15 @@ export function Header() {
   return (
     <nav className="header-container">
       {isMyAccount && <MyAccount handleClean={handleMyAccount}></MyAccount>}
-      {location.pathname !== "/app" && (
-        <button className="back-button" onClick={handleGoBack}>
-          <ArrowBack></ArrowBack>
-        </button>
-      )}
+      {location.pathname !== "/app" &&
+        !(
+          actualUser?.role === "doctor" &&
+          location.pathname === "/app/pacientes"
+        ) && (
+          <button className="back-button" onClick={handleGoBack}>
+            <ArrowBack></ArrowBack>
+          </button>
+        )}
       <p className="location-text">
         <img src={DynaViz}></img>
         <span>DynaViz</span>{" "}

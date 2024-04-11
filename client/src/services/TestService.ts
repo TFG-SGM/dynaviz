@@ -1,29 +1,29 @@
 import { TestPartsData } from "../utils/types";
 
 export class TestService {
-  static getRealMovements(parts: TestPartsData, actualPart: string) {
+  public static getRealMovements(parts: TestPartsData, actualPart: string) {
     return parts[actualPart].realMovement;
   }
 
-  static getIdealMovements(parts: TestPartsData, actualPart: string) {
+  public static getIdealMovements(parts: TestPartsData, actualPart: string) {
     return parts[actualPart].idealMovement;
   }
 
-  static getBodyParts(parts: TestPartsData) {
+  public static getBodyParts(parts: TestPartsData) {
     return Object.keys(parts).map((part) => part);
   }
 
-  static getBodyPartsForRadial(parts: TestPartsData) {
+  public static getBodyPartsForRadial(parts: TestPartsData) {
     return Object.keys(parts).map((part) => {
       return { name: part };
     });
   }
 
-  static getBodyPartRestriction(parts: TestPartsData) {
+  public static getBodyPartRestriction(parts: TestPartsData) {
     return Object.keys(parts).map((part) => parts[part].restriction);
   }
 
-  static getUniqueVariations(parts: TestPartsData, actualPart: string) {
+  public static getUniqueVariations(parts: TestPartsData, actualPart: string) {
     const uniqueVariationsSet = new Set<number>();
     for (const num of parts[actualPart].variations) {
       uniqueVariationsSet.add(num);
@@ -36,7 +36,7 @@ export class TestService {
     return uniqueVariationsArray;
   }
 
-  static getVariationsCount(
+  public static getVariationsCount(
     parts: TestPartsData,
     actualPart: string,
     uniqueVariations: number[]
@@ -53,7 +53,7 @@ export class TestService {
     return countVariations;
   }
 
-  static getBoxPlotData(movements: number[]) {
+  public static getBoxPlotData(movements: number[]) {
     const sortedData = movements.sort((a, b) => a - b);
 
     const min = sortedData[0];
@@ -65,18 +65,7 @@ export class TestService {
     return [min, q1, median, q3, max];
   }
 
-  private static findQuartile(sortedData: number[], quartile: number) {
-    const index = quartile * (sortedData.length - 1);
-    const lowerIndex = Math.floor(index);
-    const upperIndex = Math.ceil(index);
-    const fraction = index - lowerIndex;
-    return (
-      (1 - fraction) * sortedData[lowerIndex] +
-      fraction * sortedData[upperIndex]
-    );
-  }
-
-  static getCorrelatedVariations(
+  public static getCorrelatedVariations(
     parts: TestPartsData,
     part1: string,
     part2: string
@@ -101,5 +90,16 @@ export class TestService {
     });
 
     return result;
+  }
+
+  private static findQuartile(sortedData: number[], quartile: number) {
+    const index = quartile * (sortedData.length - 1);
+    const lowerIndex = Math.floor(index);
+    const upperIndex = Math.ceil(index);
+    const fraction = index - lowerIndex;
+    return (
+      (1 - fraction) * sortedData[lowerIndex] +
+      fraction * sortedData[upperIndex]
+    );
   }
 }

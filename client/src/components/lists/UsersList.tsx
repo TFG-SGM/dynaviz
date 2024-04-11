@@ -3,7 +3,7 @@ import { AddUserForm } from "../forms/AddUserForm";
 import { useEffect, useState } from "react";
 import { UserData, userActual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
-import { PATIENT_ENDPOINT } from "../../utils/constants";
+import { ACTUAL_USER_ENDPOINT, PATIENT_ENDPOINT } from "../../utils/constants";
 import { UserMenuView } from "../menus/UserMenuView";
 import { getUserType, updateDataHelper } from "../../utils/helpers";
 import { useUserEndpoint } from "../../hooks/useUserEndpoint";
@@ -17,6 +17,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
     action: "",
     userId: "",
   });
+  const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
   const [feedback, setFeedback] = useState<string | null>(null);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
       <div className="user-list">
         {users.map((user: UserData) => {
+          if (actualUser?._id === user._id) return;
           return (
             <UserCard
               key={user._id}
