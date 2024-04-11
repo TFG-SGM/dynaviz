@@ -2,13 +2,9 @@ import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
 import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
-import { WarnComponent } from "../other/WarnComponent";
 
 export function Histogram({ data, part }: { data: TestSubData; part: string }) {
-  if (part === "")
-    return (
-      <WarnComponent text="Selecciona una parte del cuerpo"></WarnComponent>
-    );
+  if (part === "") return;
 
   const uniqueVariations = TestService.getUniqueVariations(data.parts, part);
   const option = {

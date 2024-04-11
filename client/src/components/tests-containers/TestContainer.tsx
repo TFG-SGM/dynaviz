@@ -3,7 +3,13 @@ import { useData } from "../../hooks/useData";
 import { TestData, testActual } from "../../utils/types";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestButtons } from "../buttons/TestButtons";
-import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
 import { ActualChart } from "../elements/ActualChart";
 import { TestMenuView } from "../menus/TestMenuView";
@@ -16,18 +22,41 @@ export function TestContainer() {
     part1: "",
     part2: "",
   });
+
+  useEffect(() => {
+    if (test && test.data) {
+      const partsKeys = Object.keys(test.data.parts);
+      setActual((prevState) => ({
+        ...prevState,
+        part1: partsKeys[0],
+        part2: partsKeys[1],
+      }));
+
+      const firstBodyPartButton = document.querySelector(`.body-part-button1`);
+      const secondBodyPartButton = document.querySelector(`.body-part-button2`);
+      firstBodyPartButton?.classList.add(`active-part1`);
+      secondBodyPartButton?.classList.add(`active-part2`);
+    }
+  }, [test, actual.chart]);
+
   const [isViewing, setIsViewing] = useState(false);
 
   const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
+
     const activeButton = document.querySelector(".active-chart");
     const activePart1 = document.querySelector(".active-part1");
     const activePart2 = document.querySelector(".active-part2");
+    const firstBodyPartButton = document.querySelector(`.body-part-button1`);
+    const secondBodyPartButton = document.querySelector(`.body-part-button2`);
 
     activeButton?.classList.remove("active-chart");
     target.classList.add("active-chart");
     activePart1?.classList.remove("active-part1");
     activePart2?.classList.remove("active-part2");
+    firstBodyPartButton?.classList.add(`active-part1`);
+    secondBodyPartButton?.classList.add(`active-part2`);
+
     setActual(() => ({ chart: target.id, part1: "", part2: "" }));
   };
 
@@ -55,20 +84,32 @@ export function TestContainer() {
         <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
         <div className="body-parts-container">
           {isParts1(actual.chart) && (
-            <BodyPartsButtons
-              parts={test.data.parts}
-              handleChangePart={handleChangePart1}
-            ></BodyPartsButtons>
-          )}
+            <>
+              {isParts2(actual.chart) ? (
+                <p>Selecciona dos partes del cuerpo:</p>
+              ) : (
+                <p>Selecciona una parte del cuerpo:</p>
+              )}
+              <div>
+                <BodyPartsButtons
+                  parts={test.data.parts}
+                  handleChangePart={handleChangePart1}
+                ></BodyPartsButtons>
 
-          {isParts2(actual.chart) && (
-            <BodyPartsButtons
-              parts={test.data.parts}
-              handleChangePart={handleChangePart2}
-            ></BodyPartsButtons>
+                {isParts2(actual.chart) && (
+                  <BodyPartsButtons
+                    parts={test.data.parts}
+                    isPart2={true}
+                    handleChangePart={handleChangePart2}
+                  ></BodyPartsButtons>
+                )}
+              </div>
+            </>
           )}
         </div>
-        <ActualChart actual={actual} data={test.data}></ActualChart>
+        <div className="chart-container">
+          <ActualChart actual={actual} data={test.data}></ActualChart>
+        </div>
       </div>
     </>
   );

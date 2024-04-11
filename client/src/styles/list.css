@@ -58,6 +58,30 @@
   gap: 20px;
 }
 
+.feedback {
+  position: absolute;
+  background-color: var(--main-color);
+  color: var(--white-letter);
+  padding: 15px;
+  border-radius: var(--radius);
+  right: 50%;
+  animation: feedback 400ms forwards;
+  z-index: 3;
+}
+
+.feedback.red {
+  background-color: var(--red);
+}
+
+@keyframes feedback {
+  0% {
+    transform: translateY(-85px);
+  }
+  100% {
+    transform: translateY(-90px);
+  }
+}
+
 @media screen and (width < 1000px) {
   .list {
     margin: 0 5px 0 5px;

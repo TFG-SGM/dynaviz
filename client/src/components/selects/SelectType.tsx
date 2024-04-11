@@ -8,6 +8,7 @@ interface SelectTypeProps {
   value: string;
   endpoint: string;
   handleChange: ChangeEventHandler<HTMLSelectElement>;
+  isAdding?: boolean;
 }
 
 export function SelectType({
@@ -16,8 +17,9 @@ export function SelectType({
   value,
   endpoint,
   handleChange,
+  isAdding,
 }: SelectTypeProps) {
-  const [testTypes] = useData<TestTypeData[]>(endpoint);
+  const [testTypes] = useData<TestTypeData[]>(endpoint, isAdding);
 
   if (!testTypes) return;
 

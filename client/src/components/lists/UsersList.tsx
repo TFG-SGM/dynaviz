@@ -1,6 +1,6 @@
 import { UserCard } from "../cards/UserCard";
 import { AddUserForm } from "../forms/AddUserForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserData, userActual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { PATIENT_ENDPOINT } from "../../utils/constants";
@@ -8,6 +8,7 @@ import { UserMenuView } from "../menus/UserMenuView";
 import { updateDataHelper } from "../../utils/helpers";
 import { useUserEndpoint } from "../../hooks/useUserEndpoint";
 import { useData } from "../../hooks/useData";
+import { Feedback } from "../elements/Feedback";
 
 export function UsersList({ endpoint }: { endpoint: string }) {
   const [finalEndpoint] = useUserEndpoint(endpoint);
@@ -16,6 +17,12 @@ export function UsersList({ endpoint }: { endpoint: string }) {
     action: "",
     userId: "",
   });
+  const [feedback, setFeedback] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!feedback) return;
+    setTimeout(() => setFeedback(null), 2000);
+  }, [feedback]);
 
   const handleAdd = () => setActual({ action: "add", userId: "" });
   const handleClean = () => setActual({ action: "", userId: "" });
@@ -30,6 +37,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
   return (
     <>
+      {feedback && <Feedback feedback={feedback}></Feedback>}
       <button className="add-user-button" onClick={handleAdd}>
         Añadir Usuario
       </button>
@@ -38,6 +46,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           endpoint={endpoint}
           handleClean={handleClean}
           setUsers={setUsers}
+          setFeedback={setFeedback}
         ></AddUserForm>
       )}
       {actual.action === "get" && (
@@ -48,6 +57,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           setUsers={setUsers}
           handleUpdateList={handleUpdateList}
           isPatient={endpoint === PATIENT_ENDPOINT}
+          setFeedback={setFeedback}
         ></UserMenuView>
       )}
 

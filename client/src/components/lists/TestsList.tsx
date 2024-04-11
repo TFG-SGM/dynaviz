@@ -66,6 +66,7 @@ export function TestsList({ patient }: { patient: UserData }) {
         patientId={patient._id}
         filters={filters}
         handleChange={handleChange}
+        isAdding={isAdding}
       ></TestsFilters>
 
       <div className="test-list">

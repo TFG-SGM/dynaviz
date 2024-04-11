@@ -11,12 +11,14 @@ interface TestFiltersProps {
     date: string;
   };
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  isAdding?: boolean;
 }
 
 export function TestsFilters({
   patientId,
   filters,
   handleChange,
+  isAdding,
 }: TestFiltersProps) {
   return (
     <div className="test-filters">
@@ -25,6 +27,7 @@ export function TestsFilters({
         value={filters.typeId}
         endpoint={TEST_TYPE_ENDPOINT}
         handleChange={handleChange}
+        isAdding={isAdding}
       ></SelectType>
       <SelectType
         label="médico"
@@ -32,11 +35,13 @@ export function TestsFilters({
         value={filters.doctorId}
         endpoint={DOCTOR_ENDPOINT}
         handleChange={handleChange}
+        isAdding={isAdding}
       ></SelectType>
       <SelectDate
         patientId={patientId}
         filters={filters}
         handleChange={handleChange}
+        isAdding={isAdding}
       ></SelectDate>{" "}
     </div>
   );

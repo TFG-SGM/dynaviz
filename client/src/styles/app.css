@@ -1,7 +1,7 @@
 :root {
   --main-color: #54a57e;
   --red: #b62222;
-  --background-color: #eeeeee;
+  --background-color: #eee;
   --black-letter: #1e1e1e;
   --white-letter: #f0f2f5;
   --list-background-color: #fff;
@@ -46,7 +46,7 @@ dialog {
   margin-right: auto;
 
   width: 1000px;
-  max-height: 900px;
+  max-height: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -139,7 +139,7 @@ form label input {
 
   dialog {
     max-width: 95%;
-    max-height: 95%;
+    max-height: 100%;
   }
 
   select {

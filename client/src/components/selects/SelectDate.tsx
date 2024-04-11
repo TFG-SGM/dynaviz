@@ -6,15 +6,18 @@ interface SelectDateProps {
   patientId: string;
   filters: { date: string };
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  isAdding?: boolean;
 }
 
 export function SelectDate({
   patientId,
   filters,
   handleChange,
+  isAdding,
 }: SelectDateProps) {
   const [dates] = useData<string[]>(
-    TEST_ENDPOINT + `attribute?attribute=date&patientId=${patientId}`
+    TEST_ENDPOINT + `attribute?attribute=date&patientId=${patientId}`,
+    isAdding
   );
 
   if (!dates) return;

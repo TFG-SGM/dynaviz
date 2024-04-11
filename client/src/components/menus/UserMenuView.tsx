@@ -19,6 +19,7 @@ export interface UserMenuView {
   setUsers: Dispatch<SetStateAction<UserData[] | null>>;
   handleUpdateList: (data: UserData) => void;
   isPatient?: boolean;
+  setFeedback: Dispatch<SetStateAction<string | null>>;
 }
 
 export function UserMenuView({
@@ -28,6 +29,7 @@ export function UserMenuView({
   setUsers,
   handleUpdateList,
   isPatient = false,
+  setFeedback,
 }: UserMenuView) {
   const endpointParts = endpoint.split("/");
   const userType = endpointParts[0] + "/";
@@ -44,22 +46,32 @@ export function UserMenuView({
   const handleCancelUpdate = () => setIsUpdate(false);
 
   const handleUpdate = (data: UserData) => {
-    setUser(data);
-    handleUpdateList(data);
+    try {
+      setUser(data);
+      handleUpdateList(data);
+      setFeedback("Usuario editado correctamente");
+    } catch (e) {
+      setFeedback("Error: Usuario no editado correctamente");
+    }
   };
 
   const handleDelete = async () => {
-    const data = await DataService.deleteData(endpoint);
-    if (isPatient)
-      await DataService.deleteData(
-        TEST_ENDPOINT + "patient/" + endpointParts[1]
+    try {
+      const data = await DataService.deleteData(endpoint);
+      if (isPatient)
+        await DataService.deleteData(
+          TEST_ENDPOINT + "patient/" + endpointParts[1]
+        );
+      setUsers((prevState) =>
+        prevState
+          ? prevState.filter((dataDict) => dataDict._id !== data)
+          : prevState
       );
-    setUsers((prevState) =>
-      prevState
-        ? prevState.filter((dataDict) => dataDict._id !== data)
-        : prevState
-    );
-    if (setActual) setActual({ action: "", userId: "" });
+      if (setActual) setActual({ action: "", userId: "" });
+      setFeedback("Usuario eliminado correctamente");
+    } catch (e) {
+      setFeedback("Error: Usuario no eliminado correctamente");
+    }
   };
 
   if (!user) return;
