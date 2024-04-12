@@ -29,6 +29,7 @@
 
 .test-evolution-container {
   grid-template-rows: 50px auto;
+  grid-template-columns: auto auto;
 }
 
 .test-evolution-container > .charts-buttons {
