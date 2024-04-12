@@ -43,9 +43,12 @@ export class TestModel {
 
   static async deleteByPatient({ patientId }: { patientId: string }) {
     const db = await connectToMongoDB("tests");
+    const deletedTests = await db.find({ patientId }).toArray();
+    const deletedVideoIds = deletedTests.map((test) => test.video.id);
 
     const { deletedCount } = await db.deleteMany({ patientId });
-    if (deletedCount > 0) return deletedCount;
+
+    if (deletedCount > 0) return deletedVideoIds;
     return null;
   }
 
@@ -78,13 +81,17 @@ export class TestModel {
     doctorId,
     typeId,
     date,
+    order,
   }: {
     patientId: string;
     doctorId: string;
     typeId: string;
     date: string;
+    order?: string;
   }) {
     const db = await connectToMongoDB("tests");
+    const dateOrder = order ? 1 : -1;
+
     const matchStage: any = {};
     if (patientId) matchStage.patientId = patientId;
     if (doctorId) matchStage.doctorId = doctorId;
@@ -93,7 +100,7 @@ export class TestModel {
 
     const aggregationPipeline = [
       { $match: matchStage },
-      { $sort: { date: -1 } },
+      { $sort: { date: dateOrder } },
     ];
 
     const result = await db.aggregate(aggregationPipeline).toArray();

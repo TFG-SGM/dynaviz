@@ -1,16 +1,19 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { UserData } from "../../utils/types";
+import { ErrorComponent } from "../other/ErrorComponent";
 
 export interface UserFormProps<T> {
   data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
   isPass?: boolean;
+  error: string | null;
 }
 
 export function UserForm<T>({
   data,
   setNewData,
   isPass = false,
+  error,
 }: UserFormProps<T>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -77,6 +80,7 @@ export function UserForm<T>({
           onChange={handleChange}
           required
         ></input>
+        {error && <ErrorComponent error={error}></ErrorComponent>}
       </label>
       {isPass && (
         <label>

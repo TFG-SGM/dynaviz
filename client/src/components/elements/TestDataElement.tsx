@@ -43,10 +43,12 @@ export function TestDataElement({ test }: { test: TestData }) {
       <p>
         <strong>Video:</strong> {video.name}
       </p>
-      {videoBlob && (
+      {videoBlob ? (
         <video id="videoPlayer" width="500" controls>
           <source src={URL.createObjectURL(videoBlob)} type="video/mp4" />
         </video>
+      ) : (
+        <p className="loading">Cargando vídeo</p>
       )}
     </>
   );

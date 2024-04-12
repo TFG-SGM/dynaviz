@@ -64,9 +64,10 @@
   color: var(--white-letter);
   padding: 15px;
   border-radius: var(--radius);
-  right: 50%;
   animation: feedback 400ms forwards;
   z-index: 3;
+  width: 90%;
+  text-align: center;
 }
 
 .feedback.red {

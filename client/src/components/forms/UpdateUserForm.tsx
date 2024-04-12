@@ -3,7 +3,6 @@ import { useData } from "../../hooks/useData";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
 import { PatientData, UserData } from "../../utils/types";
-import { ErrorComponent } from "../other/ErrorComponent";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
 import { PatientForm } from "./PatientForm";
@@ -38,10 +37,8 @@ export function UpdateUserForm({
       handleUpdate(data);
       handleCancel();
     } catch (error) {
-      console.log(error);
-
       if (error instanceof AxiosError && error.response)
-        setError(error.response.data.error);
+        setError(error.response.data.message);
     }
   };
 
@@ -60,11 +57,13 @@ export function UpdateUserForm({
             <PatientForm
               data={newData as PatientData}
               setNewData={setNewData}
+              error={error}
             ></PatientForm>
           ) : (
             <UserForm
               data={newData as UserData}
               setNewData={setNewData}
+              error={error}
             ></UserForm>
           )}
           <div className="buttons-container">
@@ -78,7 +77,6 @@ export function UpdateUserForm({
             <button>Guardar</button>
           </div>
         </form>
-        {error && <ErrorComponent error={error}></ErrorComponent>}
       </dialog>
     </>
   );

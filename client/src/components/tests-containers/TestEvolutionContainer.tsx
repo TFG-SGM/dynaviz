@@ -15,7 +15,7 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
   });
   const [typeId, setTypeId] = useState("");
   const [tests] = useData<TestData[]>(
-    TEST_ENDPOINT + "?patientId=" + patientId + "&typeId=" + typeId
+    TEST_ENDPOINT + "?patientId=" + patientId + "&typeId=" + typeId + "&order=1"
   );
   const [parts] = useEvolutionParts(typeId, tests);
 

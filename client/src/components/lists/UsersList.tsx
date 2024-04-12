@@ -1,6 +1,6 @@
 import { UserCard } from "../cards/UserCard";
 import { AddUserForm } from "../forms/AddUserForm";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { UserData, userActual } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { ACTUAL_USER_ENDPOINT, PATIENT_ENDPOINT } from "../../utils/constants";
@@ -9,6 +9,7 @@ import { getUserType, updateDataHelper } from "../../utils/helpers";
 import { useUserEndpoint } from "../../hooks/useUserEndpoint";
 import { useData } from "../../hooks/useData";
 import { Feedback } from "../elements/Feedback";
+import { useFeedback } from "../../hooks/useFeedback";
 
 export function UsersList({ endpoint }: { endpoint: string }) {
   const [finalEndpoint] = useUserEndpoint(endpoint);
@@ -18,12 +19,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
     userId: "",
   });
   const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
-  const [feedback, setFeedback] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!feedback) return;
-    setTimeout(() => setFeedback(null), 2000);
-  }, [feedback]);
+  const [feedback, setFeedback] = useFeedback();
 
   const handleAdd = () => setActual({ action: "add", userId: "" });
   const handleClean = () => setActual({ action: "", userId: "" });
@@ -38,7 +34,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
 
   return (
     <>
-      {feedback && <Feedback feedback={feedback}></Feedback>}
+      {feedback && <Feedback feedback={feedback as string}></Feedback>}
       <button className="add-user-button" onClick={handleAdd}>
         Añadir {getUserType(endpoint)}
       </button>
@@ -47,7 +43,7 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           endpoint={endpoint}
           handleClean={handleClean}
           setUsers={setUsers}
-          setFeedback={setFeedback}
+          setFeedback={setFeedback as Dispatch<SetStateAction<string | null>>}
         ></AddUserForm>
       )}
       {actual.action === "get" && (
@@ -58,21 +54,27 @@ export function UsersList({ endpoint }: { endpoint: string }) {
           setUsers={setUsers}
           handleUpdateList={handleUpdateList}
           isPatient={endpoint === PATIENT_ENDPOINT}
-          setFeedback={setFeedback}
+          setFeedback={setFeedback as Dispatch<SetStateAction<string | null>>}
         ></UserMenuView>
       )}
 
       <div className="user-list">
-        {users.map((user: UserData) => {
-          if (actualUser?._id === user._id) return;
-          return (
-            <UserCard
-              key={user._id}
-              setActual={setActual}
-              userData={user}
-            ></UserCard>
-          );
-        })}
+        {users.length === 0 ? (
+          <p className="empty-text">
+            ¡No hay ningún {getUserType(endpoint)?.toLowerCase()}!
+          </p>
+        ) : (
+          users.map((user: UserData) => {
+            if (actualUser?._id === user._id) return;
+            return (
+              <UserCard
+                key={user._id}
+                setActual={setActual}
+                userData={user}
+              ></UserCard>
+            );
+          })
+        )}
       </div>
     </>
   );

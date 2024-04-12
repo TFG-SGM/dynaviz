@@ -28,7 +28,7 @@ export class PatientController {
     const isEmail = await AuthController.validateEmail(result.data.email);
     if (isEmail) {
       return res.status(400).json({
-        message: `El correo ya esta registrado.`,
+        message: `El correo ya está registrado.`,
       });
     }
 
@@ -53,7 +53,7 @@ export class PatientController {
       const isEmail = await AuthController.validateEmail(result.data.email);
       if (isEmail) {
         return res.status(400).json({
-          message: `El correo ya esta registrado.`,
+          message: `El correo ya está registrado.`,
         });
       }
     }

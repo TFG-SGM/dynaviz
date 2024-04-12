@@ -3,6 +3,7 @@
   --red: #b62222;
   --background-color: #eee;
   --black-letter: #1e1e1e;
+  --gray-letter: #4c4c4c;
   --white-letter: #f0f2f5;
   --list-background-color: #fff;
 
@@ -125,6 +126,10 @@ form label input {
   width: fit-content;
   font-size: xx-large;
   margin: 10% auto;
+}
+
+.empty-text {
+  font-size: xx-large;
 }
 
 @media screen and (width < 1000px) {

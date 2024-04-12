@@ -6,6 +6,8 @@ import { SelectType } from "../selects/SelectType";
 import { RecordVideoView } from "../elements/RecordVideoView";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { NewTest } from "./NewTest";
+import { Feedback } from "../elements/Feedback";
+import { useFeedback } from "../../hooks/useFeedback";
 
 export interface TestFormProps {
   data: ManyTestsData | null;
@@ -17,6 +19,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
   const [isRecording, setIsRecording] = useState(false);
+  const [feedback, setFeedback] = useFeedback(5000);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChangeRecordingState = () => setIsRecording(!isRecording);
@@ -99,8 +102,10 @@ export function TestForm({ data, setNewData }: TestFormProps) {
       {isRecording && (
         <RecordVideoView
           handleChangeRecordingState={handleChangeRecordingState}
+          setFeedback={setFeedback as Dispatch<SetStateAction<string | null>>}
         ></RecordVideoView>
       )}
+      {feedback && <Feedback feedback={feedback as string}></Feedback>}
       <label>
         Médico{" "}
         <SelectType

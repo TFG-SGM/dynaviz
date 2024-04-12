@@ -3,13 +3,19 @@ import { PatientData } from "../../utils/types";
 import { SelectType } from "../selects/SelectType";
 import { DOCTOR_ENDPOINT } from "../../utils/constants";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
+import { ErrorComponent } from "../other/ErrorComponent";
 
 export interface PatientFormProps<T> {
   data: PatientData | null;
   setNewData: Dispatch<SetStateAction<T>>;
+  error: string | null;
 }
 
-export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
+export function PatientForm<T>({
+  data,
+  setNewData,
+  error,
+}: PatientFormProps<T>) {
   useActualDoctor(setNewData);
 
   const handleChange = (
@@ -90,6 +96,7 @@ export function PatientForm<T>({ data, setNewData }: PatientFormProps<T>) {
           onChange={handleChange}
           required
         ></input>
+        {error && <ErrorComponent error={error}></ErrorComponent>}
       </label>
       <label>
         Teléfono{" "}

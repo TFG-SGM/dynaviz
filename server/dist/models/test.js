@@ -51,9 +51,11 @@ class TestModel {
     static deleteByPatient({ patientId }) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
+            const deletedTests = yield db.find({ patientId }).toArray();
+            const deletedVideoIds = deletedTests.map((test) => test.video.id);
             const { deletedCount } = yield db.deleteMany({ patientId });
             if (deletedCount > 0)
-                return deletedCount;
+                return deletedVideoIds;
             return null;
         });
     }

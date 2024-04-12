@@ -7,7 +7,11 @@ import { CrossButton } from "../buttons/CrossButton";
 import { TestsViewButton } from "../buttons/TestsViewButton";
 import { PatientDataElement } from "../elements/PatientDataElement";
 import { Overlay } from "../other/Overlay";
-import { ACTUAL_USER_ENDPOINT, TEST_ENDPOINT } from "../../utils/constants";
+import {
+  ACTUAL_USER_ENDPOINT,
+  TEST_ENDPOINT,
+  VIDEO_ENDPOINT,
+} from "../../utils/constants";
 import { DeleteMenu } from "./DeleteMenu";
 import { DataService } from "../../services/DataService";
 import { getUserType } from "../../utils/helpers";
@@ -58,10 +62,15 @@ export function UserMenuView({
   const handleDelete = async () => {
     try {
       const data = await DataService.deleteData(endpoint);
-      if (isPatient)
-        await DataService.deleteData(
+      if (isPatient) {
+        const data = await DataService.deleteData(
           TEST_ENDPOINT + "patient/" + endpointParts[1]
         );
+        if (data)
+          data.forEach(async (id: string) => {
+            await DataService.deleteData(VIDEO_ENDPOINT + id);
+          });
+      }
       setUsers((prevState) =>
         prevState
           ? prevState.filter((dataDict) => dataDict._id !== data)

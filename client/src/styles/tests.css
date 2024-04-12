@@ -93,8 +93,32 @@
   height: 100%;
 }
 
-.empty-text {
-  font-size: xx-large;
+.loading {
+  color: var(--gray-letter);
+}
+
+.buttons-container > .loading {
+  align-self: center;
+}
+
+.loading::after {
+  content: "";
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    content: "";
+  }
+  30% {
+    content: ".";
+  }
+  60% {
+    content: "..";
+  }
+  90% {
+    content: "...";
+  }
 }
 
 @media screen and (width < 1000px) {

@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
 import { TestModel } from "../models/test";
-import { validateTest, validatePartialTest } from "../schemas/test";
+import { validateTest } from "../schemas/test";
 
 export class TestController {
   static async getAll(req: Request, res: Response) {
-    const { patientId, doctorId, typeId, date } = req.query;
+    const { patientId, doctorId, typeId, date, order } = req.query;
 
     const tests = await TestModel.getAll({
       patientId: patientId as string,
       typeId: typeId as string,
       doctorId: doctorId as string,
       date: date as string,
+      order: order as string,
     });
 
     res.json(tests);

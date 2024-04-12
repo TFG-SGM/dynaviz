@@ -24,10 +24,12 @@ export function AddTestForm({
     ...INITIAL_TEST,
     patientId: patient._id,
   });
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      setIsDisabled(true);
       const { doctorId, date, patientId, evaScale } = newData;
       const fetchPromises = Object.keys(newData.dataTests).map(
         async (dataKey) => {
@@ -47,11 +49,12 @@ export function AddTestForm({
           await DataService.createTestData(endpoint, completeTest);
         }
       );
-
       await Promise.all(fetchPromises);
       handleClean();
       setFeedback("Prueba(s) añadida(s) correctamente");
     } catch (e) {
+      console.log(e);
+      setIsDisabled(false);
       setFeedback("Error: Prueba(s) no añadida(s) correctamente");
     }
   };
@@ -67,11 +70,15 @@ export function AddTestForm({
         <form className="test-form" onSubmit={handleSubmit}>
           <TestForm data={newData} setNewData={setNewData}></TestForm>
           <div className="buttons-container">
-            <button className="add-button">Añadir</button>
+            {isDisabled && <p className="loading">Añadiendo pruebas</p>}
+            <button className="add-button" disabled={isDisabled}>
+              Añadir
+            </button>
             <button
               type="button"
               className="cancel-button"
               onClick={handleClean}
+              disabled={isDisabled}
             >
               Cancelar
             </button>
