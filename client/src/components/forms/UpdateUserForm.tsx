@@ -6,9 +6,9 @@ import { PatientData, UserData } from "../../utils/types";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
 import { PatientForm } from "./PatientForm";
-import { PATIENT_ENDPOINT } from "../../utils/constants";
 import { Overlay } from "../other/Overlay";
 import { getUserType } from "../../utils/helpers";
+import { toast } from "sonner";
 
 export interface UpdateFormProps {
   endpoint: string;
@@ -23,7 +23,7 @@ export function UpdateUserForm({
   handleCancel,
   handleUpdate,
 }: UpdateFormProps) {
-  const typeUser = endpoint.split("/")[0] + "/";
+  const userType = getUserType(endpoint.split("/")[0] + "/");
   const [newData, setNewData] = useData<UserData | PatientData>(endpoint);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,7 +36,9 @@ export function UpdateUserForm({
       );
       handleUpdate(data);
       handleCancel();
+      toast.success(`${userType} actualizado correctamente`);
     } catch (error) {
+      toast.error(`Error: ${userType} no actualizado correctamente`);
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);
     }
@@ -49,11 +51,11 @@ export function UpdateUserForm({
       <Overlay></Overlay>
       <dialog open>
         <div className="menu-title">
-          <h2>Editar {getUserType(typeUser)}</h2>
+          <h2>Editar {userType}</h2>
           <CrossButton handleClean={handleClean}></CrossButton>
         </div>
         <form onSubmit={handleSubmit}>
-          {typeUser === PATIENT_ENDPOINT ? (
+          {userType === "Paciente" ? (
             <PatientForm
               data={newData as PatientData}
               setNewData={setNewData}

@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
 import { DataService } from "../../services/DataService";
 import { ManyTestsData, UserData } from "../../utils/types";
 import { CrossButton } from "../buttons/CrossButton";
@@ -6,20 +6,15 @@ import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { TestForm } from "./TestForm";
 import { generateDataTest } from "../../utils/generateDataTest";
 import { Overlay } from "../other/Overlay";
+import { toast } from "sonner";
 
 export interface AddTestProps {
   endpoint: string;
   handleClean: () => void;
   patient: UserData;
-  setFeedback: Dispatch<SetStateAction<string | null>>;
 }
 
-export function AddTestForm({
-  endpoint,
-  handleClean,
-  patient,
-  setFeedback,
-}: AddTestProps) {
+export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   const [newData, setNewData] = useState<ManyTestsData>({
     ...INITIAL_TEST,
     patientId: patient._id,
@@ -51,11 +46,11 @@ export function AddTestForm({
       );
       await Promise.all(fetchPromises);
       handleClean();
-      setFeedback("Prueba(s) añadida(s) correctamente");
+      toast.success("Prueba(s) añadida(s) correctamente");
     } catch (e) {
       console.log(e);
       setIsDisabled(false);
-      setFeedback("Error: Prueba(s) no añadida(s) correctamente");
+      toast.error("Error: Prueba(s) no añadida(s) correctamente");
     }
   };
 

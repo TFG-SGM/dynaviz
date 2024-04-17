@@ -19,6 +19,10 @@ export function Heatmap({
   const option = {
     tooltip: {
       position: "top",
+      trigger: "none",
+      axisPointer: {
+        type: "cross",
+      },
     },
     animation: false,
     grid: {
@@ -43,6 +47,7 @@ export function Heatmap({
     },
     series: [
       {
+        name: "Correlación entre variaciones",
         type: "heatmap",
         data: TestService.getCorrelatedVariations(
           data.parts,

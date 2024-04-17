@@ -12,19 +12,18 @@ import {
 import { PatientForm } from "./PatientForm";
 import { Overlay } from "../other/Overlay";
 import { getUserType } from "../../utils/helpers";
+import { toast } from "sonner";
 
 export interface AddFormProps<T> {
   endpoint: string;
   handleClean: () => void;
   setUsers: Dispatch<SetStateAction<T[] | null>>;
-  setFeedback: Dispatch<SetStateAction<string | null>>;
 }
 
 export function AddUserForm<T>({
   endpoint,
   handleClean,
   setUsers,
-  setFeedback,
 }: AddFormProps<T>) {
   const [newData, setNewData] = useState<UserData | PatientData>(
     endpoint === PATIENT_ENDPOINT ? INITIAL_PATIENT : INITIAL_USER
@@ -43,11 +42,11 @@ export function AddUserForm<T>({
       );
       setUsers((prevState) => [...(prevState || []), data]);
       handleClean();
-      setFeedback(`${userType} añadido correctamente`);
+      toast.success(`${userType} añadido correctamente`);
     } catch (error) {
       setIsDisabled(false);
       console.log(error);
-      setFeedback(`Error: ${userType} no añadido correctamente.`);
+      toast.error(`Error: ${userType} no añadido correctamente`);
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);
     }

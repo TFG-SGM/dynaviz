@@ -23,9 +23,15 @@ export function BubbleChart({
     yAxis: {
       name: `Var. ${part2}`,
     },
-    tooltip: {},
+    tooltip: {
+      trigger: "none",
+      axisPointer: {
+        type: "cross",
+      },
+    },
     series: [
       {
+        name: "Correlación entre variaciones",
         data: TestService.getCorrelatedVariations(
           data.parts,
           axis,

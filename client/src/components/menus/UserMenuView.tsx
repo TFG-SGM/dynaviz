@@ -15,6 +15,7 @@ import {
 import { DeleteMenu } from "./DeleteMenu";
 import { DataService } from "../../services/DataService";
 import { getUserType } from "../../utils/helpers";
+import { toast } from "sonner";
 
 export interface UserMenuView {
   endpoint: string;
@@ -23,7 +24,6 @@ export interface UserMenuView {
   setUsers: Dispatch<SetStateAction<UserData[] | null>>;
   handleUpdateList: (data: UserData) => void;
   isPatient?: boolean;
-  setFeedback: Dispatch<SetStateAction<string | null>>;
 }
 
 export function UserMenuView({
@@ -33,7 +33,6 @@ export function UserMenuView({
   setUsers,
   handleUpdateList,
   isPatient = false,
-  setFeedback,
 }: UserMenuView) {
   const endpointParts = endpoint.split("/");
   const userType = getUserType(endpointParts[0] + "/");
@@ -50,13 +49,8 @@ export function UserMenuView({
   const handleCancelUpdate = () => setIsUpdate(false);
 
   const handleUpdate = (data: UserData) => {
-    try {
-      setUser(data);
-      handleUpdateList(data);
-      setFeedback("Usuario editado correctamente");
-    } catch (e) {
-      setFeedback("Error: Usuario no editado correctamente");
-    }
+    setUser(data);
+    handleUpdateList(data);
   };
 
   const handleDelete = async () => {
@@ -77,9 +71,9 @@ export function UserMenuView({
           : prevState
       );
       if (setActual) setActual({ action: "", userId: "" });
-      setFeedback(`${userType} eliminado correctamente`);
+      toast.success(`${userType} eliminado correctamente`);
     } catch (e) {
-      setFeedback(`Error: ${userType} no eliminado correctamente`);
+      toast.error(`Error: ${userType} no eliminado correctamente`);
     }
   };
 

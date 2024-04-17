@@ -17,6 +17,7 @@ export function BarChart({ data }: { data: TestSubData }) {
     },
     series: [
       {
+        name: "Restricción de movimiento",
         data: TestService.getBodyPartRestriction(data.parts),
         type: "bar",
       },

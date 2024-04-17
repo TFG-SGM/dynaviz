@@ -33,12 +33,12 @@ export function BoxPlot({
       {
         type: "boxplot",
         data: [TestService.getBoxPlotData(realMovements)],
-        name: "Real",
+        name: "Desplazamiento real",
       },
       {
         type: "boxplot",
         data: [TestService.getBoxPlotData(idealMovements)],
-        name: "Ideal",
+        name: "Desplazamiento ideal",
       },
     ],
     legend: {

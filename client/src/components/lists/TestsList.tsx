@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { AddTestForm } from "../forms/AddTestForm";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestCard } from "../cards/TestCard";
@@ -7,8 +7,7 @@ import { TestData, UserData } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 import { useFilters } from "../../hooks/useFilters";
 import { TestsFilters } from "../elements/TestsFilters";
-import { Feedback } from "../elements/Feedback";
-import { useFeedback } from "../../hooks/useFeedback";
+import { Toaster } from "sonner";
 
 export function TestsList({ patient }: { patient: UserData }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -22,7 +21,6 @@ export function TestsList({ patient }: { patient: UserData }) {
     TEST_ENDPOINT + "?patientId=" + patient._id + filtersText,
     isAdding
   );
-  const [feedback, setFeedback] = useFeedback();
   const navigate = useNavigate();
 
   const handleStartCreating = () => setIsAdding(true);
@@ -46,14 +44,12 @@ export function TestsList({ patient }: { patient: UserData }) {
 
   return (
     <>
-      {feedback && <Feedback feedback={feedback as string}></Feedback>}
-
+      <Toaster position="top-center" richColors></Toaster>
       {isAdding && (
         <AddTestForm
           endpoint={TEST_ENDPOINT}
           handleClean={handleClean}
           patient={patient}
-          setFeedback={setFeedback as Dispatch<SetStateAction<string | null>>}
         ></AddTestForm>
       )}
 

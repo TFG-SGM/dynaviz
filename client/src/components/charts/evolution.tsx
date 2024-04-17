@@ -23,7 +23,7 @@ export function EvolutionChart({
     const newRestrictions: { [key: string]: number[] } = {};
 
     if (actual.parts.length === 0) {
-      newRestrictions["Restricción Total"] = [];
+      newRestrictions["Restricción de movimiento total"] = [];
     } else {
       actual.parts.forEach((part: string) => {
         newRestrictions[part] = [];
@@ -33,7 +33,9 @@ export function EvolutionChart({
     tests.forEach((test) => {
       if (test.data) {
         if (actual.parts.length === 0)
-          newRestrictions["Restricción Total"].push(test.data.restriction);
+          newRestrictions["Restricción de movimiento total"].push(
+            test.data.restriction
+          );
         else if (test.data.parts) {
           Object.keys(test.data.parts).forEach((part) => {
             if (part in newRestrictions)
@@ -59,7 +61,7 @@ export function EvolutionChart({
           data: newRestrictions[key],
           type: actual.chart,
           name: key,
-          stack: "Restricción Total",
+          stack: "Restricción de movimiento total",
           areaStyle: actual.parts.length !== 0 ? {} : undefined,
         };
       }
@@ -78,7 +80,7 @@ export function EvolutionChart({
       data: data.dates,
     },
     yAxis: {
-      name: "Restricción",
+      name: "Restricción de movimiento",
       type: "value",
     },
     series: data.restrictionSeries,

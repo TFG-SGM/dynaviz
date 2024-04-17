@@ -32,6 +32,7 @@ export function Histogram({
     tooltip: {},
     series: [
       {
+        name: "Número de variación",
         data: TestService.getVariationsCount(
           data.parts,
           axis,

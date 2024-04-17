@@ -1,14 +1,12 @@
 import { ReactMediaRecorder } from "react-media-recorder";
 import { PreviewVideoView } from "./PreviewVideoView";
 import { Overlay } from "../other/Overlay";
-import { Dispatch, SetStateAction } from "react";
+import { toast } from "sonner";
 
 export function RecordVideoView({
   handleChangeRecordingState,
-  setFeedback,
 }: {
   handleChangeRecordingState: () => void;
-  setFeedback: Dispatch<SetStateAction<string | null>>;
 }) {
   const downloadVideo = (url: string | null) => {
     if (!url) return;
@@ -16,9 +14,8 @@ export function RecordVideoView({
     anchor.href = url;
     anchor.download = "video.mp4";
     anchor.click();
-    setFeedback(
-      "Vídeo guardado correctamente. Seleccione el vídeo recién guardado."
-    );
+    toast.success("Vídeo guardado correctamente ");
+    toast.info("Seleccione el vídeo recién guardado");
     handleChangeRecordingState();
   };
   return (

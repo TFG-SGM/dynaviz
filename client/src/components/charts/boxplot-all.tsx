@@ -14,7 +14,7 @@ export function BoxPlotAll({
     return {
       type: "boxplot",
       data: [TestService.getBoxPlotData(data.parts[part][axis].variations)],
-      name: part,
+      name: `Variación de ${part.toLowerCase()}`,
     };
   });
 

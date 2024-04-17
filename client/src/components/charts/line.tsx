@@ -26,12 +26,12 @@ export function LineChart({
     },
     series: [
       {
-        name: "Real",
+        name: "Desplazamiento real",
         data: TestService.getRealMovements(data.parts, axis, part),
         type: "line",
       },
       {
-        name: "Ideal",
+        name: "Desplazamiento ideal",
         data: TestService.getIdealMovements(data.parts, axis, part),
         type: "line",
       },
