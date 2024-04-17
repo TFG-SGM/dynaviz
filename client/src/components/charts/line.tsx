@@ -16,7 +16,7 @@ export function LineChart({
 
   const option = {
     xAxis: {
-      name: "Segundos en vídeo",
+      name: "Segundos de vídeo",
       type: "category",
       data: data.time,
     },

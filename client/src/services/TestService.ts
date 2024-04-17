@@ -67,7 +67,7 @@ export class TestService {
   }
 
   public static getBoxPlotData(movements: number[]) {
-    const sortedData = movements.sort((a, b) => a - b);
+    const sortedData = [...movements].sort((a, b) => a - b);
 
     const min = sortedData[0];
     const q1 = this.findQuartile(sortedData, 0.25);
