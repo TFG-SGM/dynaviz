@@ -20,7 +20,7 @@ export type PatientData = {
   city: string;
   email: string;
   phone: string;
-  activityLevel: number;
+  activityLevel: string;
   occupation: string;
   diagnosisYears: number;
   isFibro: boolean;
@@ -34,8 +34,11 @@ export type userActual = {
   userId: string | null;
 };
 
+export type axisData = "xAxis" | "yAxis";
+
 export type testActual = {
   chart: string;
+  axis: axisData;
   part1: string;
   part2: string;
 };
@@ -47,9 +50,16 @@ export type evolutionActual = {
 
 export interface TestPartsData {
   [key: string]: {
-    idealMovement: number[];
-    realMovement: number[];
-    variations: number[];
+    xAxis: {
+      idealMovement: number[];
+      realMovement: number[];
+      variations: number[];
+    };
+    yAxis: {
+      idealMovement: number[];
+      realMovement: number[];
+      variations: number[];
+    };
     restriction: number;
   };
 }

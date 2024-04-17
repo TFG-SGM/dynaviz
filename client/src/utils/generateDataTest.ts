@@ -21,18 +21,24 @@ export function generateDataTest(bodyParts: string[]) {
 }
 
 function generateParts(videoLength: number) {
+  return {
+    xAxis: generateAxis(videoLength),
+    yAxis: generateAxis(videoLength),
+    restriction: generateRandomRestriction(),
+  };
+}
+
+function generateAxis(videoLength: number) {
   const idealMovement = generateMovements(videoLength);
   const realMovement = generateMovements(videoLength);
   const variations = idealMovement.map((move, index) =>
     Math.abs(move - realMovement[index])
   );
-  const restriction = generateRandomRestriction();
 
   return {
     idealMovement,
     realMovement,
     variations,
-    restriction,
   };
 }
 

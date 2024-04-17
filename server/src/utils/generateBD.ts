@@ -38,7 +38,7 @@ async function createAdmin() {
     age: faker.number.int({ min: 18, max: 100 }),
     city: faker.location.city(),
     email: faker.internet.email(),
-    phone: faker.number.int({ min: 100000000, max: 999999999 }),
+    phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
   };
 
   admin.password = await AuthController.hashPassword(admin.password);
@@ -54,7 +54,7 @@ async function createDoctor() {
     age: faker.number.int({ min: 18, max: 100 }),
     city: faker.location.city(),
     email: faker.internet.email(),
-    phone: faker.number.int({ min: 100000000, max: 999999999 }),
+    phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
   };
 
   doctor.password = await AuthController.hashPassword(doctor.password);
@@ -64,6 +64,12 @@ async function createDoctor() {
 }
 
 async function createPatient(doctorId: string) {
+  const activityLevels = ["leve", "moderado", "activo"];
+  const randomIndex = faker.number.int({
+    min: 0,
+    max: activityLevels.length - 1,
+  });
+
   const patient = {
     name: faker.person.firstName(),
     surname: faker.person.lastName(),
@@ -71,10 +77,10 @@ async function createPatient(doctorId: string) {
     age: faker.number.int({ min: 18, max: 100 }),
     city: faker.location.city(),
     email: faker.internet.email(),
-    phone: faker.number.int({ min: 100000000, max: 999999999 }),
+    phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
     weight: faker.number.float({ fractionDigits: 2, min: 50, max: 130 }),
     height: faker.number.float({ fractionDigits: 2, min: 150, max: 210 }),
-    activityLevel: faker.number.int({ min: 1, max: 5 }),
+    activityLevel: activityLevels[randomIndex],
     isFibro: false,
     diagnosisYears: faker.number.int({ min: 0, max: 50 }),
     occupation: faker.person.jobTitle(),

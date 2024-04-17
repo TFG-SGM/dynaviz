@@ -2,12 +2,12 @@ import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 import { ManyTestsData, TestTypeData, UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
-import { SelectType } from "../selects/SelectType";
 import { RecordVideoView } from "../elements/RecordVideoView";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { NewTest } from "./NewTest";
 import { Feedback } from "../elements/Feedback";
 import { useFeedback } from "../../hooks/useFeedback";
+import { SelectDoctor } from "../selects/SelectDoctor";
 
 export interface TestFormProps {
   data: ManyTestsData | null;
@@ -108,13 +108,12 @@ export function TestForm({ data, setNewData }: TestFormProps) {
       {feedback && <Feedback feedback={feedback as string}></Feedback>}
       <label>
         Médico{" "}
-        <SelectType
-          label="médico"
+        <SelectDoctor
           option={"doctorId"}
           value={data.doctorId}
           endpoint={DOCTOR_ENDPOINT}
           handleChange={handleChange}
-        ></SelectType>
+        ></SelectDoctor>
       </label>
       <label>
         Fecha{" "}

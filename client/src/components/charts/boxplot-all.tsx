@@ -1,13 +1,19 @@
 import ReactECharts from "echarts-for-react";
-import { TestSubData } from "../../utils/types";
+import { TestSubData, axisData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 import { TestService } from "../../services/TestService";
 
-export function BoxPlotAll({ data }: { data: TestSubData }) {
+export function BoxPlotAll({
+  data,
+  axis,
+}: {
+  data: TestSubData;
+  axis: axisData;
+}) {
   const variations = Object.keys(data.parts).map((part) => {
     return {
       type: "boxplot",
-      data: [TestService.getBoxPlotData(data.parts[part].variations)],
+      data: [TestService.getBoxPlotData(data.parts[part][axis].variations)],
       name: part,
     };
   });
@@ -26,9 +32,8 @@ export function BoxPlotAll({ data }: { data: TestSubData }) {
     },
     series: variations,
     legend: {
-      orient: "vertical",
-      right: 10,
-      top: "center",
+      top: "bottom",
+      orient: "horizontal",
     },
   };
 

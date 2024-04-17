@@ -31,7 +31,7 @@ export const INITIAL_PATIENT = {
   phone: "",
   weight: 0,
   height: 0,
-  activityLevel: 3,
+  activityLevel: "",
   occupation: "",
   diagnosisYears: 0,
   isFibro: false,

@@ -10,7 +10,7 @@ export interface User {
   age: number;
   city: string;
   email: string;
-  phone: number;
+  phone: string;
 }
 
 export interface PartialUser {
@@ -20,7 +20,7 @@ export interface PartialUser {
   age?: number | undefined;
   city?: string | undefined;
   email?: string | undefined;
-  phone?: number | undefined;
+  phone?: string | undefined;
 }
 
 export interface Patient {
@@ -29,11 +29,11 @@ export interface Patient {
   age: number;
   city: string;
   email: string;
-  phone: number;
+  phone: string;
   weight: number;
   height: number;
   occupation: string;
-  activityLevel: number;
+  activityLevel: string;
   diagnosisYears: number;
   isFibro: boolean;
   doctorId: string;
@@ -45,11 +45,11 @@ export interface PartialPatient {
   age?: number | undefined;
   city?: string | undefined;
   email?: string | undefined;
-  phone?: number | undefined;
+  phone?: string | undefined;
   weight?: number | undefined;
   height?: number | undefined;
   occupation?: string | undefined;
-  activityLevel?: number | undefined;
+  activityLevel?: string | undefined;
   diagnosisYears?: number | undefined;
   isFibro?: boolean | undefined;
   doctorId?: string | undefined;

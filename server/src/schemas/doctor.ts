@@ -8,7 +8,7 @@ const DoctorSchema = z.object({
   age: z.number(),
   city: z.string(),
   email: z.string(),
-  phone: z.number(),
+  phone: z.string(),
 });
 
 export function validateDoctor(input: User) {

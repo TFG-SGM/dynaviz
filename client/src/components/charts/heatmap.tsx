@@ -1,14 +1,16 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
-import { TestSubData } from "../../utils/types";
+import { TestSubData, axisData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
 export function Heatmap({
   data,
+  axis,
   part1,
   part2,
 }: {
   data: TestSubData;
+  axis: axisData;
   part1: string;
   part2: string;
 }) {
@@ -42,7 +44,12 @@ export function Heatmap({
     series: [
       {
         type: "heatmap",
-        data: TestService.getCorrelatedVariations(data.parts, part1, part2),
+        data: TestService.getCorrelatedVariations(
+          data.parts,
+          axis,
+          part1,
+          part2
+        ),
       },
     ],
   };

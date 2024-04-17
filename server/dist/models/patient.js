@@ -34,7 +34,7 @@ class PatientModel {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             const numericId = yield (0, helpers_1.generateNumericId)("patients");
-            const formattedId = numericId.toString().padStart(8, "0") + "P";
+            const formattedId = numericId.toString().padStart(4, "0") + "P";
             const userWithId = Object.assign(Object.assign({}, input), { uId: formattedId });
             const { insertedId } = yield db.insertOne(userWithId);
             return Object.assign({ id: insertedId }, userWithId);

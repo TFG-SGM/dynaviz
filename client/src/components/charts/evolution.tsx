@@ -23,7 +23,7 @@ export function EvolutionChart({
     const newRestrictions: { [key: string]: number[] } = {};
 
     if (actual.parts.length === 0) {
-      newRestrictions["total"] = [];
+      newRestrictions["Restricción Total"] = [];
     } else {
       actual.parts.forEach((part: string) => {
         newRestrictions[part] = [];
@@ -33,7 +33,7 @@ export function EvolutionChart({
     tests.forEach((test) => {
       if (test.data) {
         if (actual.parts.length === 0)
-          newRestrictions["total"].push(test.data.restriction);
+          newRestrictions["Restricción Total"].push(test.data.restriction);
         else if (test.data.parts) {
           Object.keys(test.data.parts).forEach((part) => {
             if (part in newRestrictions)
@@ -48,13 +48,21 @@ export function EvolutionChart({
     });
 
     const restrictionSeries = Object.keys(newRestrictions).map((key) => {
-      return {
-        data: newRestrictions[key],
-        type: actual.chart,
-        name: key,
-        stack: "Total",
-        areaStyle: actual.parts.length !== 0 ? {} : undefined,
-      };
+      if (actual.chart === "line") {
+        return {
+          data: newRestrictions[key],
+          type: actual.chart,
+          name: key,
+        };
+      } else {
+        return {
+          data: newRestrictions[key],
+          type: actual.chart,
+          name: key,
+          stack: "Restricción Total",
+          areaStyle: actual.parts.length !== 0 ? {} : undefined,
+        };
+      }
     });
 
     setData({
@@ -65,10 +73,12 @@ export function EvolutionChart({
 
   const option = {
     xAxis: {
+      name: "Fecha",
       type: "category",
       data: data.dates,
     },
     yAxis: {
+      name: "Restricción",
       type: "value",
     },
     series: data.restrictionSeries,

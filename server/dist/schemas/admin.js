@@ -12,7 +12,7 @@ const adminSchema = zod_1.default.object({
     age: zod_1.default.number(),
     city: zod_1.default.string(),
     email: zod_1.default.string(),
-    phone: zod_1.default.number(),
+    phone: zod_1.default.string(),
 });
 function validateAdmin(input) {
     return adminSchema.safeParse(input);

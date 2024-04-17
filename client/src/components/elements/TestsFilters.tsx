@@ -2,6 +2,7 @@ import { ChangeEvent } from "react";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { SelectDate } from "../selects/SelectDate";
 import { SelectType } from "../selects/SelectType";
+import { SelectDoctor } from "../selects/SelectDoctor";
 
 interface TestFiltersProps {
   patientId: string;
@@ -29,14 +30,13 @@ export function TestsFilters({
         handleChange={handleChange}
         isAdding={isAdding}
       ></SelectType>
-      <SelectType
-        label="médico"
+      <SelectDoctor
         option={"doctorId"}
         value={filters.doctorId}
         endpoint={DOCTOR_ENDPOINT}
         handleChange={handleChange}
         isAdding={isAdding}
-      ></SelectType>
+      ></SelectDoctor>
       <SelectDate
         patientId={patientId}
         filters={filters}

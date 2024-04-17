@@ -1,7 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
-
 export interface UserFormProps<T> {
   data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
@@ -22,7 +21,7 @@ export function UserForm<T>({
       if (!prevState) return prevState;
       return {
         ...prevState,
-        [name]: name === "phone" || name === "age" ? parseInt(value) : value,
+        [name]: name === "age" ? parseInt(value) : value,
       };
     });
   };
@@ -58,6 +57,7 @@ export function UserForm<T>({
           type="number"
           value={data.age}
           onChange={handleChange}
+          min="0"
           required
         ></input>
       </label>

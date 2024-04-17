@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from "react";
 import { useData } from "../../hooks/useData";
-import { TestTypeData } from "../../utils/types";
+import { UserData } from "../../utils/types";
 
 interface SelectTypeProps {
   option: string;
@@ -10,23 +10,23 @@ interface SelectTypeProps {
   isAdding?: boolean;
 }
 
-export function SelectType({
+export function SelectDoctor({
   option,
   value,
   endpoint,
   handleChange,
   isAdding,
 }: SelectTypeProps) {
-  const [testTypes] = useData<TestTypeData[]>(endpoint, isAdding);
+  const [doctors] = useData<UserData[]>(endpoint, isAdding);
 
-  if (!testTypes) return;
+  if (!doctors) return;
 
   return (
     <select name={option} value={value} onChange={handleChange} required>
-      <option value="">Selecciona un tipo</option>
-      {testTypes.map((element, index) => (
+      <option value="">Selecciona un médico</option>
+      {doctors.map((element, index) => (
         <option key={index} value={element._id}>
-          {element.name}
+          {element.name} {element.surname}
         </option>
       ))}
     </select>

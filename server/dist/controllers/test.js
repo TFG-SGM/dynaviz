@@ -15,12 +15,13 @@ const test_2 = require("../schemas/test");
 class TestController {
     static getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { patientId, doctorId, typeId, date } = req.query;
+            const { patientId, doctorId, typeId, date, order } = req.query;
             const tests = yield test_1.TestModel.getAll({
                 patientId: patientId,
                 typeId: typeId,
                 doctorId: doctorId,
                 date: date,
+                order: order,
             });
             res.json(tests);
         });

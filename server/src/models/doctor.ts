@@ -23,7 +23,7 @@ export class DoctorModel {
     const db = await connectToMongoDB("doctors");
 
     const numericId = await generateNumericId("doctors");
-    const formattedId = numericId.toString().padStart(8, "0") + "M";
+    const formattedId = numericId.toString().padStart(4, "0") + "M";
     const userWithId = { ...input, uId: formattedId };
 
     const { insertedId } = await db.insertOne(userWithId);

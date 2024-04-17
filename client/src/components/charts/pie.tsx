@@ -10,6 +10,7 @@ export function PieChart({ type, data }: { type: string; data: TestSubData }) {
     tooltip: {},
     series: [
       {
+        name: "Restricción de movimiento",
         data: bodyParts.map((part, index) => {
           return { name: part, value: values[index], color: "#111" };
         }),

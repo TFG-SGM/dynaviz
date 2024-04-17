@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { PatientData } from "../../utils/types";
-import { SelectType } from "../selects/SelectType";
 import { DOCTOR_ENDPOINT } from "../../utils/constants";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { ErrorComponent } from "../other/ErrorComponent";
+import { SelectDoctor } from "../selects/SelectDoctor";
 
 export interface PatientFormProps<T> {
   data: PatientData | null;
@@ -29,10 +29,7 @@ export function PatientForm<T>({
       return {
         ...prevState,
         [name]:
-          name === "phone" ||
-          name === "activityLevel" ||
-          name === "diagnosisYears" ||
-          name === "age"
+          name === "diagnosisYears" || name === "age"
             ? parseInt(value)
             : name === "isFibro"
             ? checked
@@ -74,6 +71,8 @@ export function PatientForm<T>({
           type="number"
           value={data.age}
           onChange={handleChange}
+          min="0"
+          max="150"
           required
         ></input>
       </label>
@@ -115,6 +114,7 @@ export function PatientForm<T>({
           type="number"
           value={data.weight}
           onChange={handleChange}
+          min="0"
           required
         ></input>
       </label>
@@ -125,6 +125,7 @@ export function PatientForm<T>({
           type="number"
           value={data.height}
           onChange={handleChange}
+          min="0"
           required
         ></input>
       </label>
@@ -140,24 +141,16 @@ export function PatientForm<T>({
       </label>
       <label>
         Nivel de actividad física
-        <input
+        <select
           name="activityLevel"
-          type="range"
           value={data.activityLevel}
           onChange={handleChange}
-          min={1}
-          max={5}
           required
-        ></input>
-        <p>
-          {" "}
-          {data.activityLevel < 3
-            ? "😞"
-            : data.activityLevel > 3
-            ? "😀"
-            : "😐"}{" "}
-          {data.activityLevel}
-        </p>
+        >
+          <option value="leve">Leve</option>
+          <option value="moderado">Moderado</option>
+          <option value="activo">Activo</option>
+        </select>
       </label>
       <label>
         Años con diagnostico{" "}
@@ -182,13 +175,12 @@ export function PatientForm<T>({
       </label>
       <label>
         Médico{" "}
-        <SelectType
-          label="médico"
+        <SelectDoctor
           option="doctorId"
           value={data.doctorId}
           endpoint={DOCTOR_ENDPOINT}
           handleChange={handleChange}
-        ></SelectType>
+        ></SelectDoctor>
       </label>
     </>
   );

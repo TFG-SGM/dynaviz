@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useData } from "../../hooks/useData";
-import { TestData, testActual } from "../../utils/types";
+import { TestData, axisData, testActual } from "../../utils/types";
 import { TEST_ENDPOINT } from "../../utils/constants";
 import { TestButtons } from "../buttons/TestButtons";
 import {
+  ChangeEvent,
   Dispatch,
   MouseEventHandler,
   SetStateAction,
@@ -19,6 +20,7 @@ export function TestContainer() {
   const [test] = useData<TestData>(TEST_ENDPOINT + testId);
   const [actual, setActual] = useState<testActual>({
     chart: "line",
+    axis: "xAxis",
     part1: "",
     part2: "",
   });
@@ -57,7 +59,19 @@ export function TestContainer() {
     firstBodyPartButton?.classList.add(`active-part1`);
     secondBodyPartButton?.classList.add(`active-part2`);
 
-    setActual(() => ({ chart: target.id, part1: "", part2: "" }));
+    setActual(() => ({
+      chart: target.id,
+      axis: "xAxis",
+      part1: "",
+      part2: "",
+    }));
+  };
+
+  const handleChangeAxis = (e: ChangeEvent<HTMLSelectElement>) => {
+    setActual((prevState) => ({
+      ...prevState,
+      axis: e.target.value as axisData,
+    }));
   };
 
   const handleChangePart1 = createButtonHandler("part1", setActual);
@@ -83,20 +97,31 @@ export function TestContainer() {
         )}
         <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
         <div className="body-parts-container">
-          {isParts1(actual.chart) && (
+          {isAxisChart(actual.chart) && (
+            <label>
+              Selecciona un eje:{" "}
+              <select value={actual.axis} onChange={handleChangeAxis}>
+                <option value="xAxis">Eje x</option>
+                <option value="yAxis">Eje y</option>
+              </select>
+            </label>
+          )}
+
+          {isBodyPartsChart(actual.chart) && (
             <>
-              {isParts2(actual.chart) ? (
+              {isCorrelationChart(actual.chart) ? (
                 <p>Selecciona dos partes del cuerpo:</p>
               ) : (
                 <p>Selecciona una parte del cuerpo:</p>
               )}
+
               <div>
                 <BodyPartsButtons
                   parts={test.data.parts}
                   handleChangePart={handleChangePart1}
                 ></BodyPartsButtons>
 
-                {isParts2(actual.chart) && (
+                {isCorrelationChart(actual.chart) && (
                   <BodyPartsButtons
                     parts={test.data.parts}
                     isPart2={true}
@@ -115,7 +140,18 @@ export function TestContainer() {
   );
 }
 
-function isParts1(chart: string) {
+function isAxisChart(chart: string) {
+  return (
+    chart === "line" ||
+    chart === "histogram" ||
+    chart === "boxplot1" ||
+    chart === "boxplot2" ||
+    chart === "bubble" ||
+    chart == "heatmap"
+  );
+}
+
+function isBodyPartsChart(chart: string) {
   return (
     chart === "line" ||
     chart === "histogram" ||
@@ -125,7 +161,7 @@ function isParts1(chart: string) {
   );
 }
 
-function isParts2(chart: string) {
+function isCorrelationChart(chart: string) {
   return chart === "bubble" || chart == "heatmap";
 }
 

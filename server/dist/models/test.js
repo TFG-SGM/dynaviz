@@ -76,9 +76,10 @@ class TestModel {
             return attributes;
         });
     }
-    static getAll({ patientId, doctorId, typeId, date, }) {
+    static getAll({ patientId, doctorId, typeId, date, order, }) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
+            const dateOrder = order ? 1 : -1;
             const matchStage = {};
             if (patientId)
                 matchStage.patientId = patientId;
@@ -90,7 +91,7 @@ class TestModel {
                 matchStage.date = new Date(date);
             const aggregationPipeline = [
                 { $match: matchStage },
-                { $sort: { date: -1 } },
+                { $sort: { date: dateOrder } },
             ];
             const result = yield db.aggregate(aggregationPipeline).toArray();
             return result;

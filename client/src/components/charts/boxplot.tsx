@@ -1,13 +1,21 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
-import { TestSubData } from "../../utils/types";
+import { TestSubData, axisData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function BoxPlot({ data, part }: { data: TestSubData; part: string }) {
+export function BoxPlot({
+  data,
+  axis,
+  part,
+}: {
+  data: TestSubData;
+  axis: axisData;
+  part: string;
+}) {
   if (part === "") return;
 
-  const realMovements = TestService.getRealMovements(data.parts, part);
-  const idealMovements = TestService.getIdealMovements(data.parts, part);
+  const realMovements = TestService.getRealMovements(data.parts, axis, part);
+  const idealMovements = TestService.getIdealMovements(data.parts, axis, part);
 
   const option = {
     xAxis: {
@@ -34,9 +42,8 @@ export function BoxPlot({ data, part }: { data: TestSubData; part: string }) {
       },
     ],
     legend: {
-      orient: "vertical",
-      right: 10,
-      top: "center",
+      top: "bottom",
+      orient: "horizontal",
     },
   };
 

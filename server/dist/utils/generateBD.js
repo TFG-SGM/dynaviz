@@ -50,7 +50,7 @@ function createAdmin() {
             age: faker_1.faker.number.int({ min: 18, max: 100 }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),
-            phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }),
+            phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
         };
         admin.password = yield auth_1.AuthController.hashPassword(admin.password);
         yield admin_1.AdminModel.create({ input: admin });
@@ -65,7 +65,7 @@ function createDoctor() {
             age: faker_1.faker.number.int({ min: 18, max: 100 }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),
-            phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }),
+            phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
         };
         doctor.password = yield auth_1.AuthController.hashPassword(doctor.password);
         const newDoctor = yield doctor_1.DoctorModel.create({ input: doctor });
@@ -74,6 +74,11 @@ function createDoctor() {
 }
 function createPatient(doctorId) {
     return __awaiter(this, void 0, void 0, function* () {
+        const activityLevels = ["leve", "moderado", "activo"];
+        const randomIndex = faker_1.faker.number.int({
+            min: 0,
+            max: activityLevels.length - 1,
+        });
         const patient = {
             name: faker_1.faker.person.firstName(),
             surname: faker_1.faker.person.lastName(),
@@ -81,10 +86,10 @@ function createPatient(doctorId) {
             age: faker_1.faker.number.int({ min: 18, max: 100 }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),
-            phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }),
+            phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
             weight: faker_1.faker.number.float({ fractionDigits: 2, min: 50, max: 130 }),
             height: faker_1.faker.number.float({ fractionDigits: 2, min: 150, max: 210 }),
-            activityLevel: faker_1.faker.number.int({ min: 1, max: 5 }),
+            activityLevel: activityLevels[randomIndex],
             isFibro: false,
             diagnosisYears: faker_1.faker.number.int({ min: 0, max: 50 }),
             occupation: faker_1.faker.person.jobTitle(),

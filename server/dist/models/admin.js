@@ -33,7 +33,7 @@ class AdminModel {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield (0, connection_1.connectToMongoDB)("admins");
             const numericId = yield (0, helpers_1.generateNumericId)("admins");
-            const formattedId = numericId.toString().padStart(8, "0") + "A";
+            const formattedId = numericId.toString().padStart(4, "0") + "A";
             const userWithId = Object.assign(Object.assign({}, input), { uId: formattedId });
             const { insertedId } = yield db.insertOne(userWithId);
             return Object.assign({ id: insertedId }, userWithId);

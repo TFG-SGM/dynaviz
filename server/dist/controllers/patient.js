@@ -41,7 +41,7 @@ class PatientController {
             const isEmail = yield auth_1.AuthController.validateEmail(result.data.email);
             if (isEmail) {
                 return res.status(400).json({
-                    message: `El correo ya esta registrado.`,
+                    message: `El correo ya está registrado.`,
                 });
             }
             const newPatient = yield patient_1.PatientModel.create({ input: result.data });
@@ -63,7 +63,7 @@ class PatientController {
                 const isEmail = yield auth_1.AuthController.validateEmail(result.data.email);
                 if (isEmail) {
                     return res.status(400).json({
-                        message: `El correo ya esta registrado.`,
+                        message: `El correo ya está registrado.`,
                     });
                 }
             }

@@ -23,7 +23,7 @@ export class AdminModel {
     const db = await connectToMongoDB("admins");
 
     const numericId = await generateNumericId("admins");
-    const formattedId = numericId.toString().padStart(8, "0") + "A";
+    const formattedId = numericId.toString().padStart(4, "0") + "A";
     const userWithId = { ...input, uId: formattedId };
 
     const { insertedId } = await db.insertOne(userWithId);

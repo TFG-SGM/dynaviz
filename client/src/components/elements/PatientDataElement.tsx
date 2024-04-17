@@ -50,7 +50,7 @@ export function PatientDataElement({ user }: { user: PatientData }) {
         <strong>Altura:</strong> {height}
       </p>
       <p>
-        <strong>Actividad física:</strong> {activityLevel} / 5
+        <strong>Actividad física:</strong> {activityLevel}
       </p>
       <p>
         <strong>Ocupación:</strong> {occupation}

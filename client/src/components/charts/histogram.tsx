@@ -1,12 +1,24 @@
 import ReactECharts from "echarts-for-react";
 import { TestService } from "../../services/TestService";
-import { TestSubData } from "../../utils/types";
+import { TestSubData, axisData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function Histogram({ data, part }: { data: TestSubData; part: string }) {
+export function Histogram({
+  data,
+  axis,
+  part,
+}: {
+  data: TestSubData;
+  axis: axisData;
+  part: string;
+}) {
   if (part === "") return;
 
-  const uniqueVariations = TestService.getUniqueVariations(data.parts, part);
+  const uniqueVariations = TestService.getUniqueVariations(
+    data.parts,
+    axis,
+    part
+  );
   const option = {
     xAxis: {
       name: "Variación",
@@ -14,7 +26,7 @@ export function Histogram({ data, part }: { data: TestSubData; part: string }) {
       data: uniqueVariations,
     },
     yAxis: {
-      name: "Número",
+      name: "Número de veces",
       type: "value",
     },
     tooltip: {},
@@ -22,6 +34,7 @@ export function Histogram({ data, part }: { data: TestSubData; part: string }) {
       {
         data: TestService.getVariationsCount(
           data.parts,
+          axis,
           part,
           uniqueVariations
         ),

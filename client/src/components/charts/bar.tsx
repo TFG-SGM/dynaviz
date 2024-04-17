@@ -6,6 +6,7 @@ import { CHART_HEIGHT } from "../../utils/constants";
 export function BarChart({ data }: { data: TestSubData }) {
   const option = {
     xAxis: {
+      name: "Partes del cuerpo",
       type: "category",
       data: TestService.getBodyParts(data.parts),
       colorBy: "values",

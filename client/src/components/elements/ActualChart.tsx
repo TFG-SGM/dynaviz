@@ -15,10 +15,10 @@ interface ActualChartProps {
 }
 
 export function ActualChart({ actual, data }: ActualChartProps) {
-  const { chart, part1, part2 } = actual;
+  const { chart, axis, part1, part2 } = actual;
   switch (chart) {
     case "line":
-      return <LineChart data={data} part={part1} />;
+      return <LineChart data={data} axis={axis} part={part1} />;
     case "bar":
       return <BarChart data={data} />;
     case "radar":
@@ -28,17 +28,24 @@ export function ActualChart({ actual, data }: ActualChartProps) {
     case "treemap":
       return <PieChart type="treemap" data={data} />;
     case "histogram":
-      return <Histogram data={data} part={part1}></Histogram>;
+      return <Histogram data={data} axis={axis} part={part1}></Histogram>;
     case "boxplot1":
-      return <BoxPlot data={data} part={part1}></BoxPlot>;
+      return <BoxPlot data={data} axis={axis} part={part1}></BoxPlot>;
     case "boxplot2":
-      return <BoxPlotAll data={data}></BoxPlotAll>;
+      return <BoxPlotAll data={data} axis={axis}></BoxPlotAll>;
     case "bubble":
       return (
-        <BubbleChart data={data} part1={part1} part2={part2}></BubbleChart>
+        <BubbleChart
+          data={data}
+          axis={axis}
+          part1={part1}
+          part2={part2}
+        ></BubbleChart>
       );
     case "heatmap":
-      return <Heatmap data={data} part1={part1} part2={part2}></Heatmap>;
+      return (
+        <Heatmap data={data} axis={axis} part1={part1} part2={part2}></Heatmap>
+      );
     default:
       return;
   }

@@ -38,7 +38,7 @@ class DoctorController {
             const isEmail = yield auth_1.AuthController.validateEmail(result.data.email);
             if (isEmail) {
                 return res.status(400).json({
-                    message: `El correo ya esta registrado.`,
+                    message: `El correo ya está registrado.`,
                 });
             }
             result.data.password = yield auth_1.AuthController.hashPassword(result.data.password);
@@ -61,7 +61,7 @@ class DoctorController {
                 const isEmail = yield auth_1.AuthController.validateEmail(result.data.email);
                 if (isEmail) {
                     return res.status(400).json({
-                        message: `El correo ya esta registrado.`,
+                        message: `El correo ya está registrado.`,
                     });
                 }
             }

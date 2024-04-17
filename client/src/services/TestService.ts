@@ -1,12 +1,20 @@
-import { TestPartsData } from "../utils/types";
+import { TestPartsData, axisData } from "../utils/types";
 
 export class TestService {
-  public static getRealMovements(parts: TestPartsData, actualPart: string) {
-    return parts[actualPart].realMovement;
+  public static getRealMovements(
+    parts: TestPartsData,
+    axis: axisData,
+    actualPart: string
+  ) {
+    return parts[actualPart][axis].realMovement;
   }
 
-  public static getIdealMovements(parts: TestPartsData, actualPart: string) {
-    return parts[actualPart].idealMovement;
+  public static getIdealMovements(
+    parts: TestPartsData,
+    axis: axisData,
+    actualPart: string
+  ) {
+    return parts[actualPart][axis].idealMovement;
   }
 
   public static getBodyParts(parts: TestPartsData) {
@@ -23,9 +31,13 @@ export class TestService {
     return Object.keys(parts).map((part) => parts[part].restriction);
   }
 
-  public static getUniqueVariations(parts: TestPartsData, actualPart: string) {
+  public static getUniqueVariations(
+    parts: TestPartsData,
+    axis: axisData,
+    actualPart: string
+  ) {
     const uniqueVariationsSet = new Set<number>();
-    for (const num of parts[actualPart].variations) {
+    for (const num of parts[actualPart][axis].variations) {
       uniqueVariationsSet.add(num);
     }
 
@@ -38,10 +50,11 @@ export class TestService {
 
   public static getVariationsCount(
     parts: TestPartsData,
+    axis: axisData,
     actualPart: string,
     uniqueVariations: number[]
   ) {
-    const variations = parts[actualPart].variations;
+    const variations = parts[actualPart][axis].variations;
 
     const countVariations = uniqueVariations.map((uniqueVariation) => {
       const count = variations.filter(
@@ -67,11 +80,12 @@ export class TestService {
 
   public static getCorrelatedVariations(
     parts: TestPartsData,
+    axis: axisData,
     part1: string,
     part2: string
   ) {
-    const variations1 = parts[part1].variations;
-    const variations2 = parts[part2].variations;
+    const variations1 = parts[part1][axis].variations;
+    const variations2 = parts[part2][axis].variations;
 
     const combine = variations1.map((variation, index) => [
       variation,
