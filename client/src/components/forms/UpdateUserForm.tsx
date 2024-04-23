@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, MouseEventHandler, useState } from "react";
 import { useData } from "../../hooks/useData";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
@@ -15,7 +15,7 @@ export interface UpdateFormProps {
   handleClean: () => void;
   handleCancel: () => void;
   handleUpdate: (data: UserData) => void;
-  isChangePass?: boolean;
+  handleChangePassForm?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export function UpdateUserForm({
@@ -23,7 +23,7 @@ export function UpdateUserForm({
   handleClean,
   handleCancel,
   handleUpdate,
-  isChangePass = false,
+  handleChangePassForm = undefined,
 }: UpdateFormProps) {
   const userType = getUserType(endpoint.split("/")[0] + "/");
   const [newData, setNewData] = useData<UserData | PatientData>(endpoint);
@@ -67,7 +67,7 @@ export function UpdateUserForm({
             <UserForm
               data={newData as UserData}
               setNewData={setNewData}
-              isChangePass={isChangePass}
+              handleChangePassForm={handleChangePassForm}
               error={error}
             ></UserForm>
           )}

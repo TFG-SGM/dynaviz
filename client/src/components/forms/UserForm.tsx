@@ -1,12 +1,16 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+} from "react";
 import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
-import { ChangePassForm } from "./ChangePassForm";
 export interface UserFormProps<T> {
   data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
   isPass?: boolean;
-  isChangePass?: boolean;
+  handleChangePassForm?: MouseEventHandler<HTMLButtonElement> | undefined;
   error: string | null;
 }
 
@@ -14,11 +18,9 @@ export function UserForm<T>({
   data,
   setNewData,
   isPass = false,
-  isChangePass = false,
+  handleChangePassForm = undefined,
   error,
 }: UserFormProps<T>) {
-  const [isChangePassForm, setIsChangePassForm] = useState(false);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -31,17 +33,10 @@ export function UserForm<T>({
     });
   };
 
-  const handleChangePassForm = () => setIsChangePassForm(!isChangePassForm);
-
   if (!data) return;
 
   return (
     <>
-      {isChangePassForm && (
-        <ChangePassForm
-          handleChangePassForm={handleChangePassForm}
-        ></ChangePassForm>
-      )}
       <label>
         Nombre{" "}
         <input
@@ -116,7 +111,7 @@ export function UserForm<T>({
           ></input>
         </label>
       )}
-      {isChangePass && (
+      {handleChangePassForm && (
         <button
           type="button"
           className="change-pass-button"

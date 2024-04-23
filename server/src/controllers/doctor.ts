@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { DoctorModel } from "../models/doctor";
 import { validateDoctor, validatePartialDoctor } from "../schemas/doctor";
 import { AuthController } from "./auth";
+import { validatePasswords } from "../schemas/passwords";
+import { compare } from "bcryptjs";
 
 export class DoctorController {
   static async getAll(req: Request, res: Response) {
@@ -62,6 +64,48 @@ export class DoctorController {
     }
 
     const updatedDoctor = await DoctorModel.update({ id, input: result.data });
+    return res.json(updatedDoctor);
+  }
+
+  static async updatePass(req: Request, res: Response) {
+    const result = validatePasswords(req.body);
+
+    if (!result.success) {
+      return res.status(400).json({ error: JSON.parse(result.error.message) });
+    }
+
+    const { id } = req.params;
+    const existingDoctor = await DoctorModel.getById({ id });
+
+    if (!existingDoctor) {
+      return res.status(404).json({ message: "Médico no encontrado" });
+    }
+
+    if (result.data.new1 !== result.data.new2) {
+      return res.status(404).json({ message: "Las contraseñas no coinciden" });
+    }
+
+    let isMatch = await compare(result.data.old, existingDoctor.password);
+
+    if (!isMatch) {
+      return res.status(404).json({ message: "Contraseña incorrecta" });
+    }
+
+    isMatch = await compare(result.data.new1, existingDoctor.password);
+
+    if (isMatch) {
+      return res
+        .status(404)
+        .json({ message: "La contraseña antigua y nueva son las mismas" });
+    }
+
+    const password = await AuthController.hashPassword(result.data.new1);
+
+    const updatedDoctor = await DoctorModel.update({
+      id,
+      input: { password },
+    });
+
     return res.json(updatedDoctor);
   }
 

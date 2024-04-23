@@ -16,5 +16,5 @@ export function validateDoctor(input: User) {
 }
 
 export function validatePartialDoctor(input: User) {
-  return DoctorSchema.partial().safeParse(input);
+  return DoctorSchema.omit({ password: true }).partial().safeParse(input);
 }

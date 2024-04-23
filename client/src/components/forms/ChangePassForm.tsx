@@ -1,8 +1,22 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Overlay } from "../other/Overlay";
+import { DataService } from "../../services/DataService";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
+import { ErrorComponent } from "../other/ErrorComponent";
+import { useEndpoint } from "../../hooks/useEndpoint";
 
-export function ChangePassForm({ handleChangePassForm }) {
+export function ChangePassForm({
+  id,
+  handleChangePassForm,
+}: {
+  id: string;
+  handleChangePassForm: () => void;
+}) {
   const [passwords, setPasswords] = useState({ old: "", new1: "", new2: "" });
+  const [error, setError] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [endpoint] = useEndpoint();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -16,7 +30,20 @@ export function ChangePassForm({ handleChangePassForm }) {
     });
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      setIsDisabled(true);
+      await DataService.updateData(endpoint + "password/" + id, passwords);
+      toast.success(`Contraseña cambiada correctamente`);
+      handleChangePassForm();
+    } catch (error) {
+      setIsDisabled(false);
+      toast.error(`Error: Contraseña no cambiada correctamente`);
+      if (error instanceof AxiosError && error.response)
+        setError(error.response.data.message);
+    }
+  };
 
   return (
     <>
@@ -25,7 +52,7 @@ export function ChangePassForm({ handleChangePassForm }) {
         <div className="menu-title">
           <h2>Cambio de contraseña</h2>
         </div>{" "}
-        <form>
+        <form onSubmit={handleSubmit} className="password-form">
           <label>
             Contraseña actual
             <input
@@ -56,15 +83,19 @@ export function ChangePassForm({ handleChangePassForm }) {
               required
             ></input>
           </label>
+          {error && <ErrorComponent error={error}></ErrorComponent>}
           <div className="buttons-container">
             <button
+              disabled={isDisabled}
               type="button"
               className="cancel-button"
               onClick={handleChangePassForm}
             >
               Cancelar
             </button>
-            <button>Cambiar</button>
+            <button disabled={isDisabled} type="submit">
+              Cambiar
+            </button>
           </div>
         </form>
       </dialog>

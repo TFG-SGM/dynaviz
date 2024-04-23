@@ -5,10 +5,12 @@ import { UserDataElement } from "../elements/UserDataElement";
 import { useData } from "../../hooks/useData";
 import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
+import { ChangePassForm } from "../forms/ChangePassForm";
 
 export function MyAccount({ handleClean }: { handleClean: () => void }) {
   const [user, setUser] = useData<UserData>("auth/user-data");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [isChangePassForm, setIsChangePassForm] = useState(false);
 
   const handleStartUpdate = () => setIsUpdate(true);
   const handleCancelUpdate = () => setIsUpdate(false);
@@ -17,17 +19,24 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
       return { ...prevState, ...data };
     });
 
+  const handleChangePassForm = () => setIsChangePassForm(!isChangePassForm);
+
   if (!user) return;
 
   return (
     <>
-      {isUpdate ? (
+      {isChangePassForm ? (
+        <ChangePassForm
+          id={user._id}
+          handleChangePassForm={handleChangePassForm}
+        ></ChangePassForm>
+      ) : isUpdate ? (
         <UpdateUserForm
           endpoint={user.role + "/" + user._id}
           handleClean={handleClean}
           handleCancel={handleCancelUpdate}
           handleUpdate={handleUpdate}
-          isChangePass={true}
+          handleChangePassForm={handleChangePassForm}
         ></UpdateUserForm>
       ) : (
         <>

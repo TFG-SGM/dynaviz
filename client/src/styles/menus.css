@@ -57,6 +57,11 @@
   flex-direction: row;
 }
 
+/*PASSWORDS*/
+.password-form {
+  grid-template-columns: 1fr;
+}
+
 input[type="checkbox"] {
   /* Add if not using autoprefixer */
   -webkit-appearance: none;

@@ -84,3 +84,9 @@ export interface PartialTestType {
   name?: string | undefined;
   bodyParts?: string[] | undefined;
 }
+
+export interface Password {
+  old: string;
+  new1: string;
+  new2: string;
+}

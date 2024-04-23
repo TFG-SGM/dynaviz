@@ -11,5 +11,8 @@ adminRouter.get("/", AdminController.getAll);
 adminRouter.post("/", AdminController.create);
 
 adminRouter.get("/:id", AdminController.getById);
+
 adminRouter.put("/:id", AdminController.update);
+adminRouter.put("/password/:id", AdminController.updatePass);
+
 adminRouter.delete("/:id", AdminController.delete);

@@ -55,8 +55,6 @@
 }
 
 .record-dialog video {
-  width: 90%;
-  height: 500px;
   border-radius: var(--radius);
   margin: 50px 0;
 }
@@ -76,10 +74,6 @@
     font-size: 0.8rem;
     width: 100%;
     padding: 5px;
-  }
-
-  .record-dialog video {
-    width: 100%;
   }
 
   .remove-new-test-button {

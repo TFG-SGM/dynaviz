@@ -75,6 +75,7 @@ export class DataService {
 
   public static async updateData<T>(endpoint: string, newData: T | null) {
     const token = await DataService.getToken();
+    console.log(URL + endpoint);
     const { data } = await axios.put(URL + endpoint, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
