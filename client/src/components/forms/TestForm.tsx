@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 import { ManyTestsData, TestTypeData, UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT, TEST_TYPE_ENDPOINT } from "../../utils/constants";
-import { RecordVideoView } from "../elements/RecordVideoView";
+import { RecordVideoView } from "../menus/RecordVideoView";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { NewTest } from "./NewTest";
 import { SelectDoctor } from "../selects/SelectDoctor";

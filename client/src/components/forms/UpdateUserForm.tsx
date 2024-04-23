@@ -15,6 +15,7 @@ export interface UpdateFormProps {
   handleClean: () => void;
   handleCancel: () => void;
   handleUpdate: (data: UserData) => void;
+  isChangePass?: boolean;
 }
 
 export function UpdateUserForm({
@@ -22,6 +23,7 @@ export function UpdateUserForm({
   handleClean,
   handleCancel,
   handleUpdate,
+  isChangePass = false,
 }: UpdateFormProps) {
   const userType = getUserType(endpoint.split("/")[0] + "/");
   const [newData, setNewData] = useData<UserData | PatientData>(endpoint);
@@ -65,6 +67,7 @@ export function UpdateUserForm({
             <UserForm
               data={newData as UserData}
               setNewData={setNewData}
+              isChangePass={isChangePass}
               error={error}
             ></UserForm>
           )}

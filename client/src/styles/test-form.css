@@ -27,7 +27,7 @@
 .remove-new-test-button {
   align-self: flex-end;
   background-color: var(--form-background);
-  margin-bottom: -50px;
+  margin-bottom: -40px;
   color: var(--red);
   font-size: x-large;
 }

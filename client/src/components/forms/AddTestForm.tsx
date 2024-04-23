@@ -7,6 +7,7 @@ import { TestForm } from "./TestForm";
 import { generateDataTest } from "../../utils/generateDataTest";
 import { Overlay } from "../other/Overlay";
 import { toast } from "sonner";
+import { LoadingComponent } from "../other/LoadingComponent";
 
 export interface AddTestProps {
   endpoint: string;
@@ -65,7 +66,9 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
         <form className="test-form" onSubmit={handleSubmit}>
           <TestForm data={newData} setNewData={setNewData}></TestForm>
           <div className="buttons-container">
-            {isDisabled && <p className="loading">Añadiendo pruebas</p>}
+            {isDisabled && (
+              <LoadingComponent message="Añadiendo pruebas"></LoadingComponent>
+            )}
             <button className="add-button" disabled={isDisabled}>
               Añadir
             </button>

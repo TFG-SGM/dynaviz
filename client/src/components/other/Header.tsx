@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DataService } from "../../services/DataService";
 import { useState } from "react";
 import { MyAccount } from "../menus/MyAccount";
@@ -36,36 +36,78 @@ export function Header() {
         )}
       <p className="location-text">
         <img src={DynaViz}></img>
-        <span>DynaViz</span>{" "}
+        <Link
+          className={actualUser?.role === "doctor" ? "no-link" : ""}
+          to={actualUser?.role === "doctor" ? "#" : "/app"}
+        >
+          DynaViz
+        </Link>
         {pathParts[2] && (
           <>
-            &#x276F; <span>{pathParts[2]}</span>
+            &#x276F;{" "}
+            <Link to={"/" + pathParts[1] + "/" + pathParts[2]}>
+              Lista de {pathParts[2]}
+            </Link>
           </>
         )}{" "}
         {pathParts[3] && (
           <>
-            &#x276F; <span>Pruebas</span>
+            &#x276F;{" "}
+            <Link
+              to={"/" + pathParts[1] + "/" + pathParts[2] + "/" + pathParts[3]}
+            >
+              Lista de pruebas
+            </Link>
           </>
         )}
         {pathParts[4] && pathParts[4] !== "evolucion" && (
           <>
-            &#x276F; <span>Prueba</span>
+            &#x276F;{" "}
+            <Link
+              to={
+                "/" +
+                pathParts[1] +
+                "/" +
+                pathParts[2] +
+                "/" +
+                pathParts[3] +
+                "/" +
+                pathParts[4]
+              }
+            >
+              Prueba
+            </Link>
           </>
         )}
         {pathParts[4] && pathParts[4] === "evolucion" && (
           <>
-            &#x276F; <span>Evolución</span>
+            &#x276F;{" "}
+            <Link
+              to={
+                "/" +
+                pathParts[1] +
+                "/" +
+                pathParts[2] +
+                "/" +
+                pathParts[3] +
+                "/" +
+                pathParts[4]
+              }
+            >
+              Evolución
+            </Link>
           </>
         )}
       </p>
-      <div>
-        <button className="account-button" onClick={handleMyAccount}>
-          <Account></Account>
-        </button>
-        <button className="logout-button" onClick={handleLogout}>
-          <Logout></Logout>
-        </button>
-      </div>
+      <p className="user-name">
+        {actualUser?.name + " " + actualUser?.surname}
+      </p>
+      <button className="account-button" onClick={handleMyAccount}>
+        <Account></Account>
+      </button>
+      <button className="logout-button" onClick={handleLogout}>
+        <Logout></Logout>
+      </button>
     </nav>
   );
 }

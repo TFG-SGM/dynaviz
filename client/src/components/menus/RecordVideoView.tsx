@@ -1,5 +1,5 @@
 import { ReactMediaRecorder } from "react-media-recorder";
-import { PreviewVideoView } from "./PreviewVideoView";
+import { PreviewVideoView } from "../elements/PreviewVideoView";
 import { Overlay } from "../other/Overlay";
 import { toast } from "sonner";
 

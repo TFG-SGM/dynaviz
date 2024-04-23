@@ -13,6 +13,7 @@ import { PatientForm } from "./PatientForm";
 import { Overlay } from "../other/Overlay";
 import { getUserType } from "../../utils/helpers";
 import { toast } from "sonner";
+import { LoadingComponent } from "../other/LoadingComponent";
 
 export interface AddFormProps<T> {
   endpoint: string;
@@ -76,7 +77,11 @@ export function AddUserForm<T>({
             ></UserForm>
           )}
           <div className="buttons-container">
-            {isDisabled && <p className="loading">Añadiendo {userType}</p>}
+            {isDisabled && (
+              <LoadingComponent
+                message={`Añadiendo ${userType}`}
+              ></LoadingComponent>
+            )}
             <button
               className="cancel-button"
               onClick={handleClean}

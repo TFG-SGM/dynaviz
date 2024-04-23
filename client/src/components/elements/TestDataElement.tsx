@@ -11,6 +11,7 @@ import {
   UserData,
 } from "../../utils/types";
 import { useVideo } from "../../hooks/useVideo";
+import { LoadingComponent } from "../other/LoadingComponent";
 
 export function TestDataElement({ test }: { test: TestData }) {
   const { doctorId, typeId, date, video, patientId, evaScale } = test;
@@ -48,7 +49,7 @@ export function TestDataElement({ test }: { test: TestData }) {
           <source src={URL.createObjectURL(videoBlob)} type="video/mp4" />
         </video>
       ) : (
-        <p className="loading">Cargando vídeo</p>
+        <LoadingComponent message="Cargando vídeo"></LoadingComponent>
       )}
     </>
   );

@@ -27,6 +27,7 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
           handleClean={handleClean}
           handleCancel={handleCancelUpdate}
           handleUpdate={handleUpdate}
+          isChangePass={true}
         ></UpdateUserForm>
       ) : (
         <>

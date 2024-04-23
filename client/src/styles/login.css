@@ -1,3 +1,14 @@
+.login-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-page > footer {
+  margin: auto auto 20px auto;
+  width: fit-content;
+}
+
 .login-container {
   margin: 10% auto;
   display: flex;
