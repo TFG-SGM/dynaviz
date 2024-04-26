@@ -1,20 +1,22 @@
 describe("Login as doctor", () => {
   it("Login as doctor", () => {
-    cy.visit("localhost:5173/");
+    cy.visit("http://localhost:5173/");
     cy.get("label").contains("Correo").type("doctor@gmail.com");
     cy.get("label").contains("Contraseña").type("doctor");
     cy.get("button").contains("Iniciar Sesión").click();
+
     cy.url().should("include", "http://localhost:5173/app/pacientes");
+    cy.get("h1").contains("Pacientes").should("be.visible");
+    cy.get("button").contains("Añadir Paciente").should("be.visible");
   });
 });
 
-describe("Manage patients", () => {
+describe("Manage patients as doctor", () => {
   beforeEach("Login as doctor", () => {
-    cy.visit("localhost:5173/");
+    cy.visit("http://localhost:5173/");
     cy.get("label").contains("Correo").type("doctor@gmail.com");
     cy.get("label").contains("Contraseña").type("doctor");
     cy.get("button").contains("Iniciar Sesión").click();
-    cy.url().should("include", "http://localhost:5173/app/pacientes");
   });
 
   it("Add new patient", () => {
@@ -34,7 +36,8 @@ describe("Manage patients", () => {
       .within(() => cy.get("select").select("activo"));
     cy.get("label").contains("Años con diagnostico").type("0");
     cy.get(".add-button").click();
-    cy.get("h2").last().contains("Sergio García Muñoz");
+
+    cy.get("h2").last().contains("Sergio García Muñoz").should("be.visible");
   });
 
   it("Add repetitive patient", () => {
@@ -54,20 +57,27 @@ describe("Manage patients", () => {
       .within(() => cy.get("select").select("activo"));
     cy.get("label").contains("Años con diagnostico").type("0");
     cy.get(".add-button").click();
-    cy.contains("El correo ya está registrado");
-    cy.contains("Error: Paciente no añadido correctamente");
+
+    cy.contains("El correo ya está registrado").should("be.visible");
+    cy.contains("Error: Paciente no añadido correctamente").should(
+      "be.visible"
+    );
   });
 
   it("Edit patient", () => {
     cy.get("h2").last().contains("Sergio García Muñoz").click();
     cy.get("button").contains("Editar").click();
-    cy.contains("Editar Paciente");
+
+    cy.contains("Editar Paciente").should("be.visible");
   });
 
   it("Consult tests of patient", () => {
     cy.get("h2").last().contains("Sergio García Muñoz").click();
     cy.get("button").contains("Pruebas").click();
-    cy.contains("Pruebas de Sergio");
+
+    cy.get("h1").contains("Pruebas de Sergio").should("be.visible");
+    cy.get("button").contains("Añadir Pruebas").should("be.visible");
+    cy.get("button").contains("Evolución de Paciente").should("be.visible");
   });
 
   it("Remove patient", () => {
@@ -75,6 +85,7 @@ describe("Manage patients", () => {
     cy.contains("Detalles de Paciente");
     cy.get("button").contains("Eliminar").click();
     cy.get("button").contains("Confirmar").click();
-    cy.contains("Paciente eliminado correctamente");
+
+    cy.contains("Paciente eliminado correctamente").should("be.visible");
   });
 });
