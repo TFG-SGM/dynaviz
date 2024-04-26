@@ -9,6 +9,7 @@ exports.doctorRouter = (0, express_1.Router)();
 exports.doctorRouter.get("/:id", doctor_1.DoctorController.getById);
 exports.doctorRouter.get("/", doctor_1.DoctorController.getAll);
 exports.doctorRouter.put("/:id", doctor_1.DoctorController.update);
+exports.doctorRouter.put("/password/:id", (0, checkRole_1.checkRole)(constants_1.DOCTOR_ROLE), doctor_1.DoctorController.updatePass);
 exports.doctorRouter.use((0, checkRole_1.checkRole)(constants_1.ADMIN_ROLE));
 exports.doctorRouter.post("/", doctor_1.DoctorController.create);
 exports.doctorRouter.delete("/:id", doctor_1.DoctorController.delete);

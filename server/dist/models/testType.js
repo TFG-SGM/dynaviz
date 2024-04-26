@@ -20,8 +20,8 @@ class TestTypeModel {
             return testTypes;
         });
     }
-    static getById({ id }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static getById(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id }) {
             const db = yield (0, connection_1.connectToMongoDB)("testTypes");
             const objectId = new mongodb_1.ObjectId(id);
             const testType = yield db.findOne({ _id: objectId });

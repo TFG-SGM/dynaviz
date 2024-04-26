@@ -13,23 +13,23 @@ exports.TestModel = void 0;
 const mongodb_1 = require("mongodb");
 const connection_1 = require("../utils/connection");
 class TestModel {
-    static getById({ id }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static getById(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const objectId = new mongodb_1.ObjectId(id);
             const test = yield db.findOne({ _id: objectId });
             return test;
         });
     }
-    static create({ input }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static create(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ input }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const { insertedId } = yield db.insertOne(input);
             return Object.assign({ id: insertedId }, input);
         });
     }
-    static update({ id, input }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static update(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id, input }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const objectId = new mongodb_1.ObjectId(id);
             const updatedTest = yield db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnDocument: "after" });
@@ -38,8 +38,8 @@ class TestModel {
             return null;
         });
     }
-    static delete({ id }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static delete(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const objectId = new mongodb_1.ObjectId(id);
             const { deletedCount } = yield db.deleteOne({ _id: objectId });
@@ -48,8 +48,8 @@ class TestModel {
             return null;
         });
     }
-    static deleteByPatient({ patientId }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static deleteByPatient(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ patientId }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const deletedTests = yield db.find({ patientId }).toArray();
             const deletedVideoIds = deletedTests.map((test) => test.video.id);
@@ -59,8 +59,8 @@ class TestModel {
             return null;
         });
     }
-    static getAttributes({ attribute, patientId, }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static getAttributes(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ attribute, patientId, }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const aggregationPipeline = [
                 { $match: { patientId: patientId } },
@@ -76,8 +76,8 @@ class TestModel {
             return attributes;
         });
     }
-    static getAll({ patientId, doctorId, typeId, date, order, }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static getAll(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ patientId, doctorId, typeId, date, order, }) {
             const db = yield (0, connection_1.connectToMongoDB)("tests");
             const dateOrder = order ? 1 : -1;
             const matchStage = {};

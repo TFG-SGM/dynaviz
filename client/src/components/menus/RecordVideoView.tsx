@@ -8,7 +8,7 @@ export function RecordVideoView({
 }: {
   handleChangeRecordingState: () => void;
 }) {
-  const downloadVideo = (url: string | null) => {
+  const downloadVideo = (url: string | undefined) => {
     if (!url) return;
     const anchor = document.createElement("a");
     anchor.href = url;
@@ -75,7 +75,7 @@ export function RecordVideoView({
                 {status === "stopped" ? (
                   <button
                     type="button"
-                    onClick={() => downloadVideo(mediaBlobUrl)}
+                    onClick={() => mediaBlobUrl && downloadVideo(mediaBlobUrl)}
                   >
                     Guardar Vídeo
                   </button>

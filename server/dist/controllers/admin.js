@@ -13,6 +13,8 @@ exports.AdminController = void 0;
 const admin_1 = require("../models/admin");
 const admin_2 = require("../schemas/admin");
 const auth_1 = require("./auth");
+const passwords_1 = require("../schemas/passwords");
+const bcryptjs_1 = require("bcryptjs");
 class AdminController {
     static getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -67,6 +69,38 @@ class AdminController {
             }
             const updatedAdmin = yield admin_1.AdminModel.update({ id, input: result.data });
             return res.json(updatedAdmin);
+        });
+    }
+    static updatePass(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = (0, passwords_1.validatePasswords)(req.body);
+            if (!result.success) {
+                return res.status(400).json({ error: JSON.parse(result.error.message) });
+            }
+            const { id } = req.params;
+            const existingDoctor = yield admin_1.AdminModel.getById({ id });
+            if (!existingDoctor) {
+                return res.status(404).json({ message: "Médico no encontrado" });
+            }
+            if (result.data.new1 !== result.data.new2) {
+                return res.status(404).json({ message: "Las contraseñas no coinciden" });
+            }
+            let isMatch = yield (0, bcryptjs_1.compare)(result.data.old, existingDoctor.password);
+            if (!isMatch) {
+                return res.status(404).json({ message: "Contraseña incorrecta" });
+            }
+            isMatch = yield (0, bcryptjs_1.compare)(result.data.new1, existingDoctor.password);
+            if (isMatch) {
+                return res
+                    .status(404)
+                    .json({ message: "La contraseña antigua y nueva son las mismas" });
+            }
+            const password = yield auth_1.AuthController.hashPassword(result.data.new1);
+            const updatedDoctor = yield admin_1.AdminModel.update({
+                id,
+                input: { password },
+            });
+            return res.json(updatedDoctor);
         });
     }
     static delete(req, res) {

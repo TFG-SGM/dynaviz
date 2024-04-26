@@ -1,0 +1,15 @@
+{
+  "name": "dynaviz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm --filter '**' build",
+    "dev": "pnpm --filter '**' dev",
+    "generate": "pnpm --filter 'server' generate",
+    "test": "pnpm --filter 'client' cy:open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

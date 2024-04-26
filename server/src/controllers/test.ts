@@ -36,14 +36,12 @@ export class TestController {
   }
 
   static async create(req: Request, res: Response) {
-    console.log(req.file);
     req.body = {
       ...req.body,
       evaScale: parseInt(req.body.evaScale),
       data: JSON.parse(req.body.data),
       video: { name: req.file?.originalname, id: req.file?.id.toString() },
     };
-    console.log(req.body);
 
     const result = validateTest(req.body);
     if (!result.success) {

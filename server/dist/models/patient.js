@@ -14,24 +14,24 @@ const mongodb_1 = require("mongodb");
 const connection_1 = require("../utils/connection");
 const helpers_1 = require("../utils/helpers");
 class PatientModel {
-    static getAll({ doctorId }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static getAll(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ doctorId }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             const query = doctorId ? { doctorId } : {};
             const patients = yield db.find(query).toArray();
             return patients;
         });
     }
-    static getById({ id }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static getById(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             const objectId = new mongodb_1.ObjectId(id);
             const patient = yield db.findOne({ _id: objectId });
             return patient;
         });
     }
-    static create({ input }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static create(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ input }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             const numericId = yield (0, helpers_1.generateNumericId)("patients");
             const formattedId = numericId.toString().padStart(4, "0") + "P";
@@ -40,8 +40,8 @@ class PatientModel {
             return Object.assign({ id: insertedId }, userWithId);
         });
     }
-    static update({ id, input }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static update(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id, input }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             const objectId = new mongodb_1.ObjectId(id);
             const updatedPatient = yield db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnDocument: "after" });
@@ -50,8 +50,8 @@ class PatientModel {
             return null;
         });
     }
-    static delete({ id }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static delete(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ id }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             const objectId = new mongodb_1.ObjectId(id);
             const { deletedCount } = yield db.deleteOne({ _id: objectId });
@@ -60,8 +60,8 @@ class PatientModel {
             return null;
         });
     }
-    static validateEmail({ email }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static validateEmail(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ email }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");
             let patient = yield db.findOne({ email });
             return patient ? false : true;

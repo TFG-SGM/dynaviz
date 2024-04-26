@@ -11,4 +11,5 @@ exports.adminRouter.get("/", admin_1.AdminController.getAll);
 exports.adminRouter.post("/", admin_1.AdminController.create);
 exports.adminRouter.get("/:id", admin_1.AdminController.getById);
 exports.adminRouter.put("/:id", admin_1.AdminController.update);
+exports.adminRouter.put("/password/:id", admin_1.AdminController.updatePass);
 exports.adminRouter.delete("/:id", admin_1.AdminController.delete);
