@@ -61,7 +61,10 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
       <dialog open>
         <div className="menu-title">
           <h2>Nueva Prueba</h2>
-          <CrossButton handleClean={handleClean}></CrossButton>
+          <CrossButton
+            handleClean={handleClean}
+            isDisabled={isDisabled}
+          ></CrossButton>
         </div>{" "}
         <form className="test-form" onSubmit={handleSubmit}>
           <TestForm data={newData} setNewData={setNewData}></TestForm>

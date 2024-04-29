@@ -59,7 +59,10 @@ export function AddUserForm<T>({
       <dialog open>
         <div className="menu-title">
           <h2>Nuevo {userType}</h2>
-          <CrossButton handleClean={handleClean}></CrossButton>
+          <CrossButton
+            handleClean={handleClean}
+            isDisabled={isDisabled}
+          ></CrossButton>
         </div>
         <form onSubmit={handleSubmit}>
           {endpoint === PATIENT_ENDPOINT ? (
