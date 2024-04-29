@@ -112,6 +112,7 @@ export function PatientForm<T>({
         <input
           name="weight"
           type="number"
+          step="0.01"
           value={data.weight}
           onChange={handleChange}
           min="0"
@@ -123,6 +124,7 @@ export function PatientForm<T>({
         <input
           name="height"
           type="number"
+          step="0.01"
           value={data.height}
           onChange={handleChange}
           min="0"
