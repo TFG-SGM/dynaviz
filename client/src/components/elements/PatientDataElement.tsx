@@ -44,10 +44,10 @@ export function PatientDataElement({ user }: { user: PatientData }) {
         <strong>Teléfono:</strong> {phone}
       </p>
       <p>
-        <strong>Peso:</strong> {weight}
+        <strong>Peso:</strong> {weight} kg
       </p>
       <p>
-        <strong>Altura:</strong> {height}
+        <strong>Altura:</strong> {height} cm
       </p>
       <p>
         <strong>Actividad física:</strong> {activityLevel}

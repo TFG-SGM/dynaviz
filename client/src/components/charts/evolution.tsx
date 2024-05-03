@@ -87,6 +87,10 @@ export function EvolutionChart({
     tooltip: {
       trigger: "axis",
     },
+    legend: {
+      top: "bottom",
+      orient: "horizontal",
+    },
   };
 
   return (

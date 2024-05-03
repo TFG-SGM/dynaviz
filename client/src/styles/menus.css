@@ -101,3 +101,13 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
+
+@media screen and (width < 1000px) {
+  .menu-title {
+    margin-bottom: 10px;
+  }
+
+  .delete-menu {
+    width: 100%;
+  }
+}
