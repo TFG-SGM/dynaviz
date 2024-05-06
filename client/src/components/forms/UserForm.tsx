@@ -3,6 +3,7 @@ import {
   Dispatch,
   MouseEventHandler,
   SetStateAction,
+  useRef,
 } from "react";
 import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
@@ -21,6 +22,8 @@ export function UserForm<T>({
   handleChangePassForm = undefined,
   error,
 }: UserFormProps<T>) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -28,7 +31,10 @@ export function UserForm<T>({
       if (!prevState) return prevState;
       return {
         ...prevState,
-        [name]: name === "age" ? parseInt(value) : value,
+        [name]:
+          name === "photo" && inputRef.current && inputRef.current.files
+            ? inputRef.current.files[0]
+            : value,
       };
     });
   };
@@ -58,13 +64,13 @@ export function UserForm<T>({
         ></input>
       </label>
       <label>
-        Edad{" "}
+        Fecha de nacimiento{" "}
         <input
-          name="age"
-          type="number"
-          value={data.age}
+          name="date"
+          type="date"
+          value={data.date.split("T")[0] as string}
           onChange={handleChange}
-          min="0"
+          max={new Date().toISOString().split("T")[0]}
           required
         ></input>
       </label>
@@ -111,6 +117,10 @@ export function UserForm<T>({
           ></input>
         </label>
       )}
+      <label>
+        Foto:
+        <input type="file" name="photo" ref={inputRef}></input>
+      </label>
       {handleChangePassForm && (
         <button
           type="button"

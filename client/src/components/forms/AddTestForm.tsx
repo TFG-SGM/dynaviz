@@ -42,7 +42,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
             data: generateDataTest(data.bodyParts),
           };
 
-          await DataService.createTestData(endpoint, completeTest);
+          await DataService.createFormData(endpoint, completeTest);
         }
       );
       await Promise.all(fetchPromises);

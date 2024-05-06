@@ -20,6 +20,11 @@ export class AdminController {
   }
 
   static async create(req: Request, res: Response) {
+    req.body = {
+      ...req.body,
+      photo: { name: req.file?.originalname, id: req.file?.id.toString() },
+    };
+    console.log(req.file);
     const result = validateAdmin(req.body);
 
     if (!result.success) {
@@ -42,6 +47,10 @@ export class AdminController {
   }
 
   static async update(req: Request, res: Response) {
+    req.body = {
+      ...req.body,
+      photo: { name: req.file?.originalname, id: req.file?.id.toString() },
+    };
     const result = validatePartialAdmin(req.body);
 
     if (!result.success) {

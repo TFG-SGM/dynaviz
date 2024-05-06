@@ -7,7 +7,7 @@ export interface User {
   password: string;
   name: string;
   surname: string;
-  age: number;
+  date: Date;
   city: string;
   email: string;
   phone: string;
@@ -17,7 +17,7 @@ export interface PartialUser {
   password?: string | undefined;
   name?: string | undefined;
   surname?: string | undefined;
-  age?: number | undefined;
+  date?: Date | undefined;
   city?: string | undefined;
   email?: string | undefined;
   phone?: string | undefined;
@@ -26,7 +26,7 @@ export interface PartialUser {
 export interface Patient {
   name: string;
   surname: string;
-  age: number;
+  date: Date;
   city: string;
   email: string;
   phone: string;
@@ -42,7 +42,7 @@ export interface Patient {
 export interface PartialPatient {
   name?: string | undefined;
   surname?: string | undefined;
-  age?: number | undefined;
+  date?: Date | undefined;
   city?: string | undefined;
   email?: string | undefined;
   phone?: string | undefined;

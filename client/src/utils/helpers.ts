@@ -17,3 +17,20 @@ export function getUserType(endpoint: string) {
     "patient/": "Paciente",
   }[endpoint];
 }
+
+export function calculateAge(date: string): number {
+  const birthDate = new Date(date);
+  const currentDate = new Date();
+  const yearsDiff = currentDate.getFullYear() - birthDate.getFullYear();
+
+  // Check if the birthday has occurred this year already
+  const hasBirthdayOccurred =
+    currentDate.getMonth() > birthDate.getMonth() ||
+    (currentDate.getMonth() === birthDate.getMonth() &&
+      currentDate.getDate() >= birthDate.getDate());
+
+  // If birthday hasn't occurred yet this year, subtract 1 from age
+  const age = hasBirthdayOccurred ? yearsDiff : yearsDiff - 1;
+
+  return age;
+}

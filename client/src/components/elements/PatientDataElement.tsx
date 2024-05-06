@@ -1,5 +1,6 @@
 import { useData } from "../../hooks/useData";
 import { DOCTOR_ENDPOINT } from "../../utils/constants";
+import { calculateAge } from "../../utils/helpers";
 import { PatientData, UserData } from "../../utils/types";
 
 export function PatientDataElement({ user }: { user: PatientData }) {
@@ -7,7 +8,7 @@ export function PatientDataElement({ user }: { user: PatientData }) {
     uId,
     name,
     surname,
-    age,
+    date,
     city,
     email,
     phone,
@@ -20,6 +21,7 @@ export function PatientDataElement({ user }: { user: PatientData }) {
     doctorId,
   } = user;
   const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + doctorId);
+  const age = calculateAge(date);
   return (
     <>
       <p>
@@ -32,6 +34,7 @@ export function PatientDataElement({ user }: { user: PatientData }) {
         <strong>Apellidos:</strong> {surname}
       </p>
       <p>
+        <strong>Fecha de nacimiento:</strong> {date.split("T")[0]}.{" "}
         <strong>Edad:</strong> {age}
       </p>
       <p>

@@ -5,7 +5,7 @@ const DoctorSchema = z.object({
   password: z.string(),
   name: z.string(),
   surname: z.string(),
-  age: z.number(),
+  date: z.string().transform((str) => new Date(str)),
   city: z.string(),
   email: z.string(),
   phone: z.string(),

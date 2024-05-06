@@ -37,7 +37,7 @@ export function AddUserForm<T>({
     e.preventDefault();
     try {
       setIsDisabled(true);
-      const data = await DataService.createData<UserData | PatientData>(
+      const data = await DataService.createFormData<UserData | PatientData>(
         endpoint,
         newData
       );

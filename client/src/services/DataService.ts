@@ -1,6 +1,5 @@
 import axios from "axios";
 import { URL } from "../utils/constants";
-import { CreateTestData } from "../utils/types";
 
 export class DataService {
   public static async getToken(): Promise<string | null> {
@@ -41,10 +40,7 @@ export class DataService {
     return data;
   }
 
-  public static async createTestData(
-    endpoint: string,
-    newData: CreateTestData
-  ) {
+  public static async createFormData<T>(endpoint: string, newData: T) {
     const token = await DataService.getToken();
 
     const formData = this.getFormDataFromObject(newData);
@@ -75,10 +71,25 @@ export class DataService {
 
   public static async updateData<T>(endpoint: string, newData: T | null) {
     const token = await DataService.getToken();
-    console.log(URL + endpoint);
+
     const { data } = await axios.put(URL + endpoint, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data.value;
+  }
+
+  public static async updateFormData<T>(endpoint: string, newData: T) {
+    const token = await DataService.getToken();
+
+    const formData = this.getFormDataFromObject(newData);
+
+    const { data } = await axios.put(URL + endpoint, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     });
 
@@ -95,11 +106,11 @@ export class DataService {
     return data;
   }
 
-  private static getFormDataFromObject(data: CreateTestData) {
+  private static getFormDataFromObject<T>(data: T) {
     const formData = new FormData();
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
-        formData.append(key, data[key as keyof CreateTestData] as string);
+        formData.append(key, data[key as keyof T] as string);
       }
     }
 

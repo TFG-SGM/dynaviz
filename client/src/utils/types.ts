@@ -4,7 +4,8 @@ export type UserData = {
   password: string;
   name: string;
   surname: string;
-  age: number;
+  date: string;
+  age?: number;
   city: string;
   email: string;
   phone: string;
@@ -16,7 +17,8 @@ export type PatientData = {
   _id: string;
   name: string;
   surname: string;
-  age: number;
+  date: string;
+  age?: number;
   city: string;
   email: string;
   phone: string;

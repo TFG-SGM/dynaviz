@@ -29,7 +29,7 @@ export function PatientForm<T>({
       return {
         ...prevState,
         [name]:
-          name === "diagnosisYears" || name === "age"
+          name === "diagnosisYears"
             ? parseInt(value)
             : name === "isFibro"
             ? checked
@@ -65,14 +65,13 @@ export function PatientForm<T>({
         ></input>
       </label>
       <label>
-        Edad{" "}
+        Fecha de nacimiento{" "}
         <input
-          name="age"
-          type="number"
-          value={data.age}
+          name="date"
+          type="date"
+          value={data.date.split("T")[0] as string}
           onChange={handleChange}
-          min="0"
-          max="150"
+          max={new Date().toISOString().split("T")[0]}
           required
         ></input>
       </label>

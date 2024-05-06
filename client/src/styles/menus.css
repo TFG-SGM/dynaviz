@@ -63,13 +63,9 @@
 }
 
 input[type="checkbox"] {
-  /* Add if not using autoprefixer */
   -webkit-appearance: none;
-  /* Remove most all native input styles */
   appearance: none;
-  /* For iOS < 15 */
   background-color: var(--form-background);
-  /* Not removed via appearance */
   margin-left: 10px;
 
   font: inherit;

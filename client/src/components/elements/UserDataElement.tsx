@@ -1,7 +1,9 @@
+import { calculateAge } from "../../utils/helpers";
 import { UserData } from "../../utils/types";
 
 export function UserDataElement({ user }: { user: UserData }) {
-  const { uId, name, surname, age, city, email, phone } = user;
+  const { uId, name, surname, date, city, email, phone } = user;
+  const age = calculateAge(date);
   return (
     <>
       <p>
@@ -14,7 +16,8 @@ export function UserDataElement({ user }: { user: UserData }) {
         <strong>Apellidos:</strong> {surname}
       </p>
       <p>
-        <strong>Edad:</strong> {age}
+        <strong>Fecha de nacimiento:</strong> {date.split("T")[0]}.{" "}
+        <strong>Edad:</strong> {age}{" "}
       </p>
       <p>
         <strong>Ciudad:</strong> {city}

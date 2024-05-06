@@ -4,7 +4,7 @@ import { Patient } from "../utils/types";
 const patientSchema = z.object({
   name: z.string(),
   surname: z.string(),
-  age: z.number(),
+  date: z.string().transform((str) => new Date(str)),
   city: z.string(),
   email: z.string(),
   phone: z.string(),

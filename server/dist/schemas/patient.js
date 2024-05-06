@@ -8,7 +8,7 @@ const zod_1 = __importDefault(require("zod"));
 const patientSchema = zod_1.default.object({
     name: zod_1.default.string(),
     surname: zod_1.default.string(),
-    age: zod_1.default.number(),
+    date: zod_1.default.string().transform((str) => new Date(str)),
     city: zod_1.default.string(),
     email: zod_1.default.string(),
     phone: zod_1.default.string(),
