@@ -1,6 +1,7 @@
-export function HelpElement({ chart }) {
+export function HelpElement({ chart }: { chart: string }) {
   switch (chart) {
-    case "line" || "boxplot1":
+    case "line":
+    case "boxplot1":
       return (
         <>
           <p>
@@ -10,7 +11,10 @@ export function HelpElement({ chart }) {
           <p>Se puede elegir la parte del cuerpo y el eje.</p>
         </>
       );
-    case "bar" || "radar" || "pie" || "treemap":
+    case "bar":
+    case "radar":
+    case "pie":
+    case "treemap":
       return (
         <>
           <p>
@@ -47,20 +51,6 @@ export function HelpElement({ chart }) {
         </>
       );
     case "bubble":
-      return (
-        <>
-          <p>
-            En esta gráfica se observa la correlación de variaciones entre dos
-            partes del cuerpo.
-          </p>
-          <p>
-            Por ejemplo, cuando la parte del cuerpo A tiene 10 de variación, la
-            parte del cuerpo B tiene 20 en el mismo momento de la prueba.
-          </p>
-          <p>El tamaño del punto indica el número de coincidencias.</p>
-          <p>Se puede elegir las partes del cuerpo a comparar y el eje.</p>
-        </>
-      );
     case "heatmap":
       return (
         <>
@@ -72,10 +62,15 @@ export function HelpElement({ chart }) {
             Por ejemplo, cuando la parte del cuerpo A tiene 10 de variación, la
             parte del cuerpo B tiene 20 en el mismo momento de la prueba.
           </p>
-          <p>El color indica el número de coincidencias.</p>
+          {chart === "bubble" ? (
+            <p>El tamaño del punto indica el número de coincidencias.</p>
+          ) : (
+            <p>El color indica el número de coincidencias.</p>
+          )}
           <p>Se puede elegir las partes del cuerpo a comparar y el eje.</p>
         </>
       );
+
     case "line-evolution":
       return (
         <>

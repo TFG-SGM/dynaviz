@@ -9,6 +9,7 @@ import { EvolutionButtons } from "../buttons/EvolutionButtons";
 import { useEvolutionParts } from "../../hooks/useEvolutionParts";
 import { HelpMenu } from "../menus/HelpMenu";
 import { Interrogation } from "../other/Icons";
+import { RadarEvolutionChart } from "../charts/radar-evolution";
 
 export function TestEvolutionContainer({ patientId }: { patientId: string }) {
   const [actual, setActual] = useState<evolutionActual>({
@@ -77,23 +78,23 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
         ></HelpMenu>
       )}
       <div className="test-evolution-container">
-        <SelectType
-          option={"typeId"}
-          value={typeId}
-          endpoint={TEST_TYPE_ENDPOINT}
-          handleChange={handleChange}
-        ></SelectType>
-
+        <div className="evolution-filter">
+          <SelectType
+            option={"typeId"}
+            value={typeId}
+            endpoint={TEST_TYPE_ENDPOINT}
+            handleChange={handleChange}
+          ></SelectType>
+          <EvolutionButtons
+            handleChangeChart={handleChangeChart}
+          ></EvolutionButtons>
+        </div>
         {tests.length === 0 ? (
           <p className="empty-text">¡No hay ninguna prueba!</p>
         ) : tests.length === 1 ? (
           <p className="empty-text">¡Solo hay una prueba!</p>
         ) : (
           <>
-            <EvolutionButtons
-              handleChangeChart={handleChangeChart}
-            ></EvolutionButtons>
-
             <BodyPartsButtons
               parts={parts}
               handleChangePart={handleChangePart}

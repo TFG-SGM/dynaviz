@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { TestData, TestSubData, evolutionActual } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function EvolutionChart({
+export function RadarEvolutionChart({
   tests,
   actual,
 }: {
@@ -50,21 +50,10 @@ export function EvolutionChart({
     });
 
     const restrictionSeries = Object.keys(newRestrictions).map((key) => {
-      if (actual.chart === "line") {
-        return {
-          data: newRestrictions[key],
-          type: actual.chart,
-          name: key,
-        };
-      } else {
-        return {
-          data: newRestrictions[key],
-          type: actual.chart,
-          name: key,
-          stack: "Restricción de movimiento total",
-          areaStyle: actual.parts.length !== 0 ? {} : undefined,
-        };
-      }
+      return {
+        data: newRestrictions[key],
+        name: key,
+      };
     });
 
     setData({
@@ -73,33 +62,47 @@ export function EvolutionChart({
     });
   }, [tests, actual.parts, actual.chart]);
 
-  console.log(data);
-
-  const option = {
-    xAxis: {
-      name: "Fecha",
-      type: "category",
-      data: data.dates,
-    },
-    yAxis: {
-      name: "Restricción de movimiento",
-      type: "value",
-    },
-    series: data.restrictionSeries,
-    tooltip: {
-      trigger: "axis",
-    },
-    legend: {
-      top: "bottom",
-      orient: "horizontal",
-    },
-  };
+  const options = data.dates.map((date, index) => {
+    return {
+      radar: {
+        indicator: Object.keys(data.restrictionSeries).map((key) => ({
+          name: data.restrictionSeries[key].name,
+        })),
+        axisName: {
+          color: "#444",
+        },
+      },
+      series: [
+        {
+          name: date,
+          data: [
+            {
+              value: Object.keys(data.restrictionSeries).map(
+                (key) => data.restrictionSeries[key].data[index]
+              ),
+            },
+          ],
+          type: "radar",
+        },
+      ],
+      tooltip: {
+        trigger: "item",
+      },
+    };
+  });
 
   return (
-    <ReactECharts
-      style={{ height: CHART_HEIGHT }}
-      option={option}
-      notMerge={true}
-    ></ReactECharts>
+    <div className="radar-evolution-charts">
+      {options.map((option, index) => (
+        <div>
+          <ReactECharts
+            key={index}
+            style={{ height: CHART_HEIGHT }}
+            option={option}
+            notMerge={true}
+          />
+        </div>
+      ))}
+    </div>
   );
 }

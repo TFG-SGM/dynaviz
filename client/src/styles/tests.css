@@ -27,13 +27,18 @@
   grid-area: button;
 }
 
-.test-evolution-container {
-  grid-template-rows: 50px auto;
-  grid-template-columns: auto auto;
+.test-evolution-container > .charts-buttons {
+  grid-template-columns: span 1;
 }
 
-.test-evolution-container > .charts-buttons {
-  grid-column: span 1;
+.evolution-filter {
+  display: flex;
+  gap: 50px;
+  grid-column: 1/3;
+}
+
+.test-evolution-container {
+  grid-template-columns: auto auto;
 }
 
 .body-parts-container {
