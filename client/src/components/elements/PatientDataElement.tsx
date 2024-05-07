@@ -34,7 +34,9 @@ export function PatientDataElement({ user }: { user: PatientData }) {
         <strong>Apellidos:</strong> {surname}
       </p>
       <p>
-        <strong>Fecha de nacimiento:</strong> {date.split("T")[0]}.{" "}
+        <strong>Fecha de nacimiento:</strong> {date.split("T")[0]}
+      </p>
+      <p>
         <strong>Edad:</strong> {age}
       </p>
       <p>

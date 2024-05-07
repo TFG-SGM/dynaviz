@@ -14,10 +14,13 @@ import {
 import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
 import { ActualChart } from "../elements/ActualChart";
 import { TestMenuView } from "../menus/TestMenuView";
+import { HelpMenu } from "../menus/HelpMenu";
+import { Interrogation } from "../other/Icons";
 
 export function TestContainer() {
   const { testId } = useParams();
   const [test] = useData<TestData>(TEST_ENDPOINT + testId);
+  const [isHelpMenu, setIsHelpMenu] = useData<boolean>(false);
   const [actual, setActual] = useState<testActual>({
     chart: "line",
     axis: "xAxis",
@@ -81,20 +84,25 @@ export function TestContainer() {
 
   return (
     <>
+      {isHelpMenu && (
+        <HelpMenu
+          chart={actual.chart}
+          handleClean={() => setIsHelpMenu(false)}
+        ></HelpMenu>
+      )}
+      {isViewing && (
+        <TestMenuView
+          test={test}
+          handleClean={() => setIsViewing(false)}
+        ></TestMenuView>
+      )}
       <button
         className="test-details-button"
         onClick={() => setIsViewing(true)}
       >
         Consultar detalles
       </button>
-
       <div className="test-container">
-        {isViewing && (
-          <TestMenuView
-            test={test}
-            handleClean={() => setIsViewing(false)}
-          ></TestMenuView>
-        )}
         <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
         <div className="body-parts-container">
           {isAxisChart(actual.chart) && (
@@ -133,6 +141,9 @@ export function TestContainer() {
           )}
         </div>
         <div className="chart-container">
+          <button className="help-button" onClick={() => setIsHelpMenu(true)}>
+            <Interrogation></Interrogation>
+          </button>
           <ActualChart actual={actual} data={test.data}></ActualChart>
         </div>
       </div>

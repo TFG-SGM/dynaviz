@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { getMongoDB } from "../utils/connection";
 import { GridFSBucket, ObjectId } from "mongodb";
 
-export class VideoController {
+export class FileController {
   static async getById(req: Request, res: Response) {
     const _id = new ObjectId(req.params.id);
+    const type = req.query.type;
     if (!_id) return res.status(400).send("Requiere id");
 
     const db = await getMongoDB();
@@ -16,7 +17,7 @@ export class VideoController {
 
     const headers = {
       "Content-Length": videoSize,
-      "Content-Type": "video/mp4",
+      "Content-Type": `${type}/*`,
     };
 
     res.writeHead(200, headers);

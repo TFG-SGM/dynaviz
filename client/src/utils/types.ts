@@ -10,6 +10,7 @@ export type UserData = {
   email: string;
   phone: string;
   role?: string;
+  photo: string | File;
 };
 
 export type PatientData = {

@@ -24,9 +24,25 @@ export function UserForm<T>({
 }: UserFormProps<T>) {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const handleChangeImg = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const imgElement = document.querySelector(".profile");
+      if (!imgElement) return;
+      imgElement.src = reader.result;
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    if (name === "photo") handleChangeImg(e);
     setNewData((prevState) => {
       if (!prevState) return prevState;
       return {
@@ -117,19 +133,28 @@ export function UserForm<T>({
           ></input>
         </label>
       )}
-      <label>
-        Foto:
-        <input type="file" name="photo" ref={inputRef}></input>
-      </label>
-      {handleChangePassForm && (
-        <button
-          type="button"
-          className="change-pass-button"
-          onClick={handleChangePassForm}
-        >
-          Cambiar contraseña
-        </button>
-      )}
+      <div>
+        <label>
+          Foto:
+          <input
+            type="file"
+            name="photo"
+            accept="image/*"
+            onChange={handleChange}
+            ref={inputRef}
+          ></input>
+        </label>
+        <img className="profile"></img>
+        {handleChangePassForm && (
+          <button
+            type="button"
+            className="change-pass-button"
+            onClick={handleChangePassForm}
+          >
+            Cambiar contraseña
+          </button>
+        )}
+      </div>
     </>
   );
 }

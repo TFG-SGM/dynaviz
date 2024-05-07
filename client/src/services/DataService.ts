@@ -42,6 +42,7 @@ export class DataService {
 
   public static async createFormData<T>(endpoint: string, newData: T) {
     const token = await DataService.getToken();
+    console.log(newData);
 
     const formData = this.getFormDataFromObject(newData);
 

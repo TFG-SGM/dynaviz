@@ -3,6 +3,7 @@ import {
   DOCTOR_ENDPOINT,
   PATIENT_ENDPOINT,
   TEST_TYPE_ENDPOINT,
+  VIDEO_TYPE,
 } from "../../utils/constants";
 import {
   PatientData,
@@ -10,7 +11,7 @@ import {
   TestTypeData,
   UserData,
 } from "../../utils/types";
-import { useVideo } from "../../hooks/useVideo";
+import { useFile } from "../../hooks/useFile";
 import { LoadingComponent } from "../other/LoadingComponent";
 
 export function TestDataElement({ test }: { test: TestData }) {
@@ -18,7 +19,7 @@ export function TestDataElement({ test }: { test: TestData }) {
   const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + doctorId);
   const [type] = useData<TestTypeData>(TEST_TYPE_ENDPOINT + typeId);
   const [patient] = useData<PatientData>(PATIENT_ENDPOINT + patientId);
-  const [videoBlob] = useVideo(video.id);
+  const [videoBlob] = useFile(video.id, VIDEO_TYPE);
 
   return (
     <>

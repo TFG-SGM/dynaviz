@@ -6,7 +6,9 @@ export const PATIENT_ENDPOINT = "patient/";
 export const TEST_ENDPOINT = "test/";
 export const TEST_TYPE_ENDPOINT = "testType/";
 export const ACTUAL_USER_ENDPOINT = "auth/user-data";
-export const VIDEO_ENDPOINT = "video/";
+export const FILE_ENDPOINT = "file/";
+export const VIDEO_TYPE = "?type=video";
+export const IMAGE_TYPE = "?type=image";
 
 export const CHART_HEIGHT = "500px";
 
@@ -19,6 +21,7 @@ export const INITIAL_USER = {
   email: "",
   phone: "",
   password: "",
+  photo: "",
 };
 
 export const INITIAL_PATIENT = {

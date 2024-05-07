@@ -7,6 +7,8 @@ import { SelectType } from "../selects/SelectType";
 import { BodyPartsButtons } from "../buttons/BodyPartsButtons";
 import { EvolutionButtons } from "../buttons/EvolutionButtons";
 import { useEvolutionParts } from "../../hooks/useEvolutionParts";
+import { HelpMenu } from "../menus/HelpMenu";
+import { Interrogation } from "../other/Icons";
 
 export function TestEvolutionContainer({ patientId }: { patientId: string }) {
   const [actual, setActual] = useState<evolutionActual>({
@@ -18,6 +20,7 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
     TEST_ENDPOINT + "?patientId=" + patientId + "&typeId=" + typeId + "&order=1"
   );
   const [parts] = useEvolutionParts(typeId, tests);
+  const [isHelpMenu, setIsHelpMenu] = useState<boolean>(false);
 
   const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
@@ -65,32 +68,48 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
   if (!tests) return;
 
   return (
-    <div className="test-evolution-container">
-      <SelectType
-        option={"typeId"}
-        value={typeId}
-        endpoint={TEST_TYPE_ENDPOINT}
-        handleChange={handleChange}
-      ></SelectType>
-
-      {tests.length === 0 ? (
-        <p className="empty-text">¡No hay ninguna prueba!</p>
-      ) : tests.length === 1 ? (
-        <p className="empty-text">¡Solo hay una prueba!</p>
-      ) : (
-        <>
-          <EvolutionButtons
-            handleChangeChart={handleChangeChart}
-          ></EvolutionButtons>
-
-          <BodyPartsButtons
-            parts={parts}
-            handleChangePart={handleChangePart}
-          ></BodyPartsButtons>
-
-          <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
-        </>
+    <>
+      {isHelpMenu && (
+        <HelpMenu
+          chart={actual.chart}
+          isEvolution={true}
+          handleClean={() => setIsHelpMenu(false)}
+        ></HelpMenu>
       )}
-    </div>
+      <div className="test-evolution-container">
+        <SelectType
+          option={"typeId"}
+          value={typeId}
+          endpoint={TEST_TYPE_ENDPOINT}
+          handleChange={handleChange}
+        ></SelectType>
+
+        {tests.length === 0 ? (
+          <p className="empty-text">¡No hay ninguna prueba!</p>
+        ) : tests.length === 1 ? (
+          <p className="empty-text">¡Solo hay una prueba!</p>
+        ) : (
+          <>
+            <EvolutionButtons
+              handleChangeChart={handleChangeChart}
+            ></EvolutionButtons>
+
+            <BodyPartsButtons
+              parts={parts}
+              handleChangePart={handleChangePart}
+            ></BodyPartsButtons>
+            <div className="chart-container">
+              <button
+                className="help-button"
+                onClick={() => setIsHelpMenu(true)}
+              >
+                <Interrogation></Interrogation>
+              </button>
+              <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }

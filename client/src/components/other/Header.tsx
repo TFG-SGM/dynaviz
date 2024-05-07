@@ -5,13 +5,15 @@ import { MyAccount } from "../menus/MyAccount";
 import { Account, ArrowBack, Logout } from "./Icons";
 import DynaViz from "../../../public/dynaviz.png";
 import { useData } from "../../hooks/useData";
-import { ACTUAL_USER_ENDPOINT } from "../../utils/constants";
+import { ACTUAL_USER_ENDPOINT, IMAGE_TYPE } from "../../utils/constants";
 import { UserData } from "../../utils/types";
+import { useFile } from "../../hooks/useFile";
 export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMyAccount, setIsMyAccount] = useState(false);
   const [actualUser] = useData<UserData>(ACTUAL_USER_ENDPOINT);
+  const [imageBlob] = useFile(actualUser?.photo?.id, IMAGE_TYPE);
 
   const handleGoBack = () => navigate(-1);
   const handleMyAccount = () => setIsMyAccount(!isMyAccount);
@@ -103,7 +105,11 @@ export function Header() {
         {actualUser?.name + " " + actualUser?.surname}
       </p>
       <button className="account-button" onClick={handleMyAccount}>
-        <Account></Account>
+        {!actualUser?.photo?.id ? (
+          <Account></Account>
+        ) : imageBlob ? (
+          <img className="profile" src={URL.createObjectURL(imageBlob)} />
+        ) : null}
       </button>
       <button className="logout-button" onClick={handleLogout}>
         <Logout></Logout>

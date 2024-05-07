@@ -11,8 +11,8 @@ const adminSchema = z.object({
   phone: z.string(),
   photo: z
     .object({
-      name: z.string(),
-      id: z.string(),
+      name: z.string().optional(),
+      id: z.string().optional(),
     })
     .optional(),
 });

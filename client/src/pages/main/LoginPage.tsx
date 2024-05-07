@@ -11,20 +11,20 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      setIsLoading(true);
       const data = await DataService.login(email, password);
-      setLoading(false);
+      setIsLoading(false);
       if (data.role === "admin") navigate("/app");
       else navigate("/app/pacientes");
     } catch (error) {
-      setLoading(false);
+      setIsLoading(false);
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);
     }
@@ -54,10 +54,12 @@ export function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             ></input>
           </label>
-          <button className="login-button">Iniciar Sesión</button>
+          <button className="login-button" disabled={isLoading}>
+            Iniciar Sesión
+          </button>
           {error ? (
             <ErrorComponent error={error}></ErrorComponent>
-          ) : loading ? (
+          ) : isLoading ? (
             <LoadingComponent message="Cargando"></LoadingComponent>
           ) : null}
         </form>

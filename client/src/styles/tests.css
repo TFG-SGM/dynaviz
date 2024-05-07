@@ -107,6 +107,24 @@
   animation: loading 2s infinite;
 }
 
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.43);
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+.help-button {
+  width: fit-content;
+  align-self: flex-end;
+  background-color: var(--white-color);
+  padding: 0;
+  margin-bottom: -50px;
+  z-index: 1;
+}
+
 @keyframes loading {
   0% {
     content: "";

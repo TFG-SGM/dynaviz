@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { DataService } from "../services/DataService";
-import { URL, VIDEO_ENDPOINT } from "../utils/constants";
+import { FILE_ENDPOINT, URL } from "../utils/constants";
 
-export function useVideo(id: string) {
+export function useFile(id: string, type: string) {
   const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
+    if (!id) return;
     const fetchVideo = async () => {
       const token = await DataService.getToken();
 
@@ -14,7 +15,7 @@ export function useVideo(id: string) {
       };
 
       try {
-        const response = await fetch(URL + VIDEO_ENDPOINT + id, {
+        const response = await fetch(URL + FILE_ENDPOINT + id + type, {
           headers,
         });
         if (!response.ok) {
@@ -29,7 +30,7 @@ export function useVideo(id: string) {
     };
 
     fetchVideo();
-  }, [id]);
+  }, [id, type]);
 
   return [videoBlob];
 }

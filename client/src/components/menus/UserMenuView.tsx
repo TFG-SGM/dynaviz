@@ -9,8 +9,8 @@ import { PatientDataElement } from "../elements/PatientDataElement";
 import { Overlay } from "../other/Overlay";
 import {
   ACTUAL_USER_ENDPOINT,
+  FILE_ENDPOINT,
   TEST_ENDPOINT,
-  VIDEO_ENDPOINT,
 } from "../../utils/constants";
 import { DeleteMenu } from "./DeleteMenu";
 import { DataService } from "../../services/DataService";
@@ -62,7 +62,7 @@ export function UserMenuView({
         );
         if (data)
           data.forEach(async (id: string) => {
-            await DataService.deleteData(VIDEO_ENDPOINT + id);
+            await DataService.deleteData(FILE_ENDPOINT + id);
           });
       }
       setUsers((prevState) =>

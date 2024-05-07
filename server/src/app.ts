@@ -8,7 +8,7 @@ import { doctorRouter } from "./routes/doctor";
 import { adminRouter } from "./routes/admin";
 import { testRouter } from "./routes/test";
 import { testTypeRouter } from "./routes/testTypes";
-import { videoRouter } from "./routes/video";
+import { fileRouter } from "./routes/file";
 
 dotenv.config();
 
@@ -28,7 +28,7 @@ app.use("/doctor", doctorRouter);
 app.use("/admin", adminRouter);
 app.use("/test", testRouter);
 app.use("/testType", testTypeRouter);
-app.use("/video", videoRouter);
+app.use("/file", fileRouter);
 
 app.listen(port, () => {
   console.log(`server is running at http://localhost:${port}`);

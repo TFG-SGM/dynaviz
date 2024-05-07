@@ -4,11 +4,28 @@
   gap: 20px;
 }
 
+.user-data {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  gap: 20px;
+}
+
+.user-data > .text-data {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-data > .profile {
+  width: 200px;
+}
+
 .menu-title {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--black-letter);
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .cross-button {
@@ -39,6 +56,12 @@
 
 .delete-button {
   background-color: var(--red);
+}
+
+.help-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /*DELETE MENU*/
@@ -99,8 +122,8 @@ input[type="checkbox"]:checked::before {
 }
 
 @media screen and (width < 1000px) {
-  .menu-title {
-    margin-bottom: 10px;
+  .user-data {
+    flex-direction: column;
   }
 
   .delete-menu {
