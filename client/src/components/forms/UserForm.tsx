@@ -7,6 +7,9 @@ import {
 } from "react";
 import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
+import { useFile } from "../../hooks/useFile";
+import { IMAGE_TYPE } from "../../utils/constants";
+import { LoadingComponent } from "../other/LoadingComponent";
 export interface UserFormProps<T> {
   data: UserData | null;
   setNewData: Dispatch<SetStateAction<T>>;
@@ -23,13 +26,14 @@ export function UserForm<T>({
   error,
 }: UserFormProps<T>) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [imageBlob] = useFile(data?.photo.id, IMAGE_TYPE);
 
   const handleChangeImg = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onload = () => {
-      const imgElement = document.querySelector(".profile");
+      const imgElement = document.querySelector(".photo-preview");
       if (!imgElement) return;
       imgElement.src = reader.result;
     };
@@ -53,6 +57,14 @@ export function UserForm<T>({
             : value,
       };
     });
+  };
+
+  const handleDeletePhoto = () => {
+    data.photo.name = null;
+    data.photo.id = null;
+    const imgElement = document.querySelector(".photo-preview");
+    if (!imgElement) return;
+    imgElement.src = undefined;
   };
 
   if (!data) return;
@@ -133,28 +145,33 @@ export function UserForm<T>({
           ></input>
         </label>
       )}
-      <div>
-        <label>
-          Foto:
-          <input
-            type="file"
-            name="photo"
-            accept="image/*"
-            onChange={handleChange}
-            ref={inputRef}
-          ></input>
-        </label>
-        <img className="profile"></img>
-        {handleChangePassForm && (
-          <button
-            type="button"
-            className="change-pass-button"
-            onClick={handleChangePassForm}
-          >
+      <label>
+        Foto:
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          onChange={handleChange}
+          ref={inputRef}
+        ></input>
+        {!data.photo.id ? (
+          <img className="photo-preview" />
+        ) : imageBlob ? (
+          <img className="photo-preview" src={URL.createObjectURL(imageBlob)} />
+        ) : (
+          <LoadingComponent message="Cargando imagen"></LoadingComponent>
+        )}
+        <button type="button" onClick={handleDeletePhoto}></button>
+      </label>
+
+      {handleChangePassForm && (
+        <div className="change-pass-container">
+          <strong>Contraseña</strong>
+          <button type="button" onClick={handleChangePassForm}>
             Cambiar contraseña
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }

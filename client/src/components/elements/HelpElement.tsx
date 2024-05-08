@@ -99,6 +99,16 @@ export function HelpElement({ chart }: { chart: string }) {
           </p>
         </>
       );
+    case "radar-evolution":
+      return (
+        <>
+          <p>
+            En esta gráfica se compara la restricción de movimiento de cada
+            parte del cuerpo de todas las pruebas realizadas.
+          </p>
+          <p>Se puede elegir el tipo de prueba.</p>
+        </>
+      );
     default:
       return;
   }

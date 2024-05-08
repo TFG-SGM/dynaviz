@@ -90,8 +90,9 @@ form {
   gap: 30px;
 }
 
-form .profile {
+form img {
   width: 200px;
+  border-radius: var(--radius);
 }
 
 form label {

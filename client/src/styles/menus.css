@@ -17,8 +17,9 @@
   gap: 20px;
 }
 
-.user-data > .profile {
-  width: 200px;
+.user-data > img {
+  height: 250px;
+  border-radius: var(--radius);
 }
 
 .menu-title {
@@ -62,6 +63,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.change-pass-container {
+  display: flex;
+  flex-direction: column;
 }
 
 /*DELETE MENU*/

@@ -47,10 +47,12 @@ export class AdminController {
   }
 
   static async update(req: Request, res: Response) {
-    req.body = {
-      ...req.body,
-      photo: { name: req.file?.originalname, id: req.file?.id.toString() },
-    };
+    if (req.file) {
+      req.body = {
+        ...req.body,
+        photo: { name: req.file?.originalname, id: req.file?.id.toString() },
+      };
+    }
     const result = validatePartialAdmin(req.body);
 
     if (!result.success) {

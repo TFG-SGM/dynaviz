@@ -1,100 +1,48 @@
 import ReactECharts from "echarts-for-react";
-import { useEffect, useState } from "react";
-import { TestData, TestSubData, evolutionActual } from "../../utils/types";
+import { TestData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
-export function RadarEvolutionChart({
-  tests,
-  actual,
-}: {
-  tests: TestData[];
-  actual: evolutionActual;
-}) {
-  const [data, setData] = useState<{
-    dates: string[];
-    restrictionSeries: object;
-  }>({
-    dates: [],
-    restrictionSeries: {},
-  });
-
-  useEffect(() => {
-    const newDates: string[] = [];
-    const newRestrictions: { [key: string]: number[] } = {};
-
-    if (actual.parts.length === 0) {
-      newRestrictions["Restricción de movimiento total"] = [];
-    } else {
-      actual.parts.forEach((part: string) => {
-        newRestrictions[part] = [];
-      });
-    }
-
-    tests.forEach((test) => {
-      if (test.data) {
-        if (actual.parts.length === 0)
-          newRestrictions["Restricción de movimiento total"].push(
-            test.data.restriction
-          );
-        else if (test.data.parts) {
-          Object.keys(test.data.parts).forEach((part) => {
-            if (part in newRestrictions)
-              newRestrictions[part] = [
-                ...(newRestrictions[part] ?? []),
-                (test.data as TestSubData).parts[part].restriction,
-              ];
-          });
-        }
-        newDates.push(test.date.split("T")[0]);
-      }
-    });
-
-    const restrictionSeries = Object.keys(newRestrictions).map((key) => {
-      return {
-        data: newRestrictions[key],
-        name: key,
-      };
-    });
-
-    setData({
-      dates: newDates,
-      restrictionSeries: restrictionSeries,
-    });
-  }, [tests, actual.parts, actual.chart]);
-
-  const options = data.dates.map((date, index) => {
+export function RadarEvolutionChart({ tests }: { tests: TestData[] }) {
+  const processData = tests.map((test) => {
+    if (!test.data) return null; // Ensure null is returned for tests without data
     return {
-      radar: {
-        indicator: Object.keys(data.restrictionSeries).map((key) => ({
-          name: data.restrictionSeries[key].name,
-        })),
-        axisName: {
-          color: "#444",
-        },
-      },
-      series: [
-        {
-          name: date,
-          data: [
-            {
-              value: Object.keys(data.restrictionSeries).map(
-                (key) => data.restrictionSeries[key].data[index]
-              ),
-            },
-          ],
-          type: "radar",
-        },
-      ],
-      tooltip: {
-        trigger: "item",
-      },
+      date: test.date.split("T")[0],
+      parts: Object.keys(test.data.parts).map((part) => ({
+        name: part,
+        restriction: test.data.parts[part].restriction,
+      })),
     };
   });
 
+  console.log(processData);
+
+  const options = processData.map((data) => ({
+    radar: {
+      indicator: data.parts.map((part) => ({ text: part.name, max: 100 })),
+      axisName: {
+        color: "#444",
+      },
+    },
+    series: [
+      {
+        name: `Restricciones del ${data.date}`,
+        data: [
+          {
+            value: data.parts.map((part) => part.restriction),
+          },
+        ],
+        type: "radar",
+      },
+    ],
+    tooltip: {
+      trigger: "item",
+    },
+  }));
   return (
     <div className="radar-evolution-charts">
       {options.map((option, index) => (
         <div>
+          <h3>{processData[index].date}</h3>
           <ReactECharts
             key={index}
             style={{ height: CHART_HEIGHT }}

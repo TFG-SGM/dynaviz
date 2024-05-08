@@ -111,6 +111,8 @@ export class DataService {
     const formData = new FormData();
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
+        console.log(key, data[key]);
+
         formData.append(key, data[key as keyof T] as string);
       }
     }

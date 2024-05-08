@@ -119,6 +119,17 @@
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.43);
   border-radius: var(--radius);
   padding: 10px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.radar-evolution-charts > div:nth-child(even) {
+  background-color: var(--background-color);
+}
+
+.radar-evolution-charts h3 {
+  text-align: center;
+  padding: 20px;
 }
 
 .help-button {

@@ -95,10 +95,13 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
           <p className="empty-text">¡Solo hay una prueba!</p>
         ) : (
           <>
-            <BodyPartsButtons
-              parts={parts}
-              handleChangePart={handleChangePart}
-            ></BodyPartsButtons>
+            {actual.chart !== "radar" && (
+              <BodyPartsButtons
+                parts={parts}
+                handleChangePart={handleChangePart}
+              ></BodyPartsButtons>
+            )}
+
             <div className="chart-container">
               <button
                 className="help-button"
@@ -106,7 +109,11 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
               >
                 <Interrogation></Interrogation>
               </button>
-              <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
+              {actual.chart === "radar" ? (
+                <RadarEvolutionChart tests={tests}></RadarEvolutionChart>
+              ) : (
+                <EvolutionChart tests={tests} actual={actual}></EvolutionChart>
+              )}
             </div>
           </>
         )}
