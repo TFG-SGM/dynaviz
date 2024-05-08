@@ -1,4 +1,4 @@
-import { TestPartsData, axisData } from "../utils/types";
+import { TestData, TestPartsData, TestSubData, axisData } from "../utils/types";
 
 export class TestService {
   public static getRealMovements(
@@ -104,6 +104,42 @@ export class TestService {
     });
 
     return result;
+  }
+
+  public static getProcessDataForBarChart(data: TestSubData) {
+    const processData = {
+      dataX: TestService.getBodyParts(data.parts),
+      dataY: TestService.getBodyPartRestriction(data.parts),
+    };
+
+    // Combine dataX and dataY into an array of objects
+    const combinedData = processData.dataX.map((x, index) => ({
+      x,
+      y: processData.dataY[index],
+    }));
+
+    // Sort the combined data based on the values of dataY
+    combinedData.sort((a, b) => b.y - a.y);
+
+    // Separate the sorted data back into dataX and dataY
+    processData.dataX = combinedData.map((item) => item.x);
+    processData.dataY = combinedData.map((item) => item.y);
+
+    return processData;
+  }
+
+  public static getProcessDataForChartEvolution(tests: TestData[]) {
+    const processData = tests.map((test) => {
+      if (!test.data) return null;
+      return {
+        date: test.date.split("T")[0],
+        parts: Object.keys(test.data.parts).map((part) => ({
+          name: part,
+          restriction: test.data.parts[part].restriction,
+        })),
+      };
+    });
+    return processData;
   }
 
   private static findQuartile(sortedData: number[], quartile: number) {

@@ -8,7 +8,7 @@ export function EvolutionButtons({
   return (
     <div className="charts-buttons">
       <button id="line" className="active-chart" onClick={handleChangeChart}>
-        Línea
+        Líneas
       </button>
       <button id="bar" onClick={handleChangeChart}>
         Barras

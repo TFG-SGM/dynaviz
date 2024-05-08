@@ -1,20 +1,10 @@
 import ReactECharts from "echarts-for-react";
 import { TestData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
+import { TestService } from "../../services/TestService";
 
 export function RadarEvolutionChart({ tests }: { tests: TestData[] }) {
-  const processData = tests.map((test) => {
-    if (!test.data) return null; // Ensure null is returned for tests without data
-    return {
-      date: test.date.split("T")[0],
-      parts: Object.keys(test.data.parts).map((part) => ({
-        name: part,
-        restriction: test.data.parts[part].restriction,
-      })),
-    };
-  });
-
-  console.log(processData);
+  const processData = TestService.getProcessDataForChartEvolution(tests);
 
   const options = processData.map((data) => ({
     radar: {

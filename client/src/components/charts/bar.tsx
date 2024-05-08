@@ -4,11 +4,13 @@ import { TestSubData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
 
 export function BarChart({ data }: { data: TestSubData }) {
+  const processData = TestService.getProcessDataForBarChart(data);
+
   const option = {
     xAxis: {
       name: "Partes del cuerpo",
       type: "category",
-      data: TestService.getBodyParts(data.parts),
+      data: processData.dataX,
       colorBy: "values",
     },
     yAxis: {
@@ -18,7 +20,7 @@ export function BarChart({ data }: { data: TestSubData }) {
     series: [
       {
         name: "Restricción de movimiento",
-        data: TestService.getBodyPartRestriction(data.parts),
+        data: processData.dataY,
         type: "bar",
       },
     ],

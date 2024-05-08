@@ -19,7 +19,8 @@ export function HelpElement({ chart }: { chart: string }) {
         <>
           <p>
             En esta gráfica se compara la restricción de movimiento de todas las
-            partes del cuerpo.
+            partes del cuerpo.{" "}
+            {chart === "bar" && "Ordenadas de mayor a menor."}
           </p>
         </>
       );
