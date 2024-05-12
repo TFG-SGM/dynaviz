@@ -5,6 +5,7 @@ import { validateAdmin, validatePartialAdmin } from "../schemas/admin";
 import { AuthController } from "./auth";
 import { validatePasswords } from "../schemas/passwords";
 import { compare } from "bcryptjs";
+import { FileController } from "./file";
 
 export class AdminController {
   static async getAll(req: Request, res: Response) {
@@ -24,7 +25,6 @@ export class AdminController {
       ...req.body,
       photo: { name: req.file?.originalname, id: req.file?.id.toString() },
     };
-    console.log(req.file);
     const result = validateAdmin(req.body);
 
     if (!result.success) {
@@ -47,12 +47,16 @@ export class AdminController {
   }
 
   static async update(req: Request, res: Response) {
-    if (req.file) {
+    console.log(req.body);
+    if (req.body.isPhotoChanged) {
       req.body = {
         ...req.body,
         photo: { name: req.file?.originalname, id: req.file?.id.toString() },
       };
+    } else {
+      delete req.body.photo;
     }
+
     const result = validatePartialAdmin(req.body);
 
     if (!result.success) {

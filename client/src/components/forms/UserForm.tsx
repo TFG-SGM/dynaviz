@@ -31,7 +31,13 @@ export function UserForm<T>({
   const handleChangeImg = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-
+    setNewData((prevState) => {
+      return {
+        ...prevState,
+        isPhotoChanged: true,
+        prevPhoto: prevState.photo.id,
+      };
+    });
     reader.onload = () => {
       const imgElement = document.querySelector(".photo-preview");
       if (!imgElement) return;
@@ -60,6 +66,13 @@ export function UserForm<T>({
   };
 
   const handleDeletePhoto = () => {
+    setNewData((prevState) => {
+      return {
+        ...prevState,
+        isPhotoChanged: true,
+        prevPhoto: prevState.photo.id,
+      };
+    });
     data.photo.name = null;
     data.photo.id = null;
     const imgElement = document.querySelector(".photo-preview");

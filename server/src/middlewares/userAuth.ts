@@ -25,7 +25,6 @@ export const userAuth = (req: Request, res: Response, next: NextFunction) => {
     }
 
     req.body.userData = { email: decoded.email, role: decoded.role };
-    console.log("Token decodificado:", decoded);
     next();
   });
 };

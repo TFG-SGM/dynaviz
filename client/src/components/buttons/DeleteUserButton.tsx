@@ -19,6 +19,7 @@ export function DeleteUserButton({
   const handleDelete = async () => {
     try {
       const data = await DataService.deleteData(endpoint);
+
       setUsers((prevState) =>
         prevState
           ? prevState.filter((dataDict) => dataDict._id !== data)

@@ -55,16 +55,23 @@ export function UserMenuView({
 
   const handleDelete = async () => {
     try {
-      const data = await DataService.deleteData(endpoint);
+      const [user, data] = await Promise.all([
+        DataService.getData(endpoint),
+        DataService.deleteData(endpoint),
+      ]);
+
       if (isPatient) {
-        const data = await DataService.deleteData(
+        const testData = await DataService.deleteData(
           TEST_ENDPOINT + "patient/" + endpointParts[1]
         );
-        if (data)
-          data.forEach(async (id: string) => {
-            await DataService.deleteData(FILE_ENDPOINT + id);
+        if (testData)
+          testData.forEach(async (id: string) => {
+            DataService.deleteData(FILE_ENDPOINT + id);
           });
+      } else if (user.photo.id) {
+        DataService.deleteData(FILE_ENDPOINT + user.photo.id);
       }
+
       setUsers((prevState) =>
         prevState
           ? prevState.filter((dataDict) => dataDict._id !== data)
@@ -76,7 +83,6 @@ export function UserMenuView({
       toast.error(`Error: ${userType} no eliminado correctamente`);
     }
   };
-
   if (!user) return;
   return (
     <>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { URL } from "../utils/constants";
+import { FILE_ENDPOINT, URL } from "../utils/constants";
 
 export class DataService {
   public static async getToken(): Promise<string | null> {
@@ -42,7 +42,6 @@ export class DataService {
 
   public static async createFormData<T>(endpoint: string, newData: T) {
     const token = await DataService.getToken();
-    console.log(newData);
 
     const formData = this.getFormDataFromObject(newData);
 
@@ -85,6 +84,9 @@ export class DataService {
   public static async updateFormData<T>(endpoint: string, newData: T) {
     const token = await DataService.getToken();
 
+    console.log(newData);
+
+    if (newData.prevPhoto) this.deleteData(FILE_ENDPOINT + newData.prevPhoto);
     const formData = this.getFormDataFromObject(newData);
 
     const { data } = await axios.put(URL + endpoint, formData, {
@@ -111,8 +113,6 @@ export class DataService {
     const formData = new FormData();
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
-        console.log(key, data[key]);
-
         formData.append(key, data[key as keyof T] as string);
       }
     }

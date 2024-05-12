@@ -45,11 +45,8 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
   const handleChangePart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
     const classButton = target.classList;
-
     const newParts = [...actual.parts];
-
     const partId = target.id;
-
     const partIndex = newParts.indexOf(partId);
 
     if (partIndex !== -1) {

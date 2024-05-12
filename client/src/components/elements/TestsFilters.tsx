@@ -39,7 +39,7 @@ export function TestsFilters({
       ></SelectDoctor>
       <SelectDate
         patientId={patientId}
-        filters={filters}
+        value={filters.date}
         handleChange={handleChange}
         isAdding={isAdding}
       ></SelectDate>{" "}

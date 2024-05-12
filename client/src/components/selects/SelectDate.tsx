@@ -4,14 +4,14 @@ import { TEST_ENDPOINT } from "../../utils/constants";
 
 interface SelectDateProps {
   patientId: string;
-  filters: { date: string };
+  value: string;
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isAdding?: boolean;
 }
 
 export function SelectDate({
   patientId,
-  filters,
+  value,
   handleChange,
   isAdding,
 }: SelectDateProps) {
@@ -22,7 +22,7 @@ export function SelectDate({
 
   if (!dates) return;
   return (
-    <select name="date" value={filters.date} onChange={handleChange} required>
+    <select name="date" value={value} onChange={handleChange} required>
       <option value="">Selecciona una fecha</option>
       {dates.map((date, index) => (
         <option key={index} value={date}>

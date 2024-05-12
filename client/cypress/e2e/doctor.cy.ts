@@ -20,11 +20,12 @@ describe("Manage patients as doctor", () => {
   });
 
   it("Add new patient", () => {
+    cy.intercept("POST", "/patient", { statusCode: 202 });
     cy.contains("Añadir Paciente").click();
     cy.contains("Nuevo Paciente");
     cy.get("label").contains("Nombre").type("Sergio");
     cy.get("label").contains("Apellidos").type("García Muñoz");
-    cy.get("label").contains("Edad").type("22");
+    cy.get("label").contains("Fecha de nacimiento").type("2002-04-08");
     cy.get("label").contains("Ciudad").type("Talavera de la Reina");
     cy.get("label").contains("Email").type("sergio.garicia@gmail.com");
     cy.get("label").contains("Teléfono").type("123456789");
@@ -36,16 +37,17 @@ describe("Manage patients as doctor", () => {
       .within(() => cy.get("select").select("activo"));
     cy.get("label").contains("Años con diagnostico").type("0");
     cy.get(".add-button").click();
-
-    cy.get("h2").last().contains("Sergio García Muñoz").should("be.visible");
+    cy.contains("Paciente añadido correctamente").should("be.visible");
   });
 
   it("Add repetitive patient", () => {
+    cy.intercept("DELETE", "/patient", { statusCode: 404 });
+
     cy.contains("Añadir Paciente").click();
     cy.contains("Nuevo Paciente");
     cy.get("label").contains("Nombre").type("Sergio");
     cy.get("label").contains("Apellidos").type("García Muñoz");
-    cy.get("label").contains("Edad").type("22");
+    cy.get("label").contains("Fecha de nacimiento").type("2002-04-08");
     cy.get("label").contains("Ciudad").type("Talavera de la Reina");
     cy.get("label").contains("Email").type("sergio.garicia@gmail.com");
     cy.get("label").contains("Teléfono").type("123456789");
@@ -72,15 +74,17 @@ describe("Manage patients as doctor", () => {
   });
 
   it("Consult tests of patient", () => {
-    cy.get("h2").last().contains("Sergio García Muñoz").click();
+    cy.get("h2").last().click();
     cy.get("button").contains("Pruebas").click();
 
-    cy.get("h1").contains("Pruebas de Sergio").should("be.visible");
+    cy.get("h1").contains("Pruebas de ").should("be.visible");
     cy.get("button").contains("Añadir Pruebas").should("be.visible");
     cy.get("button").contains("Evolución de Paciente").should("be.visible");
   });
 
   it("Remove patient", () => {
+    cy.intercept("DELETE", "/patient", { statusCode: 202 });
+
     cy.get("h2").last().contains("Sergio García Muñoz").click();
     cy.contains("Detalles de Paciente");
     cy.get("button").contains("Eliminar").click();

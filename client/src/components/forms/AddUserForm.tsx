@@ -37,10 +37,18 @@ export function AddUserForm<T>({
     e.preventDefault();
     try {
       setIsDisabled(true);
-      const data = await DataService.createFormData<UserData | PatientData>(
-        endpoint,
-        newData
-      );
+      let data = null;
+      if (endpoint === PATIENT_ENDPOINT) {
+        data = await DataService.createData<UserData | PatientData>(
+          endpoint,
+          newData
+        );
+      } else {
+        data = await DataService.createFormData<UserData | PatientData>(
+          endpoint,
+          newData
+        );
+      }
       setUsers((prevState) => [...(prevState || []), data]);
       handleClean();
       toast.success(`${userType} añadido correctamente`);
