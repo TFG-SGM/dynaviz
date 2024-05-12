@@ -19,6 +19,11 @@ export class DoctorController {
   }
 
   static async create(req: Request, res: Response) {
+    req.body = {
+      ...req.body,
+      photo: { name: req.file?.originalname, id: req.file?.id.toString() },
+    };
+
     const result = validateDoctor(req.body);
 
     if (!result.success) {
@@ -41,6 +46,15 @@ export class DoctorController {
   }
 
   static async update(req: Request, res: Response) {
+    if (req.body.isPhotoChanged) {
+      req.body = {
+        ...req.body,
+        photo: { name: req.file?.originalname, id: req.file?.id.toString() },
+      };
+    } else {
+      delete req.body.photo;
+    }
+
     const result = validatePartialDoctor(req.body);
 
     if (!result.success) {

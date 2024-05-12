@@ -42,6 +42,7 @@ async function createAdmin() {
     city: faker.location.city(),
     email: faker.internet.email(),
     phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
+    photo: null,
   };
 
   admin.password = await AuthController.hashPassword(admin.password);
@@ -61,6 +62,7 @@ async function createDoctor() {
     city: faker.location.city(),
     email: faker.internet.email(),
     phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
+    photo: null,
   };
 
   doctor.password = await AuthController.hashPassword(doctor.password);

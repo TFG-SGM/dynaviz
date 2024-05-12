@@ -9,6 +9,12 @@ const DoctorSchema = z.object({
   city: z.string(),
   email: z.string(),
   phone: z.string(),
+  photo: z
+    .object({
+      name: z.string().optional(),
+      id: z.string().optional(),
+    })
+    .optional(),
 });
 
 export function validateDoctor(input: User) {

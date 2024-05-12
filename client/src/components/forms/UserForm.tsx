@@ -69,12 +69,12 @@ export function UserForm<T>({
     setNewData((prevState) => {
       return {
         ...prevState,
+        photo: { name: null, id: null },
         isPhotoChanged: true,
         prevPhoto: prevState.photo.id,
       };
     });
-    data.photo.name = null;
-    data.photo.id = null;
+
     const imgElement = document.querySelector(".photo-preview");
     if (!imgElement) return;
     imgElement.src = undefined;
@@ -170,11 +170,22 @@ export function UserForm<T>({
         {!data.photo.id ? (
           <img className="photo-preview" />
         ) : imageBlob ? (
-          <img className="photo-preview" src={URL.createObjectURL(imageBlob)} />
+          <>
+            <img
+              className="photo-preview"
+              src={URL.createObjectURL(imageBlob)}
+            />
+          </>
         ) : (
           <LoadingComponent message="Cargando imagen"></LoadingComponent>
         )}
-        <button type="button" onClick={handleDeletePhoto}></button>
+        <button
+          type="button"
+          className="remove-image-button"
+          onClick={handleDeletePhoto}
+        >
+          Eliminar imagen
+        </button>
       </label>
 
       {handleChangePassForm && (
