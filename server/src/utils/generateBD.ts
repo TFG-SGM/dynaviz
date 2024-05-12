@@ -36,8 +36,8 @@ async function createAdmin() {
     surname: faker.person.lastName(),
     password: "admin",
     date: faker.date.between({
-      from: "1960-01-01T00:00:00.000Z",
-      to: "2006-01-01T00:00:00.000Z",
+      from: "1970-01-01T00:00:00.000Z",
+      to: "2000-01-01T00:00:00.000Z",
     }),
     city: faker.location.city(),
     email: faker.internet.email(),
@@ -56,8 +56,8 @@ async function createDoctor() {
     surname: faker.person.lastName(),
     password: "doctor",
     date: faker.date.between({
-      from: "1960-01-01T00:00:00.000Z",
-      to: "2006-01-01T00:00:00.000Z",
+      from: "1970-01-01T00:00:00.000Z",
+      to: "2000-01-01T00:00:00.000Z",
     }),
     city: faker.location.city(),
     email: faker.internet.email(),

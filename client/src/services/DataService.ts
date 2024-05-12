@@ -87,7 +87,11 @@ export class DataService {
   ) {
     const token = await DataService.getToken();
 
-    if ("prevPhoto" in newData && newData.prevPhoto !== null) {
+    if (
+      "prevPhoto" in newData &&
+      newData.prevPhoto &&
+      newData.prevPhoto !== ""
+    ) {
       this.deleteData(FILE_ENDPOINT + newData.prevPhoto);
     }
     const formData = this.getFormDataFromObject(newData);

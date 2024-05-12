@@ -48,11 +48,21 @@
   grid-column: 1 / -1;
 }
 
+.remove-image-button,
 .cancel-button {
   background-color: var(--form-background);
   color: var(--red);
   transition: 200ms;
   margin-left: auto;
+}
+
+.remove-image-button {
+  margin-left: 0;
+  width: fit-content;
+}
+
+.remove-image-button.hidden {
+  display: none;
 }
 
 .delete-button {

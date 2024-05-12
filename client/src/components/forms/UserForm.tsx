@@ -43,8 +43,11 @@ export function UserForm({
       const imgElement = document.querySelector(
         ".photo-preview"
       ) as HTMLImageElement;
+      const removeImgButton = document.querySelector(".remove-image-button");
+
       if (!imgElement) return;
       imgElement.src = reader.result as string;
+      removeImgButton?.classList.remove("hidden");
     };
 
     if (file) {
@@ -81,8 +84,10 @@ export function UserForm({
     const imgElement = document.querySelector(
       ".photo-preview"
     ) as HTMLImageElement;
+    const removeImgButton = document.querySelector(".remove-image-button");
     if (!imgElement) return;
     imgElement.src = "";
+    removeImgButton?.classList.add("hidden");
   };
 
   if (!data) return;
@@ -186,7 +191,7 @@ export function UserForm({
         )}
         <button
           type="button"
-          className="remove-image-button"
+          className={`remove-image-button ${!imageBlob && "hidden"}`}
           onClick={handleDeletePhoto}
         >
           Eliminar imagen
