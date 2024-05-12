@@ -4,7 +4,7 @@ import { TestButtons } from "./TestButtons";
 describe("<TestButtons />", () => {
   it("renders", () => {
     // Render your component
-    cy.mount(<TestButtons />);
+    cy.mount(<TestButtons handleChangeChart={() => {}} />);
 
     // Check if the component renders the test information correctly
     cy.get("button").contains("Líneas").should("exist");
@@ -23,7 +23,7 @@ describe("<TestButtons />", () => {
 describe("<EvolutionButtons />", () => {
   it("renders", () => {
     // Render your component
-    cy.mount(<EvolutionButtons />);
+    cy.mount(<EvolutionButtons handleChangeChart={() => {}} />);
 
     // Check if the component renders the test information correctly
     cy.get("button").contains("Líneas").should("exist");

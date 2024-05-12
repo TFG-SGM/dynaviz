@@ -81,12 +81,15 @@ export class DataService {
     return data.value;
   }
 
-  public static async updateFormData<T>(endpoint: string, newData: T) {
+  public static async updateFormData<T extends { prevPhoto?: string }>(
+    endpoint: string,
+    newData: T
+  ) {
     const token = await DataService.getToken();
 
-    console.log(newData);
-
-    if (newData.prevPhoto) this.deleteData(FILE_ENDPOINT + newData.prevPhoto);
+    if ("prevPhoto" in newData && newData.prevPhoto !== null) {
+      this.deleteData(FILE_ENDPOINT + newData.prevPhoto);
+    }
     const formData = this.getFormDataFromObject(newData);
 
     const { data } = await axios.put(URL + endpoint, formData, {

@@ -48,12 +48,13 @@ function createAdmin() {
             surname: faker_1.faker.person.lastName(),
             password: "admin",
             date: faker_1.faker.date.between({
-                from: "1930-01-01T00:00:00.000Z",
+                from: "1960-01-01T00:00:00.000Z",
                 to: "2006-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),
             phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
+            photo: { id: null, name: null },
         };
         admin.password = yield auth_1.AuthController.hashPassword(admin.password);
         yield admin_1.AdminModel.create({ input: admin });
@@ -66,12 +67,13 @@ function createDoctor() {
             surname: faker_1.faker.person.lastName(),
             password: "doctor",
             date: faker_1.faker.date.between({
-                from: "1930-01-01T00:00:00.000Z",
+                from: "1960-01-01T00:00:00.000Z",
                 to: "2006-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),
             phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
+            photo: { id: null, name: null },
         };
         doctor.password = yield auth_1.AuthController.hashPassword(doctor.password);
         const newDoctor = yield doctor_1.DoctorModel.create({ input: doctor });

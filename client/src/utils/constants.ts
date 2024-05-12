@@ -21,7 +21,7 @@ export const INITIAL_USER = {
   email: "",
   phone: "",
   password: "",
-  photo: "",
+  photo: { id: "", name: "" },
 };
 
 export const INITIAL_PATIENT = {

@@ -135,7 +135,7 @@ export class TestService {
         date: test.date.split("T")[0],
         parts: Object.keys(test.data.parts).map((part) => ({
           name: part,
-          restriction: test.data.parts[part].restriction,
+          restriction: test.data?.parts[part].restriction,
         })),
       };
     });

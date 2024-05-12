@@ -22,7 +22,6 @@ const userAuth = (req, res, next) => {
             return res.status(403).send({ error: "Token invalido." });
         }
         req.body.userData = { email: decoded.email, role: decoded.role };
-        console.log("Token decodificado:", decoded);
         next();
     });
 };

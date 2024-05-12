@@ -10,25 +10,26 @@ import { ErrorComponent } from "../other/ErrorComponent";
 import { useFile } from "../../hooks/useFile";
 import { IMAGE_TYPE } from "../../utils/constants";
 import { LoadingComponent } from "../other/LoadingComponent";
-export interface UserFormProps<T> {
+export interface UserFormProps {
   data: UserData | null;
-  setNewData: Dispatch<SetStateAction<T>>;
+  setNewData: Dispatch<SetStateAction<UserData>>;
   isPass?: boolean;
   handleChangePassForm?: MouseEventHandler<HTMLButtonElement> | undefined;
   error: string | null;
 }
 
-export function UserForm<T>({
+export function UserForm({
   data,
   setNewData,
   isPass = false,
   handleChangePassForm = undefined,
   error,
-}: UserFormProps<T>) {
+}: UserFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageBlob] = useFile(data?.photo.id, IMAGE_TYPE);
 
   const handleChangeImg = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     const file = e.target.files[0];
     const reader = new FileReader();
     setNewData((prevState) => {
@@ -39,9 +40,11 @@ export function UserForm<T>({
       };
     });
     reader.onload = () => {
-      const imgElement = document.querySelector(".photo-preview");
+      const imgElement = document.querySelector(
+        ".photo-preview"
+      ) as HTMLImageElement;
       if (!imgElement) return;
-      imgElement.src = reader.result;
+      imgElement.src = reader.result as string;
     };
 
     if (file) {
@@ -69,15 +72,17 @@ export function UserForm<T>({
     setNewData((prevState) => {
       return {
         ...prevState,
-        photo: { name: null, id: null },
+        photo: { name: "", id: "" },
         isPhotoChanged: true,
         prevPhoto: prevState.photo.id,
       };
     });
 
-    const imgElement = document.querySelector(".photo-preview");
+    const imgElement = document.querySelector(
+      ".photo-preview"
+    ) as HTMLImageElement;
     if (!imgElement) return;
-    imgElement.src = undefined;
+    imgElement.src = "";
   };
 
   if (!data) return;

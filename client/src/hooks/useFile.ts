@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataService } from "../services/DataService";
 import { FILE_ENDPOINT, URL } from "../utils/constants";
 
-export function useFile(id: string, type: string) {
+export function useFile(id: string | undefined, type: string) {
   const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
 
   useEffect(() => {

@@ -10,7 +10,9 @@ export type UserData = {
   email: string;
   phone: string;
   role?: string;
-  photo: string | File;
+  photo: { id: string; name: string };
+  prevPhoto?: string;
+  isPhotoChanged?: boolean;
 };
 
 export type PatientData = {

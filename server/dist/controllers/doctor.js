@@ -33,6 +33,8 @@ class DoctorController {
     }
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            req.body = Object.assign(Object.assign({}, req.body), { photo: { name: (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, id: (_b = req.file) === null || _b === void 0 ? void 0 : _b.id.toString() } });
             const result = (0, doctor_2.validateDoctor)(req.body);
             if (!result.success) {
                 return res.status(400).json({ error: JSON.parse(result.error.message) });
@@ -50,6 +52,13 @@ class DoctorController {
     }
     static update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            if (req.body.isPhotoChanged) {
+                req.body = Object.assign(Object.assign({}, req.body), { photo: { name: (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, id: (_b = req.file) === null || _b === void 0 ? void 0 : _b.id.toString() } });
+            }
+            else {
+                delete req.body.photo;
+            }
             const result = (0, doctor_2.validatePartialDoctor)(req.body);
             if (!result.success) {
                 return res.status(400).json({ error: JSON.parse(result.error.message) });

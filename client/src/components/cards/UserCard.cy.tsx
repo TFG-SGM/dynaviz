@@ -1,8 +1,10 @@
+import { INITIAL_USER } from "../../utils/constants";
 import { UserCard } from "./UserCard";
 
 describe("<UserCard />", () => {
   it("calls setActual with correct parameters when clicked", () => {
     const userData = {
+      ...INITIAL_USER,
       _id: "0001",
       uId: "0001",
       name: "Sergio",

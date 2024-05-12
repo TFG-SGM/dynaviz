@@ -20,7 +20,7 @@ import { Interrogation } from "../other/Icons";
 export function TestContainer() {
   const { testId } = useParams();
   const [test] = useData<TestData>(TEST_ENDPOINT + testId);
-  const [isHelpMenu, setIsHelpMenu] = useData<boolean>(false);
+  const [isHelpMenu, setIsHelpMenu] = useState<boolean>(false);
   const [actual, setActual] = useState<testActual>({
     chart: "line",
     axis: "xAxis",

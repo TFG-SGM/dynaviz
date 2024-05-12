@@ -13,6 +13,12 @@ const DoctorSchema = zod_1.default.object({
     city: zod_1.default.string(),
     email: zod_1.default.string(),
     phone: zod_1.default.string(),
+    photo: zod_1.default
+        .object({
+        name: zod_1.default.string().optional(),
+        id: zod_1.default.string().optional(),
+    })
+        .optional(),
 });
 function validateDoctor(input) {
     return DoctorSchema.safeParse(input);

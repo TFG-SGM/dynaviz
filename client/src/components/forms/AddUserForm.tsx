@@ -39,14 +39,14 @@ export function AddUserForm<T>({
       setIsDisabled(true);
       let data = null;
       if (endpoint === PATIENT_ENDPOINT) {
-        data = await DataService.createData<UserData | PatientData>(
+        data = await DataService.createData<PatientData>(
           endpoint,
-          newData
+          newData as PatientData
         );
       } else {
-        data = await DataService.createFormData<UserData | PatientData>(
+        data = await DataService.createFormData<UserData>(
           endpoint,
-          newData
+          newData as UserData
         );
       }
       setUsers((prevState) => [...(prevState || []), data]);
@@ -76,13 +76,13 @@ export function AddUserForm<T>({
           {endpoint === PATIENT_ENDPOINT ? (
             <PatientForm
               data={newData as PatientData}
-              setNewData={setNewData}
+              setNewData={setNewData as Dispatch<SetStateAction<PatientData>>}
               error={error}
             ></PatientForm>
           ) : (
             <UserForm
               data={newData as UserData}
-              setNewData={setNewData}
+              setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
               isPass={true}
               error={error}
             ></UserForm>

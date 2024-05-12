@@ -1,4 +1,10 @@
-import { FormEvent, MouseEventHandler, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  MouseEventHandler,
+  SetStateAction,
+  useState,
+} from "react";
 import { useData } from "../../hooks/useData";
 import { UserForm } from "./UserForm";
 import { DataService } from "../../services/DataService";
@@ -32,10 +38,19 @@ export function UpdateUserForm({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await DataService.updateFormData<UserData | PatientData>(
-        endpoint,
-        newData
-      );
+      let data = null;
+      if (userType === "Paciente") {
+        data = await DataService.updateData<PatientData>(
+          endpoint,
+          newData as PatientData
+        );
+      } else {
+        data = await DataService.updateFormData<UserData>(
+          endpoint,
+          newData as UserData
+        );
+      }
+
       handleUpdate(data);
       handleCancel();
       toast.success(`${userType} actualizado correctamente`);
@@ -61,13 +76,13 @@ export function UpdateUserForm({
           {userType === "Paciente" ? (
             <PatientForm
               data={newData as PatientData}
-              setNewData={setNewData}
+              setNewData={setNewData as Dispatch<SetStateAction<PatientData>>}
               error={error}
             ></PatientForm>
           ) : (
             <UserForm
               data={newData as UserData}
-              setNewData={setNewData}
+              setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
               handleChangePassForm={handleChangePassForm}
               error={error}
             ></UserForm>

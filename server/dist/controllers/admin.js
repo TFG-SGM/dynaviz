@@ -33,6 +33,8 @@ class AdminController {
     }
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            req.body = Object.assign(Object.assign({}, req.body), { photo: { name: (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, id: (_b = req.file) === null || _b === void 0 ? void 0 : _b.id.toString() } });
             const result = (0, admin_2.validateAdmin)(req.body);
             if (!result.success) {
                 return res.status(400).json({ error: JSON.parse(result.error.message) });
@@ -50,6 +52,14 @@ class AdminController {
     }
     static update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            console.log(req.body);
+            if (req.body.isPhotoChanged) {
+                req.body = Object.assign(Object.assign({}, req.body), { photo: { name: (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, id: (_b = req.file) === null || _b === void 0 ? void 0 : _b.id.toString() } });
+            }
+            else {
+                delete req.body.photo;
+            }
             const result = (0, admin_2.validatePartialAdmin)(req.body);
             if (!result.success) {
                 return res.status(400).json({ error: JSON.parse(result.error.message) });

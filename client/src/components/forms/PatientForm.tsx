@@ -5,17 +5,13 @@ import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { SelectDoctor } from "../selects/SelectDoctor";
 
-export interface PatientFormProps<T> {
+export interface PatientFormProps {
   data: PatientData | null;
-  setNewData: Dispatch<SetStateAction<T>>;
+  setNewData: Dispatch<SetStateAction<PatientData>>;
   error: string | null;
 }
 
-export function PatientForm<T>({
-  data,
-  setNewData,
-  error,
-}: PatientFormProps<T>) {
+export function PatientForm({ data, setNewData, error }: PatientFormProps) {
   useActualDoctor(setNewData);
 
   const handleChange = (
