@@ -20,8 +20,8 @@ export function BarChart({ data }: { data: TestSubData }) {
     series: [
       {
         name: "Restricción de movimiento",
-        data: processData.dataY,
         type: "bar",
+        data: processData.dataY,
       },
     ],
     tooltip: {},

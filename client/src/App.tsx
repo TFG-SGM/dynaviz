@@ -10,6 +10,7 @@ import "./styles/cards.css";
 import "./styles/menus.css";
 import "./styles/tests.css";
 import "./styles/test-form.css";
+import "./styles/inform.css";
 
 export function App() {
   return (

@@ -43,6 +43,10 @@ export function TestDataElement({ test }: { test: TestData }) {
         <strong>Escala EVA:</strong> {evaScale} / 10
       </p>
       <p>
+        <strong>Restricción de movimiento total: </strong>
+        {test.data?.restriction}
+      </p>
+      <p>
         <strong>Video:</strong> {video.name}
       </p>
       {videoBlob ? (

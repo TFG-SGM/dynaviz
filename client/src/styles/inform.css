@@ -1,0 +1,28 @@
+.inform {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.inform-part {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inform h2 {
+  text-decoration: underline;
+}
+
+.inform-part > h3 {
+  align-self: center;
+}
+
+.inform-dialog > button {
+  margin-bottom: -35px;
+  z-index: 1;
+}
+
+.inform-buttons {
+  margin-left: auto;
+}

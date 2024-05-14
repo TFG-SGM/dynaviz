@@ -16,6 +16,7 @@ import { ActualChart } from "../elements/ActualChart";
 import { TestMenuView } from "../menus/TestMenuView";
 import { HelpMenu } from "../menus/HelpMenu";
 import { Interrogation } from "../other/Icons";
+import { Inform } from "./Inform";
 
 export function TestContainer() {
   const { testId } = useParams();
@@ -27,6 +28,8 @@ export function TestContainer() {
     part1: "",
     part2: "",
   });
+  const [isViewing, setIsViewing] = useState(false);
+  const [isInform, setIsInform] = useState(false);
 
   useEffect(() => {
     if (test && test.data) {
@@ -43,8 +46,6 @@ export function TestContainer() {
       secondBodyPartButton?.classList.add(`active-part2`);
     }
   }, [test, actual.chart]);
-
-  const [isViewing, setIsViewing] = useState(false);
 
   const handleChangeChart: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLElement;
@@ -84,6 +85,9 @@ export function TestContainer() {
 
   return (
     <>
+      {isInform && (
+        <Inform test={test} handleClean={() => setIsInform(false)}></Inform>
+      )}
       {isHelpMenu && (
         <HelpMenu
           chart={actual.chart}
@@ -96,12 +100,12 @@ export function TestContainer() {
           handleClean={() => setIsViewing(false)}
         ></TestMenuView>
       )}
-      <button
-        className="test-details-button"
-        onClick={() => setIsViewing(true)}
-      >
-        Consultar detalles
-      </button>
+
+      <div className="test-details-buttons">
+        <button onClick={() => setIsInform(true)}>Exportar datos</button>
+        <button onClick={() => setIsViewing(true)}>Consultar detalles</button>
+      </div>
+
       <div className="test-container">
         <TestButtons handleChangeChart={handleChangeChart}></TestButtons>
         <div className="body-parts-container">

@@ -16,4 +16,7 @@ export default defineConfig({
       includeAssets: ["favicon.ico"],
     }),
   ],
+  optimizeDeps: {
+    exclude: ["canvg", "html2canvas", "dompurify"],
+  },
 });

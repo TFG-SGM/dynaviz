@@ -1,3 +1,3 @@
 export function Footer() {
-  return <footer>Realizado por Sergio García Muñoz</footer>;
+  return <footer>Creado por Sergio García Muñoz</footer>;
 }

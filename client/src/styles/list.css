@@ -43,7 +43,7 @@
   font-size: 16px;
 }
 
-.test-details-button,
+.test-details-buttons,
 .add-user-button {
   grid-area: button;
   justify-self: flex-end;
@@ -74,7 +74,7 @@
     grid-template-areas: "title" "buttons" "list" "filters";
   }
 
-  .test-details-button,
+  .test-details-buttons,
   .add-user-button,
   .tests-buttons {
     justify-self: flex-start;
