@@ -60,7 +60,9 @@ export function Inform({
       }
 
       // Save or open the PDF
-      pdf.save("inform.pdf");
+      pdf.save(
+        `prueba_${patient?.name.toLowerCase()}_${patient?.surname.toLocaleLowerCase()}.pdf`
+      );
     });
   };
 
