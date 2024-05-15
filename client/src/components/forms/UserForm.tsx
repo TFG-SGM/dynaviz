@@ -95,7 +95,7 @@ export function UserForm({
   return (
     <>
       <label>
-        Nombre{" "}
+        Nombre*{" "}
         <input
           name="name"
           type="text"
@@ -105,7 +105,7 @@ export function UserForm({
         ></input>
       </label>
       <label>
-        Apellidos{" "}
+        Apellidos*{" "}
         <input
           name="surname"
           type="text"
@@ -115,7 +115,7 @@ export function UserForm({
         ></input>
       </label>
       <label>
-        Fecha de nacimiento{" "}
+        Fecha de nacimiento*{" "}
         <input
           name="date"
           type="date"
@@ -126,7 +126,7 @@ export function UserForm({
         ></input>
       </label>
       <label>
-        Ciudad{" "}
+        Ciudad*{" "}
         <input
           name="city"
           type="text"
@@ -136,7 +136,7 @@ export function UserForm({
         ></input>
       </label>
       <label>
-        Email{" "}
+        Email*{" "}
         <input
           name="email"
           type="email"
@@ -147,7 +147,7 @@ export function UserForm({
         {error && <ErrorComponent error={error}></ErrorComponent>}
       </label>
       <label>
-        Teléfono{" "}
+        Teléfono*{" "}
         <input
           name="phone"
           pattern="[0-9]{9}"
@@ -158,7 +158,7 @@ export function UserForm({
       </label>
       {isPass && (
         <label>
-          Contraseña{" "}
+          Contraseña*{" "}
           <input
             name="password"
             type="password"
@@ -169,7 +169,7 @@ export function UserForm({
         </label>
       )}
       <label>
-        Foto:
+        Foto
         <input
           type="file"
           name="photo"
