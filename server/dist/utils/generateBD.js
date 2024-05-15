@@ -48,8 +48,8 @@ function createAdmin() {
             surname: faker_1.faker.person.lastName(),
             password: "admin",
             date: faker_1.faker.date.between({
-                from: "1960-01-01T00:00:00.000Z",
-                to: "2006-01-01T00:00:00.000Z",
+                from: "1970-01-01T00:00:00.000Z",
+                to: "2000-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),
@@ -67,8 +67,8 @@ function createDoctor() {
             surname: faker_1.faker.person.lastName(),
             password: "doctor",
             date: faker_1.faker.date.between({
-                from: "1960-01-01T00:00:00.000Z",
-                to: "2006-01-01T00:00:00.000Z",
+                from: "1970-01-01T00:00:00.000Z",
+                to: "2000-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
             email: faker_1.faker.internet.email(),

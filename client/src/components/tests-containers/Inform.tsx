@@ -13,35 +13,25 @@ import {
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { BarChart } from "../charts/bar";
-import { useEffect, useState } from "react";
 import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
+import { useOrderParts } from "../../hooks/useOrderParts";
 
-export function Inform({ test, handleClean }: { test: TestData }) {
+export function Inform({
+  test,
+  handleClean,
+}: {
+  test: TestData;
+  handleClean: () => void;
+}) {
   const { doctorId, typeId, date, patientId, evaScale } = test;
   const [doctor] = useData<UserData>(DOCTOR_ENDPOINT + doctorId);
   const [type] = useData<TestTypeData>(TEST_TYPE_ENDPOINT + typeId);
   const [patient] = useData<PatientData>(PATIENT_ENDPOINT + patientId);
-  const [parts, setParts] = useState([]);
-
-  useEffect(() => {
-    if (!test.data?.parts) return;
-    const partsWithRestrictions = Object.keys(test.data.parts).map(
-      (partKey) => ({
-        partKey: partKey,
-        restriction: test.data?.parts[partKey].restriction,
-      })
-    );
-
-    partsWithRestrictions.sort((a, b) => {
-      return b.restriction - a.restriction;
-    });
-
-    setParts(partsWithRestrictions);
-  }, [test.data?.parts]);
+  const [orderParts] = useOrderParts(test);
 
   const exportInform = () => {
-    const informDiv = document.querySelector(".inform");
+    const informDiv = document.querySelector(".inform") as HTMLElement;
 
     // Use html2canvas to capture the content of the div as an image
     html2canvas(informDiv).then((canvas) => {
@@ -111,7 +101,7 @@ export function Inform({ test, handleClean }: { test: TestData }) {
           <div className="inform-part">
             <h2>Restricciones de Movimiento</h2>
 
-            {parts.map((part) => (
+            {orderParts.map((part) => (
               <p key={part.partKey}>
                 <strong>{part.partKey}: </strong> {part.restriction}
               </p>

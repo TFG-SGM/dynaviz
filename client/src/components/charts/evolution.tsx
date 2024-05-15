@@ -1,7 +1,7 @@
 import ReactECharts from "echarts-for-react";
-import { useEffect, useState } from "react";
-import { TestData, TestSubData, evolutionActual } from "../../utils/types";
+import { TestData, evolutionActual } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
+import { useProcessDataEvolution } from "../../hooks/useProcessDataEvolution";
 
 export function EvolutionChart({
   tests,
@@ -10,82 +10,19 @@ export function EvolutionChart({
   tests: TestData[];
   actual: evolutionActual;
 }) {
-  const [data, setData] = useState<{
-    dates: string[];
-    restrictionSeries: object;
-  }>({
-    dates: [],
-    restrictionSeries: {},
-  });
-
-  useEffect(() => {
-    const newDates: string[] = [];
-    const newRestrictions: { [key: string]: number[] } = {};
-
-    if (actual.parts.length === 0) {
-      newRestrictions["Restricción de movimiento total"] = [];
-    } else {
-      actual.parts.forEach((part: string) => {
-        newRestrictions[part] = [];
-      });
-    }
-
-    tests.forEach((test) => {
-      if (test.data) {
-        if (actual.parts.length === 0)
-          newRestrictions["Restricción de movimiento total"].push(
-            test.data.restriction
-          );
-        else if (test.data.parts) {
-          Object.keys(test.data.parts).forEach((part) => {
-            if (part in newRestrictions)
-              newRestrictions[part] = [
-                ...(newRestrictions[part] ?? []),
-                (test.data as TestSubData).parts[part].restriction,
-              ];
-          });
-        }
-        newDates.push(test.date.split("T")[0]);
-      }
-    });
-
-    const restrictionSeries = Object.keys(newRestrictions).map((key) => {
-      if (actual.chart === "line") {
-        return {
-          data: newRestrictions[key],
-          type: actual.chart,
-          name: key,
-        };
-      } else {
-        return {
-          data: newRestrictions[key],
-          type: actual.chart,
-          name: key,
-          stack: "Restricción de movimiento total",
-          areaStyle: actual.parts.length !== 0 ? {} : undefined,
-        };
-      }
-    });
-
-    setData({
-      dates: newDates,
-      restrictionSeries: restrictionSeries,
-    });
-  }, [tests, actual.parts, actual.chart]);
-
-  console.log(data);
+  const [processData] = useProcessDataEvolution(tests, actual);
 
   const option = {
     xAxis: {
       name: "Fecha",
       type: "category",
-      data: data.dates,
+      data: processData.dates,
     },
     yAxis: {
       name: "Restricción de movimiento",
       type: "value",
     },
-    series: data.restrictionSeries,
+    series: processData.restrictionSeries,
     tooltip: {
       trigger: "axis",
     },

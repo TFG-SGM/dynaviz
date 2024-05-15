@@ -1,26 +1,10 @@
 import ReactECharts from "echarts-for-react";
 import { TestData } from "../../utils/types";
 import { CHART_HEIGHT } from "../../utils/constants";
-import { TestService } from "../../services/TestService";
-import { useEffect, useState } from "react";
-
-interface ProcessDataProps {
-  date: string;
-  parts: {
-    name: string;
-    restriction: number | undefined;
-  }[];
-}
+import { useProcessDataRadar } from "../../hooks/useProcessDataRadar";
 
 export function RadarEvolutionChart({ tests }: { tests: TestData[] }) {
-  const [processData, setProcessData] = useState<(ProcessDataProps | null)[]>(
-    []
-  );
-
-  useEffect(() => {
-    const processData = TestService.getProcessDataForChartEvolution(tests);
-    setProcessData(processData);
-  }, [tests]);
+  const [processData] = useProcessDataRadar(tests);
 
   const options = processData.map((data) => ({
     radar: {

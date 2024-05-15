@@ -8,6 +8,7 @@ export function PreviewVideoView({ stream }: { stream: MediaStream | null }) {
       videoRef.current.srcObject = stream;
     }
   }, [stream]);
+
   if (!stream) {
     return <p>No esta grabando</p>;
   }
