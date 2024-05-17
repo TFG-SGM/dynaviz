@@ -1,10 +1,10 @@
-import { EvolutionButtons } from "./EvolutionButtons";
 import { TestButtons } from "./TestButtons";
 
 describe("<TestButtons />", () => {
-  it("renders", () => {
+  it("render", () => {
     // Render your component
-    cy.mount(<TestButtons handleChangeChart={() => {}} />);
+    const handleChangeChart = cy.stub().as("handleChangeChart");
+    cy.mount(<TestButtons handleChangeChart={handleChangeChart} />);
 
     // Check if the component renders the test information correctly
     cy.get("button").contains("Líneas").should("exist");
@@ -17,17 +17,7 @@ describe("<TestButtons />", () => {
     cy.get("button").contains("Cajas y Bigotes 2").should("exist");
     cy.get("button").contains("Burbujas").should("exist");
     cy.get("button").contains("Mapa de calor").should("exist");
-  });
-});
-
-describe("<EvolutionButtons />", () => {
-  it("renders", () => {
-    // Render your component
-    cy.mount(<EvolutionButtons handleChangeChart={() => {}} />);
-
-    // Check if the component renders the test information correctly
-    cy.get("button").contains("Líneas").should("exist");
-    cy.get("button").contains("Barras").should("exist");
-    cy.get("button").contains("Radar").should("exist");
+    cy.get(".active-chart").click();
+    cy.get("@handleChangeChart").should("have.been.called");
   });
 });

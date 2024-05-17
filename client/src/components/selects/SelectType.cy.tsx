@@ -1,24 +1,24 @@
 import { SelectType } from "./SelectType";
 
 describe("<SelectDoctor />", () => {
-  it("renders options based on the provided types", () => {
-    const option = "doctor";
-    const value = "doctor";
+  it("render", () => {
+    const option = "type";
+    const value = "type";
     const endpoint = "/type";
     const handleChange = cy.stub().as("handleChange");
     const isAdding = false;
     const doctors = [
       {
-        _id: "0",
-        name: "a",
+        _id: "0001",
+        name: "",
       },
       {
-        _id: "0",
+        _id: "0002",
         name: "a",
       },
     ];
 
-    cy.intercept("GET", endpoint, { body: doctors }).as("getData");
+    cy.intercept("GET", endpoint, { body: doctors });
 
     cy.mount(
       <SelectType
@@ -30,13 +30,13 @@ describe("<SelectDoctor />", () => {
       ></SelectType>
     );
 
-    cy.get("select[name='doctor']").should("exist");
-    cy.get("select[name='doctor'] option").should(
+    cy.get("select[name='type']").should("exist");
+    cy.get("select[name='type'] option").should(
       "have.length",
       doctors.length + 1
     );
     doctors.forEach((doctor) => {
-      cy.get(`select[name='doctor'] option[value='${doctor._id}']`).should(
+      cy.get(`select[name='type'] option[value='${doctor._id}']`).should(
         "exist"
       );
     });

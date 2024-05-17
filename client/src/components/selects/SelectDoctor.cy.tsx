@@ -1,7 +1,7 @@
 import { SelectDoctor } from "./SelectDoctor";
 
 describe("<SelectDoctor />", () => {
-  it("renders options based on the provided doctos", () => {
+  it("render", () => {
     const option = "doctor";
     const value = "doctor";
     const endpoint = "/doctor";
@@ -9,18 +9,18 @@ describe("<SelectDoctor />", () => {
     const isAdding = false;
     const doctors = [
       {
-        _id: "0",
-        name: "a",
-        surname: "a",
+        _id: "0001",
+        name: "John",
+        surname: "Doe",
       },
       {
-        _id: "0",
-        name: "a",
-        surname: "a",
+        _id: "0002",
+        name: "Jane",
+        surname: "Doe",
       },
     ];
 
-    cy.intercept("GET", endpoint, { body: doctors }).as("getData");
+    cy.intercept("GET", endpoint, { body: doctors });
 
     cy.mount(
       <SelectDoctor

@@ -2,8 +2,8 @@ import { TEST_ENDPOINT } from "../../utils/constants";
 import { SelectDate } from "./SelectDate";
 
 describe("<SelectDate />", () => {
-  it("renders options based on the provided dates", () => {
-    const patientId = "00001";
+  it("render", () => {
+    const patientId = "0001";
     const value = "";
     const handleChange = cy.stub().as("handleChange");
     const isAdding = true;
@@ -19,7 +19,7 @@ describe("<SelectDate />", () => {
       {
         body: dates,
       }
-    ).as("getData");
+    );
 
     cy.mount(
       <SelectDate
