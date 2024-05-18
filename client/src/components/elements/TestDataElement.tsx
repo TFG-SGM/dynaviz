@@ -30,14 +30,16 @@ export function TestDataElement({ test }: { test: TestData }) {
           : "Ninguno"}
       </p>
       <p>
-        <strong>Tipo:</strong> {type?.name}
+        <strong>Tipo:</strong> {type ? type.name : "Ninguno"}
       </p>
       <p>
         <strong>Fecha:</strong> {date.split("T")[0]}
       </p>
       <p>
-        <strong>Paciente:</strong> {patient?.name} {patient?.surname} (
-        {patient?.uId})
+        <strong>Paciente:</strong>{" "}
+        {patient
+          ? `${patient.name} ${patient.surname} (${patient.uId})`
+          : "Ninguno"}
       </p>
       <p>
         <strong>Escala EVA:</strong> {evaScale} / 10
@@ -47,7 +49,7 @@ export function TestDataElement({ test }: { test: TestData }) {
         {test.data?.restriction}
       </p>
       <p>
-        <strong>Video:</strong> {video.name}
+        <strong>Vídeo:</strong> {video.name}
       </p>
       {videoBlob ? (
         <video id="videoPlayer" width="500" controls>

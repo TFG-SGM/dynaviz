@@ -45,7 +45,7 @@ export function NewTest({
         ></SelectType>
       </label>
       <label>
-        Video
+        Vídeo
         <input
           name={`${id}.video`}
           type="file"

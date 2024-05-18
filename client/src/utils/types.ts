@@ -15,6 +15,8 @@ export type UserData = {
   isPhotoChanged?: boolean;
 };
 
+export type activityLevel = "leve" | "moderado" | "activo";
+
 export type PatientData = {
   uId?: string;
   _id: string;
@@ -25,7 +27,7 @@ export type PatientData = {
   city: string;
   email: string;
   phone: string;
-  activityLevel: string;
+  activityLevel: activityLevel;
   occupation: string;
   diagnosisYears: number;
   isFibro: boolean;

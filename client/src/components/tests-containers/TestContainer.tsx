@@ -16,7 +16,7 @@ import { ActualChart } from "../elements/ActualChart";
 import { TestMenuView } from "../menus/TestMenuView";
 import { HelpMenu } from "../menus/HelpMenu";
 import { Interrogation } from "../other/Icons";
-import { Inform } from "./Inform";
+import { Inform } from "../menus/Inform";
 
 export function TestContainer() {
   const { testId } = useParams();

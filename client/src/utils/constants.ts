@@ -1,3 +1,5 @@
+import { activityLevel } from "./types";
+
 export const URL = import.meta.env.VITE_SERVER_URL ?? "http://localhost:3000/";
 
 export const ADMIN_ENDPOINT = "admin/";
@@ -34,7 +36,7 @@ export const INITIAL_PATIENT = {
   phone: "",
   weight: 0,
   height: 0,
-  activityLevel: "",
+  activityLevel: "leve" as activityLevel,
   occupation: "",
   diagnosisYears: 0,
   isFibro: false,
