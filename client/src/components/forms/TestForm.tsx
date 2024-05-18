@@ -11,9 +11,10 @@ import { Toaster } from "sonner";
 export interface TestFormProps {
   data: ManyTestsData | null;
   setNewData: Dispatch<SetStateAction<ManyTestsData>>;
+  isDisabled: boolean;
 }
 
-export function TestForm({ data, setNewData }: TestFormProps) {
+export function TestForm({ data, setNewData, isDisabled }: TestFormProps) {
   useActualDoctor(setNewData);
   const [testTypes] = useData<TestTypeData[]>(TEST_TYPE_ENDPOINT);
   const [doctors] = useData<UserData[]>(DOCTOR_ENDPOINT);
@@ -150,6 +151,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
               handleChangeRecordingState={handleChangeRecordingState}
               handleRemoveNewTest={handleRemoveNewTest}
               inputRef={inputRef}
+              isDisabled={isDisabled}
             ></NewTest>
           );
         })}
@@ -157,6 +159,7 @@ export function TestForm({ data, setNewData }: TestFormProps) {
           className="add-new-test-button"
           type="button"
           onClick={handleAddNewTest}
+          disabled={isDisabled}
         >
           + Añadir tipo de prueba
         </button>

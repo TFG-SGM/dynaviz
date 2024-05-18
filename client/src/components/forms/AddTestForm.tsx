@@ -67,7 +67,11 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
           ></CrossButton>
         </div>{" "}
         <form className="test-form" onSubmit={handleSubmit}>
-          <TestForm data={newData} setNewData={setNewData}></TestForm>
+          <TestForm
+            data={newData}
+            setNewData={setNewData}
+            isDisabled={isDisabled}
+          ></TestForm>
           <div className="buttons-container">
             {isDisabled && (
               <LoadingComponent message="Añadiendo pruebas"></LoadingComponent>

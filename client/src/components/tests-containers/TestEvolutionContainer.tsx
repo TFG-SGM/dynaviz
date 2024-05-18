@@ -28,7 +28,9 @@ export function TestEvolutionContainer({ patientId }: { patientId: string }) {
     const activeButton = document.querySelector(".active-chart");
     activeButton?.classList.remove("active-chart");
     target.classList.add("active-chart");
-    setActual((prevState) => ({ ...prevState, chart: target.id }));
+    if (target.id === "radar")
+      setActual((prevState) => ({ ...prevState, parts: [], chart: target.id }));
+    else setActual((prevState) => ({ ...prevState, chart: target.id }));
   };
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {

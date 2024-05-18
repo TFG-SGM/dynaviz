@@ -12,6 +12,7 @@ interface NewTestProps {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
   inputRef: RefObject<HTMLInputElement>;
+  isDisabled: boolean;
 }
 
 export function NewTest({
@@ -21,6 +22,7 @@ export function NewTest({
   handleChangeRecordingState,
   handleRemoveNewTest,
   inputRef,
+  isDisabled,
 }: NewTestProps) {
   return (
     <div className="new-test">
@@ -30,6 +32,7 @@ export function NewTest({
           id={id.toString()}
           onClick={handleRemoveNewTest}
           type="button"
+          disabled={isDisabled}
         >
           &#x2716;
         </button>
@@ -58,6 +61,7 @@ export function NewTest({
           type="button"
           id={id.toString()}
           onClick={handleChangeRecordingState}
+          disabled={isDisabled}
         >
           Grabar Vídeo
         </button>
