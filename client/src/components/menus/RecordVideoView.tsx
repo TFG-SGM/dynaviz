@@ -59,7 +59,10 @@ export function RecordVideoView({
                 <button
                   type="button"
                   className="cancel-button"
-                  onClick={handleChangeRecordingState}
+                  onClick={() => {
+                    stopRecording();
+                    handleChangeRecordingState();
+                  }}
                 >
                   Cancelar
                 </button>
