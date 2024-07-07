@@ -1,6 +1,6 @@
 # DynaViz
 
-<img src="./client/dist/dynaviz.png" width=100px>
+<img src="./assets/dynaviz.png" width=100px>
 
 ## Sobre la App
 DynaViz es una aplicación Web diseñada para ayudar en el diagnóstico de patologías, centrada inicialmente en la fibromialgia como caso de estudio.
