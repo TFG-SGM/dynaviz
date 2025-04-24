@@ -120,3 +120,10 @@ export interface TestTypeData {
   name: string;
   bodyParts: string[];
 }
+
+export type Stroke = {
+  u: number;
+  v: number;
+  color: string;
+  size: number;
+};

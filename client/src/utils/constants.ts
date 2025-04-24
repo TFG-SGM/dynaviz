@@ -11,8 +11,10 @@ export const ACTUAL_USER_ENDPOINT = "auth/user-data";
 export const FILE_ENDPOINT = "file/";
 export const VIDEO_TYPE = "?type=video";
 export const IMAGE_TYPE = "?type=image";
-
 export const CHART_HEIGHT = "500px";
+
+export const ROTATE_MODE = "rotation";
+export const DRAWING_MODE = "drawing";
 
 export const INITIAL_USER = {
   _id: "",

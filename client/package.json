@@ -11,34 +11,38 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
+    "@react-three/drei": "^10.0.6",
+    "@react-three/fiber": "^9.1.2",
     "@types/echarts": "^4.9.22",
-    "@types/html2canvas": "^1.0.0",
     "axios": "^1.6.7",
     "cypress": "^13.8.0",
     "echarts": "^5.5.0",
     "echarts-for-react": "^3.0.2",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-image-mapper": "^0.0.15",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-media-recorder": "^1.6.5",
     "react-router-dom": "^6.22.0",
-    "sonner": "^1.4.41"
+    "sonner": "^1.4.41",
+    "three": "^0.175.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.2",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "typescript": "^5.2.2",
-    "vite": "^5.1.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.22.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "typescript": "~5.7.2",
+    "vite": "^6.3.1",
     "vite-plugin-pwa": "^0.18.1",
-    "webpack": "^5.91.0"
+    "webpack": "^5.91.0",
+    "@eslint/js": "^9.22.0",
+    "globals": "^16.0.0",
+    "typescript-eslint": "^8.26.1"
   }
 }

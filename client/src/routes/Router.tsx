@@ -9,6 +9,7 @@ import { AdminsListPage } from "../pages/lists/AdminsListPage";
 import { TestsListPage } from "../pages/lists/TestsListPage";
 import { TestPage } from "../pages/tests-pages/TestPage";
 import { TestEvolutionPage } from "../pages/tests-pages/TestEvolutionPage";
+import { EditorPage } from "../pages/EditorPage";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -46,6 +47,10 @@ export function Router() {
         {
           path: "pacientes/:patientId/evolucion",
           element: <TestEvolutionPage></TestEvolutionPage>,
+        },
+        {
+          path: "model",
+          element: <EditorPage></EditorPage>,
         },
       ],
     },
