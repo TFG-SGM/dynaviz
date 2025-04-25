@@ -54,6 +54,13 @@ export class PatientModel {
     return null;
   }
 
+  static async findByEmail({ email }: { email: string }) {
+    const db = await connectToMongoDB("patients");
+
+    let admin = await db.findOne({ email });
+    return admin;
+  }
+
   static async validateEmail({ email }: { email: string }) {
     const db = await connectToMongoDB("patients");
 

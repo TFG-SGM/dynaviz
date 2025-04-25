@@ -22,7 +22,8 @@ export function LoginPage() {
       const data = await DataService.login(email, password);
       setIsLoading(false);
       if (data.role === "admin") navigate("/app");
-      else navigate("/app/pacientes");
+      else if (data.role === "doctor") navigate("/app/pacientes");
+      else navigate(`/app/paciente/modelo`);
     } catch (error) {
       setIsLoading(false);
       if (error instanceof AxiosError && error.response)

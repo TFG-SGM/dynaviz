@@ -90,3 +90,15 @@ export interface Password {
   new1: string;
   new2: string;
 }
+
+export interface ModelPainted {
+  date: Date;
+  patientId: string;
+  data: Array<Array<any>>;
+}
+
+export interface PartialModelPainted {
+  date?: Date | undefined;
+  patientId?: string | undefined;
+  data?: Array<Array<any>>;
+}

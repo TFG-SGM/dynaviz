@@ -5,7 +5,7 @@ import { hash, compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { validateLogin } from "../schemas/login";
 import { PatientModel } from "../models/patient";
-import { ADMIN_ROLE, DOCTOR_ROLE } from "../utils/constants";
+import { ADMIN_ROLE, DOCTOR_ROLE, PATIENT_ROLE } from "../utils/constants";
 
 export class AuthController {
   static async validateEmail(email: string) {
@@ -31,8 +31,10 @@ export class AuthController {
 
     if (role === "admin") {
       user = await AdminModel.findByEmail({ email });
-    } else {
+    } else if (role === "doctor") {
       user = await DoctorModel.findByEmail({ email });
+    } else {
+      user = await PatientModel.findByEmail({ email });
     }
 
     user = { ...user, role };
@@ -58,6 +60,7 @@ export class AuthController {
 
       const admin = await AdminModel.findByEmail({ email });
       const doctor = await DoctorModel.findByEmail({ email });
+      const patient = await PatientModel.findByEmail({ email });
 
       if (admin) {
         user = { ...user, ...admin };
@@ -65,6 +68,9 @@ export class AuthController {
       } else if (doctor) {
         user = { ...user, ...doctor };
         user.role = DOCTOR_ROLE;
+      } else if (patient) {
+        user = { ...user, ...patient };
+        user.role = PATIENT_ROLE;
       } else {
         return res.status(404).json({
           message: "Usuario no encontrado.",

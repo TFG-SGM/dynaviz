@@ -8,12 +8,13 @@ export function ColorSelection({
   const [color, setColor] = useState<[string, string]>(["#000", ""]);
 
   return (
-    <div>
+    <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
       <input
         type="color"
         onChange={(e) => setColor([e.target.value, color[1]])}
       ></input>
       <input
+        style={{ fontSize: "20px" }}
         type="text"
         onChange={(e) => setColor([color[0], e.target.value])}
       ></input>
@@ -24,7 +25,7 @@ export function ColorSelection({
           setSelectedColor(color[0]);
         }}
       >
-        Guardar color
+        Crear
       </button>
     </div>
   );

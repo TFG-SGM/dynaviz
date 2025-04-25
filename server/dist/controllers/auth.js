@@ -54,6 +54,7 @@ class AuthController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = (0, login_1.validateLogin)(req.body);
+                console.log(result);
                 if (!result.success) {
                     return res
                         .status(400)
@@ -63,6 +64,7 @@ class AuthController {
                 let user = { role: "" };
                 const admin = yield admin_1.AdminModel.findByEmail({ email });
                 const doctor = yield doctor_1.DoctorModel.findByEmail({ email });
+                const patient = yield patient_1.PatientModel.findByEmail({ email });
                 if (admin) {
                     user = Object.assign(Object.assign({}, user), admin);
                     user.role = constants_1.ADMIN_ROLE;
@@ -70,6 +72,10 @@ class AuthController {
                 else if (doctor) {
                     user = Object.assign(Object.assign({}, user), doctor);
                     user.role = constants_1.DOCTOR_ROLE;
+                }
+                else if (patient) {
+                    user = Object.assign(Object.assign({}, user), patient);
+                    user.role = constants_1.PATIENT_ROLE;
                 }
                 else {
                     return res.status(404).json({
@@ -100,6 +106,7 @@ class AuthController {
                 }
             }
             catch (error) {
+                console.log(error);
                 return res.status(500).json({
                     message: "Error interno de servidor.",
                     success: false,

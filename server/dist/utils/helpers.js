@@ -9,7 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLastNumericIdFromDatabase = exports.generateNumericId = void 0;
+exports.generateNumericId = generateNumericId;
+exports.getLastNumericIdFromDatabase = getLastNumericIdFromDatabase;
 const connection_1 = require("./connection");
 function generateNumericId(collection) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -18,7 +19,6 @@ function generateNumericId(collection) {
         return nextUid;
     });
 }
-exports.generateNumericId = generateNumericId;
 function getLastNumericIdFromDatabase(collection) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield (0, connection_1.connectToMongoDB)(collection);
@@ -32,4 +32,3 @@ function getLastNumericIdFromDatabase(collection) {
         }
     });
 }
-exports.getLastNumericIdFromDatabase = getLastNumericIdFromDatabase;

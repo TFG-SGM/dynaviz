@@ -60,6 +60,13 @@ class PatientModel {
             return null;
         });
     }
+    static findByEmail(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ email }) {
+            const db = yield (0, connection_1.connectToMongoDB)("patients");
+            let admin = yield db.findOne({ email });
+            return admin;
+        });
+    }
     static validateEmail(_a) {
         return __awaiter(this, arguments, void 0, function* ({ email }) {
             const db = yield (0, connection_1.connectToMongoDB)("patients");

@@ -25,7 +25,12 @@ export function ModelEditor() {
 
   return (
     <main
-      style={{ width: "100vw", height: "100vh", display: "flex", gap: "20px" }}
+      style={{
+        height: "85vh",
+        margin: "0 25px",
+        display: "flex",
+        gap: "20px",
+      }}
     >
       <CanvasComponent
         texture={texture}
@@ -36,7 +41,6 @@ export function ModelEditor() {
       ></CanvasComponent>
       <div
         style={{
-          margin: "10px auto",
           width: "fit-content",
           display: "flex",
           flexDirection: "column",

@@ -9,6 +9,7 @@ import { adminRouter } from "./routes/admin";
 import { testRouter } from "./routes/test";
 import { testTypeRouter } from "./routes/testTypes";
 import { fileRouter } from "./routes/file";
+import { modelPaintedRouter } from "./routes/modelPainted";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/admin", adminRouter);
 app.use("/test", testRouter);
 app.use("/testType", testTypeRouter);
 app.use("/file", fileRouter);
+app.use("/modelPainted", modelPaintedRouter);
 
 app.listen(port, () => {
   console.log(`server is running at http://localhost:${port}`);

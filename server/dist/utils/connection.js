@@ -9,7 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMongoDB = exports.connectToMongoDB = void 0;
+exports.connectToMongoDB = connectToMongoDB;
+exports.getMongoDB = getMongoDB;
 const mongodb_1 = require("mongodb");
 const constants_1 = require("./constants");
 const connectionSting = constants_1.MONGO_URL;
@@ -28,7 +29,6 @@ function connectToMongoDB(collection) {
         }
     });
 }
-exports.connectToMongoDB = connectToMongoDB;
 function getMongoDB() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -41,4 +41,3 @@ function getMongoDB() {
         }
     });
 }
-exports.getMongoDB = getMongoDB;

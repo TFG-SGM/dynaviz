@@ -2,6 +2,7 @@ import z from "zod";
 import { Patient } from "../utils/types";
 
 const patientSchema = z.object({
+  password: z.string(),
   name: z.string(),
   surname: z.string(),
   date: z.string().transform((str) => new Date(str)),

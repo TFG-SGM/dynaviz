@@ -90,6 +90,7 @@ function createPatient(doctorId) {
         const patient = {
             name: faker_1.faker.person.firstName(),
             surname: faker_1.faker.person.lastName(),
+            password: "patient",
             doctorId,
             date: faker_1.faker.date.between({
                 from: "1930-01-01T00:00:00.000Z",
@@ -105,6 +106,7 @@ function createPatient(doctorId) {
             diagnosisYears: faker_1.faker.number.int({ min: 0, max: 50 }),
             occupation: faker_1.faker.person.jobTitle(),
         };
+        patient.password = yield auth_1.AuthController.hashPassword(patient.password);
         yield patient_1.PatientModel.create({ input: patient });
     });
 }

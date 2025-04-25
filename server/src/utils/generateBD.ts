@@ -81,6 +81,7 @@ async function createPatient(doctorId: string) {
   const patient = {
     name: faker.person.firstName(),
     surname: faker.person.lastName(),
+    password: "patient",
     doctorId,
     date: faker.date.between({
       from: "1930-01-01T00:00:00.000Z",
@@ -96,6 +97,7 @@ async function createPatient(doctorId: string) {
     diagnosisYears: faker.number.int({ min: 0, max: 50 }),
     occupation: faker.person.jobTitle(),
   };
+  patient.password = await AuthController.hashPassword(patient.password);
 
   await PatientModel.create({ input: patient });
 }

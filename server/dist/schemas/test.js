@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validatePartialTest = exports.validateTest = void 0;
+exports.validateTest = validateTest;
+exports.validatePartialTest = validatePartialTest;
 const zod_1 = __importDefault(require("zod"));
 const testSchema = zod_1.default.object({
     doctorId: zod_1.default.string(),
@@ -24,8 +25,6 @@ const testSchema = zod_1.default.object({
 function validateTest(input) {
     return testSchema.safeParse(input);
 }
-exports.validateTest = validateTest;
 function validatePartialTest(input) {
     return testSchema.partial().safeParse(input);
 }
-exports.validatePartialTest = validatePartialTest;

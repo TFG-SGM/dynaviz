@@ -49,7 +49,7 @@ export function Router() {
           element: <TestEvolutionPage></TestEvolutionPage>,
         },
         {
-          path: "model",
+          path: "paciente/modelo",
           element: <EditorPage></EditorPage>,
         },
       ],

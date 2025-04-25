@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { Stroke } from "../utils/types";
+import { DataService } from "../services/DataService";
 
 export function usePaintTexture({ size = 1024, initialColor = "#ffffff" }) {
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
@@ -88,36 +89,49 @@ export function usePaintTexture({ size = 1024, initialColor = "#ffffff" }) {
     }
   };
 
-  const save = () => {
-    const data = JSON.stringify(strokesRefs.current);
-    localStorage.setItem("paintLayers", data);
+  const save = async () => {
+    try {
+      const data = JSON.stringify(strokesRefs.current);
+      await DataService.createData("modelPainted", {
+        patientId: "12345",
+        date: new Date(),
+        data: strokesRefs.current,
+      });
+      localStorage.setItem("paintLayers", data);
+    } catch (error) {
+      console.error("Error saving paint layers:", error);
+    }
   };
 
   const load = () => {
-    const data = localStorage.getItem("paintLayers");
-    if (data) {
-      const parsedLayers = JSON.parse(data);
-      parsedLayers.forEach((strokes: Stroke[], layerIndex: number) => {
-        const canvas = canvasRefs.current[layerIndex];
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.fillStyle = initialColor;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
+    try {
+      const data = localStorage.getItem("paintLayers");
+      if (data) {
+        const parsedLayers = JSON.parse(data);
+        parsedLayers.forEach((strokes: Stroke[], layerIndex: number) => {
+          const canvas = canvasRefs.current[layerIndex];
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.fillStyle = initialColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-          strokes.forEach(({ u, v, color, size }: Stroke) => {
-            const x = u * canvas.width;
-            const y = (1 - v) * canvas.height;
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(x, y, size, 0, Math.PI * 2);
-            ctx.fill();
-          });
-        }
-        strokesRefs.current[layerIndex] = strokes;
-      });
-      updateTexture();
-    } else {
-      console.error("No saved layers found in localStorage");
+            strokes.forEach(({ u, v, color, size }: Stroke) => {
+              const x = u * canvas.width;
+              const y = (1 - v) * canvas.height;
+              ctx.fillStyle = color;
+              ctx.beginPath();
+              ctx.arc(x, y, size, 0, Math.PI * 2);
+              ctx.fill();
+            });
+          }
+          strokesRefs.current[layerIndex] = strokes;
+        });
+        updateTexture();
+      } else {
+        console.error("No saved layers found in localStorage");
+      }
+    } catch (error) {
+      console.error("Error loading paint layers:", error);
     }
   };
 

@@ -29,7 +29,7 @@ export function ColorsList({
       {Object.keys(colors).map((key) => (
         <div
           style={{
-            border: `1px solid ${
+            border: `2px solid ${
               selectedColor === colors[key][0] ? "red" : "black"
             }`,
             margin: "10px 0",
@@ -57,7 +57,7 @@ export function ColorsList({
       ))}
       <button
         style={{
-          border: `1px solid ${selectedColor === "#fff" ? "red" : "black"}`,
+          border: `2px solid ${selectedColor === "#fff" ? "red" : "black"}`,
         }}
         onClick={() => {
           setSelectedColor("#fff");
