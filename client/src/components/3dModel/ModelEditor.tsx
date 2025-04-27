@@ -6,8 +6,11 @@ import { CanvasComponent } from "./Canvas";
 import { ModeSelector } from "./ModeSelector";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
+import { UserData } from "../../utils/types";
+import { useData } from "../../hooks/useData";
 
-export function ModelEditor() {
+export function ModelEditor({ patientId }: { patientId: string }) {
+  const [user] = useData<UserData>("auth/user-data");
   const [mode, setMode] = useState<string>(ROTATE_MODE);
   const [colors, setColors] = useState({});
   const [selectedColor, setSelectedColor] = useState("");
@@ -21,7 +24,7 @@ export function ModelEditor() {
     save,
     load,
     setActiveLayer,
-  } = usePaintTexture({});
+  } = usePaintTexture({}, patientId);
 
   return (
     <main

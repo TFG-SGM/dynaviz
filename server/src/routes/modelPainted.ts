@@ -12,6 +12,10 @@ modelPaintedRouter.delete(
 
 modelPaintedRouter.get("/", ModelPaintedController.getAll);
 
+modelPaintedRouter.get(
+  "/patient/:patientId/:date",
+  ModelPaintedController.getByPatientAndDate
+);
 modelPaintedRouter.get("/:id", ModelPaintedController.getById);
 modelPaintedRouter.delete("/:id", ModelPaintedController.delete);
 modelPaintedRouter.post("/", ModelPaintedController.create);

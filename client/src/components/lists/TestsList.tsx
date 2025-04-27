@@ -26,7 +26,7 @@ export function TestsList({ patient }: { patient: UserData }) {
   const handleStartCreating = () => setIsAdding(true);
   const handleClean = () => setIsAdding(false);
   const handleViewEvolution = () =>
-    navigate(`/app/pacientes/${patient._id}/evolucion`);
+    navigate(`/app/pacientes/${patient._id}/pruebas/evolucion`);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;

@@ -3,7 +3,10 @@ import * as THREE from "three";
 import { Stroke } from "../utils/types";
 import { DataService } from "../services/DataService";
 
-export function usePaintTexture({ size = 1024, initialColor = "#ffffff" }) {
+export function usePaintTexture(
+  { size = 1024, initialColor = "#ffffff" },
+  patientId: string
+) {
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
   const strokesRefs = useRef<Stroke[][]>([]);
   const activeLayer = useRef(0);
@@ -93,7 +96,7 @@ export function usePaintTexture({ size = 1024, initialColor = "#ffffff" }) {
     try {
       const data = JSON.stringify(strokesRefs.current);
       await DataService.createData("modelPainted", {
-        patientId: "12345",
+        patientId: patientId,
         date: new Date(),
         data: strokesRefs.current,
       });
@@ -103,12 +106,15 @@ export function usePaintTexture({ size = 1024, initialColor = "#ffffff" }) {
     }
   };
 
-  const load = () => {
+  const load = async () => {
     try {
-      const data = localStorage.getItem("paintLayers");
+      const data = await DataService.getData(
+        `modelPainted/patient/${patientId}/${
+          new Date().toISOString().split("T")[0]
+        }`
+      );
       if (data) {
-        const parsedLayers = JSON.parse(data);
-        parsedLayers.forEach((strokes: Stroke[], layerIndex: number) => {
+        data.data.forEach((strokes: Stroke[], layerIndex: number) => {
           const canvas = canvasRefs.current[layerIndex];
           const ctx = canvas.getContext("2d");
           if (ctx) {

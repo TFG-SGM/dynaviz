@@ -9,7 +9,8 @@ export function TestCard({ testId }: { testId: string }) {
 
   const { _id, doctorId, typeId, date, patientId } = test;
 
-  const handleViewTest = () => navigate(`/app/pacientes/${patientId}/${_id}`);
+  const handleViewTest = () =>
+    navigate(`/app/pacientes/${patientId}/pruebas/${_id}`);
 
   return (
     <article className="test-card" data-test-id={_id} onClick={handleViewTest}>

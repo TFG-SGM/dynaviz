@@ -23,7 +23,7 @@ export function LoginPage() {
       setIsLoading(false);
       if (data.role === "admin") navigate("/app");
       else if (data.role === "doctor") navigate("/app/pacientes");
-      else navigate(`/app/paciente/modelo`);
+      else navigate(`/app/modelo`);
     } catch (error) {
       setIsLoading(false);
       if (error instanceof AxiosError && error.response)

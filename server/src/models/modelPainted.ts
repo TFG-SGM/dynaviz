@@ -1,11 +1,6 @@
 import { ObjectId } from "mongodb";
 import { connectToMongoDB } from "../utils/connection";
-import {
-  ModelPainted,
-  PartialModelPainted,
-  PartialTest,
-  Test,
-} from "../utils/types";
+import { ModelPainted, PartialModelPainted } from "../utils/types";
 
 export class ModelPaintedModel {
   static async getById({ id }: { id: string }) {
@@ -18,6 +13,25 @@ export class ModelPaintedModel {
 
   static async create({ input }: { input: ModelPainted }) {
     const db = await connectToMongoDB("modelPainted");
+
+    const inputDate = new Date(input.date);
+    const startOfDay = new Date(inputDate.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(inputDate.setHours(23, 59, 59, 999));
+
+    const existingModel = await db.findOne({
+      date: { $gte: startOfDay, $lte: endOfDay },
+    });
+
+    if (existingModel) {
+      const objectId = new ObjectId(existingModel._id);
+      const updatedModel = await db.findOneAndUpdate(
+        { _id: objectId },
+        { $set: input },
+        { returnDocument: "after" }
+      );
+
+      return updatedModel.value;
+    }
 
     const { insertedId } = await db.insertOne(input);
     return { id: insertedId, ...input };
@@ -61,6 +75,26 @@ export class ModelPaintedModel {
 
     if (deletedCount > 0) return deletedVideoIds;
     return null;
+  }
+
+  static async getByPatientAndDate({
+    patientId,
+    date,
+  }: {
+    patientId: string;
+    date: string;
+  }) {
+    const db = await connectToMongoDB("modelPainted");
+    const inputDate = new Date(date);
+    const startOfDay = new Date(inputDate.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(inputDate.setHours(23, 59, 59, 999));
+
+    const model = await db.findOne({
+      patientId,
+      date: { $gte: startOfDay, $lte: endOfDay },
+    });
+
+    return model;
   }
 
   static async getAll({

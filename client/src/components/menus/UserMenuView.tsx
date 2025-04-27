@@ -16,6 +16,7 @@ import { DeleteMenu } from "./DeleteMenu";
 import { DataService } from "../../services/DataService";
 import { getUserType } from "../../utils/helpers";
 import { toast } from "sonner";
+import { Model3DButton } from "../buttons/Model3DButton";
 
 export interface UserMenuView {
   endpoint: string;
@@ -120,7 +121,10 @@ export function UserMenuView({
               </button>
               <button onClick={handleStartUpdate}>Editar</button>
               {isPatient && actualUser?.role !== "admin" && (
-                <TestsViewButton userId={user?._id}></TestsViewButton>
+                <>
+                  <TestsViewButton userId={user?._id}></TestsViewButton>
+                  <Model3DButton userId={user?._id}></Model3DButton>
+                </>
               )}
             </div>
           </>

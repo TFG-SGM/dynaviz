@@ -37,19 +37,23 @@ export function Router() {
           element: <PatientsListPage></PatientsListPage>,
         },
         {
-          path: "pacientes/:patientId",
+          path: "pacientes/:patientId/pruebas",
           element: <TestsListPage></TestsListPage>,
         },
         {
-          path: "pacientes/:patientId/:testId",
+          path: "pacientes/:patientId/pruebas/:testId",
           element: <TestPage></TestPage>,
         },
         {
-          path: "pacientes/:patientId/evolucion",
+          path: "pacientes/:patientId/pruebas/evolucion",
           element: <TestEvolutionPage></TestEvolutionPage>,
         },
         {
-          path: "paciente/modelo",
+          path: "modelo",
+          element: <EditorPage></EditorPage>,
+        },
+        {
+          path: "pacientes/:patientId/modelos",
           element: <EditorPage></EditorPage>,
         },
       ],

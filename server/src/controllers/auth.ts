@@ -26,6 +26,7 @@ export class AuthController {
   }
 
   static async getUserData(req: Request, res: Response) {
+    console.log("userData", req.body.userData);
     const { role, email } = req.body.userData;
     let user = null;
 
