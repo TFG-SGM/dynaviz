@@ -127,3 +127,10 @@ export type Stroke = {
   color: string;
   size: number;
 };
+
+export type ModelPainted = {
+  _id: string;
+  patientId: string;
+  date: string;
+  strokes: Stroke[];
+};

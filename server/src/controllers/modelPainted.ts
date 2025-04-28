@@ -29,6 +29,13 @@ export class ModelPaintedController {
     res.status(404).json({ message: "Modelo no encontrado." });
   }
 
+  static async getByPatientId(req: Request, res: Response) {
+    const { patientId } = req.params;
+    const modelPainted = await ModelPaintedModel.getByPatientId({ patientId });
+    if (modelPainted) return res.json(modelPainted);
+    res.status(404).json({ message: "Modelo no encontrado." });
+  }
+
   static async getById(req: Request, res: Response) {
     const { id } = req.params;
     const modelPainted = await ModelPaintedModel.getById({ id });

@@ -97,6 +97,13 @@ export class ModelPaintedModel {
     return model;
   }
 
+  static async getByPatientId({ patientId }: { patientId: string }) {
+    const db = await connectToMongoDB("modelPainted");
+    const model = await db.find({ patientId }).toArray();
+    if (model.length === 0) return null;
+    return model;
+  }
+
   static async getAll({
     patientId,
     date,

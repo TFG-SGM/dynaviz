@@ -106,12 +106,10 @@ export function usePaintTexture(
     }
   };
 
-  const load = async () => {
+  const load = async (date = new Date().toISOString().split("T")[0]) => {
     try {
       const data = await DataService.getData(
-        `modelPainted/patient/${patientId}/${
-          new Date().toISOString().split("T")[0]
-        }`
+        `modelPainted/patient/${patientId}/${date}`
       );
       if (data) {
         data.data.forEach((strokes: Stroke[], layerIndex: number) => {

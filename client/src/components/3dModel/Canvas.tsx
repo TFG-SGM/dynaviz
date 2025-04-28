@@ -17,7 +17,7 @@ export function CanvasComponent({
       style={{
         border: "1px solid black",
       }}
-      camera={{ position: [0, 150, 300], fov: 50 }}
+      camera={{ position: [0, 150, 400], fov: 50 }}
     >
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} />

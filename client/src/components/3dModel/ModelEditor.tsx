@@ -8,6 +8,7 @@ import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
 import { UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
+import { ModelList } from "./ModelList";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
@@ -68,6 +69,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
         ></ColorsList>
+        <ModelList patientId={patientId} load={load}></ModelList>
       </div>
     </main>
   );
