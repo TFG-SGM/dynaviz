@@ -1,3 +1,4 @@
+import { Colors } from "../../utils/types";
 import { ColorSelection } from "./ColorSelection";
 
 export function ColorsList({
@@ -5,16 +6,20 @@ export function ColorsList({
   setColors,
   selectedColor,
   setSelectedColor,
+  deleteColor,
+  editColor,
 }: ColorsListProps) {
   const handleDeleteColor = (key: string) => {
-    const colorToRemove = colors[key][0];
+    const colorToRemove = colors[key].color;
     const updatedColors = { ...colors };
 
     delete updatedColors[key];
     setColors(updatedColors);
+    deleteColor(colors[key].color);
 
     if (colorToRemove === selectedColor) {
-      setSelectedColor("");
+      console.log("Color borrado");
+      setSelectedColor("#fff");
     }
   };
 
@@ -30,28 +35,27 @@ export function ColorsList({
         <div
           style={{
             border: `2px solid ${
-              selectedColor === colors[key][0] ? "red" : "black"
+              selectedColor === colors[key].color ? "red" : "black"
             }`,
             margin: "10px 0",
             cursor: "pointer",
           }}
           key={key}
-          onClick={() => setSelectedColor(colors[key][0])}
+          onClick={() => setSelectedColor(colors[key].color)}
         >
           <input
             type="color"
-            value={colors[key][0]}
-            readOnly
-            disabled
-            style={{ pointerEvents: "none" }}
+            value={colors[key].color}
+            onChange={(e) => {
+              const newColor = e.target.value;
+              editColor(colors[key].color, newColor);
+              setColors((prevColors) => ({
+                ...prevColors,
+                [key]: { ...prevColors[key], color: newColor },
+              }));
+            }}
           />
-          <input
-            type="text"
-            defaultValue={colors[key][1]}
-            readOnly
-            disabled
-            style={{ pointerEvents: "none" }}
-          />
+          <input type="text" defaultValue={key} readOnly disabled />
           <button onClick={() => handleDeleteColor(key)}>X</button>
         </div>
       ))}
@@ -70,10 +74,10 @@ export function ColorsList({
 }
 
 type ColorsListProps = {
-  colors: { [key: string]: [string, string] };
-  setColors: React.Dispatch<
-    React.SetStateAction<{ [key: string]: [string, string] }>
-  >;
+  colors: Colors;
+  setColors: React.Dispatch<React.SetStateAction<Colors>>;
   selectedColor: string;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
+  deleteColor: (color: string) => void;
+  editColor: (colorToEdit: string, newColor: string) => void;
 };

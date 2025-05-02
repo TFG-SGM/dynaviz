@@ -31,6 +31,7 @@ export function PaintableModel({
 
   const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
+    if (e.button === 2) return;
     isPainting.current = true;
     if (e.uv) {
       const { x: u, y: v } = e.uv;
@@ -39,7 +40,7 @@ export function PaintableModel({
   };
 
   const handlePointerMove = (e: ThreeEvent<PointerEvent>) => {
-    if (!isPainting.current || !e.uv) return;
+    if (!isPainting.current || !e.uv || e.button === 2) return;
     const { x: u, y: v } = e.uv;
     paint(u, v, selectedColor);
   };
@@ -58,7 +59,7 @@ export function PaintableModel({
 type PaintableModelProps = {
   texture: THREE.Texture;
   strokesRef: React.MutableRefObject<Stroke[][]>; // Updated to match multiple layers
-  paint: (u: number, v: number, color?: string, size?: number) => void;
+  paint: (u: number, v: number, color: string, size?: number) => void;
   mode: string;
   selectedColor: string;
 };

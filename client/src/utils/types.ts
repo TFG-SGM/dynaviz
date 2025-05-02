@@ -134,3 +134,10 @@ export type ModelPainted = {
   date: string;
   strokes: Stroke[];
 };
+
+export type Colors = {
+  [key: string]: {
+    color: string;
+    description: string;
+  };
+};

@@ -1,28 +1,31 @@
 import { useState } from "react";
+import { Colors } from "../../utils/types";
 
 export function ColorSelection({
   colors,
   setColors,
   setSelectedColor,
 }: ColorSelectionProps) {
-  const [color, setColor] = useState<[string, string]>(["#000", ""]);
+  const [color, setColor] = useState<[string, string]>(["", "#000"]);
 
   return (
     <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
       <input
         type="color"
-        onChange={(e) => setColor([e.target.value, color[1]])}
+        onChange={(e) => setColor([color[0], e.target.value])}
       ></input>
       <input
         style={{ fontSize: "20px" }}
         type="text"
-        onChange={(e) => setColor([color[0], e.target.value])}
+        onChange={(e) => setColor([e.target.value, color[1]])}
       ></input>
       <button
         onClick={() => {
-          const nextIndex = Object.keys(colors).length;
-          setColors({ ...colors, [nextIndex]: color });
-          setSelectedColor(color[0]);
+          setColors({
+            ...colors,
+            [color[0]]: { color: color[1], description: "" },
+          });
+          setSelectedColor(color[1]);
         }}
       >
         Crear
@@ -32,9 +35,7 @@ export function ColorSelection({
 }
 
 type ColorSelectionProps = {
-  colors: { [key: string]: [string, string] };
-  setColors: React.Dispatch<
-    React.SetStateAction<{ [key: string]: [string, string] }>
-  >;
+  colors: Colors;
+  setColors: React.Dispatch<React.SetStateAction<Colors>>;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
 };

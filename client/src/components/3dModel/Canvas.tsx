@@ -41,7 +41,7 @@ export function CanvasComponent({
 type CanvasComponentProps = {
   texture: THREE.Texture;
   strokesRef: React.MutableRefObject<Stroke[][]>;
-  paint: (u: number, v: number, color?: string, size?: number) => void;
+  paint: (u: number, v: number, color: string, size?: number) => void;
   mode: string;
   selectedColor: string;
 };

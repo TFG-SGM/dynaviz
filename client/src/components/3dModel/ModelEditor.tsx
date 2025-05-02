@@ -6,26 +6,28 @@ import { CanvasComponent } from "./Canvas";
 import { ModeSelector } from "./ModeSelector";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
-import { UserData } from "../../utils/types";
+import { Colors, UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { ModelList } from "./ModelList";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
   const [mode, setMode] = useState<string>(ROTATE_MODE);
-  const [colors, setColors] = useState({});
+  const [colors, setColors] = useState<Colors>({});
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedLayer, setSelectedLayer] = useState(0);
+  const [selectedLayers, setSelectedLayers] = useState<number[]>([0]);
   const {
     texture,
     strokesRefs,
     paint,
-    clearLayer,
-    clearAllLayers,
+    clearSelectedLayers,
+    reset,
     save,
     load,
-    setActiveLayer,
-  } = usePaintTexture({}, patientId);
+    setActiveLayers,
+    deleteColor,
+    editColor,
+  } = usePaintTexture({ patientId, colors, setColors });
 
   return (
     <main
@@ -53,21 +55,22 @@ export function ModelEditor({ patientId }: { patientId: string }) {
       >
         <ModeSelector mode={mode} setMode={setMode}></ModeSelector>
         <Buttons
-          clear={() => clearLayer(selectedLayer)}
-          clearAll={clearAllLayers}
+          clear={() => clearSelectedLayers()}
+          reset={reset}
           save={save}
-          load={load}
         ></Buttons>
         <LayerSelector
-          setActiveLayer={setActiveLayer}
-          selectedLayer={selectedLayer}
-          setSelectedLayer={setSelectedLayer}
+          setActiveLayers={setActiveLayers}
+          selectedLayers={selectedLayers}
+          setSelectedLayers={setSelectedLayers}
         ></LayerSelector>
         <ColorsList
           colors={colors}
           setColors={setColors}
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
+          deleteColor={deleteColor}
+          editColor={editColor}
         ></ColorsList>
         <ModelList patientId={patientId} load={load}></ModelList>
       </div>

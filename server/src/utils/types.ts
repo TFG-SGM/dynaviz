@@ -95,10 +95,19 @@ export interface ModelPainted {
   date: Date;
   patientId: string;
   data: Array<Array<any>>;
+  colors: Colors;
 }
 
 export interface PartialModelPainted {
   date?: Date | undefined;
   patientId?: string | undefined;
   data?: Array<Array<any>>;
+  colors?: Colors;
+}
+
+export interface Colors {
+  [key: string]: {
+    color: string;
+    description?: string;
+  };
 }
