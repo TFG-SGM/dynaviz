@@ -2,54 +2,58 @@ export function LayerSelector({
   setActiveLayers,
   selectedLayers,
   setSelectedLayers,
+  visibleLayers,
+  toggleLayerVisibility,
 }: LayerSelectorProps) {
-  const handleRangeChange = (value: number) => {
-    let layers: number[] = [];
-    switch (value) {
-      case 1:
-        layers = [0]; // Capa 1
-        break;
-      case 2:
-        layers = [1]; // Capa 2
-        break;
-      case 3:
-        layers = [2]; // Capa 3
-        break;
-      case 4:
-        layers = [0, 1]; // Capas 1 y 2
-        break;
-      case 5:
-        layers = [0, 1, 2]; // Todas las capas
-        break;
-      default:
-        layers = [];
-    }
-    setSelectedLayers(layers);
-    setActiveLayers(layers);
+  const handleCheckboxChange = (layer: number) => {
+    const updatedLayers = selectedLayers.includes(layer)
+      ? selectedLayers.filter((l) => l !== layer)
+      : [...selectedLayers, layer];
+
+    setSelectedLayers(updatedLayers);
+    setActiveLayers(updatedLayers);
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <h2>Capas</h2>
-      <input
-        type="range"
-        min={1}
-        max={5}
-        step={1}
-        value={
-          selectedLayers.length === 3
-            ? 5 // Todas las capas
-            : selectedLayers.length === 2
-            ? 4 // Capas 1 y 2
-            : selectedLayers.length === 1 && selectedLayers.includes(2)
-            ? 3 // Solo capa 3
-            : selectedLayers[0] === 1
-            ? 2 // Solo capa 2
-            : 1 // Solo capa 1
-        }
-        onChange={(e) => handleRangeChange(Number(e.target.value))}
-      />
-      <p>Capas: {selectedLayers.toString()}</p>
+      {[0, 1, 2].map((layer) => (
+        <div
+          key={layer}
+          style={{ display: "flex", alignItems: "center", gap: "10px" }}
+        >
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedLayers.includes(layer)}
+              onChange={() => handleCheckboxChange(layer)}
+            />
+            Capa {layer + 1}
+          </label>
+          <button
+            onClick={() => toggleLayerVisibility(layer)}
+            style={{
+              backgroundColor: visibleLayers.has(layer) ? "green" : "red",
+              color: "white",
+              border: "none",
+              padding: "5px 10px",
+              cursor: "pointer",
+            }}
+          >
+            {visibleLayers.has(layer) ? "Visible" : "Oculta"}
+          </button>
+        </div>
+      ))}
+      <p>
+        Capas seleccionadas:{" "}
+        {selectedLayers.map((l) => `Capa ${l + 1}`).join(", ")}
+      </p>
+      <p>
+        Capas visibles:{" "}
+        {Array.from(visibleLayers)
+          .map((l) => `Capa ${l + 1}`)
+          .join(", ")}
+      </p>
     </div>
   );
 }
@@ -58,4 +62,6 @@ type LayerSelectorProps = {
   setActiveLayers: (layers: number[]) => void;
   selectedLayers: number[];
   setSelectedLayers: React.Dispatch<React.SetStateAction<number[]>>;
+  visibleLayers: Set<number>;
+  toggleLayerVisibility: (layer: number) => void;
 };

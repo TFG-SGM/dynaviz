@@ -36,6 +36,7 @@ export const INITIAL_PATIENT = {
   city: "",
   email: "",
   phone: "",
+  password: "",
   weight: 0,
   height: 0,
   activityLevel: "leve" as activityLevel,
@@ -43,6 +44,7 @@ export const INITIAL_PATIENT = {
   diagnosisYears: 0,
   isFibro: false,
   doctorId: "",
+  photo: { id: "", name: "" },
 };
 
 export const INITIAL_TEST = {

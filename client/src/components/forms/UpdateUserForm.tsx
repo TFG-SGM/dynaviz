@@ -73,20 +73,13 @@ export function UpdateUserForm({
           <CrossButton handleClean={handleClean}></CrossButton>
         </div>
         <form onSubmit={handleSubmit}>
-          {userType === "Paciente" ? (
-            <PatientForm
-              data={newData as PatientData}
-              setNewData={setNewData as Dispatch<SetStateAction<PatientData>>}
-              error={error}
-            ></PatientForm>
-          ) : (
-            <UserForm
-              data={newData as UserData}
-              setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
-              handleChangePassForm={handleChangePassForm}
-              error={error}
-            ></UserForm>
-          )}
+          <UserForm
+            data={newData as PatientData}
+            setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
+            handleChangePassForm={handleChangePassForm}
+            error={error}
+            isPatient={userType === "Paciente"}
+          ></UserForm>
           <div className="buttons-container">
             <button
               className="cancel-button"

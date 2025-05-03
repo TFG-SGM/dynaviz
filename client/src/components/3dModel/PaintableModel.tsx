@@ -14,6 +14,7 @@ export function PaintableModel({
   selectedColor,
 }: PaintableModelProps) {
   const { scene } = useGLTF("/male.glb");
+  console.log("selectColor", selectedColor);
 
   const mesh = scene.children[0] as Mesh;
 
@@ -49,8 +50,12 @@ export function PaintableModel({
     <>
       <primitive
         object={scene}
-        onPointerDown={mode === DRAWING_MODE && handlePointerDown}
-        onPointerMove={mode === DRAWING_MODE && handlePointerMove}
+        onPointerDown={
+          mode === DRAWING_MODE && selectedColor !== "" && handlePointerDown
+        }
+        onPointerMove={
+          mode === DRAWING_MODE && selectedColor !== "" && handlePointerMove
+        }
       />
     </>
   );

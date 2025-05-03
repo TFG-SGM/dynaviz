@@ -11,10 +11,10 @@ generateData();
 async function generateData() {
   createTestTypes();
   for (let index = 0; index < 2; index++) {
-    await createAdmin();
-    const { id } = await createDoctor();
+    await createAdmin(index);
+    const { id } = await createDoctor(index);
     for (let index = 0; index < 2; index++) {
-      await createPatient(id.toString());
+      await createPatient(id.toString(), index);
     }
   }
 }
@@ -30,7 +30,7 @@ async function createTestTypes() {
   }
 }
 
-async function createAdmin() {
+async function createAdmin(index: number) {
   const admin = {
     name: faker.person.firstName(),
     surname: faker.person.lastName(),
@@ -40,7 +40,7 @@ async function createAdmin() {
       to: "2000-01-01T00:00:00.000Z",
     }),
     city: faker.location.city(),
-    email: faker.internet.email(),
+    email: index === 0 ? "admin@gmail.com" : faker.internet.email(),
     phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
     photo: { id: null, name: null },
   };
@@ -50,7 +50,7 @@ async function createAdmin() {
   await AdminModel.create({ input: admin });
 }
 
-async function createDoctor() {
+async function createDoctor(index: number) {
   const doctor = {
     name: faker.person.firstName(),
     surname: faker.person.lastName(),
@@ -60,7 +60,7 @@ async function createDoctor() {
       to: "2000-01-01T00:00:00.000Z",
     }),
     city: faker.location.city(),
-    email: faker.internet.email(),
+    email: index === 0 ? "doctor@gmail.com" : faker.internet.email(),
     phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
     photo: { id: null, name: null },
   };
@@ -71,7 +71,7 @@ async function createDoctor() {
   return newDoctor;
 }
 
-async function createPatient(doctorId: string) {
+async function createPatient(doctorId: string, index: number) {
   const activityLevels = ["leve", "moderado", "activo"];
   const randomIndex = faker.number.int({
     min: 0,
@@ -88,7 +88,7 @@ async function createPatient(doctorId: string) {
       to: "2006-01-01T00:00:00.000Z",
     }),
     city: faker.location.city(),
-    email: faker.internet.email(),
+    email: index === 0 ? "patient@gmail.com" : faker.internet.email(),
     phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
     weight: faker.number.float({ fractionDigits: 2, min: 50, max: 130 }),
     height: faker.number.float({ fractionDigits: 2, min: 150, max: 210 }),
@@ -96,6 +96,7 @@ async function createPatient(doctorId: string) {
     isFibro: false,
     diagnosisYears: faker.number.int({ min: 0, max: 50 }),
     occupation: faker.person.jobTitle(),
+    photo: { id: null, name: null },
   };
   patient.password = await AuthController.hashPassword(patient.password);
 

@@ -31,28 +31,41 @@ export function Header() {
         !(
           actualUser?.role === "doctor" &&
           location.pathname === "/app/pacientes"
+        ) &&
+        !(
+          actualUser?.role === "patient" && location.pathname === "/app/modelo"
         ) && (
           <button className="back-button" onClick={handleGoBack}>
             <ArrowBack></ArrowBack>
           </button>
         )}
       <p className="location-text">
+        {/*LOGO DYNAVIZ*/}
         <img src={DynaViz}></img>
+        {/*LINK DYNAVIZ*/}
         <Link
-          className={actualUser?.role === "doctor" ? "no-link" : ""}
-          to={actualUser?.role === "doctor" ? "#" : "/app"}
+          className={actualUser?.role !== "admin" ? "no-link" : ""}
+          to={actualUser?.role !== "admin" ? "#" : "/app"}
         >
           DynaViz
         </Link>
-        {pathParts[2] && (
+        {/*LISTA*/}
+        {pathParts[2] !== "modelo" && (
           <>
             &#x276F;{" "}
             <Link to={"/" + pathParts[1] + "/" + pathParts[2]}>
               Lista de {pathParts[2]}
             </Link>
           </>
-        )}{" "}
-        {pathParts[3] && (
+        )}
+        {pathParts[2] === "modelo" && (
+          <>
+            &#x276F;{" "}
+            <Link to={"/" + pathParts[1] + "/" + pathParts[2]}>Modelo</Link>
+          </>
+        )}
+        {/*LISTA PRUEBAS*/}
+        {pathParts[4] === "pruebas" && (
           <>
             &#x276F;{" "}
             <Link
@@ -62,7 +75,19 @@ export function Header() {
             </Link>
           </>
         )}
-        {pathParts[4] && pathParts[4] !== "evolucion" && (
+        {/*MODELOS*/}
+        {pathParts[4] === "modelos" && (
+          <>
+            &#x276F;{" "}
+            <Link
+              to={"/" + pathParts[1] + "/" + pathParts[2] + "/" + pathParts[3]}
+            >
+              Modelos
+            </Link>
+          </>
+        )}
+        {/*PRUEBA*/}
+        {pathParts[5] && pathParts[5] !== "evolucion" && (
           <>
             &#x276F;{" "}
             <Link
@@ -81,7 +106,8 @@ export function Header() {
             </Link>
           </>
         )}
-        {pathParts[4] && pathParts[4] === "evolucion" && (
+        {/*EVOLUCION*/}
+        {pathParts[5] && pathParts[5] === "evolucion" && (
           <>
             &#x276F;{" "}
             <Link
@@ -101,6 +127,7 @@ export function Header() {
           </>
         )}
       </p>
+      {/*PARTE DERECHA*/}
       <p className="user-name">
         {actualUser?.name + " " + actualUser?.surname}
       </p>

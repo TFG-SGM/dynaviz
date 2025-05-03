@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Colors } from "../../utils/types";
 import { ColorSelection } from "./ColorSelection";
 
@@ -10,18 +11,22 @@ export function ColorsList({
   editColor,
 }: ColorsListProps) {
   const handleDeleteColor = (key: string) => {
-    const colorToRemove = colors[key].color;
     const updatedColors = { ...colors };
 
     delete updatedColors[key];
     setColors(updatedColors);
     deleteColor(colors[key].color);
-
-    if (colorToRemove === selectedColor) {
-      console.log("Color borrado");
-      setSelectedColor("#fff");
-    }
   };
+
+  useEffect(() => {
+    if (
+      !Object.values(colors).some(
+        (colorObj) => colorObj.color === selectedColor
+      )
+    ) {
+      setSelectedColor("");
+    }
+  }, [colors, selectedColor]);
 
   return (
     <div>

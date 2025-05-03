@@ -105,6 +105,7 @@ function createPatient(doctorId) {
             isFibro: false,
             diagnosisYears: faker_1.faker.number.int({ min: 0, max: 50 }),
             occupation: faker_1.faker.person.jobTitle(),
+            photo: { id: null, name: null },
         };
         patient.password = yield auth_1.AuthController.hashPassword(patient.password);
         yield patient_1.PatientModel.create({ input: patient });

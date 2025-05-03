@@ -27,6 +27,7 @@ export type PatientData = {
   city: string;
   email: string;
   phone: string;
+  password: string;
   activityLevel: activityLevel;
   occupation: string;
   diagnosisYears: number;
@@ -34,6 +35,7 @@ export type PatientData = {
   weight: number;
   height: number;
   doctorId: string;
+  photo: { id: string; name: string };
 };
 
 export type userActual = {

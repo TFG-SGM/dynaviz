@@ -94,6 +94,8 @@ export class ModelPaintedModel {
       date: { $gte: startOfDay, $lte: endOfDay },
     });
 
+    if (!model) return null;
+
     return model;
   }
 

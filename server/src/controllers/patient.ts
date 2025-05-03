@@ -20,6 +20,11 @@ export class PatientController {
   }
 
   static async create(req: Request, res: Response) {
+    req.body = {
+      ...req.body,
+      photo: { name: req.file?.originalname, id: req.file?.id.toString() },
+    };
+
     const result = validatePatient(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
@@ -37,6 +42,18 @@ export class PatientController {
   }
 
   static async update(req: Request, res: Response) {
+    if (req.body.isPhotoChanged) {
+      req.body = {
+        ...req.body,
+        photo: {
+          name: req.file?.originalname,
+          id: req.file?.id.toString(),
+        },
+      };
+    } else {
+      delete req.body.photo;
+    }
+
     const result = validatePartialPatient(req.body);
 
     if (!result.success) {

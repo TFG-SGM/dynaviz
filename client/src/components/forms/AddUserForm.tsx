@@ -9,7 +9,6 @@ import {
   INITIAL_USER,
   PATIENT_ENDPOINT,
 } from "../../utils/constants";
-import { PatientForm } from "./PatientForm";
 import { Overlay } from "../other/Overlay";
 import { getUserType } from "../../utils/helpers";
 import { toast } from "sonner";
@@ -73,20 +72,14 @@ export function AddUserForm<T>({
           ></CrossButton>
         </div>
         <form onSubmit={handleSubmit}>
-          {endpoint === PATIENT_ENDPOINT ? (
-            <PatientForm
-              data={newData as PatientData}
-              setNewData={setNewData as Dispatch<SetStateAction<PatientData>>}
-              error={error}
-            ></PatientForm>
-          ) : (
-            <UserForm
-              data={newData as UserData}
-              setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
-              isPass={true}
-              error={error}
-            ></UserForm>
-          )}
+          <UserForm
+            data={newData as PatientData}
+            setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
+            isPass={true}
+            error={error}
+            isPatient={endpoint === PATIENT_ENDPOINT}
+          ></UserForm>
+
           <div className="buttons-container">
             {isDisabled && (
               <LoadingComponent

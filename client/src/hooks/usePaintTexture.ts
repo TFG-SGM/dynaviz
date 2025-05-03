@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Colors, Stroke } from "../utils/types";
 import { DataService } from "../services/DataService";
@@ -19,6 +19,12 @@ export function usePaintTexture({
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
   const strokesRefs = useRef<Stroke[][]>([]);
   const activeLayers = useRef<Set<number>>(new Set([0]));
+  const [visibleLayers, setVisibleLayers] = useState<Set<number>>(
+    new Set([0, 1, 2])
+  );
+  useEffect(() => {
+    updateTexture();
+  }, [visibleLayers]);
 
   const texture = useMemo(() => {
     const canvases = Array.from({ length: 3 }, () => {
@@ -60,9 +66,12 @@ export function usePaintTexture({
     combinedCanvas.width = combinedCanvas.height = size;
     const ctx = combinedCanvas.getContext("2d");
     if (ctx) {
-      ctx.clearRect(0, 0, combinedCanvas.width, combinedCanvas.height);
+      // Establecer un fondo predeterminado (por ejemplo, blanco)
+      ctx.fillStyle = initialColor; // Usa el color inicial como fondo
+      ctx.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
 
-      activeLayers.current.forEach((layer) => {
+      // Dibujar las capas visibles
+      visibleLayers.forEach((layer) => {
         const canvas = canvasRefs.current[layer];
         ctx.globalAlpha = 1.0;
         ctx.globalCompositeOperation = "multiply";
@@ -71,6 +80,18 @@ export function usePaintTexture({
     }
     texture.image = combinedCanvas;
     texture.needsUpdate = true;
+  };
+
+  const toggleLayerVisibility = (layer: number) => {
+    setVisibleLayers((prev) => {
+      const updated = new Set(prev);
+      if (updated.has(layer)) {
+        updated.delete(layer); // Ocultar capa
+      } else {
+        updated.add(layer); // Hacer visible la capa
+      }
+      return updated;
+    });
   };
 
   const clearSelectedLayers = () => {
@@ -196,6 +217,7 @@ export function usePaintTexture({
       const data = await DataService.getData(
         `modelPainted/patient/${patientId}/${date}`
       );
+
       if (data) {
         data.data.forEach((strokes: Stroke[], layerIndex: number) => {
           const canvas = canvasRefs.current[layerIndex];
@@ -223,12 +245,15 @@ export function usePaintTexture({
       }
     } catch (error) {
       console.error("Error loading paint layers:", error);
+      reset();
+      setColors({});
     }
   };
 
   return {
     texture,
     strokesRefs,
+    visibleLayers,
     paint,
     clearSelectedLayers,
     reset,
@@ -237,5 +262,6 @@ export function usePaintTexture({
     load,
     editColor,
     deleteColor,
+    toggleLayerVisibility,
   };
 }

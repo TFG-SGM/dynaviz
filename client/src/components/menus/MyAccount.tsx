@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { UpdateUserForm } from "../forms/UpdateUserForm";
-import { UserData } from "../../utils/types";
+import { PatientData, UserData } from "../../utils/types";
 import { UserDataElement } from "../elements/UserDataElement";
 import { useData } from "../../hooks/useData";
 import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
 import { ChangePassForm } from "../forms/ChangePassForm";
+import { PatientDataElement } from "../elements/PatientDataElement";
 
 export function MyAccount({ handleClean }: { handleClean: () => void }) {
   const [user, setUser] = useData<UserData>("auth/user-data");
@@ -46,10 +47,18 @@ export function MyAccount({ handleClean }: { handleClean: () => void }) {
               <h2>Mi Cuenta</h2>
               <CrossButton handleClean={handleClean}></CrossButton>
             </div>
-            {user && <UserDataElement user={user}></UserDataElement>}
-            <button className="edit-button" onClick={handleStartUpdate}>
-              Editar
-            </button>
+            {user && user?.role !== "patient" ? (
+              <UserDataElement user={user}></UserDataElement>
+            ) : (
+              <PatientDataElement
+                user={user as PatientData}
+              ></PatientDataElement>
+            )}
+            {user?.role !== "patient" && (
+              <button className="edit-button" onClick={handleStartUpdate}>
+                Editar
+              </button>
+            )}
           </dialog>
         </>
       )}

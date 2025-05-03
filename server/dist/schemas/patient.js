@@ -21,6 +21,12 @@ const patientSchema = zod_1.default.object({
     diagnosisYears: zod_1.default.number(),
     isFibro: zod_1.default.boolean(),
     doctorId: zod_1.default.string(),
+    photo: zod_1.default
+        .object({
+        name: zod_1.default.string().optional(),
+        id: zod_1.default.string().optional(),
+    })
+        .optional(),
 });
 function validatePatient(input) {
     return patientSchema.safeParse(input);

@@ -48,6 +48,7 @@ const admin_1 = require("./routes/admin");
 const test_1 = require("./routes/test");
 const testTypes_1 = require("./routes/testTypes");
 const file_1 = require("./routes/file");
+const modelPainted_1 = require("./routes/modelPainted");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
@@ -62,6 +63,7 @@ app.use("/admin", admin_1.adminRouter);
 app.use("/test", test_1.testRouter);
 app.use("/testType", testTypes_1.testTypeRouter);
 app.use("/file", file_1.fileRouter);
+app.use("/modelPainted", modelPainted_1.modelPaintedRouter);
 app.listen(port, () => {
     console.log(`server is running at http://localhost:${port}`);
 });

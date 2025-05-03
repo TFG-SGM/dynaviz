@@ -16,6 +16,12 @@ const patientSchema = z.object({
   diagnosisYears: z.number(),
   isFibro: z.boolean(),
   doctorId: z.string(),
+  photo: z
+    .object({
+      name: z.string().optional(),
+      id: z.string().optional(),
+    })
+    .optional(),
 });
 
 export function validatePatient(input: Patient) {

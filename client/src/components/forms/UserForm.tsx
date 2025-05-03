@@ -5,17 +5,20 @@ import {
   SetStateAction,
   useRef,
 } from "react";
-import { UserData } from "../../utils/types";
+import { PatientData, UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { useFile } from "../../hooks/useFile";
-import { IMAGE_TYPE } from "../../utils/constants";
+import { DOCTOR_ENDPOINT, IMAGE_TYPE } from "../../utils/constants";
 import { LoadingComponent } from "../other/LoadingComponent";
+import { SelectDoctor } from "../selects/SelectDoctor";
+import { useActualDoctor } from "../../hooks/useActualDoctor";
 export interface UserFormProps {
-  data: UserData | null;
+  data: PatientData | null;
   setNewData: Dispatch<SetStateAction<UserData>>;
   isPass?: boolean;
   handleChangePassForm?: MouseEventHandler<HTMLButtonElement> | undefined;
   error: string | null;
+  isPatient: boolean;
 }
 
 export function UserForm({
@@ -24,7 +27,10 @@ export function UserForm({
   isPass = false,
   handleChangePassForm = undefined,
   error,
+  isPatient,
 }: UserFormProps) {
+  useActualDoctor(setNewData);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageBlob] = useFile(data?.photo.id, IMAGE_TYPE);
 
@@ -55,7 +61,29 @@ export function UserForm({
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+
+    setNewData((prevState) => {
+      if (!prevState) return prevState;
+      return {
+        ...prevState,
+        [name]:
+          name === "diagnosisYears"
+            ? parseInt(value)
+            : name === "isFibro"
+            ? checked
+            : name === "weight" || name === "height"
+            ? parseFloat(value)
+            : value,
+      };
+    });
+  };
+
+  const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "photo") handleChangeImg(e);
@@ -168,13 +196,94 @@ export function UserForm({
           ></input>
         </label>
       )}
+      {isPatient && (
+        <>
+          <label>
+            Peso (kg){" "}
+            <input
+              name="weight"
+              type="number"
+              step="0.01"
+              value={data.weight}
+              onChange={handleChange}
+              min="0"
+              required
+            ></input>
+          </label>
+          <label>
+            Altura (cm){" "}
+            <input
+              name="height"
+              type="number"
+              step="0.01"
+              value={data.height}
+              onChange={handleChange}
+              min="0"
+              required
+            ></input>
+          </label>
+          <label>
+            Ocupación{" "}
+            <input
+              name="occupation"
+              type="text"
+              value={data.occupation}
+              onChange={handleChange}
+              required
+            ></input>
+          </label>
+          <label>
+            Nivel de actividad física
+            <select
+              name="activityLevel"
+              value={data.activityLevel}
+              onChange={handleChange}
+              required
+            >
+              <option value="leve">Leve</option>
+              <option value="moderado">Moderado</option>
+              <option value="activo">Activo</option>
+            </select>
+          </label>
+          <label>
+            Años con diagnostico{" "}
+            <input
+              name="diagnosisYears"
+              type="number"
+              value={data.diagnosisYears}
+              onChange={handleChange}
+              required
+            ></input>
+          </label>
+          <label className="fibro-label">
+            Tiene fibromialgia{" "}
+            <input
+              className="fibro-input"
+              name="isFibro"
+              type="checkbox"
+              checked={data.isFibro}
+              onChange={handleChange}
+              role="switch"
+            ></input>
+          </label>
+          <label>
+            Médico{" "}
+            <SelectDoctor
+              option="doctorId"
+              value={data.doctorId}
+              endpoint={DOCTOR_ENDPOINT}
+              handleChange={handleChange}
+            ></SelectDoctor>
+          </label>
+        </>
+      )}
       <label>
         Foto
         <input
           type="file"
           name="photo"
           accept="image/*"
-          onChange={handleChange}
+          onChange={handlePhotoChange}
           ref={inputRef}
         ></input>
         {!data.photo.id ? (
