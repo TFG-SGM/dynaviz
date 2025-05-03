@@ -3,7 +3,6 @@ import { usePaintTexture } from "../../hooks/usePaintTexture";
 import { Buttons } from "./Buttons";
 import { ColorsList } from "./ColorsList";
 import { CanvasComponent } from "./Canvas";
-import { ModeSelector } from "./ModeSelector";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
 import { Colors, UserData } from "../../utils/types";
@@ -22,7 +21,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
     strokesRefs,
     visibleLayers,
     paint,
-    clearSelectedLayers,
+    clearLayer,
     reset,
     save,
     load,
@@ -33,14 +32,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   } = usePaintTexture({ patientId, colors, setColors });
 
   return (
-    <main
-      style={{
-        height: "85vh",
-        margin: "0 25px",
-        display: "flex",
-        gap: "20px",
-      }}
-    >
+    <main className="model-editor-container">
       <CanvasComponent
         texture={texture}
         strokesRef={strokesRefs}
@@ -48,15 +40,9 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         mode={mode}
         selectedColor={selectedColor}
       ></CanvasComponent>
-      <div
-        style={{
-          width: "fit-content",
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-        }}
-      >
+      <div className="model-editor-controls">
         <input
+          className="model-editor-date-input"
           type="date"
           value={date}
           onChange={(e) => {
@@ -65,16 +51,19 @@ export function ModelEditor({ patientId }: { patientId: string }) {
             load(selectedDate);
           }}
         ></input>
-        <ModeSelector mode={mode} setMode={setMode}></ModeSelector>
         <Buttons
-          clear={() => clearSelectedLayers()}
+          mode={mode}
+          selectedColor={selectedColor}
+          setMode={setMode}
           reset={reset}
           save={save}
+          setSelectedColor={setSelectedColor}
         ></Buttons>
         <LayerSelector
           setActiveLayers={setActiveLayers}
           selectedLayers={selectedLayers}
           setSelectedLayers={setSelectedLayers}
+          clearLayer={clearLayer}
           visibleLayers={visibleLayers}
           toggleLayerVisibility={toggleLayerVisibility}
         ></LayerSelector>

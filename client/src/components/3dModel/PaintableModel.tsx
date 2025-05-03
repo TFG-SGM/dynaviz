@@ -14,8 +14,6 @@ export function PaintableModel({
   selectedColor,
 }: PaintableModelProps) {
   const { scene } = useGLTF("/male.glb");
-  console.log("selectColor", selectedColor);
-
   const mesh = scene.children[0] as Mesh;
 
   mesh.material = new THREE.MeshStandardMaterial({ map: texture });

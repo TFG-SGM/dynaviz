@@ -14,9 +14,7 @@ export function CanvasComponent({
 }: CanvasComponentProps) {
   return (
     <Canvas
-      style={{
-        border: "1px solid black",
-      }}
+      className="model-canvas"
       camera={{ position: [0, 150, 400], fov: 50 }}
     >
       <ambientLight intensity={0.5} />

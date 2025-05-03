@@ -94,16 +94,14 @@ export function usePaintTexture({
     });
   };
 
-  const clearSelectedLayers = () => {
-    activeLayers.current.forEach((layer) => {
-      const canvas = canvasRefs.current[layer];
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.fillStyle = initialColor;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      }
-      strokesRefs.current[layer] = [];
-    });
+  const clearLayer = (layer: number) => {
+    const canvas = canvasRefs.current[layer];
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.fillStyle = initialColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    strokesRefs.current[layer] = [];
     updateTexture();
   };
 
@@ -255,7 +253,7 @@ export function usePaintTexture({
     strokesRefs,
     visibleLayers,
     paint,
-    clearSelectedLayers,
+    clearLayer,
     reset,
     setActiveLayers,
     save,

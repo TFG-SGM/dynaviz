@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Colors } from "../../utils/types";
 import { ColorSelection } from "./ColorSelection";
+import { TrashColor3D } from "../other/Icons";
 
 export function ColorsList({
   colors,
@@ -22,59 +23,56 @@ export function ColorsList({
     if (
       !Object.values(colors).some(
         (colorObj) => colorObj.color === selectedColor
-      )
+      ) &&
+      selectedColor !== "#fff"
     ) {
       setSelectedColor("");
     }
   }, [colors, selectedColor]);
 
   return (
-    <div>
-      <h2>Colores</h2>
+    <details className="model-colors-list-container">
+      <summary>Colores</summary>
       <ColorSelection
         colors={colors}
         setColors={setColors}
         setSelectedColor={setSelectedColor}
       ></ColorSelection>
-      {Object.keys(colors).map((key) => (
-        <div
-          style={{
-            border: `2px solid ${
-              selectedColor === colors[key].color ? "red" : "black"
-            }`,
-            margin: "10px 0",
-            cursor: "pointer",
-          }}
-          key={key}
-          onClick={() => setSelectedColor(colors[key].color)}
-        >
-          <input
-            type="color"
-            value={colors[key].color}
-            onChange={(e) => {
-              const newColor = e.target.value;
-              editColor(colors[key].color, newColor);
-              setColors((prevColors) => ({
-                ...prevColors,
-                [key]: { ...prevColors[key], color: newColor },
-              }));
-            }}
-          />
-          <input type="text" defaultValue={key} readOnly disabled />
-          <button onClick={() => handleDeleteColor(key)}>X</button>
-        </div>
-      ))}
-      <button
-        style={{
-          border: `2px solid ${selectedColor === "#fff" ? "red" : "black"}`,
-        }}
-        onClick={() => {
-          setSelectedColor("#fff");
-        }}
-      >
-        Borrador
-      </button>
-    </div>
+      <div className="model-colors-list">
+        {Object.keys(colors).map((key) => (
+          <div className="model-color-item" key={key}>
+            <label className="color-bullet-label">
+              <input
+                type="radio"
+                name="color-selector"
+                value={colors[key].color}
+                checked={colors[key].color === selectedColor}
+                onChange={() => setSelectedColor(colors[key].color)}
+                className="color-bullet-input"
+              />
+              {" " + key}
+            </label>
+            <div>
+              <input
+                type="color"
+                value={colors[key].color}
+                onChange={(e) => {
+                  const newColor = e.target.value;
+                  editColor(colors[key].color, newColor);
+                  setColors((prevColors) => ({
+                    ...prevColors,
+                    [key]: { ...prevColors[key], color: newColor },
+                  }));
+                }}
+              />
+              <button onClick={() => handleDeleteColor(key)}>
+                <TrashColor3D></TrashColor3D>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </details>
   );
 }
 

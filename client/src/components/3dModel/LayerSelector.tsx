@@ -1,7 +1,10 @@
+import { Reset3D, VisibleActive3D, VisibleInactive3D } from "../other/Icons";
+
 export function LayerSelector({
   setActiveLayers,
   selectedLayers,
   setSelectedLayers,
+  clearLayer,
   visibleLayers,
   toggleLayerVisibility,
 }: LayerSelectorProps) {
@@ -15,36 +18,40 @@ export function LayerSelector({
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      <h2>Capas</h2>
-      {[0, 1, 2].map((layer) => (
-        <div
-          key={layer}
-          style={{ display: "flex", alignItems: "center", gap: "10px" }}
-        >
-          <label>
-            <input
-              type="checkbox"
-              checked={selectedLayers.includes(layer)}
-              onChange={() => handleCheckboxChange(layer)}
-            />
-            Capa {layer + 1}
-          </label>
-          <button
-            onClick={() => toggleLayerVisibility(layer)}
-            style={{
-              backgroundColor: visibleLayers.has(layer) ? "green" : "red",
-              color: "white",
-              border: "none",
-              padding: "5px 10px",
-              cursor: "pointer",
-            }}
-          >
-            {visibleLayers.has(layer) ? "Visible" : "Oculta"}
-          </button>
-        </div>
-      ))}
-      <p>
+    <details className="model-layer-selector-container">
+      <summary>Capas</summary>
+      <div className="model-layer-selector-content">
+        {[0, 1, 2].map((layer) => (
+          <div key={layer} className="model-layer-selector">
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedLayers.includes(layer)}
+                onChange={() => handleCheckboxChange(layer)}
+              />
+              Capa {layer + 1}
+            </label>
+            <div>
+              <button
+                onClick={() => clearLayer(layer)}
+                className="model-layer-clear-button"
+              >
+                <Reset3D></Reset3D>
+              </button>
+              <button
+                onClick={() => toggleLayerVisibility(layer)}
+                className="model-layer-visibility-button"
+              >
+                {visibleLayers.has(layer) ? (
+                  <VisibleActive3D></VisibleActive3D>
+                ) : (
+                  <VisibleInactive3D></VisibleInactive3D>
+                )}
+              </button>
+            </div>
+          </div>
+        ))}
+        {/*<p>
         Capas seleccionadas:{" "}
         {selectedLayers.map((l) => `Capa ${l + 1}`).join(", ")}
       </p>
@@ -53,8 +60,9 @@ export function LayerSelector({
         {Array.from(visibleLayers)
           .map((l) => `Capa ${l + 1}`)
           .join(", ")}
-      </p>
-    </div>
+      </p>*/}
+      </div>
+    </details>
   );
 }
 
@@ -62,6 +70,7 @@ type LayerSelectorProps = {
   setActiveLayers: (layers: number[]) => void;
   selectedLayers: number[];
   setSelectedLayers: React.Dispatch<React.SetStateAction<number[]>>;
+  clearLayer: (layer: number) => void;
   visibleLayers: Set<number>;
   toggleLayerVisibility: (layer: number) => void;
 };
