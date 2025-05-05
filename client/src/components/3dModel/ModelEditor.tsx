@@ -5,9 +5,16 @@ import { ColorsList } from "./ColorsList";
 import { CanvasComponent } from "./Canvas";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
-import { Colors, UserData } from "../../utils/types";
+import {
+  Colors,
+  DeleteMenuState,
+  NoteState,
+  UserData,
+} from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
+import { DeleteMenu } from "../menus/DeleteMenu";
+import { Note } from "./Note";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
@@ -16,6 +23,8 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const [colors, setColors] = useState<Colors>({});
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedLayers, setSelectedLayers] = useState<number[]>([0]);
+  const [deleteMenu, setDeleteMenu] = useState<DeleteMenuState | null>(null);
+  const [note, setNote] = useState<string | null>(null);
   const {
     texture,
     strokesRefs,
@@ -31,8 +40,43 @@ export function ModelEditor({ patientId }: { patientId: string }) {
     toggleLayerVisibility,
   } = usePaintTexture({ patientId, colors, setColors });
 
+  const handleReset = () => {
+    setDeleteMenu({
+      delete: reset,
+      message: "¿Estas seguro de resetear?",
+    });
+  };
+
+  const handleClearLayer = (layer: number) => {
+    setDeleteMenu({
+      delete: () => {
+        clearLayer(layer);
+      },
+      message: "¿Estas seguro de limpiar la capa?",
+    });
+  };
+
+  const handleDeleteColor = (key: string) => {
+    setDeleteMenu({
+      delete: () => {
+        const updatedColors = { ...colors };
+        delete updatedColors[key];
+        setColors(updatedColors);
+        deleteColor(colors[key].color);
+      },
+      message: "¿Estas seguro de eliminar todos los colores?",
+    });
+  };
+
   return (
     <main className="model-editor-container">
+      {deleteMenu && (
+        <DeleteMenu
+          handleClean={() => setDeleteMenu(null)}
+          handleDelete={() => deleteMenu.delete()}
+          message={deleteMenu.message}
+        ></DeleteMenu>
+      )}
       <CanvasComponent
         texture={texture}
         strokesRef={strokesRefs}
@@ -55,7 +99,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           mode={mode}
           selectedColor={selectedColor}
           setMode={setMode}
-          reset={reset}
+          handleReset={handleReset}
           save={save}
           setSelectedColor={setSelectedColor}
         ></Buttons>
@@ -63,7 +107,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           setActiveLayers={setActiveLayers}
           selectedLayers={selectedLayers}
           setSelectedLayers={setSelectedLayers}
-          clearLayer={clearLayer}
+          handleClearLayer={handleClearLayer}
           visibleLayers={visibleLayers}
           toggleLayerVisibility={toggleLayerVisibility}
         ></LayerSelector>
@@ -72,10 +116,19 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           setColors={setColors}
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
-          deleteColor={deleteColor}
+          handleDeleteColor={handleDeleteColor}
           editColor={editColor}
+          setNote={setNote}
         ></ColorsList>
       </div>
+      {note && (
+        <Note
+          note={note}
+          setNote={setNote}
+          colors={colors}
+          setColors={setColors}
+        ></Note>
+      )}
     </main>
   );
 }

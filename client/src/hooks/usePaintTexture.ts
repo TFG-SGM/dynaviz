@@ -58,6 +58,7 @@ export function usePaintTexture({
       }
       strokesRefs.current[layer].push({ u, v, color, size });
     });
+
     updateTexture();
   };
 

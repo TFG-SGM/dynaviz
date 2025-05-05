@@ -143,3 +143,8 @@ export type Colors = {
     description: string;
   };
 };
+
+export type DeleteMenuState = {
+  delete: () => void;
+  message: string;
+};

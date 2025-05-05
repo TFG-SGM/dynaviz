@@ -8,17 +8,10 @@ export function ColorsList({
   setColors,
   selectedColor,
   setSelectedColor,
-  deleteColor,
+  handleDeleteColor,
   editColor,
+  setNote,
 }: ColorsListProps) {
-  const handleDeleteColor = (key: string) => {
-    const updatedColors = { ...colors };
-
-    delete updatedColors[key];
-    setColors(updatedColors);
-    deleteColor(colors[key].color);
-  };
-
   useEffect(() => {
     if (
       !Object.values(colors).some(
@@ -65,6 +58,7 @@ export function ColorsList({
                   }));
                 }}
               />
+              <button onClick={() => setNote(key)}>T</button>
               <button onClick={() => handleDeleteColor(key)}>
                 <TrashColor3D></TrashColor3D>
               </button>
@@ -81,6 +75,7 @@ type ColorsListProps = {
   setColors: React.Dispatch<React.SetStateAction<Colors>>;
   selectedColor: string;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
-  deleteColor: (color: string) => void;
+  handleDeleteColor: (color: string) => void;
   editColor: (colorToEdit: string, newColor: string) => void;
+  setNote: (key: string) => void;
 };

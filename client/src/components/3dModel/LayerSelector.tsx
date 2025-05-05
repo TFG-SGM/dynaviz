@@ -4,7 +4,7 @@ export function LayerSelector({
   setActiveLayers,
   selectedLayers,
   setSelectedLayers,
-  clearLayer,
+  handleClearLayer,
   visibleLayers,
   toggleLayerVisibility,
 }: LayerSelectorProps) {
@@ -33,7 +33,7 @@ export function LayerSelector({
             </label>
             <div>
               <button
-                onClick={() => clearLayer(layer)}
+                onClick={() => handleClearLayer(layer)}
                 className="model-layer-clear-button"
               >
                 <Reset3D></Reset3D>
@@ -70,7 +70,7 @@ type LayerSelectorProps = {
   setActiveLayers: (layers: number[]) => void;
   selectedLayers: number[];
   setSelectedLayers: React.Dispatch<React.SetStateAction<number[]>>;
-  clearLayer: (layer: number) => void;
+  handleClearLayer: (layer: number) => void;
   visibleLayers: Set<number>;
   toggleLayerVisibility: (layer: number) => void;
 };

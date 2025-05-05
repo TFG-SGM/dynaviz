@@ -5,7 +5,7 @@ export function Buttons({
   mode,
   selectedColor,
   setMode,
-  reset,
+  handleReset,
   save,
   setSelectedColor,
 }: ButtonsProps) {
@@ -34,7 +34,7 @@ export function Buttons({
       <button onClick={save}>
         <Save3D></Save3D>
       </button>
-      <button onClick={reset}>
+      <button onClick={handleReset}>
         <Reset3D></Reset3D>
       </button>
     </div>
@@ -45,7 +45,7 @@ type ButtonsProps = {
   mode: string;
   selectedColor: string;
   setMode: (mode: string) => void;
-  reset: () => void;
+  handleReset: () => void;
   save: () => void;
   setSelectedColor: (color: string) => void;
 };
