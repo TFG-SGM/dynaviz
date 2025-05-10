@@ -130,4 +130,20 @@ export class ModelPaintedModel {
     const result = await db.aggregate(aggregationPipeline).toArray();
     return result;
   }
+
+  static async getAllDates({ patientId }: { patientId: string }) {
+    const db = await connectToMongoDB("modelPainted");
+    const model = await db.find({ patientId }).project({ date: 1 }).toArray();
+
+    if (model.length === 0) return null;
+
+    const dates = model.map((item) => {
+      const date = new Date(item.date);
+      return date.toISOString().split("T")[0];
+    });
+    if (!dates.includes(new Date().toISOString().split("T")[0])) {
+      dates.push(new Date().toISOString().split("T")[0]);
+    }
+    return dates;
+  }
 }

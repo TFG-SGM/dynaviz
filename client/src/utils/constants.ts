@@ -79,3 +79,15 @@ export const TEST_TYPES = {
   4: { name: "Movimientos laterales", img: null, bodyParts: null },
   5: { name: "De marcha", img: null, bodyParts: null },
 };
+
+export const COLORS = {
+  red: "#ff0000",
+  green: "#00ff00",
+  blue: "#0000ff",
+  orange: "#ffa500",
+  purple: "#800080",
+  teal: "#008080",
+  yellow: "#ffff00",
+  brown: "#8b4513",
+  pink: "#ff69b4",
+};

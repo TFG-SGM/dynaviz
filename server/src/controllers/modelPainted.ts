@@ -44,9 +44,8 @@ export class ModelPaintedController {
   }
 
   static async create(req: Request, res: Response) {
-    console.log(req.body);
     const result = validateModelPainted(req.body);
-    console.log(result);
+
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
@@ -84,6 +83,14 @@ export class ModelPaintedController {
   static async deleteByPatient(req: Request, res: Response) {
     const { patientId } = req.params;
     const result = await ModelPaintedModel.deleteByPatient({ patientId });
+
+    if (result) return res.json(result);
+    res.status(404).json({ message: "Modelo no encontrado." });
+  }
+
+  static async getAllDates(req: Request, res: Response) {
+    const { patientId } = req.params;
+    const result = await ModelPaintedModel.getAllDates({ patientId });
 
     if (result) return res.json(result);
     res.status(404).json({ message: "Modelo no encontrado." });

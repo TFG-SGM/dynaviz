@@ -16,6 +16,7 @@ export function usePaintTexture({
   size?: number;
   initialColor?: string;
 }) {
+  const [isModel, setIsModel] = useState(true);
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
   const strokesRefs = useRef<Stroke[][]>([]);
   const activeLayers = useRef<Set<number>>(new Set([0]));
@@ -198,20 +199,36 @@ export function usePaintTexture({
 
   const save = async () => {
     try {
-      const data = JSON.stringify(strokesRefs.current);
       await DataService.createData("modelPainted", {
         patientId: patientId,
         date: new Date(),
         data: strokesRefs.current,
         colors: colors,
       });
-      localStorage.setItem("paintLayers", data);
     } catch (error) {
       console.error("Error saving paint layers:", error);
     }
   };
 
+  const saveLocal = async () => {
+    try {
+      const currentData = JSON.parse(
+        localStorage.getItem("paintLayersHistory") || "[]"
+      );
+      const newState = {
+        strokes: strokesRefs.current,
+        colors: colors,
+      };
+      currentData.push(newState); // Push the new state to the array
+      localStorage.setItem("paintLayersHistory", JSON.stringify(currentData));
+    } catch (error) {
+      console.error("Error saving paint layers to localStorage:", error);
+    }
+  };
+
   const load = async (date = new Date().toISOString().split("T")[0]) => {
+    localStorage.setItem("paintLayers", JSON.stringify(strokesRefs.current));
+    localStorage.setItem("colors", JSON.stringify(colors));
     try {
       const data = await DataService.getData(
         `modelPainted/patient/${patientId}/${date}`
@@ -236,7 +253,7 @@ export function usePaintTexture({
           }
           strokesRefs.current[layerIndex] = strokes;
         });
-
+        setIsModel(true);
         setColors(data.colors);
         updateTexture();
       } else {
@@ -244,12 +261,51 @@ export function usePaintTexture({
       }
     } catch (error) {
       console.error("Error loading paint layers:", error);
+      setIsModel(false);
       reset();
       setColors({});
     }
   };
 
+  const loadLocal = () => {
+    const data = localStorage.getItem("paintLayersHistory");
+    if (data) {
+      const history = JSON.parse(data);
+      if (history.length > 0) {
+        const lastState = history.pop(); // Get the last state
+        localStorage.setItem("paintLayersHistory", JSON.stringify(history)); // Update the history
+        const { strokes, colors: loadedColors } = lastState;
+
+        strokes.forEach((layerStrokes: Stroke[], layerIndex: number) => {
+          const canvas = canvasRefs.current[layerIndex];
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.fillStyle = initialColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            layerStrokes.forEach(({ u, v, color, size }: Stroke) => {
+              const x = u * canvas.width;
+              const y = (1 - v) * canvas.height;
+              ctx.fillStyle = color;
+              ctx.beginPath();
+              ctx.arc(x, y, size, 0, Math.PI * 2);
+              ctx.fill();
+            });
+          }
+          strokesRefs.current[layerIndex] = layerStrokes;
+        });
+
+        setColors(loadedColors);
+        updateTexture();
+      } else {
+        console.error("No saved states found in localStorage");
+      }
+    } else {
+      console.error("No saved layers found in localStorage");
+    }
+  };
+
   return {
+    isModel,
     texture,
     strokesRefs,
     visibleLayers,
@@ -258,7 +314,9 @@ export function usePaintTexture({
     reset,
     setActiveLayers,
     save,
+    saveLocal,
     load,
+    loadLocal,
     editColor,
     deleteColor,
     toggleLayerVisibility,

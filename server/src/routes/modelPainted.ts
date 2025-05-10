@@ -17,9 +17,14 @@ modelPaintedRouter.get(
   ModelPaintedController.getByPatientId
 );
 modelPaintedRouter.get(
+  "/patient/:patientId/dates",
+  ModelPaintedController.getAllDates
+);
+modelPaintedRouter.get(
   "/patient/:patientId/:date",
   ModelPaintedController.getByPatientAndDate
 );
+
 modelPaintedRouter.get("/:id", ModelPaintedController.getById);
 modelPaintedRouter.delete("/:id", ModelPaintedController.delete);
 modelPaintedRouter.post("/", ModelPaintedController.create);

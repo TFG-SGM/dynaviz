@@ -1,6 +1,7 @@
 import { Reset3D, VisibleActive3D, VisibleInactive3D } from "../other/Icons";
 
 export function LayerSelector({
+  isPatient,
   setActiveLayers,
   selectedLayers,
   setSelectedLayers,
@@ -32,12 +33,14 @@ export function LayerSelector({
               Capa {layer + 1}
             </label>
             <div>
-              <button
-                onClick={() => handleClearLayer(layer)}
-                className="model-layer-clear-button"
-              >
-                <Reset3D></Reset3D>
-              </button>
+              {isPatient && (
+                <button
+                  onClick={() => handleClearLayer(layer)}
+                  className="model-layer-clear-button"
+                >
+                  <Reset3D></Reset3D>
+                </button>
+              )}
               <button
                 onClick={() => toggleLayerVisibility(layer)}
                 className="model-layer-visibility-button"
@@ -67,6 +70,7 @@ export function LayerSelector({
 }
 
 type LayerSelectorProps = {
+  isPatient: boolean;
   setActiveLayers: (layers: number[]) => void;
   selectedLayers: number[];
   setSelectedLayers: React.Dispatch<React.SetStateAction<number[]>>;

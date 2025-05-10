@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePaintTexture } from "../../hooks/usePaintTexture";
 import { Buttons } from "./Buttons";
 import { ColorsList } from "./ColorsList";
 import { CanvasComponent } from "./Canvas";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
-import {
-  Colors,
-  DeleteMenuState,
-  NoteState,
-  UserData,
-} from "../../utils/types";
+import { Colors, DeleteMenuState, UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
 import { DeleteMenu } from "../menus/DeleteMenu";
 import { Note } from "./Note";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
@@ -25,7 +22,20 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const [selectedLayers, setSelectedLayers] = useState<number[]>([0]);
   const [deleteMenu, setDeleteMenu] = useState<DeleteMenuState | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  const disabledDates = useData<string[]>(
+    `modelPainted/patient/${patientId}/dates`
+  );
+
+  const isDateDisabled = (date: string) => {
+    return disabledDates?.[0]?.includes(date) ?? false;
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
   const {
+    isModel,
     texture,
     strokesRefs,
     visibleLayers,
@@ -33,7 +43,9 @@ export function ModelEditor({ patientId }: { patientId: string }) {
     clearLayer,
     reset,
     save,
+    saveLocal,
     load,
+    loadLocal,
     setActiveLayers,
     deleteColor,
     editColor,
@@ -64,7 +76,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         setColors(updatedColors);
         deleteColor(colors[key].color);
       },
-      message: "¿Estas seguro de eliminar todos los colores?",
+      message: "¿Estas seguro de eliminar el color?",
     });
   };
 
@@ -77,33 +89,46 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           message={deleteMenu.message}
         ></DeleteMenu>
       )}
-      <CanvasComponent
-        texture={texture}
-        strokesRef={strokesRefs}
-        paint={paint}
-        mode={mode}
-        selectedColor={selectedColor}
-      ></CanvasComponent>
-      <div className="model-editor-controls">
-        <input
-          className="model-editor-date-input"
-          type="date"
-          value={date}
-          onChange={(e) => {
-            const selectedDate = e.target.value;
-            setDate(selectedDate);
-            load(selectedDate);
-          }}
-        ></input>
-        <Buttons
+      {isModel ? (
+        <CanvasComponent
+          texture={texture}
+          strokesRef={strokesRefs}
+          saveLocal={saveLocal}
+          paint={paint}
           mode={mode}
           selectedColor={selectedColor}
-          setMode={setMode}
-          handleReset={handleReset}
-          save={save}
-          setSelectedColor={setSelectedColor}
-        ></Buttons>
+        ></CanvasComponent>
+      ) : (
+        <p>No hay modelo</p>
+      )}
+      <div className="model-editor-controls">
+        <DatePicker
+          className="model-editor-date-input"
+          selected={new Date(date)}
+          onChange={(date: Date | null) => {
+            if (date) {
+              const selectedDate = format(date, "yyyy-MM-dd");
+              setDate(selectedDate);
+              load(selectedDate);
+            }
+          }}
+          filterDate={(date) => isDateDisabled(format(date, "yyyy-MM-dd"))}
+          portalId="root"
+          dateFormat="dd-MM-YYYY"
+        />
+        {user?.role === "patient" && (
+          <Buttons
+            mode={mode}
+            selectedColor={selectedColor}
+            setMode={setMode}
+            handleReset={handleReset}
+            save={save}
+            setSelectedColor={setSelectedColor}
+            loadLocal={loadLocal}
+          ></Buttons>
+        )}
         <LayerSelector
+          isPatient={user?.role === "patient"}
           setActiveLayers={setActiveLayers}
           selectedLayers={selectedLayers}
           setSelectedLayers={setSelectedLayers}
@@ -112,6 +137,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           toggleLayerVisibility={toggleLayerVisibility}
         ></LayerSelector>
         <ColorsList
+          isPatient={user?.role === "patient"}
           colors={colors}
           setColors={setColors}
           selectedColor={selectedColor}

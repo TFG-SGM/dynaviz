@@ -9,6 +9,7 @@ import { Stroke } from "../../utils/types";
 export function PaintableModel({
   texture,
   strokesRef,
+  saveLocal,
   paint,
   mode,
   selectedColor,
@@ -31,6 +32,7 @@ export function PaintableModel({
   const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     if (e.button === 2) return;
+    saveLocal();
     isPainting.current = true;
     if (e.uv) {
       const { x: u, y: v } = e.uv;
@@ -61,7 +63,8 @@ export function PaintableModel({
 
 type PaintableModelProps = {
   texture: THREE.Texture;
-  strokesRef: React.MutableRefObject<Stroke[][]>; // Updated to match multiple layers
+  strokesRef: React.MutableRefObject<Stroke[][]>;
+  saveLocal: () => void;
   paint: (u: number, v: number, color: string, size?: number) => void;
   mode: string;
   selectedColor: string;

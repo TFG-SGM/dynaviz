@@ -8,6 +8,7 @@ import { Stroke } from "../../utils/types";
 export function CanvasComponent({
   texture,
   strokesRef,
+  saveLocal,
   paint,
   mode,
   selectedColor,
@@ -15,7 +16,7 @@ export function CanvasComponent({
   return (
     <Canvas
       className="model-canvas"
-      camera={{ position: [0, 150, 400], fov: 50 }}
+      camera={{ position: [0, 150, 400], fov: 30 }}
     >
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} />
@@ -23,6 +24,7 @@ export function CanvasComponent({
       <PaintableModel
         texture={texture}
         strokesRef={strokesRef}
+        saveLocal={saveLocal}
         paint={paint}
         mode={mode}
         selectedColor={selectedColor}
@@ -39,6 +41,7 @@ export function CanvasComponent({
 type CanvasComponentProps = {
   texture: THREE.Texture;
   strokesRef: React.MutableRefObject<Stroke[][]>;
+  saveLocal: () => void;
   paint: (u: number, v: number, color: string, size?: number) => void;
   mode: string;
   selectedColor: string;

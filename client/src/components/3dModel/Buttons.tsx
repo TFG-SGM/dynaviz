@@ -1,5 +1,12 @@
 import { DRAWING_MODE, ROTATE_MODE } from "../../utils/constants";
-import { Drawing3D, Erase3D, Reset3D, Rotate3D, Save3D } from "../other/Icons";
+import {
+  Drawing3D,
+  Erase3D,
+  Reset3D,
+  Rotate3D,
+  Save3D,
+  Undo3D,
+} from "../other/Icons";
 
 export function Buttons({
   mode,
@@ -8,6 +15,7 @@ export function Buttons({
   handleReset,
   save,
   setSelectedColor,
+  loadLocal,
 }: ButtonsProps) {
   return (
     <div className="model-buttons-container">
@@ -31,6 +39,9 @@ export function Buttons({
       >
         <Erase3D></Erase3D>
       </button>
+      <button onClick={loadLocal}>
+        <Undo3D></Undo3D>
+      </button>
       <button onClick={save}>
         <Save3D></Save3D>
       </button>
@@ -48,4 +59,5 @@ type ButtonsProps = {
   handleReset: () => void;
   save: () => void;
   setSelectedColor: (color: string) => void;
+  loadLocal: () => void;
 };

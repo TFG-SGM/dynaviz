@@ -24,6 +24,7 @@
 }
 
 .model-editor-date-input {
+  width: 100%;
   font-size: 15px;
   padding: 5px;
 }
@@ -96,6 +97,7 @@
   display: grid;
   grid-template-columns: 60% 40%;
   margin: 10px 10px 10px 0;
+  align-items: center;
 }
 
 .model-color-selection > div {
