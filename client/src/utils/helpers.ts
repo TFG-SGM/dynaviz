@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export function updateDataHelper<T extends { _id: string }>(
   prevState: T[] | null,
   updatedData: T
@@ -33,4 +35,9 @@ export function calculateAge(date: string): number {
   const age = hasBirthdayOccurred ? yearsDiff : yearsDiff - 1;
 
   return age;
+}
+
+export function isToday(date: string) {
+  console.log(new Date());
+  return date === format(new Date(), "yyyy-MM-dd");
 }

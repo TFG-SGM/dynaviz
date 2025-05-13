@@ -25,11 +25,13 @@ export function LayerSelector({
         {[0, 1, 2].map((layer) => (
           <div key={layer} className="model-layer-selector">
             <label>
-              <input
-                type="checkbox"
-                checked={selectedLayers.includes(layer)}
-                onChange={() => handleCheckboxChange(layer)}
-              />
+              {isPatient && (
+                <input
+                  type="checkbox"
+                  checked={selectedLayers.includes(layer)}
+                  onChange={() => handleCheckboxChange(layer)}
+                />
+              )}
               Capa {layer + 1}
             </label>
             <div>

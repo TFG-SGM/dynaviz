@@ -10,6 +10,7 @@ import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
 import { DeleteMenu } from "../menus/DeleteMenu";
 import { Note } from "./Note";
+import { isToday } from "../../utils/helpers";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -35,7 +36,6 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   }, []);
 
   const {
-    isModel,
     texture,
     strokesRefs,
     visibleLayers,
@@ -89,18 +89,14 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           message={deleteMenu.message}
         ></DeleteMenu>
       )}
-      {isModel ? (
-        <CanvasComponent
-          texture={texture}
-          strokesRef={strokesRefs}
-          saveLocal={saveLocal}
-          paint={paint}
-          mode={mode}
-          selectedColor={selectedColor}
-        ></CanvasComponent>
-      ) : (
-        <p>No hay modelo</p>
-      )}
+      <CanvasComponent
+        texture={texture}
+        strokesRef={strokesRefs}
+        saveLocal={saveLocal}
+        paint={paint}
+        mode={mode}
+        selectedColor={selectedColor}
+      ></CanvasComponent>
       <div className="model-editor-controls">
         <DatePicker
           className="model-editor-date-input"
@@ -109,6 +105,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
             if (date) {
               const selectedDate = format(date, "yyyy-MM-dd");
               setDate(selectedDate);
+              setMode(ROTATE_MODE);
               load(selectedDate);
             }
           }}
@@ -116,7 +113,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           portalId="root"
           dateFormat="dd-MM-YYYY"
         />
-        {user?.role === "patient" && (
+        {user?.role === "patient" && isToday(date) && (
           <Buttons
             mode={mode}
             selectedColor={selectedColor}
@@ -128,7 +125,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           ></Buttons>
         )}
         <LayerSelector
-          isPatient={user?.role === "patient"}
+          isPatient={user?.role === "patient" && isToday(date)}
           setActiveLayers={setActiveLayers}
           selectedLayers={selectedLayers}
           setSelectedLayers={setSelectedLayers}
@@ -137,7 +134,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           toggleLayerVisibility={toggleLayerVisibility}
         ></LayerSelector>
         <ColorsList
-          isPatient={user?.role === "patient"}
+          isPatient={user?.role === "patient" && isToday(date)}
           colors={colors}
           setColors={setColors}
           selectedColor={selectedColor}
@@ -153,6 +150,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           setNote={setNote}
           colors={colors}
           setColors={setColors}
+          isPatient={user?.role === "patient" && isToday(date)}
         ></Note>
       )}
     </main>

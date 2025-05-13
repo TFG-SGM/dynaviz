@@ -16,7 +16,6 @@ export function usePaintTexture({
   size?: number;
   initialColor?: string;
 }) {
-  const [isModel, setIsModel] = useState(true);
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
   const strokesRefs = useRef<Stroke[][]>([]);
   const activeLayers = useRef<Set<number>>(new Set([0]));
@@ -253,7 +252,6 @@ export function usePaintTexture({
           }
           strokesRefs.current[layerIndex] = strokes;
         });
-        setIsModel(true);
         setColors(data.colors);
         updateTexture();
       } else {
@@ -261,7 +259,6 @@ export function usePaintTexture({
       }
     } catch (error) {
       console.error("Error loading paint layers:", error);
-      setIsModel(false);
       reset();
       setColors({});
     }
@@ -305,7 +302,6 @@ export function usePaintTexture({
   };
 
   return {
-    isModel,
     texture,
     strokesRefs,
     visibleLayers,

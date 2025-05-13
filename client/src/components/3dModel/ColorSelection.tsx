@@ -35,7 +35,6 @@ export function ColorSelection({
           onChange={handleColorChange}
         ></ColorIntensityPicker>
         */}
-
         <button
           onClick={() => {
             setColors({

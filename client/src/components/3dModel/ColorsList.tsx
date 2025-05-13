@@ -39,14 +39,16 @@ export function ColorsList({
         {Object.keys(colors).map((key) => (
           <div className="model-color-item" key={key}>
             <label className="color-bullet-label">
-              <input
-                type="radio"
-                name="color-selector"
-                value={colors[key].color}
-                checked={colors[key].color === selectedColor}
-                onChange={() => setSelectedColor(colors[key].color)}
-                className="color-bullet-input"
-              />
+              {isPatient && (
+                <input
+                  type="radio"
+                  name="color-selector"
+                  value={colors[key].color}
+                  checked={colors[key].color === selectedColor}
+                  onChange={() => setSelectedColor(colors[key].color)}
+                  className="color-bullet-input"
+                />
+              )}
               {" " + key}
             </label>
             <div>
@@ -76,11 +78,11 @@ export function ColorsList({
                   }));
                 }}
               />*/}
+              <button onClick={() => setNote(key)}>
+                <Note3D></Note3D>
+              </button>
               {isPatient && (
                 <>
-                  <button onClick={() => setNote(key)}>
-                    <Note3D></Note3D>
-                  </button>
                   <button onClick={() => handleDeleteColor(key)}>
                     <TrashColor3D></TrashColor3D>
                   </button>
