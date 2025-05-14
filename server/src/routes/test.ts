@@ -13,7 +13,7 @@ const storage = new GridFsStorage({
       filename: file.originalname,
     };
   },
-});
+}) as unknown as multer.StorageEngine;
 
 const upload = multer({ storage });
 
