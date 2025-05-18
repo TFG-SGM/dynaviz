@@ -3,12 +3,14 @@ import { ModelPainted } from "../utils/types";
 
 const baseModelPaintedSchema = z.object({
   date: z.string().transform((str) => new Date(str)),
+  generalNote: z.object({ patient: z.string(), doctor: z.string() }),
   patientId: z.string(),
   data: z.array(z.array(z.unknown())),
   colors: z.record(
     z.object({
       color: z.string(),
       description: z.string(),
+      intensity: z.number(),
     })
   ),
 });

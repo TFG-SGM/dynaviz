@@ -1,3 +1,4 @@
+import { getLayerName } from "../../utils/helpers";
 import { Reset3D, VisibleActive3D, VisibleInactive3D } from "../other/Icons";
 
 export function LayerSelector({
@@ -32,7 +33,7 @@ export function LayerSelector({
                   onChange={() => handleCheckboxChange(layer)}
                 />
               )}
-              Capa {layer + 1}
+              {getLayerName(layer)}
             </label>
             <div>
               {isPatient && (

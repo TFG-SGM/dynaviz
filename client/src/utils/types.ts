@@ -141,10 +141,16 @@ export type Colors = {
   [key: string]: {
     color: string;
     description: string;
+    intensity: number;
   };
 };
 
 export type DeleteMenuState = {
   delete: () => void;
   message: string;
+};
+
+export type GeneralNote = {
+  patient: string;
+  doctor: string;
 };

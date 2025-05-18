@@ -33,13 +33,14 @@ const adjustLightDark = (hex: string, level: number) => {
   return `#${toHex(blendedR)}${toHex(blendedG)}${toHex(blendedB)}`;
 };
 
-export function ColorIntensityPicker({
+export function ColorEvaSelector({
   color,
+  intensity,
   onChange,
-}: ColorIntensityPickerProps) {
+}: ColorEvaSelectorProps) {
   const [isChoosing, setIsChoosing] = useState(false);
   const [selectedColor, setSelectedColor] = useState(color);
-  const [intensity, setIntensity] = useState(5);
+  const [selectedIntensity, setSelectedIntensity] = useState(intensity);
   const parentRef = useRef<HTMLDivElement | null>(null);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const [displayColor, setDisplayColor] = useState(color);
@@ -55,25 +56,31 @@ export function ColorIntensityPicker({
   }, [isChoosing]);
 
   useEffect(() => {
-    setDisplayColor(adjustLightDark(selectedColor, intensity));
-  }, [selectedColor, intensity]);
+    setDisplayColor(adjustLightDark(selectedColor, selectedIntensity));
+  }, [selectedColor, selectedIntensity]);
 
   useEffect(() => {
-    onChange(displayColor);
+    onChange(displayColor, selectedIntensity);
   }, [displayColor, onChange]);
+
+  useEffect(() => {
+    setSelectedIntensity(intensity);
+  }, [intensity]);
 
   const dropdown = (
     <div
       className="dropdown"
       style={{
         position: "absolute",
+        display: "flex",
         top: dropdownPosition.top,
         left: dropdownPosition.left,
         zIndex: 999,
         backgroundColor: "white",
         border: "1px solid #ccc",
         borderRadius: "8px",
-        padding: "10px",
+        padding: "20px",
+        gap: "20px",
       }}
     >
       <div
@@ -104,16 +111,46 @@ export function ColorIntensityPicker({
           />
         ))}
       </div>
-      <label>
-        <input
-          type="range"
-          min="0"
-          max="10"
-          value={intensity}
-          onChange={(e) => setIntensity(Number(e.target.value))}
-        />
-        &nbsp;<strong>{intensity}</strong>
-      </label>
+      <div style={{ display: "flex", alignItems: "center", height: "200px" }}>
+        <label
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value={intensity}
+            onChange={(e) => setSelectedIntensity(Number(e.target.value))}
+            style={{
+              writingMode: "vertical-lr",
+              WebkitAppearance: "slider-vertical",
+              height: "100%",
+              rotate: "180deg",
+            }}
+          />
+        </label>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "100%",
+            marginLeft: "5px",
+            marginBottom: "5px",
+          }}
+        >
+          {Array.from({ length: 10 }, (_, i) => (
+            <span key={i} style={{ fontSize: "12px" }}>
+              {10 - i}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 
@@ -143,7 +180,7 @@ export function ColorIntensityPicker({
       ref={parentRef}
       style={{
         position: "relative",
-        paddingLeft: "50px",
+        paddingLeft: "150px",
       }}
     >
       <div
@@ -162,7 +199,8 @@ export function ColorIntensityPicker({
   );
 }
 
-type ColorIntensityPickerProps = {
+type ColorEvaSelectorProps = {
   color: string;
-  onChange: (color: string) => void;
+  intensity: number;
+  onChange: (color: string, intensity: number) => void;
 };

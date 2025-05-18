@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Colors } from "../../utils/types";
 import { ColorSelection } from "./ColorSelection";
 import { Note3D, TrashColor3D } from "../other/Icons";
-import { ColorIntensityPicker } from "./ColorIntensityPicker";
 
 export function ColorsList({
   isPatient,
@@ -11,7 +10,6 @@ export function ColorsList({
   selectedColor,
   setSelectedColor,
   handleDeleteColor,
-  editColor,
   setNote,
 }: ColorsListProps) {
   useEffect(() => {
@@ -52,32 +50,18 @@ export function ColorsList({
               {" " + key}
             </label>
             <div>
-              {
-                <input
-                  type="color"
-                  value={colors[key].color}
-                  onChange={(e) => {
-                    const newColor = e.target.value;
-                    editColor(colors[key].color, newColor);
-                    setColors((prevColors) => ({
-                      ...prevColors,
-                      [key]: { ...prevColors[key], color: newColor },
-                    }));
-                  }}
-                  disabled={!isPatient}
-                />
-              }
-
-              {/*<ColorIntensityPicker
-                color={colors[key].color}
-                onChange={(newColor) => {
-                  editColor(colors[key].color, newColor);
-                  setColors((prevColors) => ({
-                    ...prevColors,
-                    [key]: { ...prevColors[key], color: newColor },
-                  }));
+              <div
+                style={{
+                  backgroundColor: colors[key].color,
+                  color: "#fff",
+                  minWidth: "50px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  fontWeight: "bold",
                 }}
-              />*/}
+              >
+                {colors[key].intensity}
+              </div>
               <button onClick={() => setNote(key)}>
                 <Note3D></Note3D>
               </button>
@@ -103,6 +87,5 @@ type ColorsListProps = {
   selectedColor: string;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
   handleDeleteColor: (color: string) => void;
-  editColor: (colorToEdit: string, newColor: string) => void;
   setNote: (key: string) => void;
 };

@@ -13,6 +13,8 @@ import { Note } from "./Note";
 import { isToday } from "../../utils/helpers";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Note3D } from "../other/Icons";
+import { GeneralNote } from "./GeneralNote";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
@@ -23,6 +25,8 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const [selectedLayers, setSelectedLayers] = useState<number[]>([0]);
   const [deleteMenu, setDeleteMenu] = useState<DeleteMenuState | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  const [generalNote, setGeneralNote] = useState({ patient: "", doctor: "" });
+  const [isGeneralNote, setIsGeneralNote] = useState(false);
   const disabledDates = useData<string[]>(
     `modelPainted/patient/${patientId}/dates`
   );
@@ -48,9 +52,14 @@ export function ModelEditor({ patientId }: { patientId: string }) {
     loadLocal,
     setActiveLayers,
     deleteColor,
-    editColor,
     toggleLayerVisibility,
-  } = usePaintTexture({ patientId, colors, setColors });
+  } = usePaintTexture({
+    patientId,
+    colors,
+    setColors,
+    generalNote,
+    setGeneralNote,
+  });
 
   const handleReset = () => {
     setDeleteMenu({
@@ -89,6 +98,14 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           message={deleteMenu.message}
         ></DeleteMenu>
       )}
+      {isGeneralNote && (
+        <GeneralNote
+          generalNote={generalNote}
+          setGeneralNote={setGeneralNote}
+          setIsGeneralNote={setIsGeneralNote}
+          isPatient={user?.role === "patient"}
+        ></GeneralNote>
+      )}
       <CanvasComponent
         texture={texture}
         strokesRef={strokesRefs}
@@ -98,21 +115,26 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         selectedColor={selectedColor}
       ></CanvasComponent>
       <div className="model-editor-controls">
-        <DatePicker
-          className="model-editor-date-input"
-          selected={new Date(date)}
-          onChange={(date: Date | null) => {
-            if (date) {
-              const selectedDate = format(date, "yyyy-MM-dd");
-              setDate(selectedDate);
-              setMode(ROTATE_MODE);
-              load(selectedDate);
-            }
-          }}
-          filterDate={(date) => isDateDisabled(format(date, "yyyy-MM-dd"))}
-          portalId="root"
-          dateFormat="dd-MM-YYYY"
-        />
+        <div className="model-date-container">
+          <DatePicker
+            className="model-editor-date-input"
+            selected={new Date(date)}
+            onChange={(date: Date | null) => {
+              if (date) {
+                const selectedDate = format(date, "yyyy-MM-dd");
+                setDate(selectedDate);
+                setMode(ROTATE_MODE);
+                load(selectedDate);
+              }
+            }}
+            filterDate={(date) => isDateDisabled(format(date, "yyyy-MM-dd"))}
+            portalId="root"
+            dateFormat="dd-MM-YYYY"
+          />
+          <button onClick={() => setIsGeneralNote(true)}>
+            <Note3D></Note3D>
+          </button>
+        </div>
         {user?.role === "patient" && isToday(date) && (
           <Buttons
             mode={mode}
@@ -140,7 +162,6 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
           handleDeleteColor={handleDeleteColor}
-          editColor={editColor}
           setNote={setNote}
         ></ColorsList>
       </div>

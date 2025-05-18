@@ -93,6 +93,7 @@ export interface Password {
 
 export interface ModelPainted {
   date: Date;
+  generalNote: GeneralNote;
   patientId: string;
   data: Array<Array<any>>;
   colors: Colors;
@@ -100,6 +101,7 @@ export interface ModelPainted {
 
 export interface PartialModelPainted {
   date?: Date | undefined;
+  GeneralNote?: GeneralNote;
   patientId?: string | undefined;
   data?: Array<Array<any>>;
   colors?: Colors;
@@ -108,6 +110,12 @@ export interface PartialModelPainted {
 export interface Colors {
   [key: string]: {
     color: string;
-    description?: string;
+    description: string;
+    intensity: number;
   };
+}
+
+export interface GeneralNote {
+  patient: string;
+  doctor: string;
 }

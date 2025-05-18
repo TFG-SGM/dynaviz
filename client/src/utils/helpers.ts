@@ -41,3 +41,7 @@ export function isToday(date: string) {
   console.log(new Date());
   return date === format(new Date(), "yyyy-MM-dd");
 }
+
+export function getLayerName(number: number) {
+  return { 0: "Interno", 1: "Musculo", 2: "Piel" }[number];
+}

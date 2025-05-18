@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { Colors, Stroke } from "../utils/types";
+import { Colors, GeneralNote, Stroke } from "../utils/types";
 import { DataService } from "../services/DataService";
 
 export function usePaintTexture({
@@ -9,12 +9,16 @@ export function usePaintTexture({
   setColors,
   size = 1024,
   initialColor = "#fff",
+  generalNote,
+  setGeneralNote,
 }: {
   patientId: string;
   colors: Colors;
   setColors: (colors: Colors) => void;
   size?: number;
   initialColor?: string;
+  generalNote: GeneralNote;
+  setGeneralNote: (generalNote: GeneralNote) => void;
 }) {
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
   const strokesRefs = useRef<Stroke[][]>([]);
@@ -22,6 +26,7 @@ export function usePaintTexture({
   const [visibleLayers, setVisibleLayers] = useState<Set<number>>(
     new Set([0, 1, 2])
   );
+
   useEffect(() => {
     updateTexture();
   }, [visibleLayers]);
@@ -201,6 +206,7 @@ export function usePaintTexture({
       await DataService.createData("modelPainted", {
         patientId: patientId,
         date: new Date(),
+        generalNote: generalNote,
         data: strokesRefs.current,
         colors: colors,
       });
@@ -253,6 +259,7 @@ export function usePaintTexture({
           strokesRefs.current[layerIndex] = strokes;
         });
         setColors(data.colors);
+        setGeneralNote(data.generalNote);
         updateTexture();
       } else {
         console.error("No saved layers found in localStorage");
