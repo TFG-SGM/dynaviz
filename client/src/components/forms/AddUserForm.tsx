@@ -53,7 +53,6 @@ export function AddUserForm<T>({
       toast.success(`${userType} añadido correctamente`);
     } catch (error) {
       setIsDisabled(false);
-      console.log(error);
       toast.error(`Error: ${userType} no añadido correctamente`);
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);

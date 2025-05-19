@@ -55,7 +55,6 @@ export function UpdateUserForm({
       handleCancel();
       toast.success(`${userType} actualizado correctamente`);
     } catch (error) {
-      console.log(error);
       toast.error(`Error: ${userType} no actualizado correctamente`);
       if (error instanceof AxiosError && error.response)
         setError(error.response.data.message);

@@ -142,6 +142,7 @@ export type Colors = {
     color: string;
     description: string;
     intensity: number;
+    base: string;
   };
 };
 
@@ -150,7 +151,7 @@ export type DeleteMenuState = {
   message: string;
 };
 
-export type GeneralNote = {
+export type GeneralNoteType = {
   patient: string;
   doctor: string;
 };

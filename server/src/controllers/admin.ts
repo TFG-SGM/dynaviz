@@ -47,7 +47,6 @@ export class AdminController {
   }
 
   static async update(req: Request, res: Response) {
-    console.log(req.body);
     if (req.body.isPhotoChanged) {
       req.body = {
         ...req.body,

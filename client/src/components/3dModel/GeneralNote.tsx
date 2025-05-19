@@ -1,22 +1,32 @@
 import { useState } from "react";
 import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
+import { DataService } from "../../services/DataService";
+import { GeneralNoteType } from "../../utils/types";
 
 export function GeneralNote({
   generalNote,
   setGeneralNote,
   setIsGeneralNote,
   isPatient,
-}) {
+  patientId,
+  strokesRefs,
+  colors,
+  date,
+}: GeneralNoteProps) {
   const [newGeneralNote, setNewGeneralNote] = useState(generalNote);
 
   const handleSave = async () => {
-    try {
-      setGeneralNote(newGeneralNote);
-      setIsGeneralNote(false);
-    } catch (error) {
-      console.error("Error saving paint layers:", error);
-    }
+    await DataService.createData("modelPainted", {
+      patientId: patientId,
+      date: date,
+      generalNote: newGeneralNote,
+      data: strokesRefs.current,
+      colors: colors,
+    });
+
+    setGeneralNote(newGeneralNote);
+    setIsGeneralNote(false);
   };
 
   return (
@@ -49,7 +59,7 @@ export function GeneralNote({
         <textarea
           value={
             newGeneralNote.doctor === "" && isPatient
-              ? "El médico todavía no ha puesto ningún comentario"
+              ? "El médico todavía no ha puesto ningún comentario."
               : newGeneralNote.doctor
           }
           onChange={(e) =>
@@ -71,4 +81,13 @@ export function GeneralNote({
   );
 }
 
-interface GeneralNoteProps {}
+interface GeneralNoteProps {
+  generalNote: GeneralNoteType;
+  setGeneralNote: (note: GeneralNoteType) => void;
+  setIsGeneralNote: (open: boolean) => void;
+  isPatient: boolean;
+  patientId: string;
+  strokesRefs: React.RefObject<any>;
+  colors: any;
+  date: string;
+}

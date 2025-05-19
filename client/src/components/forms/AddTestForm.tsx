@@ -49,7 +49,6 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
       handleClean();
       toast.success("Prueba(s) añadida(s) correctamente");
     } catch (e) {
-      console.log(e);
       setIsDisabled(false);
       toast.error("Error: Prueba(s) no añadida(s) correctamente");
     }

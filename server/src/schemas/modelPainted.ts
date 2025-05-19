@@ -11,6 +11,7 @@ const baseModelPaintedSchema = z.object({
       color: z.string(),
       description: z.string(),
       intensity: z.number(),
+      base: z.string(),
     })
   ),
 });

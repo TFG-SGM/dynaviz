@@ -112,6 +112,7 @@ export interface Colors {
     color: string;
     description: string;
     intensity: number;
+    base: string;
   };
 }
 

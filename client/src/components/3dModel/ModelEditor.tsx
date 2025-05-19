@@ -5,7 +5,12 @@ import { ColorsList } from "./ColorsList";
 import { CanvasComponent } from "./Canvas";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
-import { Colors, DeleteMenuState, UserData } from "../../utils/types";
+import {
+  Colors,
+  DeleteMenuState,
+  GeneralNoteType,
+  UserData,
+} from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
 import { DeleteMenu } from "../menus/DeleteMenu";
@@ -25,7 +30,10 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const [selectedLayers, setSelectedLayers] = useState<number[]>([0]);
   const [deleteMenu, setDeleteMenu] = useState<DeleteMenuState | null>(null);
   const [note, setNote] = useState<string | null>(null);
-  const [generalNote, setGeneralNote] = useState({ patient: "", doctor: "" });
+  const [generalNote, setGeneralNote] = useState({
+    patient: "",
+    doctor: "",
+  });
   const [isGeneralNote, setIsGeneralNote] = useState(false);
   const disabledDates = useData<string[]>(
     `modelPainted/patient/${patientId}/dates`
@@ -104,6 +112,10 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           setGeneralNote={setGeneralNote}
           setIsGeneralNote={setIsGeneralNote}
           isPatient={user?.role === "patient"}
+          patientId={patientId}
+          strokesRefs={strokesRefs}
+          colors={colors}
+          date={date}
         ></GeneralNote>
       )}
       <CanvasComponent

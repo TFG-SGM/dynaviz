@@ -1,49 +1,17 @@
 import ReactDOM from "react-dom";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { COLORS } from "../../utils/constants";
-
-const adjustLightDark = (hex: string, level: number) => {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-
-  const maxBlend = 0.5; // Incrementado de 0.3 a 0.5
-  const midpoint = 5;
-  const blendFactor = (Math.abs(level - midpoint) / midpoint) * maxBlend;
-
-  let blendedR, blendedG, blendedB;
-
-  if (level < midpoint) {
-    blendedR = Math.round(r + (255 - r) * blendFactor);
-    blendedG = Math.round(g + (255 - g) * blendFactor);
-    blendedB = Math.round(b + (255 - b) * blendFactor);
-  } else if (level > midpoint) {
-    const f = 1 - blendFactor;
-    blendedR = Math.round(r * f);
-    blendedG = Math.round(g * f);
-    blendedB = Math.round(b * f);
-  } else {
-    blendedR = r;
-    blendedG = g;
-    blendedB = b;
-  }
-
-  // Convert to hexadecimal and ensure two digits
-  const toHex = (value: number) => value.toString(16).padStart(2, "0");
-  return `#${toHex(blendedR)}${toHex(blendedG)}${toHex(blendedB)}`;
-};
+import { adjustLightDark } from "../../utils/helpers";
 
 export function ColorEvaSelector({
-  color,
+  base,
   intensity,
   onChange,
 }: ColorEvaSelectorProps) {
-  const [isChoosing, setIsChoosing] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(color);
-  const [selectedIntensity, setSelectedIntensity] = useState(intensity);
   const parentRef = useRef<HTMLDivElement | null>(null);
+  const [isChoosing, setIsChoosing] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
-  const [displayColor, setDisplayColor] = useState(color);
+  const display = adjustLightDark(base, intensity);
 
   useLayoutEffect(() => {
     if (isChoosing && parentRef.current) {
@@ -54,18 +22,6 @@ export function ColorEvaSelector({
       });
     }
   }, [isChoosing]);
-
-  useEffect(() => {
-    setDisplayColor(adjustLightDark(selectedColor, selectedIntensity));
-  }, [selectedColor, selectedIntensity]);
-
-  useEffect(() => {
-    onChange(displayColor, selectedIntensity);
-  }, [displayColor, onChange]);
-
-  useEffect(() => {
-    setSelectedIntensity(intensity);
-  }, [intensity]);
 
   const dropdown = (
     <div
@@ -94,15 +50,12 @@ export function ColorEvaSelector({
         {Object.entries(COLORS).map(([name, hex]) => (
           <button
             key={name}
-            onClick={() => {
-              setSelectedColor(hex);
-            }}
+            onClick={() => onChange(hex, intensity)}
             style={{
               width: 40,
               height: 40,
               borderRadius: "50%",
-              border:
-                selectedColor === name ? "3px solid black" : "1px solid #ccc",
+              border: base === name ? "3px solid black" : "1px solid #ccc",
               backgroundColor: hex,
               cursor: "pointer",
               outline: "none",
@@ -125,7 +78,7 @@ export function ColorEvaSelector({
             min="1"
             max="10"
             value={intensity}
-            onChange={(e) => setSelectedIntensity(Number(e.target.value))}
+            onChange={(e) => onChange(base, Number(e.target.value))}
             style={{
               writingMode: "vertical-lr",
               WebkitAppearance: "slider-vertical",
@@ -189,18 +142,22 @@ export function ColorEvaSelector({
           height: "30px",
           border: "1px solid #ccc",
           borderRadius: "8px",
-          backgroundColor: displayColor,
+          backgroundColor: display,
           cursor: "pointer",
+          textAlign: "center",
+          color: "white",
         }}
         onClick={() => setIsChoosing(!isChoosing)}
-      />
+      >
+        {intensity}
+      </div>
       {isChoosing && ReactDOM.createPortal(dropdown, document.body)}
     </div>
   );
 }
 
-type ColorEvaSelectorProps = {
-  color: string;
+interface ColorEvaSelectorProps {
+  base: string;
   intensity: number;
-  onChange: (color: string, intensity: number) => void;
-};
+  onChange: (base: string, intensity: number) => void;
+}

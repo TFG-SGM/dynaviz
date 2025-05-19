@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { Colors, GeneralNote, Stroke } from "../utils/types";
+import { Colors, GeneralNoteType, Stroke } from "../utils/types";
 import { DataService } from "../services/DataService";
 
 export function usePaintTexture({
@@ -17,8 +17,8 @@ export function usePaintTexture({
   setColors: (colors: Colors) => void;
   size?: number;
   initialColor?: string;
-  generalNote: GeneralNote;
-  setGeneralNote: (generalNote: GeneralNote) => void;
+  generalNote: GeneralNoteType;
+  setGeneralNote: (generalNote: GeneralNoteType) => void;
 }) {
   const canvasRefs = useRef<HTMLCanvasElement[]>([]);
   const strokesRefs = useRef<Stroke[][]>([]);
@@ -268,6 +268,7 @@ export function usePaintTexture({
       console.error("Error loading paint layers:", error);
       reset();
       setColors({});
+      setGeneralNote({ patient: "", doctor: "" });
     }
   };
 
