@@ -21,9 +21,13 @@
 
 .model-date-container {
   display: grid;
-  grid-template-columns: 9fr 1fr;
+  grid-template-columns: 8fr 1fr;
   align-items: center;
   gap: 10px;
+}
+
+.date-container-doctor {
+  grid-template-columns: 8fr 1fr 1fr;
 }
 
 .model-canvas {

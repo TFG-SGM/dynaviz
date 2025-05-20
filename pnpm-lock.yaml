@@ -38,7 +38,7 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       jspdf:
-        specifier: ^2.5.1
+        specifier: ^2.5.2
         version: 2.5.2
       react:
         specifier: ^19.1.0

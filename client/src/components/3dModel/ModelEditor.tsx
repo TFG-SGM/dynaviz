@@ -1,16 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePaintTexture } from "../../hooks/usePaintTexture";
 import { Buttons } from "./Buttons";
 import { ColorsList } from "./ColorsList";
 import { CanvasComponent } from "./Canvas";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
-import {
-  Colors,
-  DeleteMenuState,
-  GeneralNoteType,
-  UserData,
-} from "../../utils/types";
+import { Colors, DeleteMenuState, UserData } from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
 import { DeleteMenu } from "../menus/DeleteMenu";
@@ -18,8 +13,9 @@ import { Note } from "./Note";
 import { isToday } from "../../utils/helpers";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Note3D } from "../other/Icons";
+import { Dowloand3D, Note3D } from "../other/Icons";
 import { GeneralNote } from "./GeneralNote";
+import { DataService } from "../../services/DataService";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
@@ -38,9 +34,16 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const disabledDates = useData<string[]>(
     `modelPainted/patient/${patientId}/dates`
   );
+  const downloaderRef = useRef<any>(null);
 
   const isDateDisabled = (date: string) => {
     return disabledDates?.[0]?.includes(date) ?? false;
+  };
+
+  const handleDownload = async () => {
+    const patient = await DataService.getData(`patient/${patientId}`);
+    console.log(patient);
+    downloaderRef.current?.downloadPdfWithViews(patient, date, colors);
   };
 
   useEffect(() => {
@@ -125,9 +128,14 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         paint={paint}
         mode={mode}
         selectedColor={selectedColor}
+        downloaderRef={downloaderRef}
       ></CanvasComponent>
       <div className="model-editor-controls">
-        <div className="model-date-container">
+        <div
+          className={`model-date-container ${
+            user?.role !== "patient" && "date-container-doctor"
+          }`}
+        >
           <DatePicker
             className="model-editor-date-input"
             selected={new Date(date)}
@@ -146,6 +154,11 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           <button onClick={() => setIsGeneralNote(true)}>
             <Note3D></Note3D>
           </button>
+          {user?.role !== "patient" && (
+            <button onClick={handleDownload}>
+              <Dowloand3D></Dowloand3D>
+            </button>
+          )}
         </div>
         {user?.role === "patient" && isToday(date) && (
           <Buttons
