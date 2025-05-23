@@ -46,8 +46,5 @@
     "vite": "^6.3.1",
     "vite-plugin-pwa": "^0.18.1",
     "webpack": "^5.91.0"
-  },
-  "engines": {
-    "node": "20.x"
   }
 }
