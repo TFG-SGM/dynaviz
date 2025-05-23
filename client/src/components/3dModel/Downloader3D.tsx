@@ -2,12 +2,17 @@ import { forwardRef, useImperativeHandle } from "react";
 import jsPDF from "jspdf";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { Colors, PatientData } from "../../utils/types";
 
 export const Downloader3D = forwardRef((_, ref) => {
   const { gl, scene, camera } = useThree();
 
   useImperativeHandle(ref, () => ({
-    async downloadPdfWithViews(patient, date, colors) {
+    async downloadPdfWithViews(
+      patient: PatientData,
+      date: string,
+      colors: Colors
+    ) {
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",

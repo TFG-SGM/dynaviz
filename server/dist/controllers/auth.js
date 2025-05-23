@@ -38,7 +38,6 @@ class AuthController {
     }
     static getUserData(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("userData", req.body.userData);
             const { role, email } = req.body.userData;
             let user = null;
             if (role === "admin") {

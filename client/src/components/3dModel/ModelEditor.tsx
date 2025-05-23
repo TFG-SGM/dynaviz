@@ -5,7 +5,12 @@ import { ColorsList } from "./ColorsList";
 import { CanvasComponent } from "./Canvas";
 import { LayerSelector } from "./LayerSelector";
 import { ROTATE_MODE } from "../../utils/constants";
-import { Colors, DeleteMenuState, UserData } from "../../utils/types";
+import {
+  Colors,
+  DeleteMenuState,
+  Downloader3DRef,
+  UserData,
+} from "../../utils/types";
 import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
 import { DeleteMenu } from "../menus/DeleteMenu";
@@ -34,7 +39,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const disabledDates = useData<string[]>(
     `modelPainted/patient/${patientId}/dates`
   );
-  const downloaderRef = useRef<any>(null);
+  const downloaderRef = useRef<Downloader3DRef>(null);
 
   const isDateDisabled = (date: string) => {
     return disabledDates?.[0]?.includes(date) ?? false;

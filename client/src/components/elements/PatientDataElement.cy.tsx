@@ -20,6 +20,7 @@ describe("<PatientDataElement />", () => {
       diagnosisYears: 0,
       isFibro: false,
       doctorId: "",
+      photo: { id: "", name: "" },
     };
 
     const {
@@ -83,6 +84,7 @@ describe("<PatientDataElement />", () => {
       diagnosisYears: 1,
       isFibro: true,
       doctorId: "0001",
+      photo: { id: "", name: "" },
     };
 
     const {
@@ -152,6 +154,7 @@ describe("<PatientDataElement />", () => {
       diagnosisYears: -1,
       isFibro: true,
       doctorId: "0001",
+      photo: { id: "", name: "" },
     };
 
     const {

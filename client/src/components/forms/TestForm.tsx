@@ -150,7 +150,7 @@ export function TestForm({ data, setNewData, isDisabled }: TestFormProps) {
               handleChange={handleChange}
               handleChangeRecordingState={handleChangeRecordingState}
               handleRemoveNewTest={handleRemoveNewTest}
-              inputRef={inputRef}
+              inputRef={inputRef as React.RefObject<HTMLInputElement>}
               isDisabled={isDisabled}
             ></NewTest>
           );

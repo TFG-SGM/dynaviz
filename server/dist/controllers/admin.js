@@ -53,7 +53,6 @@ class AdminController {
     static update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            console.log(req.body);
             if (req.body.isPhotoChanged) {
                 req.body = Object.assign(Object.assign({}, req.body), { photo: { name: (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, id: (_b = req.file) === null || _b === void 0 ? void 0 : _b.id.toString() } });
             }

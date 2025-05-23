@@ -72,7 +72,7 @@ export function AddUserForm<T>({
         </div>
         <form onSubmit={handleSubmit}>
           <UserForm
-            data={newData as PatientData}
+            data={newData as UserData}
             setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
             isPass={true}
             error={error}

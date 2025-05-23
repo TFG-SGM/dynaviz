@@ -5,7 +5,7 @@ import {
   SetStateAction,
   useRef,
 } from "react";
-import { PatientData, UserData } from "../../utils/types";
+import { UserData } from "../../utils/types";
 import { ErrorComponent } from "../other/ErrorComponent";
 import { useFile } from "../../hooks/useFile";
 import { DOCTOR_ENDPOINT, IMAGE_TYPE } from "../../utils/constants";
@@ -13,7 +13,7 @@ import { LoadingComponent } from "../other/LoadingComponent";
 import { SelectDoctor } from "../selects/SelectDoctor";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 export interface UserFormProps {
-  data: PatientData | null;
+  data: UserData | null;
   setNewData: Dispatch<SetStateAction<UserData>>;
   isPass?: boolean;
   handleChangePassForm?: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -270,7 +270,7 @@ export function UserForm({
             Médico{" "}
             <SelectDoctor
               option="doctorId"
-              value={data.doctorId}
+              value={data.doctorId as string}
               endpoint={DOCTOR_ENDPOINT}
               handleChange={handleChange}
             ></SelectDoctor>

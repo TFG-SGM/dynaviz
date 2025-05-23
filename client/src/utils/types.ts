@@ -13,6 +13,31 @@ export type UserData = {
   photo: { id: string; name: string };
   prevPhoto?: string;
   isPhotoChanged?: boolean;
+
+  activityLevel?: activityLevel;
+  occupation?: string;
+  diagnosisYears?: number;
+  isFibro?: boolean;
+  weight?: number;
+  height?: number;
+  doctorId?: string;
+};
+
+export type DoctorAdminType = {
+  uId?: string;
+  _id: string;
+  password: string;
+  name: string;
+  surname: string;
+  date: string;
+  age?: number;
+  city: string;
+  email: string;
+  phone: string;
+  role?: string;
+  photo: { id: string; name: string };
+  prevPhoto?: string;
+  isPhotoChanged?: boolean;
 };
 
 export type activityLevel = "leve" | "moderado" | "activo";
@@ -27,7 +52,7 @@ export type PatientData = {
   city: string;
   email: string;
   phone: string;
-  password: string;
+  password?: string;
   activityLevel: activityLevel;
   occupation: string;
   diagnosisYears: number;
@@ -155,3 +180,11 @@ export type GeneralNoteType = {
   patient: string;
   doctor: string;
 };
+
+export interface Downloader3DRef {
+  downloadPdfWithViews: (
+    patient: PatientData,
+    date: string,
+    colors: Colors
+  ) => void;
+}

@@ -1,4 +1,4 @@
-import { UserData } from "../../utils/types";
+import { DoctorAdminType, UserData } from "../../utils/types";
 import { UserForm } from "./UserForm";
 
 describe("<UserForm /> without password", () => {
@@ -13,7 +13,7 @@ describe("<UserForm /> without password", () => {
   });
 
   it("render with data empty", () => {
-    const data = {
+    const data: UserData = {
       uId: "",
       _id: "",
       password: "",
@@ -39,6 +39,7 @@ describe("<UserForm /> without password", () => {
         setNewData={setNewData}
         isPass={isPass}
         error={error}
+        isPatient={false}
       ></UserForm>
     );
 
@@ -79,6 +80,7 @@ describe("<UserForm /> without password", () => {
         setNewData={setNewData}
         isPass={isPass}
         error={error}
+        isPatient={false}
       ></UserForm>
     );
 
@@ -87,7 +89,7 @@ describe("<UserForm /> without password", () => {
 
       cy.get(`input[name=${key}]`).should(
         "have.value",
-        data[key as keyof UserData]
+        data[key as keyof DoctorAdminType]
       );
     });
     cy.contains("Error").should("be.visible");
@@ -129,10 +131,11 @@ describe("<UserForm /> with password", () => {
 
     cy.mount(
       <UserForm
-        data={data}
+        data={data as UserData}
         setNewData={setNewData}
         isPass={isPass}
         error={error}
+        isPatient={false}
       ></UserForm>
     );
 
@@ -141,7 +144,7 @@ describe("<UserForm /> with password", () => {
 
       cy.get(`input[name=${key}]`).should(
         "have.value",
-        data[key as keyof UserData]
+        data[key as keyof DoctorAdminType]
       );
     });
     cy.get(`input[name=password]`).should("have.value", data.password);
@@ -174,6 +177,7 @@ describe("<UserForm /> with password", () => {
         setNewData={setNewData}
         isPass={isPass}
         error={error}
+        isPatient={false}
       ></UserForm>
     );
 
@@ -182,7 +186,7 @@ describe("<UserForm /> with password", () => {
 
       cy.get(`input[name=${key}]`).should(
         "have.value",
-        data[key as keyof UserData]
+        data[key as keyof DoctorAdminType]
       );
     });
     cy.get(`input[name=password]`).should("have.value", data.password);

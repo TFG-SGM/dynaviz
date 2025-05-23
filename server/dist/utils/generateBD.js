@@ -21,10 +21,10 @@ function generateData() {
     return __awaiter(this, void 0, void 0, function* () {
         createTestTypes();
         for (let index = 0; index < 2; index++) {
-            yield createAdmin();
-            const { id } = yield createDoctor();
+            yield createAdmin(index);
+            const { id } = yield createDoctor(index);
             for (let index = 0; index < 2; index++) {
-                yield createPatient(id.toString());
+                yield createPatient(id.toString(), index);
             }
         }
     });
@@ -41,7 +41,7 @@ function createTestTypes() {
         }
     });
 }
-function createAdmin() {
+function createAdmin(index) {
     return __awaiter(this, void 0, void 0, function* () {
         const admin = {
             name: faker_1.faker.person.firstName(),
@@ -52,7 +52,7 @@ function createAdmin() {
                 to: "2000-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
-            email: faker_1.faker.internet.email(),
+            email: index === 0 ? "admin@gmail.com" : faker_1.faker.internet.email(),
             phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
             photo: { id: null, name: null },
         };
@@ -60,7 +60,7 @@ function createAdmin() {
         yield admin_1.AdminModel.create({ input: admin });
     });
 }
-function createDoctor() {
+function createDoctor(index) {
     return __awaiter(this, void 0, void 0, function* () {
         const doctor = {
             name: faker_1.faker.person.firstName(),
@@ -71,7 +71,7 @@ function createDoctor() {
                 to: "2000-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
-            email: faker_1.faker.internet.email(),
+            email: index === 0 ? "doctor@gmail.com" : faker_1.faker.internet.email(),
             phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
             photo: { id: null, name: null },
         };
@@ -80,7 +80,7 @@ function createDoctor() {
         return newDoctor;
     });
 }
-function createPatient(doctorId) {
+function createPatient(doctorId, index) {
     return __awaiter(this, void 0, void 0, function* () {
         const activityLevels = ["leve", "moderado", "activo"];
         const randomIndex = faker_1.faker.number.int({
@@ -97,7 +97,7 @@ function createPatient(doctorId) {
                 to: "2006-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
-            email: faker_1.faker.internet.email(),
+            email: index === 0 ? "patient@gmail.com" : faker_1.faker.internet.email(),
             phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
             weight: faker_1.faker.number.float({ fractionDigits: 2, min: 50, max: 130 }),
             height: faker_1.faker.number.float({ fractionDigits: 2, min: 150, max: 210 }),

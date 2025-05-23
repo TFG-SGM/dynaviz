@@ -36,6 +36,8 @@ describe("<PatientForm />", () => {
       weight: 0,
       height: 0,
       doctorId: "",
+      photo: { id: "", name: "" },
+      password: "",
     };
     const setNewData = cy.stub().as("setNewData");
     const error = null;
@@ -81,6 +83,8 @@ describe("<PatientForm />", () => {
       weight: 60,
       height: 180,
       doctorId: "0001",
+      photo: { id: "", name: "" },
+      password: "",
     };
     const setNewData = cy.stub().as("setNewData");
     const error = null;
@@ -128,6 +132,8 @@ describe("<PatientForm />", () => {
       weight: -60,
       height: -180,
       doctorId: "0001",
+      photo: { id: "", name: "" },
+      password: "",
     };
     const setNewData = cy.stub().as("setNewData");
     const error = "Error";

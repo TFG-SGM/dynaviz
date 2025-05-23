@@ -11,7 +11,6 @@ import { DataService } from "../../services/DataService";
 import { PatientData, UserData } from "../../utils/types";
 import { AxiosError } from "axios";
 import { CrossButton } from "../buttons/CrossButton";
-import { PatientForm } from "./PatientForm";
 import { Overlay } from "../other/Overlay";
 import { getUserType } from "../../utils/helpers";
 import { toast } from "sonner";
@@ -73,7 +72,7 @@ export function UpdateUserForm({
         </div>
         <form onSubmit={handleSubmit}>
           <UserForm
-            data={newData as PatientData}
+            data={newData as UserData}
             setNewData={setNewData as Dispatch<SetStateAction<UserData>>}
             handleChangePassForm={handleChangePassForm}
             error={error}

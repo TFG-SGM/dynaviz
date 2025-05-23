@@ -3,7 +3,7 @@ import { OrbitControls } from "@react-three/drei";
 import { PaintableModel } from "./PaintableModel";
 import { ROTATE_MODE } from "../../utils/constants";
 import * as THREE from "three";
-import { Stroke } from "../../utils/types";
+import { Downloader3DRef, Stroke } from "../../utils/types";
 import { useEffect, useRef } from "react";
 import { Downloader3D } from "./Downloader3D";
 
@@ -54,12 +54,12 @@ export function CanvasComponent({
   );
 }
 
-type CanvasComponentProps = {
+interface CanvasComponentProps {
   texture: THREE.Texture;
   strokesRef: React.MutableRefObject<Stroke[][]>;
   saveLocal: () => void;
   paint: (u: number, v: number, color: string, size?: number) => void;
   mode: string;
   selectedColor: string;
-  downloaderRef: React.RefObject<any>;
-};
+  downloaderRef: React.RefObject<Downloader3DRef | null>;
+}
