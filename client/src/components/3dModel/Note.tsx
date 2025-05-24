@@ -10,9 +10,11 @@ export function Note({
   setColors,
   isPatient,
 }: NoteProps) {
-  if (!note) return;
+  const [description, setDescription] = useState(
+    note ? colors[note].description : ""
+  );
 
-  const [description, setDescription] = useState(colors[note].description);
+  if (!note) return null;
 
   const setNewDescription = () => {
     if (description) {
@@ -28,23 +30,14 @@ export function Note({
     <>
       <Overlay></Overlay>
       <dialog className="model-note" open>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <div>
           <p>
             Describe lo que significa '{note}' para el color{" "}
             <div
+              className="model-note-color"
               style={{
-                width: "15px",
-                height: "15px",
                 color: colors[note].color,
                 backgroundColor: colors[note].color,
-                borderRadius: "100%",
-                display: "inline-block",
               }}
             ></div>
           </p>

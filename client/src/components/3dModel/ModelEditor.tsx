@@ -39,6 +39,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const disabledDates = useData<string[]>(
     `modelPainted/patient/${patientId}/dates`
   );
+  const [isControlModel, setIsControlModel] = useState(false);
   const downloaderRef = useRef<Downloader3DRef>(null);
 
   const isDateDisabled = (date: string) => {
@@ -135,65 +136,73 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         selectedColor={selectedColor}
         downloaderRef={downloaderRef}
       ></CanvasComponent>
-      <div className="model-editor-controls">
-        <div
-          className={`model-date-container ${
-            user?.role !== "patient" && "date-container-doctor"
-          }`}
+      <div className="model-editor-controls-container">
+        <button
+          className="model-editor-controls-button"
+          onClick={() => setIsControlModel(!isControlModel)}
         >
-          <DatePicker
-            className="model-editor-date-input"
-            selected={new Date(date)}
-            onChange={(date: Date | null) => {
-              if (date) {
-                const selectedDate = format(date, "yyyy-MM-dd");
-                setDate(selectedDate);
-                setMode(ROTATE_MODE);
-                load(selectedDate);
-              }
-            }}
-            filterDate={(date) => isDateDisabled(format(date, "yyyy-MM-dd"))}
-            portalId="root"
-            dateFormat="dd-MM-YYYY"
-          />
-          <button onClick={() => setIsGeneralNote(true)}>
-            <Note3D></Note3D>
-          </button>
-          {user?.role !== "patient" && (
-            <button onClick={handleDownload}>
-              <Dowloand3D></Dowloand3D>
+          {isControlModel ? "Ocultar menú" : "Mostrar menú"}
+        </button>
+        <div className={`model-editor-controls ${isControlModel && "show"}`}>
+          <div
+            className={`model-date-container ${
+              user?.role !== "patient" && "date-container-doctor"
+            }`}
+          >
+            <DatePicker
+              className="model-editor-date-input"
+              selected={new Date(date)}
+              onChange={(date: Date | null) => {
+                if (date) {
+                  const selectedDate = format(date, "yyyy-MM-dd");
+                  setDate(selectedDate);
+                  setMode(ROTATE_MODE);
+                  load(selectedDate);
+                }
+              }}
+              filterDate={(date) => isDateDisabled(format(date, "yyyy-MM-dd"))}
+              portalId="root"
+              dateFormat="dd-MM-YYYY"
+            />
+            <button onClick={() => setIsGeneralNote(true)}>
+              <Note3D></Note3D>
             </button>
+            {user?.role !== "patient" && (
+              <button onClick={handleDownload}>
+                <Dowloand3D></Dowloand3D>
+              </button>
+            )}
+          </div>
+          {user?.role === "patient" && isToday(date) && (
+            <Buttons
+              mode={mode}
+              selectedColor={selectedColor}
+              setMode={setMode}
+              handleReset={handleReset}
+              save={save}
+              setSelectedColor={setSelectedColor}
+              loadLocal={loadLocal}
+            ></Buttons>
           )}
-        </div>
-        {user?.role === "patient" && isToday(date) && (
-          <Buttons
-            mode={mode}
+          <LayerSelector
+            isPatient={user?.role === "patient" && isToday(date)}
+            setActiveLayers={setActiveLayers}
+            selectedLayers={selectedLayers}
+            setSelectedLayers={setSelectedLayers}
+            handleClearLayer={handleClearLayer}
+            visibleLayers={visibleLayers}
+            toggleLayerVisibility={toggleLayerVisibility}
+          ></LayerSelector>
+          <ColorsList
+            isPatient={user?.role === "patient" && isToday(date)}
+            colors={colors}
+            setColors={setColors}
             selectedColor={selectedColor}
-            setMode={setMode}
-            handleReset={handleReset}
-            save={save}
             setSelectedColor={setSelectedColor}
-            loadLocal={loadLocal}
-          ></Buttons>
-        )}
-        <LayerSelector
-          isPatient={user?.role === "patient" && isToday(date)}
-          setActiveLayers={setActiveLayers}
-          selectedLayers={selectedLayers}
-          setSelectedLayers={setSelectedLayers}
-          handleClearLayer={handleClearLayer}
-          visibleLayers={visibleLayers}
-          toggleLayerVisibility={toggleLayerVisibility}
-        ></LayerSelector>
-        <ColorsList
-          isPatient={user?.role === "patient" && isToday(date)}
-          colors={colors}
-          setColors={setColors}
-          selectedColor={selectedColor}
-          setSelectedColor={setSelectedColor}
-          handleDeleteColor={handleDeleteColor}
-          setNote={setNote}
-        ></ColorsList>
+            handleDeleteColor={handleDeleteColor}
+            setNote={setNote}
+          ></ColorsList>
+        </div>
       </div>
       {note && (
         <Note

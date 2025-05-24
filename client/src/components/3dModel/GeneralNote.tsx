@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
 import { DataService } from "../../services/DataService";
-import { GeneralNoteType } from "../../utils/types";
+import { Colors, GeneralNoteType, Stroke } from "../../utils/types";
 
 export function GeneralNote({
   generalNote,
@@ -33,13 +33,7 @@ export function GeneralNote({
     <>
       <Overlay></Overlay>
       <dialog className="model-note" open>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <div>
           <p>Describe lo que sientes hoy:</p>
           <CrossButton
             handleClean={() => setIsGeneralNote(false)}
@@ -87,7 +81,7 @@ interface GeneralNoteProps {
   setIsGeneralNote: (open: boolean) => void;
   isPatient: boolean;
   patientId: string;
-  strokesRefs: React.RefObject<any>;
-  colors: any;
+  strokesRefs: React.RefObject<Stroke[][]>;
+  colors: Colors;
   date: string;
 }

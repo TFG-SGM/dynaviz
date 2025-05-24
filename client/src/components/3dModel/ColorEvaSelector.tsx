@@ -25,83 +25,51 @@ export function ColorEvaSelector({
 
   const dropdown = (
     <div
-      className="dropdown"
+      className="model-dropdown-container"
       style={{
-        position: "absolute",
-        display: "flex",
         top: dropdownPosition.top,
         left: dropdownPosition.left,
-        zIndex: 999,
-        backgroundColor: "white",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        padding: "20px",
-        gap: "20px",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "8px",
-          width: "150px",
-        }}
-      >
-        {Object.entries(COLORS).map(([name, hex]) => (
-          <button
-            key={name}
-            onClick={() => onChange(hex, intensity)}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: "50%",
-              border: base === name ? "3px solid black" : "1px solid #ccc",
-              backgroundColor: hex,
-              cursor: "pointer",
-              outline: "none",
-            }}
-            title={name}
-          />
-        ))}
-      </div>
-      <div style={{ display: "flex", alignItems: "center", height: "200px" }}>
-        <label
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={intensity}
-            onChange={(e) => onChange(base, Number(e.target.value))}
-            style={{
-              writingMode: "vertical-lr",
-              WebkitAppearance: "slider-vertical",
-              height: "100%",
-              rotate: "180deg",
-            }}
-          />
-        </label>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            height: "100%",
-            marginLeft: "5px",
-            marginBottom: "5px",
-          }}
-        >
-          {Array.from({ length: 10 }, (_, i) => (
-            <span key={i} style={{ fontSize: "12px" }}>
-              {10 - i}
-            </span>
+      <p>Elige un color y una intensidad:</p>
+      <div className="model-dropdown">
+        <div className="model-dropdown-colors-selector">
+          {Object.entries(COLORS).map(([name, hex]) => (
+            <button
+              key={name}
+              onClick={() => onChange(hex, intensity)}
+              className="model-dropdown-color-button"
+              style={{
+                border: base === name ? "3px solid black" : "1px solid #ccc",
+                backgroundColor: hex,
+              }}
+              title={name}
+            />
           ))}
+        </div>
+        <div className="model-dropdown-intensity-selector">
+          <label>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={intensity}
+              onChange={(e) => onChange(base, Number(e.target.value))}
+              style={{
+                writingMode: "vertical-lr",
+                WebkitAppearance: "slider-vertical",
+                height: "100%",
+                rotate: "180deg",
+              }}
+            />
+          </label>
+          <div className="model-dropdown-intensity-numbers">
+            {Array.from({ length: 10 }, (_, i) => (
+              <span key={i} style={{ fontSize: "12px" }}>
+                {10 - i}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -113,7 +81,9 @@ export function ColorEvaSelector({
       if (
         parentRef.current &&
         !parentRef.current.contains(target) &&
-        !document.body.contains((target as HTMLElement).closest(".dropdown"))
+        !document.body.contains(
+          (target as HTMLElement).closest(".model-dropdown")
+        )
       ) {
         setIsChoosing(false);
       }
@@ -129,23 +99,12 @@ export function ColorEvaSelector({
   }, [isChoosing]);
 
   return (
-    <div
-      ref={parentRef}
-      style={{
-        position: "relative",
-        paddingLeft: "150px",
-      }}
-    >
+    <div ref={parentRef} className="model-color-selector">
       <div
+        className="model-color-bullet"
         style={{
-          width: "50px",
-          height: "30px",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
           backgroundColor: display,
           cursor: "pointer",
-          textAlign: "center",
-          color: "white",
         }}
         onClick={() => setIsChoosing(!isChoosing)}
       >

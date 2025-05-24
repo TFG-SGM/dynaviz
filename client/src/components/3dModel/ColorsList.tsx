@@ -21,7 +21,7 @@ export function ColorsList({
     ) {
       setSelectedColor("");
     }
-  }, [colors, selectedColor]);
+  }, [colors, selectedColor, setSelectedColor]);
 
   return (
     <details className="model-colors-list-container">
@@ -51,13 +51,9 @@ export function ColorsList({
             </label>
             <div>
               <div
+                className="model-color-bullet"
                 style={{
                   backgroundColor: colors[key].color,
-                  color: "#fff",
-                  minWidth: "50px",
-                  textAlign: "center",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
                 }}
               >
                 {colors[key].intensity}

@@ -57,16 +57,6 @@ export function LayerSelector({
             </div>
           </div>
         ))}
-        {/*<p>
-        Capas seleccionadas:{" "}
-        {selectedLayers.map((l) => `Capa ${l + 1}`).join(", ")}
-      </p>
-      <p>
-        Capas visibles:{" "}
-        {Array.from(visibleLayers)
-          .map((l) => `Capa ${l + 1}`)
-          .join(", ")}
-      </p>*/}
       </div>
     </details>
   );
