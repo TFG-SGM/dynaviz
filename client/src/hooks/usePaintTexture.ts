@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Colors, GeneralNoteType, Stroke } from "../utils/types";
 import { DataService } from "../services/DataService";
+import { toast } from "sonner";
+import { getLayerName } from "../utils/helpers";
 
 export function usePaintTexture({
   patientId,
@@ -109,9 +111,10 @@ export function usePaintTexture({
     }
     strokesRefs.current[layer] = [];
     updateTexture();
+    toast.success(`Capa "${getLayerName(layer)}" limpiada correctamente`);
   };
 
-  const reset = () => {
+  const reset = (isToast = true) => {
     canvasRefs.current.forEach((canvas, index) => {
       const ctx = canvas.getContext("2d");
       if (ctx) {
@@ -121,6 +124,7 @@ export function usePaintTexture({
       strokesRefs.current[index] = [];
     });
     updateTexture();
+    if (isToast) toast.success("Modelo reseteado correctamente");
   };
 
   const setActiveLayers = (layers: number[]) => {
@@ -199,6 +203,7 @@ export function usePaintTexture({
 
     // Actualizar la textura
     updateTexture();
+    toast.success(`Color eliminado correctamente`);
   };
 
   const save = async () => {
@@ -210,7 +215,9 @@ export function usePaintTexture({
         data: strokesRefs.current,
         colors: colors,
       });
+      toast.success("Modelo guardado correctamente");
     } catch (error) {
+      toast.success("Error: Modelo no guardado correctamente");
       console.error("Error saving paint layers:", error);
     }
   };
@@ -266,7 +273,7 @@ export function usePaintTexture({
       }
     } catch (error) {
       console.error("Error loading paint layers:", error);
-      reset();
+      reset(false);
       setColors({});
       setGeneralNote({ patient: "", doctor: "" });
     }

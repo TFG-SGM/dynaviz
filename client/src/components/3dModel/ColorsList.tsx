@@ -34,43 +34,47 @@ export function ColorsList({
         ></ColorSelection>
       )}
       <div className="model-colors-list">
-        {Object.keys(colors).map((key) => (
-          <div className="model-color-item" key={key}>
-            <label className="color-bullet-label">
-              {isPatient && (
-                <input
-                  type="radio"
-                  name="color-selector"
-                  value={colors[key].color}
-                  checked={colors[key].color === selectedColor}
-                  onChange={() => setSelectedColor(colors[key].color)}
-                  className="color-bullet-input"
-                />
-              )}
-              {" " + key}
-            </label>
-            <div>
-              <div
-                className="model-color-bullet"
-                style={{
-                  backgroundColor: colors[key].color,
-                }}
-              >
-                {colors[key].intensity}
+        {Object.keys(colors).length === 0 ? (
+          <p>&#x26A0; No hay ningún color creado todavía</p>
+        ) : (
+          Object.keys(colors).map((key) => (
+            <div className="model-color-item" key={key}>
+              <label className="color-bullet-label">
+                {isPatient && (
+                  <input
+                    type="radio"
+                    name="color-selector"
+                    value={colors[key].color}
+                    checked={colors[key].color === selectedColor}
+                    onChange={() => setSelectedColor(colors[key].color)}
+                    className="color-bullet-input"
+                  />
+                )}
+                {" " + key}
+              </label>
+              <div>
+                <div
+                  className="model-color-bullet"
+                  style={{
+                    backgroundColor: colors[key].color,
+                  }}
+                >
+                  {colors[key].intensity}
+                </div>
+                <button onClick={() => setNote(key)}>
+                  <Note3D></Note3D>
+                </button>
+                {isPatient && (
+                  <>
+                    <button onClick={() => handleDeleteColor(key)}>
+                      <TrashColor3D></TrashColor3D>
+                    </button>
+                  </>
+                )}
               </div>
-              <button onClick={() => setNote(key)}>
-                <Note3D></Note3D>
-              </button>
-              {isPatient && (
-                <>
-                  <button onClick={() => handleDeleteColor(key)}>
-                    <TrashColor3D></TrashColor3D>
-                  </button>
-                </>
-              )}
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </details>
   );

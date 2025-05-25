@@ -10,11 +10,11 @@ generateData();
 
 async function generateData() {
   createTestTypes();
-  for (let index = 0; index < 2; index++) {
-    await createAdmin(index);
-    const { id } = await createDoctor(index);
-    for (let index = 0; index < 2; index++) {
-      await createPatient(id.toString(), index);
+  for (let i = 0; i < 1; i++) {
+    await createAdmin(i);
+    const { id } = await createDoctor(i);
+    for (let j = 0; j < 4; j++) {
+      await createPatient(id.toString(), i + j);
     }
   }
 }
@@ -88,7 +88,7 @@ async function createPatient(doctorId: string, index: number) {
       to: "2006-01-01T00:00:00.000Z",
     }),
     city: faker.location.city(),
-    email: index === 0 ? "patient@gmail.com" : faker.internet.email(),
+    email: getPatientEmail(index),
     phone: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
     weight: faker.number.float({ fractionDigits: 2, min: 50, max: 130 }),
     height: faker.number.float({ fractionDigits: 2, min: 150, max: 210 }),
@@ -101,4 +101,15 @@ async function createPatient(doctorId: string, index: number) {
   patient.password = await AuthController.hashPassword(patient.password);
 
   await PatientModel.create({ input: patient });
+}
+
+function getPatientEmail(index: number) {
+  return (
+    {
+      0: "patient@gmail.com",
+      1: "sergio@gmail.com",
+      2: "felix@gmail.com",
+      3: "cristina@gmail.com",
+    }[index] || faker.internet.email()
+  );
 }

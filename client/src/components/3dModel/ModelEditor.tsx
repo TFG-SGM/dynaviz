@@ -15,12 +15,13 @@ import { useData } from "../../hooks/useData";
 import { format } from "date-fns";
 import { DeleteMenu } from "../menus/DeleteMenu";
 import { Note } from "./Note";
-import { isToday } from "../../utils/helpers";
+import { getLayerName, isToday } from "../../utils/helpers";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Dowloand3D, Note3D } from "../other/Icons";
 import { GeneralNote } from "./GeneralNote";
 import { DataService } from "../../services/DataService";
+import { Toaster } from "sonner";
 
 export function ModelEditor({ patientId }: { patientId: string }) {
   const [user] = useData<UserData>("auth/user-data");
@@ -81,7 +82,8 @@ export function ModelEditor({ patientId }: { patientId: string }) {
   const handleReset = () => {
     setDeleteMenu({
       delete: reset,
-      message: "¿Estas seguro de resetear?",
+      message:
+        "Se eliminará todo lo dibujado en todas las capas. ¿Estas seguro de resetear?",
     });
   };
 
@@ -90,7 +92,9 @@ export function ModelEditor({ patientId }: { patientId: string }) {
       delete: () => {
         clearLayer(layer);
       },
-      message: "¿Estas seguro de limpiar la capa?",
+      message: `Se eliminará todo lo dibujado en la capa "${getLayerName(
+        layer
+      )}". ¿Estas seguro de limpiar la capa?`,
     });
   };
 
@@ -102,12 +106,13 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         setColors(updatedColors);
         deleteColor(colors[key].color);
       },
-      message: "¿Estas seguro de eliminar el color?",
+      message: `Se eliminará todo lo dibujado con el color "${key}". ¿Estas seguro de eliminar el color?`,
     });
   };
 
   return (
     <main className="model-editor-container">
+      <Toaster position="top-center" richColors expand={true}></Toaster>
       {deleteMenu && (
         <DeleteMenu
           handleClean={() => setDeleteMenu(null)}

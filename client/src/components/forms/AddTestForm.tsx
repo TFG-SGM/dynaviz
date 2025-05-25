@@ -6,7 +6,7 @@ import { INITIAL_TEST, TEST_TYPE_ENDPOINT } from "../../utils/constants";
 import { TestForm } from "./TestForm";
 import { generateDataTest } from "../../utils/generateDataTest";
 import { Overlay } from "../other/Overlay";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { LoadingComponent } from "../other/LoadingComponent";
 
 export interface AddTestProps {
@@ -57,6 +57,7 @@ export function AddTestForm({ endpoint, handleClean, patient }: AddTestProps) {
   return (
     <>
       <Overlay></Overlay>
+      <Toaster position="top-center" richColors expand={true}></Toaster>
       <dialog open>
         <div className="menu-title">
           <h2>Nueva Prueba</h2>

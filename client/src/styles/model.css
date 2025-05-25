@@ -147,6 +147,10 @@
   overflow-y: auto;
   max-height: 300px;
 }
+.model-colors-list > p {
+  margin-top: 10px;
+  font-size: 14px;
+}
 
 .model-color-item {
   display: flex;

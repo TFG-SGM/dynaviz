@@ -3,6 +3,7 @@ import { Colors } from "../../utils/types";
 import { ColorEvaSelector } from "./ColorEvaSelector";
 import { COLORS } from "../../utils/constants";
 import { adjustLightDark } from "../../utils/helpers";
+import { toast } from "sonner";
 
 export function ColorSelection({
   colors,
@@ -15,16 +16,17 @@ export function ColorSelection({
     intensity: 5,
   });
 
-  const [error, setError] = useState("");
-
   const handleAdd = () => {
     const mixed = adjustLightDark(temp.base, temp.intensity);
 
-    if (colors[temp.name]) {
-      setError("El nombre ya existe");
+    if (temp.name.trim() === "") {
+      toast.error("Error: El nombre del color no puede estar vacío");
+      return;
+    } else if (colors[temp.name]) {
+      toast.error("Error: El nombre del color ya existe");
       return;
     } else if (Object.values(colors).some((c) => c.color === mixed)) {
-      setError("El color ya existe");
+      toast.error("Error: El color ya existe");
       return;
     } else {
       setColors({
@@ -38,7 +40,6 @@ export function ColorSelection({
       });
       setSelectedColor(mixed);
       setTemp({ name: "", base: COLORS.red, intensity: 5 });
-      setError("");
     }
   };
 
@@ -49,7 +50,6 @@ export function ColorSelection({
         value={temp.name}
         onChange={(e) => {
           setTemp({ ...temp, name: e.target.value });
-          setError("");
         }}
       ></input>
       <div>
@@ -62,7 +62,6 @@ export function ColorSelection({
         ></ColorEvaSelector>
         <button onClick={() => handleAdd()}>&#43;</button>
       </div>
-      {error && <p style={{ color: "red", fontSize: "0.9em" }}>{error}</p>}{" "}
     </div>
   );
 }

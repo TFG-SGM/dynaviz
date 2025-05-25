@@ -6,7 +6,6 @@ import { RecordVideoView } from "../menus/RecordVideoView";
 import { useActualDoctor } from "../../hooks/useActualDoctor";
 import { NewTest } from "./NewTest";
 import { SelectDoctor } from "../selects/SelectDoctor";
-import { Toaster } from "sonner";
 
 export interface TestFormProps {
   data: ManyTestsData | null;
@@ -103,7 +102,6 @@ export function TestForm({ data, setNewData, isDisabled }: TestFormProps) {
           handleChangeRecordingState={handleChangeRecordingState}
         ></RecordVideoView>
       )}
-      <Toaster position="top-center" richColors expand={true}></Toaster>
       <label>
         Médico{" "}
         <SelectDoctor

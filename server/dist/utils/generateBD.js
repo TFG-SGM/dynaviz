@@ -20,11 +20,11 @@ generateData();
 function generateData() {
     return __awaiter(this, void 0, void 0, function* () {
         createTestTypes();
-        for (let index = 0; index < 2; index++) {
-            yield createAdmin(index);
-            const { id } = yield createDoctor(index);
-            for (let index = 0; index < 2; index++) {
-                yield createPatient(id.toString(), index);
+        for (let i = 0; i < 1; i++) {
+            yield createAdmin(i);
+            const { id } = yield createDoctor(i);
+            for (let j = 0; j < 4; j++) {
+                yield createPatient(id.toString(), i + j);
             }
         }
     });
@@ -97,7 +97,7 @@ function createPatient(doctorId, index) {
                 to: "2006-01-01T00:00:00.000Z",
             }),
             city: faker_1.faker.location.city(),
-            email: index === 0 ? "patient@gmail.com" : faker_1.faker.internet.email(),
+            email: getPatientEmail(index),
             phone: faker_1.faker.number.int({ min: 100000000, max: 999999999 }).toString(),
             weight: faker_1.faker.number.float({ fractionDigits: 2, min: 50, max: 130 }),
             height: faker_1.faker.number.float({ fractionDigits: 2, min: 150, max: 210 }),
@@ -110,4 +110,12 @@ function createPatient(doctorId, index) {
         patient.password = yield auth_1.AuthController.hashPassword(patient.password);
         yield patient_1.PatientModel.create({ input: patient });
     });
+}
+function getPatientEmail(index) {
+    return ({
+        0: "patient@gmail.com",
+        1: "sergio@gmail.com",
+        2: "felix@gmail.com",
+        3: "cristina@gmail.com",
+    }[index] || faker_1.faker.internet.email());
 }

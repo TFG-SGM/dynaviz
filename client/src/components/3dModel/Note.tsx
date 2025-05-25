@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Overlay } from "../other/Overlay";
 import { Colors } from "../../utils/types";
 import { CrossButton } from "../buttons/CrossButton";
+import { toast } from "sonner";
 
 export function Note({
   note,
@@ -24,6 +25,8 @@ export function Note({
       }));
     }
     setNote(null);
+    toast.success("Nota guardada correctamente");
+    toast.warning("Recurda guardar el modelo para que se guarde la nota");
   };
 
   return (

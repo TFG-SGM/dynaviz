@@ -19,107 +19,137 @@ export const Downloader3D = forwardRef((_, ref) => {
         format: [600, 800],
       });
 
-      const marginY = 30;
-      const marginX = 20;
-      const lineHeight = 20;
-      const colorLineHeight = 30;
+      const marginY = 40;
+      const marginX = 30;
+      const lineHeight = 22;
       const maxWidth = 250;
       const spacingY = 50;
-      const spacingX = 20;
+      const spacingX = 30;
 
       let yPos = marginY;
       let xPos = marginX;
 
+      // Utilidad para títulos destacados
+      const drawSectionTitle = (text: string) => {
+        pdf.setFontSize(16);
+        pdf.setTextColor(40, 40, 40);
+        pdf.setFont("helvetica", "bold");
+        pdf.text(text, marginX, yPos);
+        yPos += 6;
+        pdf.setDrawColor(100, 100, 100);
+        pdf.setLineWidth(0.5);
+        pdf.line(marginX, yPos, 580, yPos);
+        yPos += lineHeight;
+      };
+
       // region PACIENTE
-      pdf.setFontSize(16);
-      pdf.text("Información del paciente", marginX, yPos);
-      yPos += lineHeight;
+      drawSectionTitle("Información del paciente");
 
       pdf.setFontSize(12);
+      pdf.setFont("helvetica", "normal");
+      pdf.setTextColor(60, 60, 60);
 
-      pdf.text(`Nombre: ${patient.name} ${patient.surname}`, marginX, yPos);
-      yPos += lineHeight;
+      const addPatientInfo = (label: string, value: string) => {
+        pdf.text(`${label}: ${value}`, marginX, yPos);
+        yPos += lineHeight;
+      };
 
-      pdf.text(`ID de paciente: ${patient.uId}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(
-        `¿Fibromialgia? ${patient.isFibro ? "Sí" : "No"}`,
-        marginX,
-        yPos
+      addPatientInfo("Nombre", `${patient.name} ${patient.surname}`);
+      addPatientInfo("ID de paciente", patient.uId as string);
+      addPatientInfo("¿Fibromialgia?", patient.isFibro ? "Sí" : "No");
+      addPatientInfo(
+        "Fecha de nacimiento",
+        new Date(patient.date).toLocaleDateString()
       );
+      addPatientInfo("Ciudad", patient.city);
+      addPatientInfo("Email", patient.email);
+      addPatientInfo("Teléfono", patient.phone);
+      addPatientInfo("Peso", `${patient.weight} kg`);
+      addPatientInfo("Altura", `${patient.height} cm`);
+      addPatientInfo("Nivel de actividad", patient.activityLevel);
+      addPatientInfo("Años de diagnóstico", patient.diagnosisYears.toString());
+      addPatientInfo("Ocupación", patient.occupation);
+
       yPos += lineHeight;
-
-      const dob = new Date(patient.date).toLocaleDateString();
-      pdf.text(`Fecha de nacimiento: ${dob}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Ciudad: ${patient.city}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Email: ${patient.email}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Teléfono: ${patient.phone}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Peso: ${patient.weight} kg`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Altura: ${patient.height} cm`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Nivel de actividad: ${patient.activityLevel}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Años de diagnóstico: ${patient.diagnosisYears}`, marginX, yPos);
-      yPos += lineHeight;
-
-      pdf.text(`Ocupación: ${patient.occupation}`, marginX, yPos);
-
-      yPos += lineHeight * 2;
       // endregion
 
       // region LEYENDA
-      pdf.setFontSize(16);
-      pdf.text("Leyenda de colores", 20, yPos);
+      if (Object.keys(colors).length > 0) {
+        drawSectionTitle("Leyenda de colores");
 
-      pdf.setFontSize(12);
-      yPos += lineHeight;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const boxPadding = 15;
+        const usableWidth = pageWidth - boxPadding * 2;
+        Object.keys(colors).forEach((key) => {
+          const { color, description, intensity } = colors[key];
 
-      Object.keys(colors).forEach((key) => {
-        const colorObj = colors[key];
+          const descFontSize = 10;
+          const showDescription = description && description.trim().length > 0;
+          const descLines = showDescription
+            ? pdf.splitTextToSize(description, usableWidth - 35)
+            : [];
+          const descHeight = showDescription
+            ? descLines.length * (descFontSize + 1)
+            : 0;
+          const boxHeight = 40 + descHeight;
 
-        // Dibuja un rectángulo con el color
-        pdf.setFillColor(colorObj.color);
-        pdf.rect(20, yPos - 12, 20, 20, "F"); // "F" para fill (relleno)
+          // Fondo
+          pdf.setFillColor(245, 245, 245);
+          pdf.roundedRect(
+            boxPadding,
+            yPos - 20,
+            usableWidth,
+            boxHeight,
+            6,
+            6,
+            "F"
+          );
 
-        // Escribe la key, descripción e intensidad
-        pdf.setTextColor(0, 0, 0);
-        pdf.text(key, 50, yPos);
-        pdf.text(`Descripción: ${colorObj.description}`, 150, yPos);
-        pdf.text(`Intensidad: ${colorObj.intensity}`, 400, yPos);
+          // Color box
+          pdf.setFillColor(color);
+          pdf.rect(boxPadding + 10, yPos - 10, 16, 16, "F");
 
-        yPos += colorLineHeight;
+          // Nombre del color
+          pdf.setFontSize(12);
+          pdf.setFont("helvetica", "bold");
+          pdf.setTextColor(0, 0, 0);
+          pdf.text(key, boxPadding + 35, yPos + 2);
 
-        // Si llegamos al final de la página, agrega página nueva y reinicia yPos
-        if (yPos > 780) {
-          pdf.addPage();
-          yPos = marginY;
-        }
-      });
+          // Intensidad (alineada a la derecha)
+          pdf.setFontSize(10);
+          pdf.setFont("helvetica", "normal");
+          pdf.text(
+            `Intensidad: ${intensity}`,
+            boxPadding + usableWidth - 80,
+            yPos + 2
+          );
+
+          // Descripción
+          if (showDescription) {
+            pdf.setFontSize(descFontSize);
+            pdf.setTextColor(60, 60, 60);
+            pdf.text(`Descripción:`, boxPadding + 35, yPos + 16);
+            pdf.text(descLines, boxPadding + 35, yPos + 30);
+          }
+
+          yPos += boxHeight + 10;
+
+          if (yPos > 760) {
+            pdf.addPage();
+            yPos = marginY;
+          }
+        });
+      }
       // endregion
 
+      // region MODELO
       pdf.addPage();
       yPos = marginY;
+      drawSectionTitle("Modelo");
 
-      // region MODELO
-      pdf.setFontSize(16);
-      pdf.text("Modelo", 20, yPos);
-      yPos += lineHeight / 2;
-
+      pdf.setFont("helvetica", "normal");
       pdf.setFontSize(12);
-      pdf.text(`Fecha de modelo: ${date}`, 20, yPos);
+      pdf.text(`Fecha de modelo: ${date}`, marginX, yPos);
       yPos += lineHeight * 2;
 
       const originalPosition = camera.position.clone();
@@ -139,6 +169,7 @@ export const Downloader3D = forwardRef((_, ref) => {
         gl.render(scene, camera);
         const dataURL = gl.domElement.toDataURL("image/png");
 
+        pdf.setFontSize(12);
         pdf.text(view.name, xPos, yPos - 10);
 
         const width = gl.domElement.width;
@@ -146,21 +177,20 @@ export const Downloader3D = forwardRef((_, ref) => {
         const scale = maxWidth / width;
         const scaledHeight = height * scale;
 
-        pdf.setDrawColor(0, 0, 0);
-        pdf.setLineWidth(1);
+        pdf.setDrawColor(180);
+        pdf.setLineWidth(0.8);
         pdf.rect(xPos, yPos, maxWidth, scaledHeight);
 
         pdf.addImage(dataURL, "PNG", xPos, yPos, maxWidth, scaledHeight);
 
         if (i % 2 === 0) {
-          // Primera columna, movemos a la segunda columna
           xPos += maxWidth + spacingX;
         } else {
-          // Segunda columna, bajamos fila y volvemos a la primera columna
           xPos = marginX;
           yPos += scaledHeight + spacingY;
         }
       }
+
       camera.position.copy(originalPosition);
       camera.lookAt(0, 100, 0);
       // endregion

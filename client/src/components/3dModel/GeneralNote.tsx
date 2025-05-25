@@ -3,6 +3,7 @@ import { CrossButton } from "../buttons/CrossButton";
 import { Overlay } from "../other/Overlay";
 import { DataService } from "../../services/DataService";
 import { Colors, GeneralNoteType, Stroke } from "../../utils/types";
+import { toast } from "sonner";
 
 export function GeneralNote({
   generalNote,
@@ -17,16 +18,22 @@ export function GeneralNote({
   const [newGeneralNote, setNewGeneralNote] = useState(generalNote);
 
   const handleSave = async () => {
-    await DataService.createData("modelPainted", {
-      patientId: patientId,
-      date: date,
-      generalNote: newGeneralNote,
-      data: strokesRefs.current,
-      colors: colors,
-    });
+    try {
+      await DataService.createData("modelPainted", {
+        patientId: patientId,
+        date: date,
+        generalNote: newGeneralNote,
+        data: strokesRefs.current,
+        colors: colors,
+      });
 
-    setGeneralNote(newGeneralNote);
-    setIsGeneralNote(false);
+      setGeneralNote(newGeneralNote);
+      setIsGeneralNote(false);
+      toast.success("Nota guardada correctamente");
+    } catch (error) {
+      console.error("Error al guardar la nota:", error);
+      toast.error("Error: Nota no guardada correctamente");
+    }
   };
 
   return (
