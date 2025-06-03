@@ -169,7 +169,10 @@ export function ModelEditor({ patientId }: { patientId: string }) {
               portalId="root"
               dateFormat="dd-MM-YYYY"
             />
-            <button onClick={() => setIsGeneralNote(true)}>
+            <button
+              onClick={() => setIsGeneralNote(true)}
+              title="Añadir nota general"
+            >
               <Note3D></Note3D>
             </button>
             {user?.role !== "patient" && (
@@ -184,7 +187,6 @@ export function ModelEditor({ patientId }: { patientId: string }) {
               selectedColor={selectedColor}
               setMode={setMode}
               handleReset={handleReset}
-              save={save}
               setSelectedColor={setSelectedColor}
               loadLocal={loadLocal}
             ></Buttons>
@@ -206,6 +208,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
             setSelectedColor={setSelectedColor}
             handleDeleteColor={handleDeleteColor}
             setNote={setNote}
+            save={save}
           ></ColorsList>
         </div>
       </div>
@@ -216,6 +219,10 @@ export function ModelEditor({ patientId }: { patientId: string }) {
           colors={colors}
           setColors={setColors}
           isPatient={user?.role === "patient" && isToday(date)}
+          patientId={patientId}
+          date={date}
+          generalNote={generalNote}
+          strokesRefs={strokesRefs}
         ></Note>
       )}
     </main>

@@ -40,6 +40,7 @@ export function LayerSelector({
                 <button
                   onClick={() => handleClearLayer(layer)}
                   className="model-layer-clear-button"
+                  title="Limpiar capa"
                 >
                   <Reset3D></Reset3D>
                 </button>
@@ -47,6 +48,9 @@ export function LayerSelector({
               <button
                 onClick={() => toggleLayerVisibility(layer)}
                 className="model-layer-visibility-button"
+                title={
+                  visibleLayers.has(layer) ? "Ocultar capa" : "Mostrar capa"
+                }
               >
                 {visibleLayers.has(layer) ? (
                   <VisibleActive3D></VisibleActive3D>

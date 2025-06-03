@@ -1,19 +1,11 @@
 import { DRAWING_MODE, ROTATE_MODE } from "../../utils/constants";
-import {
-  Drawing3D,
-  Erase3D,
-  Reset3D,
-  Rotate3D,
-  Save3D,
-  Undo3D,
-} from "../other/Icons";
+import { Drawing3D, Erase3D, Reset3D, Rotate3D, Undo3D } from "../other/Icons";
 
 export function Buttons({
   mode,
   selectedColor,
   setMode,
   handleReset,
-  save,
   setSelectedColor,
   loadLocal,
 }: ButtonsProps) {
@@ -21,31 +13,35 @@ export function Buttons({
     <div className="model-buttons-container">
       <button
         className={mode === ROTATE_MODE ? "model-button-active" : ""}
-        onClick={() => setMode(ROTATE_MODE)}
+        onClick={() => {
+          setMode(ROTATE_MODE);
+          setSelectedColor("");
+        }}
+        title="Activar modo rotación"
       >
         <Rotate3D></Rotate3D>
       </button>
       <button
         className={mode === DRAWING_MODE ? "model-button-active" : ""}
         onClick={() => setMode(DRAWING_MODE)}
+        title="Activar modo dibujo"
       >
         <Drawing3D></Drawing3D>
       </button>
       <button
         className={selectedColor === "#fff" ? "model-button-active" : ""}
         onClick={() => {
+          setMode(DRAWING_MODE);
           setSelectedColor("#fff");
         }}
+        title="Borrador"
       >
         <Erase3D></Erase3D>
       </button>
-      <button onClick={loadLocal}>
+      <button onClick={loadLocal} title="Deshacer">
         <Undo3D></Undo3D>
       </button>
-      <button onClick={save}>
-        <Save3D></Save3D>
-      </button>
-      <button onClick={handleReset}>
+      <button onClick={handleReset} title="Reiniciar modelo">
         <Reset3D></Reset3D>
       </button>
     </div>
@@ -57,7 +53,6 @@ type ButtonsProps = {
   selectedColor: string;
   setMode: (mode: string) => void;
   handleReset: () => void;
-  save: () => void;
   setSelectedColor: (color: string) => void;
   loadLocal: () => void;
 };

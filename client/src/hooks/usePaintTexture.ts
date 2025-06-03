@@ -67,6 +67,7 @@ export function usePaintTexture({
     });
 
     updateTexture();
+    save();
   };
 
   const updateTexture = () => {
@@ -110,7 +111,9 @@ export function usePaintTexture({
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     strokesRefs.current[layer] = [];
+
     updateTexture();
+    save();
     toast.success(`Capa "${getLayerName(layer)}" limpiada correctamente`);
   };
 
@@ -123,7 +126,9 @@ export function usePaintTexture({
       }
       strokesRefs.current[index] = [];
     });
+
     updateTexture();
+    save();
     if (isToast) toast.success("Modelo reseteado correctamente");
   };
 
@@ -137,40 +142,6 @@ export function usePaintTexture({
     } else {
       console.error(`Invalid layer indices: ${layers}`);
     }
-  };
-
-  const editColor = (colorToEdit: string, newColor: string) => {
-    canvasRefs.current.forEach((canvas, layerIndex) => {
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        // Actualizar las trazas con el nuevo color
-        const updatedStrokes = strokesRefs.current[layerIndex].map((stroke) => {
-          if (stroke.color === colorToEdit) {
-            return { ...stroke, color: newColor }; // Cambiar el color
-          }
-          return stroke;
-        });
-
-        // Limpiar el lienzo
-        ctx.fillStyle = initialColor;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Redibujar las trazas actualizadas
-        updatedStrokes.forEach(({ u, v, color, size }) => {
-          const x = u * canvas.width;
-          const y = (1 - v) * canvas.height;
-          ctx.fillStyle = color;
-          ctx.beginPath();
-          ctx.arc(x, y, size, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        // Actualizar las trazas de la capa
-        strokesRefs.current[layerIndex] = updatedStrokes;
-      }
-    });
-    // Actualizar la textura
-    updateTexture();
   };
 
   const deleteColor = (colorToDelete: string) => {
@@ -203,6 +174,7 @@ export function usePaintTexture({
 
     // Actualizar la textura
     updateTexture();
+    save();
     toast.success(`Color eliminado correctamente`);
   };
 
@@ -215,9 +187,7 @@ export function usePaintTexture({
         data: strokesRefs.current,
         colors: colors,
       });
-      toast.success("Modelo guardado correctamente");
     } catch (error) {
-      toast.success("Error: Modelo no guardado correctamente");
       console.error("Error saving paint layers:", error);
     }
   };
@@ -308,6 +278,7 @@ export function usePaintTexture({
 
         setColors(loadedColors);
         updateTexture();
+        save();
       } else {
         console.error("No saved states found in localStorage");
       }
@@ -328,7 +299,6 @@ export function usePaintTexture({
     saveLocal,
     load,
     loadLocal,
-    editColor,
     deleteColor,
     toggleLayerVisibility,
   };

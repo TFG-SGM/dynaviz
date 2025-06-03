@@ -114,44 +114,6 @@
 /*endregion*/
 
 /*region COLORS*/
-.model-colors-list-container > summary {
-  cursor: pointer;
-}
-
-.model-colors-list-container > summary:hover {
-  background-color: #cadbc1;
-}
-
-.model-color-selection {
-  display: grid;
-  grid-template-columns: 60% 40%;
-  margin: 10px 10px 10px 0;
-  align-items: center;
-}
-
-.model-color-selection > div {
-  display: flex;
-  justify-content: end;
-}
-
-.model-color-selection > input {
-  font-size: 16px;
-  padding: 5px;
-  z-index: 1;
-}
-
-.model-colors-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  overflow-y: auto;
-  max-height: 300px;
-}
-.model-colors-list > p {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
 .model-color-item {
   display: flex;
   align-items: center;
@@ -163,7 +125,61 @@
   border-radius: 5px;
 }
 
-.model-color-selection > div,
+.model-colors-list-container > summary {
+  cursor: pointer;
+}
+
+.model-colors-list-container > summary:hover {
+  background-color: #cadbc1;
+}
+
+.model-colors-list-container > button {
+  font-size: medium;
+  margin: 10px 0 10px 0;
+}
+
+.model-color-details > p {
+  font-weight: bold;
+}
+
+.model-color-menu {
+  position: fixed;
+  display: flex;
+  gap: 30px;
+}
+
+.model-color-menu label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.model-color-menu input {
+  font-size: 16px;
+  padding: 5px;
+  z-index: 1;
+}
+
+.model-color-menu textarea {
+  height: 150px;
+  padding: 10px;
+  resize: none;
+  color: var(--black-letter);
+}
+
+.model-colors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.model-colors-list > p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
 .model-color-item > div {
   display: flex;
   align-items: center;
@@ -172,76 +188,39 @@
 }
 
 .model-color-bullet {
-  color: #fff;
-  min-width: 50px;
-  text-align: center;
+  width: 40px;
+  height: 20px;
   border-radius: 5px;
-  font-weight: bold;
-}
-/*endregion*/
-
-/*region EVA COLORS*/
-.model-color-selector {
-  position: relative;
-  padding-left: 150px;
 }
 
-.model-dropdown-container {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  z-index: 999;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  gap: 20px;
-}
-
-.model-dropdown-container > p {
-  font-size: medium;
-}
-
-.model-dropdown {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-}
-
-.model-dropdown-colors-selector {
+.model-colors-selector {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  width: 150px;
 }
 
-.model-dropdown-color-button {
+.model-color-button {
   width: 40px;
   height: 40px;
   border: none;
   cursor: pointer;
 }
 
-.model-dropdown-intensity-selector {
+.model-intensity-label > p {
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.model-color-display {
   display: flex;
+  gap: 10px;
   align-items: center;
-  height: 200px;
 }
 
-.model-dropdown-intensity-selector > label {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-.model-dropdown-intensity-numbers {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  margin-left: 5px;
-  margin-bottom: 5px;
+.model-color-display > div {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
 }
 /*endregion*/
 
@@ -253,8 +232,12 @@
   gap: 10px;
 }
 
-.model-note .cross-button {
-  font-size: 20px;
+.model-color-menu button.cross-button,
+.model-note button.cross-button {
+  align-self: flex-end;
+  background-color: var(--form-background);
+  color: var(--black-letter);
+  font-size: xx-large;
 }
 
 .model-note > textarea {
@@ -301,5 +284,15 @@
 
   .model-editor-controls.show {
     display: flex;
+  }
+
+  .model-color-menu {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color);
+    padding: 20px;
+    z-index: 2;
   }
 }

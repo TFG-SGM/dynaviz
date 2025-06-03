@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Overlay } from "../other/Overlay";
-import { Colors } from "../../utils/types";
+import { Colors, Stroke } from "../../utils/types";
 import { CrossButton } from "../buttons/CrossButton";
 import { toast } from "sonner";
+import { DataService } from "../../services/DataService";
 
 export function Note({
   note,
@@ -10,6 +11,10 @@ export function Note({
   colors,
   setColors,
   isPatient,
+  patientId,
+  date,
+  generalNote,
+  strokesRefs,
 }: NoteProps) {
   const [description, setDescription] = useState(
     note ? colors[note].description : ""
@@ -17,16 +22,25 @@ export function Note({
 
   if (!note) return null;
 
-  const setNewDescription = () => {
+  const setNewDescription = async () => {
     if (description) {
-      setColors((prevColors) => ({
-        ...prevColors,
-        [note]: { ...prevColors[note], description },
-      }));
+      const newColors = {
+        ...colors,
+        [note]: { ...colors[note], description },
+      };
+
+      await DataService.createData("modelPainted", {
+        patientId: patientId,
+        date: date,
+        generalNote: generalNote,
+        data: strokesRefs.current,
+        colors: newColors,
+      });
+
+      setColors(newColors);
     }
     setNote(null);
     toast.success("Nota guardada correctamente");
-    toast.warning("Recurda guardar el modelo para que se guarde la nota");
   };
 
   return (
@@ -70,4 +84,8 @@ type NoteProps = {
   colors: Colors;
   setColors: React.Dispatch<React.SetStateAction<Colors>>;
   isPatient: boolean;
+  patientId: string;
+  date: string;
+  generalNote: { doctor: string; patient: string };
+  strokesRefs: React.RefObject<Stroke[][]>;
 };

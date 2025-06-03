@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Colors } from "../../utils/types";
-import { ColorSelection } from "./ColorSelection";
+import { ColorMenu } from "./ColorMenu";
 import { Note3D, TrashColor3D } from "../other/Icons";
 
 export function ColorsList({
@@ -11,7 +11,10 @@ export function ColorsList({
   setSelectedColor,
   handleDeleteColor,
   setNote,
+  save,
 }: ColorsListProps) {
+  const [isColorMenu, setIsColorMenu] = useState(false);
+
   useEffect(() => {
     if (
       !Object.values(colors).some(
@@ -27,11 +30,16 @@ export function ColorsList({
     <details className="model-colors-list-container">
       <summary>Colores</summary>
       {isPatient && (
-        <ColorSelection
+        <button onClick={() => setIsColorMenu(true)}>Añadir color &#43;</button>
+      )}
+      {isColorMenu && (
+        <ColorMenu
           colors={colors}
           setColors={setColors}
           setSelectedColor={setSelectedColor}
-        ></ColorSelection>
+          hideMenu={() => setIsColorMenu(false)}
+          save={save}
+        ></ColorMenu>
       )}
       <div className="model-colors-list">
         {Object.keys(colors).length === 0 ? (
@@ -52,25 +60,31 @@ export function ColorsList({
                 )}
                 {" " + key}
               </label>
-              <div>
+              <div className="model-color-details">
                 <div
                   className="model-color-bullet"
                   style={{
                     backgroundColor: colors[key].color,
                   }}
-                >
-                  {colors[key].intensity}
+                ></div>
+                <p>{colors[key].intensity}</p>
+              </div>
+              <div className="model-color-actions">
+                <div>
+                  <button onClick={() => setNote(key)} title="Editar nota">
+                    <Note3D></Note3D>
+                  </button>
+                  {isPatient && (
+                    <>
+                      <button
+                        onClick={() => handleDeleteColor(key)}
+                        title="Eliminar color"
+                      >
+                        <TrashColor3D></TrashColor3D>
+                      </button>
+                    </>
+                  )}
                 </div>
-                <button onClick={() => setNote(key)}>
-                  <Note3D></Note3D>
-                </button>
-                {isPatient && (
-                  <>
-                    <button onClick={() => handleDeleteColor(key)}>
-                      <TrashColor3D></TrashColor3D>
-                    </button>
-                  </>
-                )}
               </div>
             </div>
           ))
@@ -88,4 +102,5 @@ type ColorsListProps = {
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
   handleDeleteColor: (color: string) => void;
   setNote: (key: string) => void;
+  save: () => void;
 };
