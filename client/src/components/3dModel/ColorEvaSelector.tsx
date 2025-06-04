@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { COLORS } from "../../utils/constants";
 import { adjustLightDark } from "../../utils/helpers";
 
