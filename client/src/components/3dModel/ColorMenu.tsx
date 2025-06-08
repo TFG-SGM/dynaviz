@@ -118,5 +118,5 @@ type ColorMenuProps = {
   setColors: React.Dispatch<React.SetStateAction<Colors>>;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
   hideMenu: () => void;
-  save: () => void;
+  save: (newColors: Colors | null) => void;
 };
