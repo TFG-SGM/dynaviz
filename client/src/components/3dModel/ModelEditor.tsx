@@ -49,8 +49,12 @@ export function ModelEditor({ patientId }: { patientId: string }) {
 
   const handleDownload = async () => {
     const patient = await DataService.getData(`patient/${patientId}`);
-    console.log(patient);
-    downloaderRef.current?.downloadPdfWithViews(patient, date, colors);
+    downloaderRef.current?.downloadPdfWithViews(
+      patient,
+      date,
+      colors,
+      generalNote
+    );
   };
 
   useEffect(() => {
@@ -105,8 +109,9 @@ export function ModelEditor({ patientId }: { patientId: string }) {
         delete updatedColors[key];
         setColors(updatedColors);
         deleteColor(colors[key].color);
+        save(updatedColors);
       },
-      message: `Se eliminará todo lo dibujado con el color "${key}". ¿Estas seguro de eliminar el color?`,
+      message: colors[key],
     });
   };
 
@@ -176,7 +181,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
               <Note3D></Note3D>
             </button>
             {user?.role !== "patient" && (
-              <button onClick={handleDownload}>
+              <button onClick={handleDownload} title="Descargar PDF">
                 <Dowloand3D></Dowloand3D>
               </button>
             )}

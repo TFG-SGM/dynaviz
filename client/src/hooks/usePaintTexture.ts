@@ -28,6 +28,7 @@ export function usePaintTexture({
   const [visibleLayers, setVisibleLayers] = useState<Set<number>>(
     new Set([0, 1, 2])
   );
+  const warningShownRef = useRef(false);
 
   useEffect(() => {
     updateTexture();
@@ -52,6 +53,19 @@ export function usePaintTexture({
   }, [initialColor, size]);
 
   const paint = (u: number, v: number, color: string, size = 10) => {
+    if (activeLayers.current.size === 0) {
+      if (!warningShownRef.current) {
+        warningShownRef.current = true;
+        toast.warning("Selecciona al menos una capa para pintar");
+
+        setTimeout(() => {
+          warningShownRef.current = false;
+        }, 1000);
+      }
+      return;
+    }
+    warningShownRef.current = false;
+
     activeLayers.current.forEach((layer) => {
       const canvas = canvasRefs.current[layer];
       const ctx = canvas.getContext("2d");
@@ -133,6 +147,12 @@ export function usePaintTexture({
   };
 
   const setActiveLayers = (layers: number[]) => {
+    if (layers.length === 0) {
+      activeLayers.current = new Set();
+      updateTexture();
+      return;
+    }
+    warningShownRef.current = false;
     const validLayers = layers.filter(
       (layer) => layer >= 0 && layer < canvasRefs.current.length
     );
@@ -174,18 +194,17 @@ export function usePaintTexture({
 
     // Actualizar la textura
     updateTexture();
-    save();
     toast.success(`Color eliminado correctamente`);
   };
 
-  const save = async () => {
+  const save = async (newColors: Colors | null = null) => {
     try {
       await DataService.createData("modelPainted", {
         patientId: patientId,
         date: new Date(),
         generalNote: generalNote,
         data: strokesRefs.current,
-        colors: colors,
+        colors: newColors || colors,
       });
     } catch (error) {
       console.error("Error saving paint layers:", error);

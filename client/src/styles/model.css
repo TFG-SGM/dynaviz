@@ -117,8 +117,8 @@
 .model-color-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: start;
+  gap: 20px;
   padding: 10px;
   transition: 300ms;
   border: 1px solid #111;
@@ -140,6 +140,11 @@
 
 .model-color-details > p {
   font-weight: bold;
+}
+
+.model-color-actions {
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .model-color-menu {

@@ -15,15 +15,22 @@ export function Buttons({
         className={mode === ROTATE_MODE ? "model-button-active" : ""}
         onClick={() => {
           setMode(ROTATE_MODE);
-          setSelectedColor("");
+          if (selectedColor === "#fff") setSelectedColor("");
         }}
         title="Activar modo rotación"
       >
         <Rotate3D></Rotate3D>
       </button>
       <button
-        className={mode === DRAWING_MODE ? "model-button-active" : ""}
-        onClick={() => setMode(DRAWING_MODE)}
+        className={
+          mode === DRAWING_MODE && selectedColor !== "#fff"
+            ? "model-button-active"
+            : ""
+        }
+        onClick={() => {
+          setMode(DRAWING_MODE);
+          if (selectedColor === "#fff") setSelectedColor("#000");
+        }}
         title="Activar modo dibujo"
       >
         <Drawing3D></Drawing3D>

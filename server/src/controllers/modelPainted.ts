@@ -44,7 +44,6 @@ export class ModelPaintedController {
 
   static async create(req: Request, res: Response) {
     const result = validateModelPainted(req.body);
-    console.log(result);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }

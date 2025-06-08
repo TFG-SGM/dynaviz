@@ -49,14 +49,13 @@ export function Note({
       <dialog className="model-note" open>
         <div>
           <p>
-            Describe lo que significa '{note}' para el color{" "}
-            <div
+            Describe lo que significa el color{" "}
+            <span
               className="model-note-color"
               style={{
-                color: colors[note].color,
                 backgroundColor: colors[note].color,
               }}
-            ></div>
+            ></span>
           </p>
           <CrossButton handleClean={() => setNote(null)}></CrossButton>
         </div>
@@ -66,12 +65,10 @@ export function Note({
           readOnly={!isPatient}
         ></textarea>
         {isPatient && (
-          <>
-            <div>
-              <button onClick={() => setNote(null)}>Cancelar</button>
-              <button onClick={() => setNewDescription()}>Guardar</button>
-            </div>
-          </>
+          <div className="buttons-container">
+            <button onClick={() => setNote(null)}>Cancelar</button>
+            <button onClick={() => setNewDescription()}>Guardar</button>
+          </div>
         )}
       </dialog>
     </>

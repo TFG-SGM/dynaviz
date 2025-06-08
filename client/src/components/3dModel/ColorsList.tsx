@@ -46,7 +46,11 @@ export function ColorsList({
           <p>&#x26A0; No hay ningún color creado todavía</p>
         ) : (
           Object.keys(colors).map((key) => (
-            <div className="model-color-item" key={key}>
+            <div
+              className="model-color-item"
+              key={key}
+              title={colors[key].description}
+            >
               <label className="color-bullet-label">
                 {isPatient && (
                   <input
@@ -58,7 +62,6 @@ export function ColorsList({
                     className="color-bullet-input"
                   />
                 )}
-                {" " + key}
               </label>
               <div className="model-color-details">
                 <div

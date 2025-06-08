@@ -173,7 +173,9 @@ export type Colors = {
 
 export type DeleteMenuState = {
   delete: () => void;
-  message: string;
+  message:
+    | string
+    | { color: string; description: string; intensity: number; base: string };
 };
 
 export type GeneralNoteType = {
@@ -185,6 +187,7 @@ export interface Downloader3DRef {
   downloadPdfWithViews: (
     patient: PatientData,
     date: string,
-    colors: Colors
+    colors: Colors,
+    generalNote: GeneralNoteType
   ) => void;
 }

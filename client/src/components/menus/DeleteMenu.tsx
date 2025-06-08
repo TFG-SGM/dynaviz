@@ -3,7 +3,9 @@ import { Overlay } from "../other/Overlay";
 interface DeleteMenuProps {
   handleDelete: () => void;
   handleClean: () => void;
-  message?: string;
+  message?:
+    | string
+    | { color: string; description: string; intensity: number; base: string };
 }
 
 export function DeleteMenu({
@@ -20,7 +22,21 @@ export function DeleteMenu({
     <>
       <Overlay></Overlay>
       <dialog open className="delete-menu">
-        <p>{message}</p>
+        {typeof message === "string" ? (
+          <p>{message}</p>
+        ) : (
+          <p>
+            Se eliminará todo lo dibujado con el color{" "}
+            <span
+              className="model-note-color"
+              style={{
+                backgroundColor: message.color,
+              }}
+              title={message.description}
+            ></span>{" "}
+            ¿Estas seguro de eliminar el color?
+          </p>
+        )}
         <div className="buttons-container">
           <button className="cancel-button" onClick={handleClean}>
             Cancelar

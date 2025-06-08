@@ -41,11 +41,12 @@ export function GeneralNote({
       <Overlay></Overlay>
       <dialog className="model-note" open>
         <div>
-          <p>Describe lo que sientes hoy:</p>
+          <h2></h2>
           <CrossButton
             handleClean={() => setIsGeneralNote(false)}
           ></CrossButton>
         </div>
+        <p>Describe como te sientes hoy</p>
         <textarea
           value={newGeneralNote.patient}
           onChange={(e) =>
@@ -56,13 +57,14 @@ export function GeneralNote({
           }
           readOnly={!isPatient}
         ></textarea>
-        <p>Comentarios del médico:</p>
+        <p>Comentarios del médico</p>
         <textarea
-          value={
+          placeholder={
             newGeneralNote.doctor === "" && isPatient
               ? "El médico todavía no ha puesto ningún comentario."
-              : newGeneralNote.doctor
+              : ""
           }
+          value={newGeneralNote.doctor}
           onChange={(e) =>
             setNewGeneralNote({
               doctor: e.target.value,
@@ -71,12 +73,10 @@ export function GeneralNote({
           }
           readOnly={isPatient}
         ></textarea>
-        <>
-          <div>
-            <button onClick={() => setIsGeneralNote(false)}>Cancelar</button>
-            <button onClick={() => handleSave()}>Guardar</button>
-          </div>
-        </>
+        <div className="buttons-container">
+          <button onClick={() => setIsGeneralNote(false)}>Cancelar</button>
+          <button onClick={() => handleSave()}>Guardar</button>
+        </div>
       </dialog>
     </>
   );

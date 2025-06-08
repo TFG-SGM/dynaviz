@@ -42,7 +42,7 @@ export function isToday(date: string) {
 }
 
 export function getLayerName(number: number) {
-  return { 0: "Interno", 1: "Musculo", 2: "Piel" }[number];
+  return { 0: "Óseo", 1: "Músculo", 2: "Piel" }[number];
 }
 
 export function adjustLightDark(hex: string, level: number) {
