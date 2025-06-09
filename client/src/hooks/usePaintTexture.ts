@@ -297,7 +297,7 @@ export function usePaintTexture({
 
         setColors(loadedColors);
         updateTexture();
-        save();
+        save(loadedColors);
       } else {
         console.error("No saved states found in localStorage");
       }
