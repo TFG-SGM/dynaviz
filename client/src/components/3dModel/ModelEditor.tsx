@@ -75,6 +75,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
     setActiveLayers,
     deleteColor,
     toggleLayerVisibility,
+    isColorInLayer,
   } = usePaintTexture({
     patientId,
     colors,
@@ -214,6 +215,7 @@ export function ModelEditor({ patientId }: { patientId: string }) {
             handleDeleteColor={handleDeleteColor}
             setNote={setNote}
             save={save}
+            isColorInLayer={isColorInLayer}
           ></ColorsList>
         </div>
       </div>

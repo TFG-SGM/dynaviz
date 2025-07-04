@@ -10,14 +10,17 @@ Esta herramienta forma parte del proyecto DIPAMIA (Diagnóstico de Patologías a
 El desarrollo de DynaViz se llevó a cabo como parte del Trabajo de Fin de Grado en Ingeniería Informática realizado por Sergio García Muñoz.
 
 ### Características
-- Dos roles: administrador y médico.
+- Tres roles: administrador, médico y paciente.
 - Funciones de administrador:
   - Gestionar otros administradores, médicos y pacientes.
   - Editar datos de su cuenta.
 - Funciones de médico:
   - Gestionar pacientes.
   - Gestionar pruebas de pacientes.
-  - Editar datos de su cuenta.  
+  - Editar datos de su cuenta. 
+  - Visualizar los módelos del paciente.
+- Funciones de paciente:
+  - Pintar en modelo 3D para señalizar dolor.
 - Diseño responsive.
 
 ### Tecnología y Herramientas
@@ -58,6 +61,9 @@ En este [vídeo](./assets/dynaviz-video.mp4) se muestra una demostración de la 
 ## Autores
 - Autor: Sergio García Muñoz.
 - Tutores: Félix Albertos Marco y Juan Enrique Garrido Navarro.
+
+## Créditos
+- Modelo 3D por: [Alexander Antipov](https://sketchfab.com/Dessen)
 
 ## Licencia
 Este proyecto es de código abierto y está disponible bajo la [licencia MIT](./LICENSE).

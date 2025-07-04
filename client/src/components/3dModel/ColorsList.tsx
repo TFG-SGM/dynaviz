@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Colors } from "../../utils/types";
 import { ColorMenu } from "./ColorMenu";
 import { Note3D, TrashColor3D } from "../other/Icons";
+import { LayersColors } from "./LayersColors";
 
 export function ColorsList({
   isPatient,
@@ -12,6 +13,7 @@ export function ColorsList({
   handleDeleteColor,
   setNote,
   save,
+  isColorInLayer,
 }: ColorsListProps) {
   const [isColorMenu, setIsColorMenu] = useState(false);
 
@@ -71,6 +73,10 @@ export function ColorsList({
                   }}
                 ></div>
                 <p>{colors[key].intensity}</p>
+                <LayersColors
+                  color={colors[key].color}
+                  isColorInLayer={isColorInLayer}
+                ></LayersColors>
               </div>
               <div className="model-color-actions">
                 <div>
@@ -106,4 +112,5 @@ type ColorsListProps = {
   handleDeleteColor: (color: string) => void;
   setNote: (key: string) => void;
   save: () => void;
+  isColorInLayer: (color: string, layer: number) => boolean;
 };

@@ -324,3 +324,20 @@ export function Dowloand3D() {
     </svg>
   );
 }
+
+export function Letter3D({ letter }: { letter: string | undefined }) {
+  return (
+    <p
+      style={{
+        background: "#1e1e1e",
+        color: "#eee",
+        fontWeight: "bolder",
+        padding: "0.2em",
+        borderRadius: "0.2em",
+        textAlign: "center",
+      }}
+    >
+      {letter}
+    </p>
+  );
+}

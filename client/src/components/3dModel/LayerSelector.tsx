@@ -1,5 +1,10 @@
 import { getLayerName } from "../../utils/helpers";
-import { Reset3D, VisibleActive3D, VisibleInactive3D } from "../other/Icons";
+import {
+  Erase3D,
+  Letter3D,
+  VisibleActive3D,
+  VisibleInactive3D,
+} from "../other/Icons";
 
 export function LayerSelector({
   isPatient,
@@ -33,7 +38,10 @@ export function LayerSelector({
                   onChange={() => handleCheckboxChange(layer)}
                 />
               )}
-              {getLayerName(layer)}
+              <Letter3D letter={getLayerName(layer)?.slice(0, 1)}></Letter3D>
+              <p style={{ marginLeft: "-8px" }}>
+                {getLayerName(layer)?.slice(1).toLowerCase()}
+              </p>
             </label>
             <div>
               {isPatient && (
@@ -42,22 +50,24 @@ export function LayerSelector({
                   className="model-layer-clear-button"
                   title="Limpiar capa"
                 >
-                  <Reset3D></Reset3D>
+                  <Erase3D></Erase3D>
                 </button>
               )}
-              <button
-                onClick={() => toggleLayerVisibility(layer)}
-                className="model-layer-visibility-button"
-                title={
-                  visibleLayers.has(layer) ? "Ocultar capa" : "Mostrar capa"
-                }
-              >
-                {visibleLayers.has(layer) ? (
-                  <VisibleActive3D></VisibleActive3D>
-                ) : (
-                  <VisibleInactive3D></VisibleInactive3D>
-                )}
-              </button>
+              {!isPatient && (
+                <button
+                  onClick={() => toggleLayerVisibility(layer)}
+                  className="model-layer-visibility-button"
+                  title={
+                    visibleLayers.has(layer) ? "Ocultar capa" : "Mostrar capa"
+                  }
+                >
+                  {visibleLayers.has(layer) ? (
+                    <VisibleActive3D></VisibleActive3D>
+                  ) : (
+                    <VisibleInactive3D></VisibleInactive3D>
+                  )}
+                </button>
+              )}
             </div>
           </div>
         ))}

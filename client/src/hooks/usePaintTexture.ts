@@ -29,6 +29,7 @@ export function usePaintTexture({
     new Set([0, 1, 2])
   );
   const warningShownRef = useRef(false);
+  const [_, forceUpdate] = useState(0);
 
   useEffect(() => {
     updateTexture();
@@ -82,6 +83,7 @@ export function usePaintTexture({
 
     updateTexture();
     save();
+    forceUpdate((n) => n + 1);
   };
 
   const updateTexture = () => {
@@ -306,6 +308,10 @@ export function usePaintTexture({
     }
   };
 
+  const isColorInLayer = (color: string, layer: number): boolean => {
+    return strokesRefs.current[layer].some((stroke) => stroke.color === color);
+  };
+
   return {
     texture,
     strokesRefs,
@@ -320,5 +326,6 @@ export function usePaintTexture({
     loadLocal,
     deleteColor,
     toggleLayerVisibility,
+    isColorInLayer,
   };
 }

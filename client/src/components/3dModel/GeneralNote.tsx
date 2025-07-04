@@ -48,6 +48,11 @@ export function GeneralNote({
         </div>
         <p>Describe como te sientes hoy</p>
         <textarea
+          placeholder={
+            newGeneralNote.patient === "" && !isPatient
+              ? "El paciente todavía no ha puesto ningún comentario."
+              : ""
+          }
           value={newGeneralNote.patient}
           onChange={(e) =>
             setNewGeneralNote({

@@ -169,6 +169,7 @@
   height: 150px;
   padding: 10px;
   resize: none;
+  font-size: large;
   color: var(--black-letter);
 }
 
@@ -227,6 +228,11 @@
   height: 40px;
   border-radius: 5px;
 }
+
+.model-layers-colors {
+  display: flex;
+  gap: 10px;
+}
 /*endregion*/
 
 /*region NOTES*/
@@ -249,6 +255,7 @@
   height: 200px;
   padding: 10px;
   resize: none;
+  font-size: large;
   color: var(--black-letter);
 }
 

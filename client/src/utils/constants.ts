@@ -90,4 +90,5 @@ export const COLORS = {
   yellow: "#ffff00",
   brown: "#8b4513",
   pink: "#ff69b4",
+  black: "#444444",
 };
