@@ -29,7 +29,7 @@ export function usePaintTexture({
     new Set([0, 1, 2])
   );
   const warningShownRef = useRef(false);
-  const [_, forceUpdate] = useState(0);
+  const [, forceUpdate] = useState(0);
 
   useEffect(() => {
     updateTexture();
