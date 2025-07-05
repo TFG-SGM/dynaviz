@@ -4,14 +4,13 @@ import { Letter3D } from "../other/Icons";
 export function LayersColors({ isColorInLayer, color }: LayersColorsProps) {
   return (
     <div className="model-layers-colors">
-      {[0, 1, 2].map((layer) =>
-        isColorInLayer(color, layer) ? (
-          <Letter3D
-            key={layer}
-            letter={getLayerName(layer)?.slice(0, 1) || ""}
-          />
-        ) : null
-      )}
+      {[0, 1, 2].map((layer) => (
+        <Letter3D
+          key={layer}
+          letter={getLayerName(layer)?.slice(0, 1) || ""}
+          isColorInLayer={isColorInLayer(color, layer)}
+        />
+      ))}
     </div>
   );
 }

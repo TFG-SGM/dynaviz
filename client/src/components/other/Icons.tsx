@@ -325,7 +325,13 @@ export function Dowloand3D() {
   );
 }
 
-export function Letter3D({ letter }: { letter: string | undefined }) {
+export function Letter3D({
+  letter,
+  isColorInLayer = true,
+}: {
+  letter: string | undefined;
+  isColorInLayer?: boolean;
+}) {
   return (
     <p
       style={{
@@ -335,6 +341,7 @@ export function Letter3D({ letter }: { letter: string | undefined }) {
         padding: "0.2em",
         borderRadius: "0.2em",
         textAlign: "center",
+        opacity: isColorInLayer ? 1 : 0.2,
       }}
     >
       {letter}
