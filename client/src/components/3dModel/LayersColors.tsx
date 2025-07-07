@@ -9,6 +9,7 @@ export function LayersColors({ isColorInLayer, color }: LayersColorsProps) {
           key={layer}
           letter={getLayerName(layer)?.slice(0, 1) || ""}
           isColorInLayer={isColorInLayer(color, layer)}
+          fontSize="15px"
         />
       ))}
     </div>

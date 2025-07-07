@@ -328,9 +328,11 @@ export function Dowloand3D() {
 export function Letter3D({
   letter,
   isColorInLayer = true,
+  fontSize = "20px",
 }: {
   letter: string | undefined;
   isColorInLayer?: boolean;
+  fontSize?: string;
 }) {
   return (
     <p
@@ -342,6 +344,7 @@ export function Letter3D({
         borderRadius: "0.2em",
         textAlign: "center",
         opacity: isColorInLayer ? 1 : 0.2,
+        fontSize,
       }}
     >
       {letter}
